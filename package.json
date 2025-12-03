@@ -2,6 +2,7 @@
   "name": "contacts",
   "private": true,
   "type": "module",
+  "author": "Mohammed Zaghloul <m.salahz86@gmail.com>",
   "scripts": {
     "dev": "vite dev --port 3000",
     "build": "vite build",
