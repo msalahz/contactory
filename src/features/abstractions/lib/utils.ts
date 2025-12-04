@@ -13,3 +13,7 @@ export function cn(...inputs: Array<ClassValue>) {
 export function isDevServerOnly() {
   return senv.ENV === 'development'
 }
+// SERVER ONLY FUNCTION
+export function isProdServerOnly() {
+  return senv.ENV === 'production'
+}
