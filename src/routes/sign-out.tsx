@@ -1,6 +1,5 @@
-import { useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate  } from '@tanstack/react-router'
 
-import { createFileRoute } from '@tanstack/react-router'
 import { authClient } from '@/integrations/better-auth/auth-client'
 
 export const Route = createFileRoute('/sign-out')({

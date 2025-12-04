@@ -8,16 +8,16 @@ import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import {
   Card,
-  CardTitle,
-  CardHeader,
   CardContent,
   CardDescription,
+  CardHeader,
+  CardTitle,
 } from '@/features/abstractions/components/primitives/card'
 import {
   Field,
+  FieldDescription,
   FieldGroup,
   FieldSeparator,
-  FieldDescription,
 } from '@/features/abstractions/components/primitives/field'
 
 const formSchema = z.object({
@@ -52,7 +52,7 @@ export function SigninForm({
           },
           onError: (ctx) => {
             toast.error('Error signing in', {
-              description: ctx.error?.message,
+              description: ctx.error.message,
             })
           },
         },
