@@ -16,6 +16,7 @@ import { cn } from '@/features/abstractions/lib/utils'
 import { Header } from '@/features/abstractions/components/reused/header'
 import { Footer } from '@/features/abstractions/components/reused/footer'
 import { useTheme } from '@/features/abstractions/components/reused/theme'
+import { Toaster } from '@/features/abstractions/components/primitives/sonner'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 
 interface MyRouterContext {
@@ -64,6 +65,8 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <Footer>
           <Footer.Copyrights />
         </Footer>
+
+        <Toaster closeButton richColors theme="light" />
 
         <TanStackDevtools
           config={{
