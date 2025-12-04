@@ -51,7 +51,7 @@ export function SigninForm({
             toast.success('User signed in successfully')
           },
           onError: (ctx) => {
-            toast.error('Error signing in', {
+            toast.error('Signing in failed', {
               description: ctx.error.message,
             })
           },
