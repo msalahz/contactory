@@ -7,7 +7,7 @@ export const authClient = createAuthClient({
   baseURL: cenv.VITE_BETTER_AUTH_BASE_URL!,
 })
 
-export const { signIn, signUp, useSession } = createAuthClient()
+export const { useSession } = createAuthClient()
 
 export type Session = typeof authClient.$Infer.Session
 export type User = typeof authClient.$Infer.Session.user
