@@ -20,38 +20,47 @@ import {
   FieldDescription,
 } from '@/features/abstractions/components/primitives/field'
 
-const formSchema = z.object({
-  email: z.email('Invalid email address').nonempty('Email is required'),
-  password: z
-    .string()
-    .nonempty('Password is required')
-    .min(10, 'Password must be at least 10 characters long'),
-})
+const formSchema = z
+  .object({
+    name: z.string().nonempty('Name is required'),
+    email: z.email('Invalid email address').nonempty('Email is required'),
+    password: z
+      .string()
+      .nonempty('Password is required')
+      .min(10, 'Password must be at least 10 characters long'),
+    passwordConfirm: z.string().nonempty('Please confirm your password'),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'Passwords do not match',
+    path: ['passwordConfirm'],
+  })
 
-export function SigninForm({
+export function SignupForm({
   className,
   ...props
 }: React.ComponentProps<'div'>) {
   const form = useAppForm({
     defaultValues: {
+      name: '',
       email: '',
       password: '',
+      passwordConfirm: '',
     },
     validators: {
       onSubmit: formSchema,
     },
     async onSubmit({ value }) {
-      return await authClient.signIn.email({
+      return await authClient.signUp.email({
+        name: value.name,
         email: value.email,
         password: value.password,
         callbackURL: '/console',
-        rememberMe: true,
         fetchOptions: {
           onSuccess: () => {
-            toast.success('User signed in successfully')
+            toast.success('User signed up successfully')
           },
           onError: (ctx) => {
-            toast.error('Error signing in', {
+            toast.error('Error signing up', {
               description: ctx.error?.message,
             })
           },
@@ -64,8 +73,8 @@ export function SigninForm({
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <CardTitle className="text-xl">Create your free account</CardTitle>
+          <CardDescription>Sign up with your Google account</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -85,12 +94,24 @@ export function SigninForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  Sign up with Google
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card uppercase">
                 Or continue with email
               </FieldSeparator>
+
+              <form.AppField
+                name="name"
+                children={(field) => (
+                  <field.Input
+                    type="name"
+                    label="Name"
+                    placeholder="Jone Doe"
+                  />
+                )}
+              />
+
               <form.AppField
                 name="email"
                 children={(field) => (
@@ -105,27 +126,22 @@ export function SigninForm({
               <form.AppField
                 name="password"
                 children={(field) => (
-                  <field.Input
-                    type="password"
-                    label="Password"
-                    labelChildren={
-                      <Link
-                        to="/forgot-password"
-                        className="text-foreground ml-auto text-sm underline-offset-4 hover:underline"
-                      >
-                        Forgot your password?
-                      </Link>
-                    }
-                  />
+                  <field.Input type="password" label="Password" />
+                )}
+              />
+
+              <form.AppField
+                name="passwordConfirm"
+                children={(field) => (
+                  <field.Input type="password" label="Confirm Password" />
                 )}
               />
 
               <form.AppForm>
-                <form.SubscribeButton label="Sign in" />
+                <form.SubscribeButton label="Sign Up" />
 
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?{' '}
-                  <Link to="/signup">Sign up for a free account</Link>
+                  Already have an account? <Link to="/signin">Sign in</Link>
                 </FieldDescription>
               </form.AppForm>
             </FieldGroup>

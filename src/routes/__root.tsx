@@ -1,8 +1,8 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import {
-  HeadContent,
   Scripts,
+  HeadContent,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 
@@ -49,9 +49,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body
-        suppressHydrationWarning
+        // suppressHydrationWarning
         className={cn(
-          'overflow-hidden grid grid-rows-[auto_1fr_auto] h-screen bg-background text-foreground',
+          'bg-background text-foreground grid h-screen grid-rows-[auto_1fr_auto] overflow-hidden',
           theme === 'dark' ? 'dark' : '',
         )}
       >
