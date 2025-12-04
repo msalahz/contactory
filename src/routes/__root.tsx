@@ -14,6 +14,7 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 import { Header } from '@/features/abstractions/components/reused/header'
+import { Footer } from '@/features/abstractions/components/reused/footer'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -42,9 +43,21 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <meta rel="icon" />
         <HeadContent />
       </head>
-      <body suppressHydrationWarning className="dark">
-        <Header />
-        {children}
+      <body
+        suppressHydrationWarning
+        className="overflow-hidden grid grid-rows-[auto_1fr_auto] h-screen bg-background text-foreground"
+      >
+        <Header className="h-15">
+          <Header.Logo />
+          <Header.Actions />
+        </Header>
+
+        <main className="overflow-auto">{children}</main>
+
+        <Footer>
+          <Footer.Copyrights />
+        </Footer>
+
         <TanStackDevtools
           config={{
             position: 'bottom-right',
