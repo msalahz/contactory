@@ -9,15 +9,18 @@ import {
 } from '@/features/abstractions/components/primitives/field'
 import { Input } from '@/features/abstractions/components/primitives/input'
 import { useFieldContext } from '@/integrations/tanstack-form/hooks/form-context'
+import { ReactNode } from 'react'
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   label?: string
   description?: string
+  labelChildren?: ReactNode
 }
 
 export function InputField({
   label,
   description,
+  labelChildren,
   ...InputProps
 }: InputFieldProps) {
   const field = useFieldContext<string>()
@@ -27,16 +30,22 @@ export function InputField({
   return (
     <Field data-invalid={isInvalid}>
       {label ? (
-        <FieldLabel htmlFor="form-tanstack-input-username">{label}</FieldLabel>
+        <div className="flex w-full items-center justify-between">
+          <FieldLabel htmlFor={`${field.name}-form-field`}>{label}</FieldLabel>
+          {labelChildren}
+        </div>
       ) : null}
+
       <Input
         {...InputProps}
+        id={`${field.name}-form-field`}
         name={field.name}
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
       />
+
       {description ? <FieldDescription>{description}</FieldDescription> : null}
       {isInvalid ? <FieldError errors={errors} /> : null}
     </Field>
