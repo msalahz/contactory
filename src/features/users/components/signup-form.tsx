@@ -60,7 +60,7 @@ export function SignupForm({
             toast.success('User signed up successfully')
           },
           onError: (ctx) => {
-            toast.error('Error signing up', {
+            toast.error('Signing up failed', {
               description: ctx.error.message,
             })
           },
