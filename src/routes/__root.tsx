@@ -1,8 +1,8 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import {
-  Scripts,
   HeadContent,
+  Scripts,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 
@@ -12,8 +12,8 @@ import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 
+import type { Session } from '@/integrations/better-auth/auth-client'
 import { cn } from '@/features/abstractions/lib/utils'
-import { Session } from '@/integrations/better-auth/auth-client'
 import { findSessionFn } from '@/features/users/functions/find-session-fn'
 import { Footer } from '@/features/abstractions/components/reused/footer'
 import { useTheme } from '@/features/abstractions/components/reused/theme'
@@ -21,8 +21,8 @@ import { Toaster } from '@/features/abstractions/components/primitives/sonner'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 import {
   Header,
-  HeaderLogo,
   HeaderActions,
+  HeaderLogo,
   HeaderSignOutButton,
 } from '@/features/abstractions/components/reused/header'
 
