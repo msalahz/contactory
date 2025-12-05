@@ -1,9 +1,14 @@
 import { Link } from '@tanstack/react-router'
+import { useServerFn } from '@tanstack/react-start'
+import { useMutation } from '@tanstack/react-query'
+
 import { cn } from '@/features/abstractions/lib/utils'
 import { Session } from '@/integrations/better-auth/auth-client'
+import { signOutFn } from '@/features/users/functions/sign-out-fn'
 import { Logo } from '@/features/abstractions/components/reused/logo'
 import { Theme } from '@/features/abstractions/components/reused/theme'
 import { Button } from '@/features/abstractions/components/primitives/button'
+import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 
 export function Header(props: React.ComponentProps<'header'>) {
   return (
@@ -32,7 +37,25 @@ export function HeaderLogo(props: React.ComponentProps<'div'>) {
   )
 }
 
+export function HeaderSignOutButton() {
+  const signOut = useServerFn(signOutFn)
+  const { mutate: signOutMutation, isPending } = useMutation({
+    mutationKey: ['signing-out'],
+    mutationFn: () => signOut(),
+  })
+  return (
+    <Button
+      variant="outline"
+      className="min-w-25"
+      onClick={() => signOutMutation()}
+    >
+      {isPending ? <Spinner /> : 'Sign Out'}
+    </Button>
+  )
+}
+
 export function HeaderActions({
+  children,
   session,
   ...props
 }: React.ComponentProps<'div'> & { session: Session | null }) {
@@ -45,18 +68,15 @@ export function HeaderActions({
       {session?.user ? (
         <>
           <span className="italic">Welcome back, {session.user.name}</span>
-
-          <Button asChild variant="outline">
-            <Link to="/sign-out">Sign Out</Link>
-          </Button>
+          {children}
         </>
       ) : (
         <>
-          <Button asChild variant="outline">
+          <Button asChild variant="outline" className="min-w-25">
             <Link to="/signin">Signin</Link>
           </Button>
 
-          <Button asChild>
+          <Button asChild className="min-w-25">
             <Link to="/signup">Signup</Link>
           </Button>
         </>
@@ -66,6 +86,3 @@ export function HeaderActions({
     </div>
   )
 }
-
-Header.Logo = HeaderLogo
-Header.Actions = HeaderActions

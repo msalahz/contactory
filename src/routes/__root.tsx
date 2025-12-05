@@ -1,8 +1,8 @@
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import {
-  HeadContent,
   Scripts,
+  HeadContent,
   createRootRouteWithContext,
 } from '@tanstack/react-router'
 
@@ -15,11 +15,16 @@ import type { QueryClient } from '@tanstack/react-query'
 import { cn } from '@/features/abstractions/lib/utils'
 import { Session } from '@/integrations/better-auth/auth-client'
 import { findSessionFn } from '@/features/users/functions/find-session-fn'
-import { Header } from '@/features/abstractions/components/reused/header'
 import { Footer } from '@/features/abstractions/components/reused/footer'
 import { useTheme } from '@/features/abstractions/components/reused/theme'
 import { Toaster } from '@/features/abstractions/components/primitives/sonner'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
+import {
+  Header,
+  HeaderLogo,
+  HeaderActions,
+  HeaderSignOutButton,
+} from '@/features/abstractions/components/reused/header'
 
 interface MyRouterContext {
   queryClient: QueryClient
@@ -66,8 +71,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         )}
       >
         <Header className="h-15">
-          <Header.Logo />
-          <Header.Actions session={context.session} />
+          <HeaderLogo />
+          <HeaderActions session={context.session}>
+            <HeaderSignOutButton />
+          </HeaderActions>
         </Header>
 
         <main className="overflow-auto">{children}</main>
