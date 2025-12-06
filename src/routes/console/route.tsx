@@ -2,7 +2,7 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 
-export const Route = createFileRoute('/console/')({
+export const Route = createFileRoute('/console')({
   server: {
     middleware: [authRequestMiddleware],
   },
