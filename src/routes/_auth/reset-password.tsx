@@ -27,7 +27,7 @@ function RouteComponent() {
             newPassword: data.newPassword,
             token,
           })
-            .then((result) => Promise.resolve(result?.status === true))
+            .then((result) => Promise.resolve(result.status === true))
             .catch(() => Promise.reject(false))
         }}
       >

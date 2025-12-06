@@ -16,19 +16,19 @@ function RouteComponent() {
   return (
     <section className="flex min-h-full flex-col items-center justify-center p-6">
       <RequestPasswordResetForm
-        onFormSubmit={async (data: { email: string }) => {
+        onFormSubmit={async ({ email }: { email: string }) => {
           return mutateAsync({
-            email: data.email,
+            email,
             redirectTo: '/reset-password',
           })
-            .then((result) => Promise.resolve(result?.status === true))
+            .then((result) => Promise.resolve(result.status === true))
             .catch(() => Promise.reject(false))
         }}
       >
         {isSuccess ? (
           <AlertBox type="success">
             <ItemTitle>
-              {data?.message ||
+              {data.message ||
                 'If an account with that email exists, check your email for a password reset link.'}
             </ItemTitle>
           </AlertBox>
