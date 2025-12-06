@@ -48,7 +48,9 @@ export const cenv = createEnv({
    */
   clientPrefix: 'VITE_',
 
-  client: {},
+  client: {
+    VITE_BETTER_AUTH_BASE_URL: z.url(),
+  },
 
   /**
    * What object holds the environment variables at runtime. This is usually
