@@ -68,8 +68,11 @@ export function HeaderActions({
     >
       {session?.user ? (
         <>
-          <span className="italic">Welcome back, {session.user.name}</span>
+          <span className="italic">Welcome, {session.user.name}</span>
           {children}
+          <Button asChild className="min-w-25">
+            <Link to="/console">Go to Console</Link>
+          </Button>
         </>
       ) : (
         <>
