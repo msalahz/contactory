@@ -1,10 +1,15 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 
-import { authRequestMiddleware } from '@/integrations/better-auth/auth-request-middleware'
+import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 
 export const Route = createFileRoute('/console/')({
   server: {
     middleware: [authRequestMiddleware],
+  },
+  beforeLoad({ context }) {
+    if (!context.session) {
+      throw redirect({ to: '/signin' })
+    }
   },
   component: RouteComponent,
 })

@@ -1,8 +1,8 @@
 import { redirect } from '@tanstack/react-router'
 import { createMiddleware } from '@tanstack/react-start'
 
-import { auth } from '@/integrations/better-auth/auth'
 import { getRequest } from '@tanstack/react-start/server'
+import { auth } from '@/integrations/better-auth/auth'
 
 export const authFnMiddleware = createMiddleware({ type: 'function' })
   .client(async ({ next }) => {
