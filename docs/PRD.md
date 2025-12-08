@@ -20,15 +20,47 @@ To provide an effortless way to manage, search, and share contacts across device
 
 ### 1. Organize
 
-**Status:** Coming Soon  
+**Status:** Under Development  
 **Description:** Keep all your contacts in one place, neatly organized and easy to manage.
 
 **Requirements:**
 
 - Create, read, update, and delete contacts
-- Store contact information including name, phone number, email, address, and notes
+- Store contact information including name, phone number, email, address and notes
 - Clean and intuitive user interface for contact management
 - Efficient data storage and retrieval
+
+**Data Model (Implemented):**
+
+The contact database schema has been implemented with the following fields:
+
+| Field          | Type      | Description                                                              |
+|----------------|-----------|--------------------------------------------------------------------------|
+| `id`           | UUID v7   | Primary key                                                              |
+| `userId`       | Text      | Foreign key to user (cascade delete)                                     |
+| `firstName`    | Text      | Required first name                                                      |
+| `lastName`     | Text      | Optional last name                                                       |
+| `displayName`  | Text      | Computed or custom display name                                          |
+| `nickname`     | Text      | Optional nickname                                                        |
+| `primaryEmail` | Text      | Primary email address                                                    |
+| `primaryPhone` | Text      | Primary phone number                                                     |
+| `company`      | Text      | Company/organization name                                                |
+| `jobTitle`     | Text      | Job title                                                                |
+| `department`   | Text      | Department name                                                          |
+| `address`      | JSONB     | Flexible address object (street, city, state, postalCode, country, type) |
+| `notes`        | Text      | Additional notes                                                         |
+| `website`      | Text      | Website URL                                                              |
+| `isFavorite`   | Boolean   | Favorite flag (default: false)                                           |
+| `createdAt`    | Timestamp | Creation timestamp                                                       |
+| `updatedAt`    | Timestamp | Last update timestamp                                                    |
+
+**Database Indexes:**
+
+- `contact_userId_idx` - User ID lookup
+- `contact_firstName_idx` - First name search
+- `contact_lastName_idx` - Last name search
+- `contact_primaryEmail_idx` - Email search
+- `contact_isFavorite_idx` - Favorites by user (compound index)
 
 ### 2. Search
 
@@ -99,7 +131,7 @@ To provide an effortless way to manage, search, and share contacts across device
 
 ### 7. Favorites
 
-**Status:** Coming Soon  
+**Status:** Under Development (Database Schema Implemented)  
 **Description:** Mark important contacts for quick and easy access.
 
 **Requirements:**
@@ -109,6 +141,11 @@ To provide an effortless way to manage, search, and share contacts across device
 - Sort favorites by custom order or frequency of use
 - Limit or unlimited favorites
 - One-tap communication with favorites
+
+**Implementation Notes:**
+
+- `isFavorite` boolean field implemented in contact schema
+- Compound index on `(isFavorite, userId)` for efficient favorites queries
 
 ### 8. Duplicate Detection
 
@@ -153,6 +190,18 @@ To provide an effortless way to manage, search, and share contacts across device
 - Social signin support (future consideration)
 - Account settings and profile management
 
+**Implementation Notes:**
+
+- Authentication powered by better-auth integration
+- Routes implemented:
+    - `/signin` - Email/password signin
+    - `/signup` - Email/password registration
+    - `/forgot-password` - Request password reset
+    - `/reset-password` - Complete password reset
+- Session management with `findSessionFn` server function
+- Auth-aware landing page CTA (shows "Go to Console" when logged in)
+- Route guards redirect authenticated users away from auth pages
+
 ### 11. Internationalization (i18n)
 
 **Status:** Coming Soon  
@@ -182,6 +231,12 @@ To provide an effortless way to manage, search, and share contacts across device
 - Persistent theme preference per user
 - Consistent theming across all components
 
+**Implementation Notes:**
+
+- Theme toggle component implemented using TanStack Store
+- Light/dark mode switching with Moon/Sun icons
+- `useTheme` hook available for theme-aware components
+
 ## Technical Requirements
 
 ### Authentication & Security
@@ -203,9 +258,10 @@ To provide an effortless way to manage, search, and share contacts across device
 
 ### Theming
 
-- Dark and light mode support via next-themes
+- Dark and light mode support via TanStack Store
 - System preference detection
 - Persistent user preference
+- `useTheme` hook for theme-aware components
 
 ### Performance
 
@@ -250,7 +306,29 @@ To provide an effortless way to manage, search, and share contacts across device
 
 ## Timeline
 
-All features are currently marked as "Coming Soon" and will be developed in phases based on priority and user feedback.
+**Completed:**
+
+- Authentication & User Management (signup, signin, password reset)
+- Contact Database Schema (Drizzle ORM with indexes)
+
+**In Progress:**
+
+- Theme Support (light/dark mode toggle)
+- Organize (CRUD operations for contacts)
+- Favorites (UI implementation)
+
+**Coming Soon:**
+
+- Search
+- Sync
+- Share
+- Import/Export
+- Groups/Labels
+- Duplicate Detection
+- QR Code Sharing
+- Internationalization (i18n)
+
+Features will be developed in phases based on priority and user feedback.
 
 ## Conclusion
 
