@@ -771,3 +771,4 @@ pnpx shadcn@latest add button
 - place reusable composed components in `components/reused/`
 - name custom hooks with `use` prefix
 - use `React.ComponentProps<'element'>` for extending native props
+- use singular nouns for table names
