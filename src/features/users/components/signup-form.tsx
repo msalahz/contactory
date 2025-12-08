@@ -34,11 +34,7 @@ const formSchema = z
   })
 
 export interface SignupFormProps extends React.ComponentProps<'div'> {
-  onFormSubmit?: (data: {
-    name: string
-    email: string
-    password: string
-  }) => Promise<void>
+  onFormSubmit?: (data: { name: string; email: string; password: string }) => Promise<void>
 }
 
 export function SignupForm({
@@ -102,37 +98,25 @@ export function SignupForm({
               <form.AppField
                 name="name"
                 children={(field) => (
-                  <field.Input
-                    type="name"
-                    label="Name"
-                    placeholder="Jone Doe"
-                  />
+                  <field.Input type="name" label="Name" placeholder="Jone Doe" />
                 )}
               />
 
               <form.AppField
                 name="email"
                 children={(field) => (
-                  <field.Input
-                    type="email"
-                    label="Email"
-                    placeholder="me@example.com"
-                  />
+                  <field.Input type="email" label="Email" placeholder="me@example.com" />
                 )}
               />
 
               <form.AppField
                 name="password"
-                children={(field) => (
-                  <field.Input type="password" label="Password" />
-                )}
+                children={(field) => <field.Input type="password" label="Password" />}
               />
 
               <form.AppField
                 name="passwordConfirm"
-                children={(field) => (
-                  <field.Input type="password" label="Confirm Password" />
-                )}
+                children={(field) => <field.Input type="password" label="Confirm Password" />}
               />
 
               <form.AppForm>
@@ -147,8 +131,8 @@ export function SignupForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )

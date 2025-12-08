@@ -74,16 +74,12 @@ export function ResetPasswordForm({
 
               <form.AppField
                 name="password"
-                children={(field) => (
-                  <field.Input type="password" label="Password" />
-                )}
+                children={(field) => <field.Input type="password" label="Password" />}
               />
 
               <form.AppField
                 name="passwordConfirm"
-                children={(field) => (
-                  <field.Input type="password" label="Confirm Password" />
-                )}
+                children={(field) => <field.Input type="password" label="Confirm Password" />}
               />
 
               <form.AppForm>
@@ -98,8 +94,8 @@ export function ResetPasswordForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )

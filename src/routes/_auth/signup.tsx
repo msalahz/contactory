@@ -22,11 +22,7 @@ function RouteComponent() {
   return (
     <section className="flex min-h-full flex-col items-center justify-center p-6">
       <SignupForm
-        onFormSubmit={async (data: {
-          name: string
-          email: string
-          password: string
-        }) => {
+        onFormSubmit={async (data: { name: string; email: string; password: string }) => {
           await mutateAsync(
             {
               name: data.name,

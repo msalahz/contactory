@@ -1,12 +1,5 @@
 import { v7 as uuidv7 } from 'uuid'
-import {
-  boolean,
-  index,
-  jsonb,
-  pgTable,
-  text,
-  timestamp,
-} from 'drizzle-orm/pg-core'
+import { boolean, index, jsonb, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 import { user } from './auth'
 

@@ -17,12 +17,7 @@ export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   labelChildren?: ReactNode
 }
 
-export function InputField({
-  label,
-  description,
-  labelChildren,
-  ...InputProps
-}: InputFieldProps) {
+export function InputField({ label, description, labelChildren, ...InputProps }: InputFieldProps) {
   const field = useFieldContext<string>()
   const errors = useStore(field.store, (state) => state.meta.errors)
   const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid

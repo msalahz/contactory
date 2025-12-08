@@ -17,11 +17,7 @@ export const getRouter = () => {
     context: { ...rqContext, session: null },
     defaultPreload: 'intent',
     Wrap: (props: { children: React.ReactNode }) => {
-      return (
-        <TanstackQuery.Provider {...rqContext}>
-          {props.children}
-        </TanstackQuery.Provider>
-      )
+      return <TanstackQuery.Provider {...rqContext}>{props.children}</TanstackQuery.Provider>
     },
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,

@@ -13,16 +13,9 @@ export function Footer(props: React.ComponentProps<'footer'>) {
   )
 }
 
-export function FooterCopyrights({
-  className,
-  ...props
-}: React.ComponentProps<'div'>) {
+export function FooterCopyrights({ className, ...props }: React.ComponentProps<'div'>) {
   return (
-    <div
-      {...props}
-      data-slot="footer-copyrights"
-      className={cn('text-sm', className)}
-    >
+    <div {...props} data-slot="footer-copyrights" className={cn('text-sm', className)}>
       &copy; {new Date().getFullYear()}{' '}
       <a target="_blank" href="https://www.linkedin.com/in/msalahz/">
         Mohammed Zaghloul

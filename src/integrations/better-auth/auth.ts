@@ -7,10 +7,7 @@ import { db } from '@/db'
 import { senv } from '@/env'
 
 export const auth = betterAuth({
-  plugins: [
-    tanstackStartCookies(),
-    ...(senv.ENABLE_BETTER_AUTH_OPENAPI ? [openAPI()] : []),
-  ],
+  plugins: [tanstackStartCookies(), ...(senv.ENABLE_BETTER_AUTH_OPENAPI ? [openAPI()] : [])],
 
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -28,9 +25,7 @@ export const auth = betterAuth({
     revokeSessionsOnPasswordReset: true,
 
     sendResetPassword({ url, user, token }) {
-      console.log(
-        `Send password reset email to ${user.email} with token: ${token} and url: ${url}`,
-      )
+      console.log(`Send password reset email to ${user.email} with token: ${token} and url: ${url}`)
       return Promise.resolve()
     },
 

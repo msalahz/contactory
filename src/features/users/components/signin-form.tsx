@@ -88,11 +88,7 @@ export function SigninForm({
               <form.AppField
                 name="email"
                 children={(field) => (
-                  <field.Input
-                    type="email"
-                    label="Email"
-                    placeholder="me@example.com"
-                  />
+                  <field.Input type="email" label="Email" placeholder="me@example.com" />
                 )}
               />
               <form.AppField
@@ -116,8 +112,7 @@ export function SigninForm({
                 <form.SubscribeButton label="Sign in" />
 
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?{' '}
-                  <Link to="/signup">Sign up for a free account</Link>
+                  Don&apos;t have an account? <Link to="/signup">Sign up for a free account</Link>
                 </FieldDescription>
               </form.AppForm>
             </FieldGroup>
@@ -126,8 +121,8 @@ export function SigninForm({
       </Card>
 
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{' '}
-        and <a href="#">Privacy Policy</a>.
+        By clicking continue, you agree to our <a href="#">Terms of Service</a> and{' '}
+        <a href="#">Privacy Policy</a>.
       </FieldDescription>
     </div>
   )

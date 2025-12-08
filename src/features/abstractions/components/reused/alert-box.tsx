@@ -1,18 +1,9 @@
-import {
-  CircleAlertIcon,
-  CircleCheckIcon,
-  InfoIcon,
-  TriangleAlert,
-} from 'lucide-react'
+import { CircleAlertIcon, CircleCheckIcon, InfoIcon, TriangleAlert } from 'lucide-react'
 
 import { cva } from 'class-variance-authority'
 import type { VariantProps } from 'class-variance-authority'
 import { cn } from '@/features/abstractions/lib/utils'
-import {
-  Item,
-  ItemContent,
-  ItemMedia,
-} from '@/features/abstractions/components/primitives/item'
+import { Item, ItemContent, ItemMedia } from '@/features/abstractions/components/primitives/item'
 
 const alertBoxVariants = cva('', {
   variants: {
@@ -30,9 +21,7 @@ const alertBoxVariants = cva('', {
 })
 
 export interface AlertBoxProps
-  extends
-    React.ComponentProps<typeof Item>,
-    VariantProps<typeof alertBoxVariants> {}
+  extends React.ComponentProps<typeof Item>, VariantProps<typeof alertBoxVariants> {}
 
 const Icons = {
   default: null,

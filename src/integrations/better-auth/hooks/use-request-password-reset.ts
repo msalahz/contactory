@@ -2,10 +2,7 @@ import { useMutation } from '@tanstack/react-query'
 import { authClient } from '@/integrations/better-auth/auth-client'
 
 export async function requestPasswordReset(
-  props: Pick<
-    Parameters<typeof authClient.requestPasswordReset>[0],
-    'email' | 'redirectTo'
-  >,
+  props: Pick<Parameters<typeof authClient.requestPasswordReset>[0], 'email' | 'redirectTo'>,
 ) {
   const { data, error } = await authClient.requestPasswordReset(props)
 

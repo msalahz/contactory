@@ -34,12 +34,11 @@ function App() {
       <section className="relative overflow-hidden px-6 py-24 text-center">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
-            Manage Your Contacts{' '}
-            <span className="text-primary">Effortlessly</span>
+            Manage Your Contacts <span className="text-primary">Effortlessly</span>
           </h1>
           <p className="text-muted-foreground mt-6 text-lg sm:text-xl">
-            A simple, fast, and secure way to organize all your personal and
-            professional contacts in one place.
+            A simple, fast, and secure way to organize all your personal and professional contacts
+            in one place.
           </p>
           <div className="mt-10 flex items-center justify-center gap-4">
             {session?.user ? (
@@ -63,9 +62,7 @@ function App() {
       {/* Features Section */}
       <section className="px-6 py-20">
         <div className="mx-auto max-w-5xl">
-          <h2 className="mb-12 text-center text-3xl font-bold">
-            Everything you need
-          </h2>
+          <h2 className="mb-12 text-center text-3xl font-bold">Everything you need</h2>
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
             <Card className="relative text-center">
               <span className="bg-primary/20 text-primary absolute top-3 right-3 rounded-full px-2 py-0.5 text-xs font-medium">
@@ -77,8 +74,7 @@ function App() {
                 </div>
                 <CardTitle>Organize</CardTitle>
                 <CardDescription>
-                  Keep all your contacts in one place, neatly organized and easy
-                  to manage.
+                  Keep all your contacts in one place, neatly organized and easy to manage.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -93,8 +89,7 @@ function App() {
                 </div>
                 <CardTitle>Search</CardTitle>
                 <CardDescription>
-                  Find anyone instantly with powerful search and filtering
-                  options.
+                  Find anyone instantly with powerful search and filtering options.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -109,8 +104,7 @@ function App() {
                 </div>
                 <CardTitle>Sync</CardTitle>
                 <CardDescription>
-                  Stay up to date across all your devices with automatic
-                  syncing.
+                  Stay up to date across all your devices with automatic syncing.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -155,8 +149,7 @@ function App() {
                 </div>
                 <CardTitle>Groups/Labels</CardTitle>
                 <CardDescription>
-                  Organize contacts into custom groups like Family, Work, or
-                  Friends.
+                  Organize contacts into custom groups like Family, Work, or Friends.
                 </CardDescription>
               </CardHeader>
             </Card>
@@ -185,9 +178,7 @@ function App() {
                   <GitMerge className="size-6" />
                 </div>
                 <CardTitle>Duplicate Detection</CardTitle>
-                <CardDescription>
-                  Find and merge duplicate contacts automatically.
-                </CardDescription>
+                <CardDescription>Find and merge duplicate contacts automatically.</CardDescription>
               </CardHeader>
             </Card>
 
@@ -200,9 +191,7 @@ function App() {
                   <QrCode className="size-6" />
                 </div>
                 <CardTitle>QR Code Sharing</CardTitle>
-                <CardDescription>
-                  Share contact info via scannable QR code.
-                </CardDescription>
+                <CardDescription>Share contact info via scannable QR code.</CardDescription>
               </CardHeader>
             </Card>
           </div>
