@@ -6,30 +6,28 @@ import { user } from './auth'
 export const contact = pgTable(
   'contact',
   {
-    id: text('id')
-      .primaryKey()
-      .$defaultFn(() => uuidv7()),
-    userId: text('user_id')
+    id: text().primaryKey().$defaultFn(() => uuidv7()),
+    userId: text()
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),
 
     // Basic Info
-    firstName: text('first_name').notNull(),
-    lastName: text('last_name'),
-    displayName: text('display_name'), // computed or custom name
-    nickname: text('nickname'),
+    firstName: text().notNull(),
+    lastName: text(),
+    displayName: text(), // computed or custom name
+    nickname: text(),
 
     // Contact Methods
-    primaryEmail: text('primary_email'),
-    primaryPhone: text('primary_phone'),
+    primaryEmail: text(),
+    primaryPhone: text(),
 
     // Organization Info
-    company: text('company'),
-    jobTitle: text('job_title'),
-    department: text('department'),
+    company: text(),
+    jobTitle: text(),
+    department: text(),
 
     // Address (stored as JSON for flexibility)
-    address: jsonb('address').$type<{
+    address: jsonb().$type<{
       street?: string
       city?: string
       state?: string
@@ -39,15 +37,15 @@ export const contact = pgTable(
     }>(),
 
     // Additional Info
-    notes: text('notes'),
-    website: text('website'),
+    notes: text(),
+    website: text(),
 
     // Metadata
-    isFavorite: boolean('is_favorite').default(false).notNull(),
+    isFavorite: boolean().default(false).notNull(),
 
     // Timestamps
-    createdAt: timestamp('created_at').defaultNow().notNull(),
-    updatedAt: timestamp('updated_at')
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp()
       .defaultNow()
       .$onUpdate(() => new Date())
       .notNull(),
