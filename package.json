@@ -17,8 +17,7 @@
     "db:migrate": "drizzle-kit migrate",
     "db:push": "drizzle-kit push",
     "db:pull": "drizzle-kit pull",
-    "db:studio": "drizzle-kit studio",
-    "deploy:netlify": "pnpm dlx netlify deploy"
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
     "@radix-ui/react-label": "^2.1.8",
@@ -59,7 +58,6 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@netlify/vite-plugin-tanstack-start": "^1.2.2",
     "@tanstack/devtools-event-client": "^0.3.2",
     "@tanstack/devtools-vite": "^0.3.11",
     "@tanstack/eslint-config": "^0.3.0",
