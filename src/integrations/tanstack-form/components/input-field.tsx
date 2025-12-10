@@ -2,14 +2,15 @@ import * as React from 'react'
 import { useStore } from '@tanstack/react-form'
 
 import type { ReactNode } from 'react'
+
+import { Input } from '@/features/abstractions/components/primitives/input'
+import { useFieldContext } from '@/integrations/tanstack-form/hooks/form-context'
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
 } from '@/features/abstractions/components/primitives/field'
-import { Input } from '@/features/abstractions/components/primitives/input'
-import { useFieldContext } from '@/integrations/tanstack-form/hooks/form-context'
 
 export interface InputFieldProps extends React.ComponentProps<typeof Input> {
   label?: string
