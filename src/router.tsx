@@ -1,9 +1,10 @@
 import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
-import * as TanstackQuery from './integrations/tanstack-query/root-provider'
+
+import { routeTree } from '@/routeTree.gen'
+import * as TanstackQuery from '@/integrations/tanstack-query/root-provider'
 
 // Import the generated route tree
-import { routeTree } from './routeTree.gen'
 
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 import { DefaultCatchBoundary } from '@/features/abstractions/components/reused/default-catch-boundary'
