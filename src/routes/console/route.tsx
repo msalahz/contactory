@@ -1,4 +1,4 @@
-import { createFileRoute, redirect } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 
@@ -15,5 +15,10 @@ export const Route = createFileRoute('/console')({
 })
 
 function RouteComponent() {
-  return <div>Hello "/console/"!</div>
+  return (
+    <div>
+      Hello "/layout/"!
+      <Outlet />
+    </div>
+  )
 }
