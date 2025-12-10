@@ -1,5 +1,6 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
+import { Layout } from '@/features/abstractions/components/reused/layout'
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 
 export const Route = createFileRoute('/console')({
@@ -16,9 +17,9 @@ export const Route = createFileRoute('/console')({
 
 function RouteComponent() {
   return (
-    <div>
+    <Layout>
       Hello "/layout/"!
       <Outlet />
-    </div>
+    </Layout>
   )
 }
