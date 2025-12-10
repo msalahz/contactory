@@ -9,6 +9,7 @@ export const contact = pgTable(
     id: text()
       .primaryKey()
       .$defaultFn(() => uuidv7()),
+
     userId: text()
       .notNull()
       .references(() => user.id, { onDelete: 'cascade' }),
