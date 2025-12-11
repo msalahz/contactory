@@ -1,15 +1,13 @@
 import { Link } from '@tanstack/react-router'
-import { useServerFn } from '@tanstack/react-start'
-import { useMutation } from '@tanstack/react-query'
 
 import type { Session } from '@/integrations/better-auth/auth-client'
 import type { Theme } from '@/features/abstractions/components/reused/theme'
 
 import { cn } from '@/features/abstractions/lib/utils'
-import { signOutFn } from '@/features/users/functions/sign-out-fn'
-import { Logo } from '@/features/abstractions/components/reused/logo'
+import { useSignOut } from '@/features/users/hooks/use-sign-out'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
+import { LiliLogo } from '@/features/abstractions/components/reused/lili-logo'
 
 export function Header(props: React.ComponentProps<'header'>) {
   return (
@@ -32,21 +30,17 @@ export function HeaderLogo(props: React.ComponentProps<'div'>) {
       className={cn('flex items-center justify-start gap-0', props.className)}
     >
       <Link to="/">
-        <Logo />
+        <LiliLogo />
       </Link>
     </div>
   )
 }
 
 export function HeaderSignOutButton() {
-  const signOut = useServerFn(signOutFn)
-  const { mutate: signOutMutation, isPending } = useMutation({
-    mutationKey: ['signing-out'],
-    mutationFn: () => signOut(),
-  })
+  const { signOut, isSigningOut } = useSignOut()
   return (
-    <Button variant="outline" className="min-w-25" onClick={() => signOutMutation()}>
-      {isPending ? <Spinner /> : 'Sign Out'}
+    <Button variant="outline" className="min-w-25" onClick={() => signOut()}>
+      {isSigningOut ? <Spinner /> : 'Sign Out'}
     </Button>
   )
 }

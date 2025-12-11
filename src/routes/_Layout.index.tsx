@@ -1,4 +1,4 @@
-import { Link, createFileRoute } from '@tanstack/react-router'
+import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
 import {
   ArrowUpDown,
   FolderHeart,
@@ -20,7 +20,7 @@ import {
   CardTitle,
 } from '@/features/abstractions/components/primitives/card'
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/_Layout/')({
   loader: () => findSessionFn(),
   component: App,
 })
@@ -31,6 +31,7 @@ function App() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
+      <Outlet />
       <section className="relative overflow-hidden px-6 py-24 text-center">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">
