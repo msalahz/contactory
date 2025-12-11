@@ -1,3 +1,8 @@
+# Run Prettier on staged files (A/C/M/R), escape spaces, write fixes, ignore unknown types
 pnpm prettier $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --write --ignore-unknown
+
+# Run ESLint with --fix on the same staged files (auto-fix lint issues)
 pnpm eslint $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g') --fix
+
+# Refresh the index so any changes made by Prettier/ESLint are re-staged
 git update-index --again
