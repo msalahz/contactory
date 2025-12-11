@@ -2,14 +2,14 @@ name: Integration Checks
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
     paths-ignore:
       - 'docs/**'
       - '.*/**'
       - '!.github/**'
       - '*/**.md'
   pull_request:
-    branches: [main]
+    branches: [ main ]
     paths-ignore:
       - 'docs/**'
       - '.*/**'
@@ -58,3 +58,11 @@ jobs:
 
       - name: Build application
         run: pnpm build
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v5
+        with:
+          name: build
+          path: '/dist'
+          overwrite: true
+          if-no-files-found: error
