@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { ConsoleSidebar } from '@/features/abstractions/components/reused/console-sidebar'
+import { ConsoleSidebar } from '@/features/abstractions/components/console/console-sidebar'
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 import {
   SidebarInset,
