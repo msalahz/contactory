@@ -5,9 +5,9 @@ import type { Theme } from '@/features/abstractions/components/reused/theme'
 
 import { cn } from '@/features/abstractions/lib/utils'
 import { useSignOut } from '@/features/users/hooks/use-sign-out'
+import { Logo } from '@/features/abstractions/components/reused/logo'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
-import { LiliLogo } from '@/features/abstractions/components/reused/lili-logo'
 
 export function Header(props: React.ComponentProps<'header'>) {
   return (
@@ -30,7 +30,7 @@ export function HeaderLogo(props: React.ComponentProps<'div'>) {
       className={cn('flex items-center justify-start gap-0', props.className)}
     >
       <Link to="/">
-        <LiliLogo />
+        <Logo />
       </Link>
     </div>
   )
