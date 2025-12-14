@@ -20,36 +20,34 @@ function RouteComponent() {
   const { mutateAsync, error, isSuccess } = useResetPassword()
 
   return (
-    <section className="flex min-h-full flex-col items-center justify-center p-6">
-      <ResetPasswordForm
-        onFormSubmit={async (data: { newPassword: string }) => {
-          return mutateAsync({
-            newPassword: data.newPassword,
-            token,
-          })
-            .then((result) => Promise.resolve(result.status === true))
-            .catch(() => Promise.reject(false))
-        }}
-      >
-        {!token || invalidTokenError ? (
-          <AlertBox type="error">
-            <ItemTitle>Invalid token</ItemTitle>
-          </AlertBox>
-        ) : null}
+    <ResetPasswordForm
+      onFormSubmit={async (data: { newPassword: string }) => {
+        return mutateAsync({
+          newPassword: data.newPassword,
+          token,
+        })
+          .then((result) => Promise.resolve(result.status === true))
+          .catch(() => Promise.reject(false))
+      }}
+    >
+      {!token || invalidTokenError ? (
+        <AlertBox type="error">
+          <ItemTitle>Invalid token</ItemTitle>
+        </AlertBox>
+      ) : null}
 
-        {isSuccess ? (
-          <AlertBox type="success">
-            <ItemTitle>Password reset successfully</ItemTitle>
-          </AlertBox>
-        ) : null}
+      {isSuccess ? (
+        <AlertBox type="success">
+          <ItemTitle>Password reset successfully</ItemTitle>
+        </AlertBox>
+      ) : null}
 
-        {error ? (
-          <AlertBox type="error">
-            <ItemTitle>Reset password failed</ItemTitle>
-            <FieldError errors={[error]} />
-          </AlertBox>
-        ) : null}
-      </ResetPasswordForm>
-    </section>
+      {error ? (
+        <AlertBox type="error">
+          <ItemTitle>Reset password failed</ItemTitle>
+          <FieldError errors={[error]} />
+        </AlertBox>
+      ) : null}
+    </ResetPasswordForm>
   )
 }

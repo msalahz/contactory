@@ -9,20 +9,21 @@ import { Logo } from '@/features/abstractions/components/reused/logo'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 
-export function Header(props: React.ComponentProps<'header'>) {
+export function SiteHeader(props: React.ComponentProps<'header'>) {
   return (
     <header
       {...props}
       data-slot="header"
       className={cn(
-        'bg-primary/5 sticky top-0 z-50 flex w-full items-center justify-between px-4 py-3 shadow shadow-black/10 dark:shadow-white/10',
+        'mx-auto mt-2 flex h-15 max-w-6xl items-center justify-between px-6 transition-all duration-300 lg:px-12',
+        // 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5',
         props.className,
       )}
     />
   )
 }
 
-export function HeaderLogo(props: React.ComponentProps<'div'>) {
+export function SiteHeaderLogo(props: React.ComponentProps<'div'>) {
   return (
     <div
       {...props}
@@ -36,7 +37,7 @@ export function HeaderLogo(props: React.ComponentProps<'div'>) {
   )
 }
 
-export function HeaderSignOutButton() {
+export function SiteHeaderSignOutButton() {
   const { signOut, isSigningOut } = useSignOut()
   return (
     <Button variant="outline" className="min-w-25" onClick={() => signOut()}>
@@ -45,7 +46,7 @@ export function HeaderSignOutButton() {
   )
 }
 
-export function HeaderActions({
+export function SiteHeaderActions({
   children,
   ...props
 }: React.ComponentProps<'div'> & { session: Session | null; theme?: Theme }) {

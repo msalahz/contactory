@@ -6,6 +6,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+html {
+  overflow: hidden;
+}
+
 body {
   @apply m-0;
   font-family: 'Plus Jakarta Sans', sans-serif;

@@ -20,24 +20,22 @@ function RouteComponent() {
   const { mutateAsync, error } = useSigninEmail()
 
   return (
-    <section className="flex min-h-full flex-col items-center justify-center p-6">
-      <SigninForm
-        onFormSubmit={async (data: { email: string; password: string }) => {
-          await mutateAsync({
-            email: data.email,
-            password: data.password,
-            rememberMe: true,
-            callbackURL: '/console',
-          }).catch(noop)
-        }}
-      >
-        {error ? (
-          <AlertBox type="error">
-            <ItemTitle>Signin Failed</ItemTitle>
-            <FieldError errors={[error]} />
-          </AlertBox>
-        ) : null}
-      </SigninForm>
-    </section>
+    <SigninForm
+      onFormSubmit={async (data: { email: string; password: string }) => {
+        await mutateAsync({
+          email: data.email,
+          password: data.password,
+          rememberMe: true,
+          callbackURL: '/console',
+        }).catch(noop)
+      }}
+    >
+      {error ? (
+        <AlertBox type="error">
+          <ItemTitle>Signin Failed</ItemTitle>
+          <FieldError errors={[error]} />
+        </AlertBox>
+      ) : null}
+    </SigninForm>
   )
 }

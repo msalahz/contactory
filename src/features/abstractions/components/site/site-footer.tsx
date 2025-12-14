@@ -1,6 +1,6 @@
 import { cn } from '@/features/abstractions/lib/utils'
 
-export function Footer(props: React.ComponentProps<'footer'>) {
+export function SiteFooter(props: React.ComponentProps<'footer'>) {
   return (
     <footer
       {...props}
@@ -13,7 +13,7 @@ export function Footer(props: React.ComponentProps<'footer'>) {
   )
 }
 
-export function FooterCopyrights({ className, ...props }: React.ComponentProps<'div'>) {
+export function SiteFooterCopyrights({ className, ...props }: React.ComponentProps<'div'>) {
   return (
     <div {...props} data-slot="footer-copyrights" className={cn('text-sm', className)}>
       &copy; {new Date().getFullYear()}{' '}
@@ -24,5 +24,3 @@ export function FooterCopyrights({ className, ...props }: React.ComponentProps<'
     </div>
   )
 }
-
-Footer.Copyrights = FooterCopyrights

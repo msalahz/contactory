@@ -20,7 +20,7 @@ import {
   CardTitle,
 } from '@/features/abstractions/components/primitives/card'
 
-export const Route = createFileRoute('/_Layout/')({
+export const Route = createFileRoute('/_site/')({
   loader: () => findSessionFn(),
   component: App,
 })

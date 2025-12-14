@@ -1,17 +1,19 @@
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
 
-import { Footer } from '@/features/abstractions/components/reused/footer'
-import { Layout } from '@/features/abstractions/components/reused/layout'
 import { Button } from '@/features/abstractions/components/primitives/button'
+import {
+  SiteFooter,
+  SiteFooterCopyrights,
+} from '@/features/abstractions/components/site/site-footer'
 import { ThemeToggle, useTheme } from '@/features/abstractions/components/reused/theme'
 import {
-  Header,
-  HeaderActions,
-  HeaderLogo,
-  HeaderSignOutButton,
-} from '@/features/abstractions/components/reused/header'
+  SiteHeader,
+  SiteHeaderActions,
+  SiteHeaderLogo,
+  SiteHeaderSignOutButton,
+} from '@/features/abstractions/components/site/site-header'
 
-export const Route = createFileRoute('/_Layout')({
+export const Route = createFileRoute('/_site')({
   component: RouteComponent,
 })
 
@@ -20,14 +22,13 @@ function RouteComponent() {
   const { theme, setTheme } = useTheme()
 
   return (
-    <Layout>
-      <Header className="h-15">
-        <HeaderLogo />
-        <HeaderActions session={session}>
+    <section className="h-dvh overflow-y-auto">
+      <SiteHeader className="h-15">
+        <SiteHeaderLogo />
+        <SiteHeaderActions session={session}>
           {session?.user ? (
             <>
-              <span className="hidden italic lg:block">Welcome, {session.user.name}</span>
-              <HeaderSignOutButton />
+              <SiteHeaderSignOutButton />
               <Button asChild className="min-w-25">
                 <Link to="/console">My Contacts</Link>
               </Button>
@@ -45,8 +46,8 @@ function RouteComponent() {
           )}
 
           <ThemeToggle theme={theme} onChange={setTheme} />
-        </HeaderActions>
-      </Header>
+        </SiteHeaderActions>
+      </SiteHeader>
 
       <section className="flex min-h-0 flex-col overflow-auto">
         <div className="flex-1">
@@ -54,9 +55,9 @@ function RouteComponent() {
         </div>
       </section>
 
-      <Footer className="mt-auto w-full">
-        <Footer.Copyrights />
-      </Footer>
-    </Layout>
+      <SiteFooter className="mt-auto w-full">
+        <SiteFooterCopyrights />
+      </SiteFooter>
+    </section>
   )
 }

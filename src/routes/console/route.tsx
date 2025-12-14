@@ -1,6 +1,5 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { Layout } from '@/features/abstractions/components/reused/layout'
 import { ConsoleSidebar } from '@/features/abstractions/components/reused/console-sidebar'
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
 import {
@@ -22,13 +21,13 @@ export const Route = createFileRoute('/console')({
 
 function RouteComponent() {
   return (
-    <Layout>
+    <section className="overflow-y-auto">
       <SidebarProvider defaultOpen={false}>
         <ConsoleSidebar />
         <SidebarInset>
           <Outlet />
         </SidebarInset>
       </SidebarProvider>
-    </Layout>
+    </section>
   )
 }
