@@ -1,9 +1,9 @@
-# 📇 Contacts
+# 📇 Contactory
 
-A simple, fast and secure contact management application that helps users organize all their personal and professional
+A simple, fast and secure Contactory management application that helps users organize all their personal and professional
 contacts in one place.
 
-🔗 **[Live Demo](https://contacts.consultin.dev/)**
+🔗 **[Live Demo](https://contactory.consultin.dev/)**
 
 ---
 
@@ -93,7 +93,7 @@ contacts in one place.
 ## 📁 Project Structure
 
 ```
-contacts/
+contactory/
 ├── .github/                       # GitHub configuration
 │   ├── copilot-instructions.md    # Copilot code generation guidelines
 │   ├── git-commit-instructions.md # Commit message conventions
@@ -174,8 +174,8 @@ contacts/
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/contacts.git
-cd contacts
+git clone https://github.com/your-username/contactory.git
+cd contactory
 
 # Install dependencies
 pnpm install
