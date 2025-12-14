@@ -1,6 +1,7 @@
 # 📇 Contactory
 
-A simple, fast and secure Contactory management application that helps users organize all their personal and professional
+A simple, fast and secure Contactory management application that helps users organize all their personal and
+professional/
 contacts in one place.
 
 🔗 **[Live Demo](https://contactory.consultin.dev/)**
