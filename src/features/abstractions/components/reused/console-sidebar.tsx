@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import {
+  AppWindowIcon,
   ContactRoundIcon,
   LayoutDashboardIcon,
   LogOutIcon,
@@ -18,12 +19,13 @@ import {
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarSeparator,
 } from '@/features/abstractions/components/primitives/sidebar'
+import { LogoIcon } from '@/features/abstractions/components/reused/logo-icon'
 
 export function ConsoleSidebar() {
   const { theme, setTheme } = useTheme()
@@ -31,6 +33,18 @@ export function ConsoleSidebar() {
 
   return (
     <Sidebar variant="inset" collapsible="icon">
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Contactory" className="hover:bg-transparent">
+              <Link to="/">
+                <LogoIcon /> <span className="font-bold">Contactory</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupContent className="flex flex-col gap-2">
@@ -60,17 +74,25 @@ export function ConsoleSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarSeparator />
-
       <SidebarFooter>
         <SidebarMenu>
           <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Site">
+              <Link to="/">
+                <AppWindowIcon />
+                <span>Site</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
+          <SidebarMenuItem>
             <SidebarMenuButton
-              tooltip="Toogle Theme"
+              tooltip="Toggle Theme"
               onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
             >
               <MoonIcon className={cn(theme === 'light' ? 'hidden' : 'block')} />
               <SunIcon className={cn(theme === 'dark' ? 'hidden' : 'block')} />
+              <span>Toggle Theme</span>
             </SidebarMenuButton>
           </SidebarMenuItem>
 
