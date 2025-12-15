@@ -14,7 +14,7 @@ export function Logo({
   return (
     <h1
       className={cn(
-        'syne-font flex w-fit items-center gap-2 text-2xl transition-all duration-200 ease-in-out',
+        'flex w-fit items-center gap-2 text-2xl transition-all duration-200 ease-in-out',
         className,
       )}
       {...props}
