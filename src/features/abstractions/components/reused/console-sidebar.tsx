@@ -1,4 +1,4 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useRouterState } from '@tanstack/react-router'
 import {
   AppWindowIcon,
   ContactRoundIcon,
@@ -12,6 +12,7 @@ import {
 import { cn } from '@/features/abstractions/lib/utils'
 import { useSignOut } from '@/features/users/hooks/use-sign-out'
 import { useTheme } from '@/features/abstractions/components/reused/theme'
+import { LogoIcon } from '@/features/abstractions/components/reused/logo-icon'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
   Sidebar,
@@ -25,9 +26,9 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/features/abstractions/components/primitives/sidebar'
-import { LogoIcon } from '@/features/abstractions/components/reused/logo-icon'
 
 export function ConsoleSidebar() {
+  const routerState = useRouterState()
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
 
@@ -50,7 +51,11 @@ export function ConsoleSidebar() {
           <SidebarGroupContent className="flex flex-col gap-2">
             <SidebarMenu className="flex flex-col gap-2">
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Dashboard">
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Dashboard"
+                  isActive={routerState.matches.some((match) => match.routeId === '/console/')}
+                >
                   <Link to="/console">
                     <LayoutDashboardIcon /> <span>Dashboard</span>
                   </Link>
@@ -58,7 +63,13 @@ export function ConsoleSidebar() {
               </SidebarMenuItem>
 
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Contacts">
+                <SidebarMenuButton
+                  asChild
+                  tooltip="Contacts"
+                  isActive={routerState.matches.some(
+                    (match) => match.routeId === '/console/contacts',
+                  )}
+                >
                   <Link to="/console/contacts">
                     <ContactRoundIcon /> <span>Contacts</span>
                   </Link>
