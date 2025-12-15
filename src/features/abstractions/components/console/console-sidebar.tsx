@@ -1,7 +1,16 @@
 import { Link } from '@tanstack/react-router'
-import { ContactRoundIcon, LayoutDashboardIcon, LogOutIcon, PlusIcon } from 'lucide-react'
+import {
+  ContactRoundIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  MoonIcon,
+  PlusIcon,
+  SunIcon,
+} from 'lucide-react'
 
+import { cn } from '@/features/abstractions/lib/utils'
 import { useSignOut } from '@/features/users/hooks/use-sign-out'
+import { useTheme } from '@/features/abstractions/components/reused/theme'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
   Sidebar,
@@ -17,7 +26,9 @@ import {
 } from '@/features/abstractions/components/primitives/sidebar'
 
 export function ConsoleSidebar() {
+  const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
+
   return (
     <Sidebar variant="inset" collapsible="icon">
       <SidebarContent>
@@ -53,6 +64,16 @@ export function ConsoleSidebar() {
 
       <SidebarFooter>
         <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              tooltip="Toogle Theme"
+              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+            >
+              <MoonIcon className={cn(theme === 'light' ? 'hidden' : 'block')} />
+              <SunIcon className={cn(theme === 'dark' ? 'hidden' : 'block')} />
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+
           <SidebarMenuItem>
             <SidebarMenuButton onClick={() => signOut()} tooltip="Sign Out">
               {isSigningOut ? <Spinner /> : <LogOutIcon />} <span>Sign Out</span>

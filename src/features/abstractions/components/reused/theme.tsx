@@ -6,6 +6,7 @@ import { Store, useStore } from '@tanstack/react-store'
 import { getCookie, setCookie } from '@tanstack/react-start/server'
 import { createServerFn, useServerFn } from '@tanstack/react-start'
 
+import * as React from 'react'
 import { cn, noop } from '@/features/abstractions/lib/utils'
 import { Button } from '@/features/abstractions/components/primitives/button'
 
@@ -72,11 +73,13 @@ export function ThemeProvider({
  * @description Theme toggle button component
  * @param theme
  * @param onChange
+ * @param props
  */
 export function ThemeToggle({
   theme,
   onChange = noop,
-}: {
+  ...props
+}: Omit<React.ComponentProps<typeof Button>, 'onChange'> & {
   theme: Theme
   onChange?: (theme: Theme) => void
 }) {
@@ -85,6 +88,7 @@ export function ThemeToggle({
       size="icon"
       variant="outline"
       onClick={() => onChange(theme === 'light' ? 'dark' : 'light')}
+      {...props}
     >
       <MoonIcon className={cn(theme === 'light' ? 'hidden' : 'block')} />
       <SunIcon className={cn(theme === 'dark' ? 'hidden' : 'block')} />

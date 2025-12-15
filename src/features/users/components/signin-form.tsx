@@ -56,8 +56,8 @@ export function SigninForm({
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Welcome back</CardTitle>
-          <CardDescription>Login with your Google account</CardDescription>
+          <CardTitle className="text-xl">Sign In to Contactory</CardTitle>
+          <CardDescription>Welcome back! Sign in to continue</CardDescription>
         </CardHeader>
 
         <CardContent>
@@ -71,7 +71,7 @@ export function SigninForm({
           >
             <FieldGroup>
               {children ? <Field>{children}</Field> : null}
-              <Field>
+              <Field hidden>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -82,7 +82,10 @@ export function SigninForm({
                   Login with Google
                 </Button>
               </Field>
-              <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card uppercase">
+              <FieldSeparator
+                hidden
+                className="*:data-[slot=field-separator-content]:bg-card uppercase"
+              >
                 Or continue with email
               </FieldSeparator>
               <form.AppField

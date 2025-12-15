@@ -66,8 +66,8 @@ export function SignupForm({
     <div className={cn('flex flex-col gap-6', className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-xl">Create your free account</CardTitle>
-          <CardDescription>Sign up with your Google account</CardDescription>
+          <CardTitle className="text-xl">Create a Contactory Account</CardTitle>
+          <CardDescription>Welcome! Create an account to get started</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -80,7 +80,7 @@ export function SignupForm({
           >
             <FieldGroup>
               {children ? <Field>{children}</Field> : null}
-              <Field>
+              <Field hidden>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                     <path
@@ -91,7 +91,10 @@ export function SignupForm({
                   Sign up with Google
                 </Button>
               </Field>
-              <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card uppercase">
+              <FieldSeparator
+                hidden
+                className="*:data-[slot=field-separator-content]:bg-card uppercase"
+              >
                 Or continue with email
               </FieldSeparator>
 
