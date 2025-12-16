@@ -142,10 +142,10 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
-                <SidebarMenuButton asChild tooltip="Site">
+                <SidebarMenuButton asChild tooltip="Go to Site">
                   <Link to="/">
                     <AppWindowIcon />
-                    <span>Site</span>
+                    <span>Go to Site</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
