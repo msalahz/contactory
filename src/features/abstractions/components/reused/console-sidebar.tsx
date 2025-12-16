@@ -5,7 +5,6 @@ import {
   LayoutDashboardIcon,
   LogOutIcon,
   MoonIcon,
-  PlusIcon,
   SunIcon,
 } from 'lucide-react'
 
@@ -22,7 +21,6 @@ import {
   SidebarGroupContent,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/features/abstractions/components/primitives/sidebar'
@@ -37,7 +35,7 @@ export function ConsoleSidebar() {
       <SidebarHeader>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Contactory" className="hover:bg-transparent">
+            <SidebarMenuButton asChild size="lg" tooltip="Contactory">
               <Link to="/">
                 <LogoIcon /> <span className="font-bold">Contactory</span>
               </Link>
@@ -48,16 +46,17 @@ export function ConsoleSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupContent className="flex flex-col gap-2">
-            <SidebarMenu className="flex flex-col gap-2">
+          <SidebarGroupContent>
+            <SidebarMenu>
               <SidebarMenuItem>
                 <SidebarMenuButton
                   asChild
                   tooltip="Dashboard"
                   isActive={routerState.matches.some((match) => match.routeId === '/console/')}
                 >
-                  <Link to="/console">
-                    <LayoutDashboardIcon /> <span>Dashboard</span>
+                  <Link to="/">
+                    <LayoutDashboardIcon />
+                    <span>Dashboard</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -74,11 +73,6 @@ export function ConsoleSidebar() {
                     <ContactRoundIcon /> <span>Contacts</span>
                   </Link>
                 </SidebarMenuButton>
-                <SidebarMenuAction title="Add Contact" asChild>
-                  <Link to="/console/contacts/new">
-                    <PlusIcon />
-                  </Link>
-                </SidebarMenuAction>
               </SidebarMenuItem>
             </SidebarMenu>
           </SidebarGroupContent>
