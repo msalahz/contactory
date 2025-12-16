@@ -5,13 +5,11 @@ import { ThemeToggle, useTheme } from '@/features/abstractions/components/reused
 import {
   SiteFooter,
   SiteFooterCopyrights,
-} from '@/features/abstractions/components/reused/site-footer'
-import {
   SiteHeader,
   SiteHeaderActions,
   SiteHeaderLogo,
   SiteHeaderSignOutButton,
-} from '@/features/abstractions/components/reused/site-header'
+} from '@/features/abstractions/components/reused/site'
 
 export const Route = createFileRoute('/_site')({
   component: RouteComponent,
