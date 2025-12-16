@@ -19,17 +19,17 @@ import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
   Collapsible,
   CollapsibleContent,
-  CollapsibleTrigger,
 } from '@/features/abstractions/components/primitives/collapsible'
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
+  SidebarGroupLabel,
   SidebarHeader,
   SidebarInset,
   SidebarMenu,
+  SidebarMenuAction,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarMenuSub,
@@ -68,6 +68,7 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
       <SidebarContent>
         <SidebarGroup>
+          <SidebarGroupLabel>Console</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               <SidebarMenuItem>
@@ -85,12 +86,21 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
 
               <Collapsible asChild defaultOpen className="group/collapsible">
                 <SidebarMenuItem>
-                  <CollapsibleTrigger asChild>
-                    <SidebarMenuButton tooltip="Contacts">
+                  <SidebarMenuButton
+                    asChild
+                    tooltip="Contacts"
+                    isActive={routerState.matches.some((match) =>
+                      match.routeId.startsWith('/console/contacts/'),
+                    )}
+                  >
+                    <Link to="/console/contacts">
                       <ContactRoundIcon /> <span>Contacts</span>
-                      <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                    </SidebarMenuButton>
-                  </CollapsibleTrigger>
+                    </Link>
+                  </SidebarMenuButton>
+
+                  <SidebarMenuAction>
+                    <ChevronRightIcon className="ml-auto transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                  </SidebarMenuAction>
 
                   <CollapsibleContent>
                     <SidebarMenuSub>
@@ -126,37 +136,40 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+
+        <SidebarGroup className="mt-auto">
+          <SidebarGroupLabel>Actions</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild tooltip="Site">
+                  <Link to="/">
+                    <AppWindowIcon />
+                    <span>Site</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  tooltip="Toggle Theme"
+                  onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
+                >
+                  <MoonIcon className={cn(theme === 'light' ? 'hidden' : 'block')} />
+                  <SunIcon className={cn(theme === 'dark' ? 'hidden' : 'block')} />
+                  <span>Toggle Theme</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+
+              <SidebarMenuItem>
+                <SidebarMenuButton onClick={() => signOut()} tooltip="Sign Out">
+                  {isSigningOut ? <Spinner /> : <LogOutIcon />} <span>Sign Out</span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
       </SidebarContent>
-
-      <SidebarFooter>
-        <SidebarMenu>
-          <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Site">
-              <Link to="/">
-                <AppWindowIcon />
-                <span>Site</span>
-              </Link>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          <SidebarMenuItem>
-            <SidebarMenuButton
-              tooltip="Toggle Theme"
-              onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}
-            >
-              <MoonIcon className={cn(theme === 'light' ? 'hidden' : 'block')} />
-              <SunIcon className={cn(theme === 'dark' ? 'hidden' : 'block')} />
-              <span>Toggle Theme</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-
-          <SidebarMenuItem>
-            <SidebarMenuButton onClick={() => signOut()} tooltip="Sign Out">
-              {isSigningOut ? <Spinner /> : <LogOutIcon />} <span>Sign Out</span>
-            </SidebarMenuButton>
-          </SidebarMenuItem>
-        </SidebarMenu>
-      </SidebarFooter>
     </Sidebar>
   )
 }
@@ -164,7 +177,7 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
 export function ConsoleInset({ children, className, ...props }: React.ComponentProps<'section'>) {
   return (
     <SidebarInset>
-      <section data-slot="console-inset" className={cn('', className)} {...props}>
+      <section data-slot="console-inset" className={cn('flex grow flex-col', className)} {...props}>
         {children}
       </section>
     </SidebarInset>
@@ -180,17 +193,17 @@ export function ConsoleInsetHeader({
     <header
       data-slot="console-inset-header"
       className={cn(
-        'flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12',
+        'flex h-12 items-center justify-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12',
         className,
       )}
       {...props}
     >
-      <div className="flex w-full items-start gap-1 px-3 lg:gap-2 lg:px-4">
-        <div>
+      <div className="flex grow items-start gap-1 px-2 lg:gap-2 lg:px-3">
+        <div className="flex h-8 items-center">
           <SidebarTrigger />
         </div>
 
-        <div className="flex flex-1">{children}</div>
+        <div className="flex grow">{children}</div>
       </div>
     </header>
   )
@@ -204,7 +217,7 @@ export function ConsoleInsetContent({
   return (
     <main
       data-slot="console-inset-content"
-      className={cn('flex-1 gap-1 overflow-auto p-2 lg:p-3', className)}
+      className={cn('flex grow overflow-auto p-2 lg:p-3', className)}
       {...props}
     >
       {children}
