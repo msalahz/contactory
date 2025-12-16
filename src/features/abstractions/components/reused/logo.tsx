@@ -1,6 +1,16 @@
 import { cn } from '@/features/abstractions/lib/utils'
-import { LogoIcon } from '@/features/abstractions/components/reused/logo-icon'
-import { LogoWord } from '@/features/abstractions/components/reused/logo-word'
+
+export function LogoIcon({ className, ...props }: React.ComponentProps<'img'>) {
+  return <img src="/logo.svg" alt="Logo" className={cn('size-8', className)} {...props} />
+}
+
+export function LogoWord({ className, ...props }: React.ComponentProps<'span'>) {
+  return (
+    <span className={cn('', className)} {...props}>
+      Contactory
+    </span>
+  )
+}
 
 export function Logo({
   className,
