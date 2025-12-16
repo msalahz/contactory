@@ -6,6 +6,7 @@ import { ItemTitle } from '@/features/abstractions/components/primitives/item'
 import { FieldError } from '@/features/abstractions/components/primitives/field'
 import { ResetPasswordForm } from '@/features/users/components/reset-password-form'
 import { useResetPassword } from '@/integrations/better-auth/hooks/use-reset-password'
+import { AnimatedPresence } from '@/features/abstractions/components/reused/animated-presence'
 
 export const Route = createFileRoute('/_auth/reset-password')({
   validateSearch: z.object({
@@ -20,34 +21,36 @@ function RouteComponent() {
   const { mutateAsync, error, isSuccess } = useResetPassword()
 
   return (
-    <ResetPasswordForm
-      onFormSubmit={async (data: { newPassword: string }) => {
-        return mutateAsync({
-          newPassword: data.newPassword,
-          token,
-        })
-          .then((result) => Promise.resolve(result.status === true))
-          .catch(() => Promise.reject(false))
-      }}
-    >
-      {!token || invalidTokenError ? (
-        <AlertBox type="error">
-          <ItemTitle>Invalid token</ItemTitle>
-        </AlertBox>
-      ) : null}
+    <AnimatedPresence>
+      <ResetPasswordForm
+        onFormSubmit={async (data: { newPassword: string }) => {
+          return mutateAsync({
+            newPassword: data.newPassword,
+            token,
+          })
+            .then((result) => Promise.resolve(result.status === true))
+            .catch(() => Promise.reject(false))
+        }}
+      >
+        {!token || invalidTokenError ? (
+          <AlertBox type="error">
+            <ItemTitle>Invalid token</ItemTitle>
+          </AlertBox>
+        ) : null}
 
-      {isSuccess ? (
-        <AlertBox type="success">
-          <ItemTitle>Password reset successfully</ItemTitle>
-        </AlertBox>
-      ) : null}
+        {isSuccess ? (
+          <AlertBox type="success">
+            <ItemTitle>Password reset successfully</ItemTitle>
+          </AlertBox>
+        ) : null}
 
-      {error ? (
-        <AlertBox type="error">
-          <ItemTitle>Reset password failed</ItemTitle>
-          <FieldError errors={[error]} />
-        </AlertBox>
-      ) : null}
-    </ResetPasswordForm>
+        {error ? (
+          <AlertBox type="error">
+            <ItemTitle>Reset password failed</ItemTitle>
+            <FieldError errors={[error]} />
+          </AlertBox>
+        ) : null}
+      </ResetPasswordForm>
+    </AnimatedPresence>
   )
 }

@@ -6,6 +6,7 @@ import { AlertBox } from '@/features/abstractions/components/reused/alert-box'
 import { ItemTitle } from '@/features/abstractions/components/primitives/item'
 import { FieldError } from '@/features/abstractions/components/primitives/field'
 import { useSignupEmail } from '@/integrations/better-auth/hooks/use-signup-email'
+import { AnimatedPresence } from '@/features/abstractions/components/reused/animated-presence'
 
 export const Route = createFileRoute('/_auth/signup')({
   beforeLoad({ context }) {
@@ -20,29 +21,31 @@ function RouteComponent() {
   const { mutateAsync, error } = useSignupEmail()
 
   return (
-    <SignupForm
-      onFormSubmit={async (data: { name: string; email: string; password: string }) => {
-        await mutateAsync(
-          {
-            name: data.name,
-            email: data.email,
-            password: data.password,
-            callbackURL: '/console',
-          },
-          {
-            onSuccess() {
-              throw redirect({ to: '/console' })
+    <AnimatedPresence>
+      <SignupForm
+        onFormSubmit={async (data: { name: string; email: string; password: string }) => {
+          await mutateAsync(
+            {
+              name: data.name,
+              email: data.email,
+              password: data.password,
+              callbackURL: '/console',
             },
-          },
-        ).catch(noop)
-      }}
-    >
-      {error ? (
-        <AlertBox type="error">
-          <ItemTitle>Signup Failed</ItemTitle>
-          <FieldError errors={[error]} />
-        </AlertBox>
-      ) : null}
-    </SignupForm>
+            {
+              onSuccess() {
+                throw redirect({ to: '/console' })
+              },
+            },
+          ).catch(noop)
+        }}
+      >
+        {error ? (
+          <AlertBox type="error">
+            <ItemTitle>Signup Failed</ItemTitle>
+            <FieldError errors={[error]} />
+          </AlertBox>
+        ) : null}
+      </SignupForm>
+    </AnimatedPresence>
   )
 }
