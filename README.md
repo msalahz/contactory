@@ -197,7 +197,7 @@ Then fill in the required environment variables:
 | `DATABASE_URL`               | PostgreSQL connection string                           | ✅       |
 | `BETTER_AUTH_SECRET`         | Secret key for authentication                          | ✅       |
 | `BETTER_AUTH_URL`            | Base URL of your app (e.g., `http://localhost:3000`)   | ✅       |
-| `ENABLE_BETTER_AUTH_OPENAPI` | Enable OpenAPI docs (`true` for dev, `false` for prod) | ❌       |
+| `BETTER_AUTH_ENABLE_OPENAPI` | Enable OpenAPI docs (`true` for dev, `false` for prod) | ❌       |
 | `VITE_BETTER_AUTH_BASE_URL`  | Client-side base URL of your app                       | ✅       |
 
 ### Running the App
