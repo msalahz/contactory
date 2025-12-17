@@ -7,13 +7,20 @@ import { createEnv } from '@t3-oss/env-core'
  */
 export const senv = createEnv({
   server: {
+    BASE_URL: z.url(),
     DATABASE_URL: z.url(),
     BETTER_AUTH_URL: z.string(),
     BETTER_AUTH_SECRET: z.string(),
-    ENABLE_BETTER_AUTH_OPENAPI: z
+    BETTER_AUTH_ENABLE_OPENAPI: z
       .string()
       .transform((val) => val === 'true')
       .default(false),
+    BETTER_AUTH_USE_SECURE_COOKIES: z
+      .string()
+      .transform((val) => val === 'true')
+      .default(false),
+    RESEND_API_KEY: z.string(),
+    RESEND_FROM_EMAIL: z.email(),
   },
   /**
    * What object holds the environment variables at runtime. This is usually
