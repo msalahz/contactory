@@ -1,4 +1,5 @@
-import type { Contact } from '@/features/contacts/types'
+import type { Contact } from '@/features/contacts/models'
+
 import {
   Table,
   TableBody,
