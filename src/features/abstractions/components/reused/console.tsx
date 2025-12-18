@@ -10,10 +10,10 @@ import {
   SunIcon,
 } from 'lucide-react'
 
+import { useSignOut } from '@/features/users/hooks'
 import { cn } from '@/features/abstractions/lib/utils'
-import { useSignOut } from '@/features/users/hooks/use-sign-out'
+import { useTheme } from '@/features/abstractions/theme/hooks'
 import { LogoIcon } from '@/features/abstractions/components/reused/logo'
-import { useTheme } from '@/features/abstractions/components/reused/theme'
 import { ContactsIcon } from '@/features/contacts/components/contacts-icon'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {

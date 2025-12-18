@@ -1,10 +1,10 @@
 import { Link } from '@tanstack/react-router'
 
+import type { Theme } from '@/features/abstractions/theme/models'
 import type { Session } from '@/integrations/better-auth/auth-client'
-import type { Theme } from '@/features/abstractions/components/reused/theme'
 
+import { useSignOut } from '@/features/users/hooks'
 import { cn } from '@/features/abstractions/lib/utils'
-import { useSignOut } from '@/features/users/hooks/use-sign-out'
 import { Logo } from '@/features/abstractions/components/reused/logo'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'

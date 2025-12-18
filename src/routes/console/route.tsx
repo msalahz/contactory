@@ -1,6 +1,6 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
-import { authRequestMiddleware } from '@/integrations/better-auth/middlewares/auth-request-middleware'
+import { authRequestMiddleware } from '@/integrations/better-auth/middlewares'
 import {
   Console,
   ConsoleInset,

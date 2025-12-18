@@ -89,7 +89,8 @@ Pick one and stick with it across the entire project.
 
 ### 💭 Comments
 
-Use comments to explain code: what does it cover, what purpose does it serve, and why is the respective solution used or preferred?
+Use comments to explain code: what does it cover, what purpose does it serve, and why is the respective solution used or
+preferred?
 
 Document functions with **JSDoc**:
 
@@ -518,8 +519,9 @@ export interface ButtonProps extends React.ComponentProps<'button'> {
   isLoading?: boolean
 }
 
-export function Button({ variant, isLoading, ...props }: ButtonProps) {
-  return <button {...props} />
+export function Button ({ variant, isLoading, ...props }: ButtonProps) {
+  return <button { ...props }
+  />
 }
 ```
 
@@ -533,6 +535,7 @@ Prefer named exports over default exports:
 export function MyComponent() {
   /* ... */
 }
+
 export { MyComponent }
 ```
 
@@ -551,8 +554,9 @@ Use ternary for inline conditionals and `null` checks:
 ✅ **Recommended:**
 
 ```typescript
-{error ? <ErrorMessage error={error} /> : null}
-{children ? <Field>{children}</Field> : null}
+{
+  error ? <ErrorMessage error = { error } /> : null}
+  {children ? <Field>{ children } < /Field> : null}
 ```
 
 ### 🪝 Custom Hooks
@@ -645,7 +649,7 @@ Use TanStack Start server functions:
 import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
-export const findSessionFn = createServerFn({ method: 'GET' }).handler(() => {
+export const findSessionFn = createServerFn().handler(() => {
   const request = getRequest()
   return auth.api.getSession({ headers: request.headers })
 })

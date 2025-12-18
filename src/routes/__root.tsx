@@ -8,34 +8,33 @@ import appCss from '../styles.css?url'
 
 import type { QueryClient } from '@tanstack/react-query'
 
+import type { User } from '@/features/users/models'
+import type { Theme } from '@/features/abstractions/theme/models'
 import type { Session } from '@/integrations/better-auth/auth-client'
-import type { Theme } from '@/features/abstractions/components/reused/theme'
-import {
-  ThemeProvider,
-  getThemeCookieFn,
-  useTheme,
-} from '@/features/abstractions/components/reused/theme'
 
 import { cn } from '@/features/abstractions/lib/utils'
-import { findSessionFn } from '@/features/users/server/functions'
+import { useTheme } from '@/features/abstractions/theme/hooks'
+import { ThemeProvider } from '@/features/abstractions/theme/context'
+import { getContextDataFn } from '@/features/abstractions/server/functions'
 import { Toaster } from '@/features/abstractions/components/primitives/sonner'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 
 interface MyRouterContext {
   queryClient: QueryClient
   session: Session | null
+  user: User['id'] | null
   theme?: Theme
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   beforeLoad: async () => {
-    const theme = await getThemeCookieFn()
-    const session = await findSessionFn()
-    return {
-      theme,
-      session,
-    }
+    return await getContextDataFn()
   },
+  loader({ context }) {
+    return { theme: context.theme }
+  },
+  notFoundComponent: () => <NotFound />,
+  shellComponent: RootDocument,
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -50,12 +49,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       { rel: 'manifest', href: '/manifest.json' },
     ],
   }),
-  notFoundComponent: () => <NotFound />,
-  shellComponent: RootDocument,
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { theme: hydratedTheme = 'light' } = Route.useRouteContext()
+  const { theme: hydratedTheme = 'light' } = Route.useLoaderData()
 
   return (
     <ThemeProvider initialTheme={hydratedTheme}>

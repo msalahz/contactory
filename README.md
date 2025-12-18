@@ -121,7 +121,7 @@ contactory/
 │   │   │   │   ├── primitives/    # Base UI components (button, input, etc.)
 │   │   │   │   └── reused/        # Composite components (header, footer, etc.)
 │   │   │   └── lib/               # Utility functions
-│   │   │       ├── utils.ts       # cn() and helpers
+│   │   │       ├── storage.ts       # cn() and helpers
 │   │   │       └── utils.test.ts  # Unit tests
 │   │   └── users/                 # User feature module
 │   │       ├── components/        # Auth forms

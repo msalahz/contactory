@@ -1,7 +1,8 @@
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { useTheme } from '@/features/abstractions/theme/hooks'
+import { ThemeToggle } from '@/features/abstractions/theme/components'
 import { Button } from '@/features/abstractions/components/primitives/button'
-import { ThemeToggle, useTheme } from '@/features/abstractions/components/reused/theme'
 import {
   SiteFooter,
   SiteFooterCopyrights,
