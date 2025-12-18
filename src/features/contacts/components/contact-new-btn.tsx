@@ -1,0 +1,14 @@
+import { PlusIcon } from 'lucide-react'
+import { Link } from '@tanstack/react-router'
+
+import { Button } from '@/features/abstractions/components/primitives/button'
+
+export function ContactNewBtn() {
+  return (
+    <Button asChild size="sm" className="ms-auto">
+      <Link to="/console/contacts/new">
+        <PlusIcon /> New Contact
+      </Link>
+    </Button>
+  )
+}

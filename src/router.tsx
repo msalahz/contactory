@@ -6,9 +6,9 @@ import * as TanstackQuery from '@/integrations/tanstack-query/root-provider'
 
 // Import the generated route tree
 
+import { Pending } from '@/features/abstractions/components/reused/pending'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 import { DefaultCatchBoundary } from '@/features/abstractions/components/reused/default-catch-boundary'
-import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 
 // Create a new router instance
 export const getRouter = () => {
@@ -23,11 +23,7 @@ export const getRouter = () => {
     },
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
-    defaultPendingComponent: () => (
-      <div className="flex h-dvh w-dvw items-center justify-center">
-        <Spinner />
-      </div>
-    ),
+    defaultPendingComponent: () => <Pending />,
     /** Time in milliseconds before showing pending UI (default: 300ms) */
     defaultPendingMs: 300,
     /** Minimum time in milliseconds to show the pending UI once it appears (default: 300ms) */

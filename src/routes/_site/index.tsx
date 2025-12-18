@@ -11,7 +11,7 @@ import {
   Users,
 } from 'lucide-react'
 
-import { findSessionFn } from '@/features/users/functions/find-session-fn'
+import { findSessionFn } from '@/features/users/server/functions'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import {
   Card,

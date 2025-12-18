@@ -2,7 +2,6 @@ import { Link, useRouterState } from '@tanstack/react-router'
 import {
   AppWindowIcon,
   ChevronRightIcon,
-  ContactRoundIcon,
   LogOutIcon,
   MoonIcon,
   PlusIcon,
@@ -15,6 +14,7 @@ import { cn } from '@/features/abstractions/lib/utils'
 import { useSignOut } from '@/features/users/hooks/use-sign-out'
 import { LogoIcon } from '@/features/abstractions/components/reused/logo'
 import { useTheme } from '@/features/abstractions/components/reused/theme'
+import { ContactsIcon } from '@/features/contacts/components/contacts-icon'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
   Collapsible,
@@ -94,7 +94,7 @@ export function ConsoleSidebar(props: React.ComponentProps<typeof Sidebar>) {
                     )}
                   >
                     <Link to="/console/contacts">
-                      <ContactRoundIcon /> <span>Contacts</span>
+                      <ContactsIcon /> <span>Contacts</span>
                     </Link>
                   </SidebarMenuButton>
 

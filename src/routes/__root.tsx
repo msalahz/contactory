@@ -17,7 +17,7 @@ import {
 } from '@/features/abstractions/components/reused/theme'
 
 import { cn } from '@/features/abstractions/lib/utils'
-import { findSessionFn } from '@/features/users/functions/find-session-fn'
+import { findSessionFn } from '@/features/users/server/functions'
 import { Toaster } from '@/features/abstractions/components/primitives/sonner'
 import { NotFound } from '@/features/abstractions/components/reused/not-found'
 
