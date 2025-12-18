@@ -12,7 +12,7 @@ import {
 
 export function ContactsEmpty() {
   return (
-    <Card className="m-auto aspect-square size-75">
+    <Card className="size-full">
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon" className="size-10">
