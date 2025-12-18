@@ -25,9 +25,9 @@ export const getRouter = () => {
     defaultNotFoundComponent: () => <NotFound />,
     defaultPendingComponent: () => <Pending />,
     /** Time in milliseconds before showing pending UI (default: 300ms) */
-    defaultPendingMs: 300,
+    // defaultPendingMs: 300,
     /** Minimum time in milliseconds to show the pending UI once it appears (default: 300ms) */
-    defaultPendingMinMs: 300,
+    // defaultPendingMinMs: 300,
     /** Time in milliseconds before cached route data is garbage collected (default: 5 minutes) */
     defaultGcTime: 1000 * 60 * 5,
     /** Time in milliseconds before cached route data is considered stale (default: 1 minute) */
