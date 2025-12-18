@@ -1,3 +1,4 @@
+import * as React from 'react'
 import { Card } from '@/features/abstractions/components/primitives/card'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
@@ -7,10 +8,11 @@ import {
   EmptyMedia,
   EmptyTitle,
 } from '@/features/abstractions/components/primitives/empty'
+import { cn } from '@/features/abstractions/lib/utils'
 
-export function Pending() {
+export function Pending({ className, ...props }: React.ComponentProps<typeof Card>) {
   return (
-    <Card className="m-auto aspect-square size-75">
+    <Card className={cn('m-auto', className)} {...props}>
       <Empty>
         <EmptyHeader>
           <EmptyMedia variant="icon">
