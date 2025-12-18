@@ -16,5 +16,5 @@ export const authFnMiddleware = createMiddleware({ type: 'function' })
       throw redirect({ to: '/signin' })
     }
 
-    return next()
+    return next({ context: { session } })
   })
