@@ -20,6 +20,7 @@ import { Route as AuthResetPasswordRouteImport } from './routes/_auth/reset-pass
 import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
 import { Route as ConsoleContactsIndexRouteImport } from './routes/console/contacts.index'
 import { Route as ConsoleContactsNewRouteImport } from './routes/console/contacts.new'
+import { Route as ConsoleContactsContactIdRouteImport } from './routes/console/contacts.$contactId'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const ConsoleRouteRoute = ConsoleRouteRouteImport.update({
@@ -75,6 +76,12 @@ const ConsoleContactsNewRoute = ConsoleContactsNewRouteImport.update({
   path: '/contacts/new',
   getParentRoute: () => ConsoleRouteRoute,
 } as any)
+const ConsoleContactsContactIdRoute =
+  ConsoleContactsContactIdRouteImport.update({
+    id: '/contacts/$contactId',
+    path: '/contacts/$contactId',
+    getParentRoute: () => ConsoleRouteRoute,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -90,6 +97,7 @@ export interface FileRoutesByFullPath {
   '/': typeof SiteIndexRoute
   '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRoute
   '/console/contacts/new': typeof ConsoleContactsNewRoute
   '/console/contacts': typeof ConsoleContactsIndexRoute
 }
@@ -101,6 +109,7 @@ export interface FileRoutesByTo {
   '/': typeof SiteIndexRoute
   '/console': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRoute
   '/console/contacts/new': typeof ConsoleContactsNewRoute
   '/console/contacts': typeof ConsoleContactsIndexRoute
 }
@@ -116,6 +125,7 @@ export interface FileRoutesById {
   '/_site/': typeof SiteIndexRoute
   '/console/': typeof ConsoleIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
+  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRoute
   '/console/contacts/new': typeof ConsoleContactsNewRoute
   '/console/contacts/': typeof ConsoleContactsIndexRoute
 }
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/'
     | '/console/'
     | '/api/auth/$'
+    | '/console/contacts/$contactId'
     | '/console/contacts/new'
     | '/console/contacts'
   fileRoutesByTo: FileRoutesByTo
@@ -141,6 +152,7 @@ export interface FileRouteTypes {
     | '/'
     | '/console'
     | '/api/auth/$'
+    | '/console/contacts/$contactId'
     | '/console/contacts/new'
     | '/console/contacts'
   id:
@@ -155,6 +167,7 @@ export interface FileRouteTypes {
     | '/_site/'
     | '/console/'
     | '/api/auth/$'
+    | '/console/contacts/$contactId'
     | '/console/contacts/new'
     | '/console/contacts/'
   fileRoutesById: FileRoutesById
@@ -245,6 +258,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ConsoleContactsNewRouteImport
       parentRoute: typeof ConsoleRouteRoute
     }
+    '/console/contacts/$contactId': {
+      id: '/console/contacts/$contactId'
+      path: '/contacts/$contactId'
+      fullPath: '/console/contacts/$contactId'
+      preLoaderRoute: typeof ConsoleContactsContactIdRouteImport
+      parentRoute: typeof ConsoleRouteRoute
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -287,12 +307,14 @@ const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
 
 interface ConsoleRouteRouteChildren {
   ConsoleIndexRoute: typeof ConsoleIndexRoute
+  ConsoleContactsContactIdRoute: typeof ConsoleContactsContactIdRoute
   ConsoleContactsNewRoute: typeof ConsoleContactsNewRoute
   ConsoleContactsIndexRoute: typeof ConsoleContactsIndexRoute
 }
 
 const ConsoleRouteRouteChildren: ConsoleRouteRouteChildren = {
   ConsoleIndexRoute: ConsoleIndexRoute,
+  ConsoleContactsContactIdRoute: ConsoleContactsContactIdRoute,
   ConsoleContactsNewRoute: ConsoleContactsNewRoute,
   ConsoleContactsIndexRoute: ConsoleContactsIndexRoute,
 }
