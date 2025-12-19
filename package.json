@@ -18,6 +18,7 @@
     "db:push": "drizzle-kit push",
     "db:pull": "drizzle-kit pull",
     "db:studio": "drizzle-kit studio",
+    "db:seeds": "tsx ./src/db/seeds.ts",
     "prepare": "husky",
     "deploy:netlify": "netlify deploy --prod"
   },
