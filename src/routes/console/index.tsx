@@ -1,6 +1,10 @@
+import { Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Card } from '@/features/abstractions/components/primitives/card'
+import { ContactsCount } from '@/features/contacts/components/contcts-count'
+import { getContactsCountQueryOptions } from '@/features/contacts/hooks/queries'
+import { ContactsCountSkeleton } from '@/features/contacts/components/contcts-count-skelton'
 import { UnderConstruction } from '@/features/abstractions/components/reused/under-construction'
 import {
   ConsoleInsetContent,
@@ -9,6 +13,9 @@ import {
 
 export const Route = createFileRoute('/console/')({
   component: RouteComponent,
+  loader({ context }) {
+    context.queryClient.ensureQueryData(getContactsCountQueryOptions())
+  },
 })
 
 function RouteComponent() {
@@ -18,9 +25,10 @@ function RouteComponent() {
       <ConsoleInsetContent>
         <div className="flex h-full grow flex-col gap-4">
           <div className="grid auto-rows-min grid-cols-1 flex-wrap gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <UnderConstruction />
-            </Card>
+            <Suspense fallback={<ContactsCountSkeleton />}>
+              <ContactsCount />
+            </Suspense>
+
             <Card>
               <UnderConstruction />
             </Card>
