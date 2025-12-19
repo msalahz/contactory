@@ -1,3 +1,5 @@
+import { Link } from '@tanstack/react-router'
+
 import type { Contact } from '@/features/contacts/models'
 
 import {
@@ -9,7 +11,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/features/abstractions/components/primitives/table'
-import { Card } from '@/features/abstractions/components/primitives/card'
+import { Card, CardContent } from '@/features/abstractions/components/primitives/card'
 
 export interface ContactsTableProps {
   contacts: Array<Contact>
@@ -17,26 +19,38 @@ export interface ContactsTableProps {
 
 export function ContactsTable({ contacts }: ContactsTableProps) {
   return (
-    <Card className="w-full">
-      <Table>
-        <TableCaption>A list of Contacts.</TableCaption>
+    <Card className="size-full">
+      <CardContent>
+        <Table>
+          <TableCaption>A list of Contacts.</TableCaption>
 
-        <TableHeader>
-          <TableRow>
-            <TableHead>Name</TableHead>
-          </TableRow>
-        </TableHeader>
+          <TableHeader className="text-xl font-medium">
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Phone</TableHead>
+            </TableRow>
+          </TableHeader>
 
-        <TableBody>
-          <TableRow>
+          <TableBody className="text-base font-light">
             {contacts.map((contact) => (
-              <TableCell key={`table-row-${contact.id}`} className="font-medium">
-                {`${contact.firstName} ${contact.lastName}`}
-              </TableCell>
+              <TableRow key={`table-row-${contact.id}`}>
+                <TableCell>
+                  <Link
+                    to="/console/contacts/$contactId"
+                    params={{ contactId: contact.id }}
+                    className="text-primary hover:underline"
+                  >
+                    {`${contact.firstName} ${contact.lastName}`}
+                  </Link>
+                </TableCell>
+                <TableCell>{contact.primaryEmail}</TableCell>
+                <TableCell>{contact.primaryPhone}</TableCell>
+              </TableRow>
             ))}
-          </TableRow>
-        </TableBody>
-      </Table>
+          </TableBody>
+        </Table>
+      </CardContent>
     </Card>
   )
 }
