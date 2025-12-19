@@ -1,5 +1,5 @@
 import { UsersRoundIcon } from 'lucide-react'
 
-export function ContactsIcon() {
-  return <UsersRoundIcon />
+export function ContactsIcon(props: React.ComponentProps<typeof UsersRoundIcon>) {
+  return <UsersRoundIcon {...props} />
 }
