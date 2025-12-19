@@ -24,18 +24,18 @@ export const getRouter = () => {
     defaultErrorComponent: DefaultCatchBoundary,
     defaultNotFoundComponent: () => <NotFound />,
     defaultPendingComponent: () => <Pending />,
-    /** Time in milliseconds before showing pending UI (default: 300ms) */
-    // defaultPendingMs: 300,
-    /** Minimum time in milliseconds to show the pending UI once it appears (default: 300ms) */
-    // defaultPendingMinMs: 300,
-    /** Time in milliseconds before cached route data is garbage collected (default: 5 minutes) */
-    defaultGcTime: 1000 * 60 * 5,
-    /** Time in milliseconds before cached route data is considered stale (default: 1 minute) */
-    defaultStaleTime: 1000 * 60,
-    /** Time in milliseconds before preloaded route data is garbage collected (default: 30 seconds) */
-    defaultPreloadGcTime: 1000 * 30,
-    /** Time in milliseconds before preloaded route data is considered stale (default: 1 minute) */
-    defaultPreloadStaleTime: 1000 * 60,
+    /** Time in milliseconds before showing pending UI (default: 1000ms) */
+    defaultPendingMs: 500,
+    /** Minimum time in milliseconds to show the pending UI once it appears (default: 500ms) */
+    defaultPendingMinMs: 500,
+    /** Time in milliseconds before cached route data is garbage collected (default: 30 minutes) */
+    defaultGcTime: 1000 * 60 * 30,
+    /** Time in milliseconds before cached route data is considered stale (default: 0) */
+    defaultStaleTime: 1000 * 60, // 1 minute
+    /** Time in milliseconds before preloaded route data is garbage collected (default: 30 minutes) */
+    defaultPreloadGcTime: 1000 * 60 * 30,
+    /** Time in milliseconds before preloaded route data is considered stale (default: 30 seconds) */
+    defaultPreloadStaleTime: 1000 * 30,
   })
 
   setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient })
