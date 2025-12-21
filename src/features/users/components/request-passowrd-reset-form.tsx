@@ -71,7 +71,7 @@ export function RequestPasswordResetForm({
                 )}
               />
               <form.AppForm>
-                <form.SubscribeButton label="Send password reset email" />
+                <form.SubmitButton label="Send password reset email" />
 
                 <FieldDescription className="text-center">
                   Got to <Link to="/signin">Signin</Link>

@@ -83,7 +83,7 @@ export function ResetPasswordForm({
               />
 
               <form.AppForm>
-                <form.SubscribeButton label="Submit" />
+                <form.SubmitButton label="Submit" />
 
                 <FieldDescription className="text-center">
                   Got to <Link to="/signin">Signin</Link>

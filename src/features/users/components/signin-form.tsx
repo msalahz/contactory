@@ -112,7 +112,7 @@ export function SigninForm({
                 )}
               />
               <form.AppForm>
-                <form.SubscribeButton label="Sign in" />
+                <form.SubmitButton label="Sign in" />
 
                 <FieldDescription className="text-center">
                   Don&apos;t have an account? <Link to="/signup">Sign up for a free account</Link>
