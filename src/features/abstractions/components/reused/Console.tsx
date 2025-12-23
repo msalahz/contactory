@@ -12,9 +12,9 @@ import {
 
 import { useSignOut } from '@/features/users/hooks'
 import { cn } from '@/features/abstractions/lib/utils'
-import { useTheme } from '@/features/abstractions/theme/hooks'
-import { LogoIcon } from '@/features/abstractions/components/reused/logo'
-import { ContactsIcon } from '@/features/contacts/components/contacts-icon'
+import { useTheme } from '@/features/abstractions/theme/useTheme'
+import { LogoIcon } from '@/features/abstractions/components/reused/Logo'
+import { ContactsIcon } from '@/features/contacts/components/ContactsIcon'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
 import {
   Collapsible,

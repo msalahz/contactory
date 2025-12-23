@@ -4,7 +4,7 @@ import {
   findContactFn,
   getContactsCountFn,
   listContactsFn,
-} from '@/features/contacts/server/functions'
+} from '@/features/contacts/serverFunctions'
 
 export const CONTACTS_QUERY_KEYS = {
   all: ['contacts'],

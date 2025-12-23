@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useSuspenseQuery } from '@tanstack/react-query'
 
-import { ContactsTable } from '@/features/contacts/components/contacts-table'
-import { ContactsEmpty } from '@/features/contacts/components/contacts-empty'
-import { ContactNewBtn } from '@/features/contacts/components/contact-new-btn'
+import { ContactsTable } from '@/features/contacts/components/ContactsTable'
+import { ContactsEmpty } from '@/features/contacts/components/ContactsEmpty'
+import { ContactNewBtn } from '@/features/contacts/components/ContactNewBtn'
 import { getListContactsQueryOptions } from '@/features/contacts/hooks/queries'
-import { ContactsPending } from '@/features/contacts/components/contacts-pending'
+import { ContactsPending } from '@/features/contacts/components/ContactsPending'
 import {
   ConsoleInsetContent,
   ConsoleInsetHeader,
-} from '@/features/abstractions/components/reused/console'
+} from '@/features/abstractions/components/reused/Console'
 
 export const Route = createFileRoute('/console/contacts/')({
   component: RouteComponent,

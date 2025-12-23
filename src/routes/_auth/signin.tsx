@@ -1,12 +1,12 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 
 import { noop } from '@/features/abstractions/lib/utils'
-import { SigninForm } from '@/features/users/components/signin-form'
+import { SigninForm } from '@/features/users/components/SigninForm'
+import { AlertBox } from '@/features/abstractions/components/reused/AlertBox'
 import { ItemTitle } from '@/features/abstractions/components/primitives/item'
-import { AlertBox } from '@/features/abstractions/components/reused/alert-box'
 import { FieldError } from '@/features/abstractions/components/primitives/field'
-import { useSigninEmail } from '@/integrations/better-auth/hooks/use-signin-email'
-import { AnimatedPresence } from '@/features/abstractions/components/reused/animated-presence'
+import { useSigninEmail } from '@/integrations/better-auth/hooks/useSigninEmail'
+import { AnimatedPresence } from '@/features/abstractions/components/reused/AnimatedPresence'
 
 export const Route = createFileRoute('/_auth/signin')({
   beforeLoad({ context }) {

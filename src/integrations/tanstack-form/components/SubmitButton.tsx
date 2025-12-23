@@ -1,6 +1,6 @@
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { Spinner } from '@/features/abstractions/components/primitives/spinner'
-import { useFormContext } from '@/integrations/tanstack-form/hooks/form-context'
+import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
 export interface SubscribeButtonProps extends React.ComponentProps<typeof Button> {
   label: string

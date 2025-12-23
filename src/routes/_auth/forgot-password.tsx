@@ -1,11 +1,11 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { AlertBox } from '@/features/abstractions/components/reused/alert-box'
+import { AlertBox } from '@/features/abstractions/components/reused/AlertBox'
 import { ItemTitle } from '@/features/abstractions/components/primitives/item'
 import { FieldError } from '@/features/abstractions/components/primitives/field'
-import { RequestPasswordResetForm } from '@/features/users/components/request-passowrd-reset-form'
-import { useRequestPasswordReset } from '@/integrations/better-auth/hooks/use-request-password-reset'
-import { AnimatedPresence } from '@/features/abstractions/components/reused/animated-presence'
+import { AnimatedPresence } from '@/features/abstractions/components/reused/AnimatedPresence'
+import { RequestPasswordResetForm } from '@/features/users/components/RequestPasswordResetForm'
+import { useRequestPasswordReset } from '@/integrations/better-auth/hooks/useRequestPasswordReset'
 
 export const Route = createFileRoute('/_auth/forgot-password')({
   component: RouteComponent,

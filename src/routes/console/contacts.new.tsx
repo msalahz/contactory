@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import {
   ConsoleInsetContent,
   ConsoleInsetHeader,
-} from '@/features/abstractions/components/reused/console'
+} from '@/features/abstractions/components/reused/Console'
 
 export const Route = createFileRoute('/console/contacts/new')({
   component: RouteComponent,

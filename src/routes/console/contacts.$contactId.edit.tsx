@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
-import { ContactForm } from '@/features/contacts/components/contact-form'
+import { ContactForm } from '@/features/contacts/components/ContactForm'
 import { findContactQueryOptions } from '@/features/contacts/hooks/queries'
-import { NotFound } from '@/features/abstractions/components/reused/not-found'
+import { NotFound } from '@/features/abstractions/components/reused/NotFound'
 import {
   Sheet,
   SheetContent,
@@ -11,7 +11,7 @@ import {
   SheetHeader,
   SheetTitle,
 } from '@/features/abstractions/components/primitives/sheet'
-import { Pending } from '@/features/abstractions/components/reused/pending'
+import { Pending } from '@/features/abstractions/components/reused/Pending'
 
 export const Route = createFileRoute('/console/contacts/$contactId/edit')({
   component: RouteComponent,

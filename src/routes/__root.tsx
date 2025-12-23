@@ -10,14 +10,14 @@ import type { QueryClient } from '@tanstack/react-query'
 
 import type { User } from '@/features/users/models'
 import type { Theme } from '@/features/abstractions/theme/models'
-import type { Session } from '@/integrations/better-auth/auth-client'
+import type { Session } from '@/integrations/better-auth/authClient'
 
 import { cn } from '@/features/abstractions/lib/utils'
-import { useTheme } from '@/features/abstractions/theme/hooks'
+import { useTheme } from '@/features/abstractions/theme/useTheme'
 import { ThemeProvider } from '@/features/abstractions/theme/context'
-import { getContextDataFn } from '@/features/abstractions/server/functions'
+import { getContextDataFn } from '@/features/abstractions/serverFunctions'
 import { Toaster } from '@/features/abstractions/components/primitives/sonner'
-import { NotFound } from '@/features/abstractions/components/reused/not-found'
+import { NotFound } from '@/features/abstractions/components/reused/NotFound'
 
 interface MyRouterContext {
   queryClient: QueryClient

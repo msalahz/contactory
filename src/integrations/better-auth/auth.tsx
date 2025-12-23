@@ -6,8 +6,8 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start'
 import { db } from '@/db'
 import { senv } from '@/env'
 import { sendEmail } from '@/integrations/resend/resend'
-import { VerifyEmail } from '@/integrations/resend/emails/verify-email'
-import { ResetPasswordEmail } from '@/integrations/resend/emails/reset-password'
+import { VerifyEmail } from '@/integrations/resend/emails/VerifyEmail'
+import { ResetPasswordEmail } from '@/integrations/resend/emails/ResetPassword'
 
 export const auth = betterAuth({
   plugins: [tanstackStartCookies(), ...(senv.BETTER_AUTH_ENABLE_OPENAPI ? [openAPI()] : [])],

@@ -2,7 +2,7 @@ import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
 import { auth } from '@/integrations/better-auth/auth'
-import { findThemeCookie } from '@/features/abstractions/theme/server/storage'
+import { findThemeCookie } from '@/features/abstractions/theme/storage'
 
 export const getContextDataFn = createServerFn().handler(async () => {
   const request = getRequest()

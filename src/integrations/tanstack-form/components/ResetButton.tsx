@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { Button } from '@/features/abstractions/components/primitives/button'
-import { useFormContext } from '@/integrations/tanstack-form/hooks/form-context'
+import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
 export interface ResetButtonProps extends React.ComponentProps<typeof Button> {
   label: string

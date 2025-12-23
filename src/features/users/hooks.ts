@@ -1,7 +1,7 @@
 import { useServerFn } from '@tanstack/react-start'
 import { useMutation } from '@tanstack/react-query'
 
-import { signOutFn } from '@/features/users/server/functions'
+import { signOutFn } from '@/features/users/serverFunctions'
 
 export function useSignOut() {
   const serverSignOut = useServerFn(signOutFn)

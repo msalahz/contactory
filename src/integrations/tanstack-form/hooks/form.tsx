@@ -1,10 +1,10 @@
 import { createFormHook } from '@tanstack/react-form'
 
-import { InputField } from '@/integrations/tanstack-form/components/input-field'
-import { SwitchField } from '@/integrations/tanstack-form/components/swtch-field'
-import { ResetButton } from '@/integrations/tanstack-form/components/reset-button'
-import { SubmitButton } from '@/integrations/tanstack-form/components/submit-button'
-import { fieldContext, formContext } from '@/integrations/tanstack-form/hooks/form-context.tsx'
+import { InputField } from '@/integrations/tanstack-form/components/InputField'
+import { SwitchField } from '@/integrations/tanstack-form/components/SwitchField'
+import { ResetButton } from '@/integrations/tanstack-form/components/ResetButton'
+import { SubmitButton } from '@/integrations/tanstack-form/components/SubmitButton'
+import { fieldContext, formContext } from '@/integrations/tanstack-form/hooks/formContext.tsx'
 
 export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {

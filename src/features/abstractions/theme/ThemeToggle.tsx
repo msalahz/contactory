@@ -1,5 +1,7 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
+
 import type { Theme } from '@/features/abstractions/theme/models'
+
 import { cn, noop } from '@/features/abstractions/lib/utils'
 import { Button } from '@/features/abstractions/components/primitives/button'
 

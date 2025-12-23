@@ -1,6 +1,6 @@
 import { Card } from '@/features/abstractions/components/primitives/card'
-import { ContactsIcon } from '@/features/contacts/components/contacts-icon'
-import { ContactNewBtn } from '@/features/contacts/components/contact-new-btn'
+import { ContactsIcon } from '@/features/contacts/components/ContactsIcon'
+import { ContactNewBtn } from '@/features/contacts/components/ContactNewBtn'
 import {
   Empty,
   EmptyContent,

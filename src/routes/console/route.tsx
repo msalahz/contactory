@@ -5,7 +5,7 @@ import {
   Console,
   ConsoleInset,
   ConsoleSidebar,
-} from '@/features/abstractions/components/reused/console'
+} from '@/features/abstractions/components/reused/Console'
 
 export const Route = createFileRoute('/console')({
   server: {

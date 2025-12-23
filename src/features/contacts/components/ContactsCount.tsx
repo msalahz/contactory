@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 
 import { cn } from '@/features/abstractions/lib/utils'
-import { ContactsIcon } from '@/features/contacts/components/contacts-icon'
+import { ContactsIcon } from '@/features/contacts/components/ContactsIcon'
 import { getContactsCountQueryOptions } from '@/features/contacts/hooks/queries'
 import {
   Card,

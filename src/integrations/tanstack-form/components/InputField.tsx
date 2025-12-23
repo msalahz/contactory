@@ -4,7 +4,7 @@ import { useStore } from '@tanstack/react-form'
 import type { ReactNode } from 'react'
 
 import { Input } from '@/features/abstractions/components/primitives/input'
-import { useFieldContext } from '@/integrations/tanstack-form/hooks/form-context'
+import { useFieldContext } from '@/integrations/tanstack-form/hooks/formContext'
 import {
   Field,
   FieldDescription,

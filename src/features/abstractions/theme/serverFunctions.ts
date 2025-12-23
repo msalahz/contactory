@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 
 import { themeSchema } from '@/features/abstractions/theme/models'
-import { findThemeCookie, setThemeCookie } from '@/features/abstractions/theme/server/storage'
+import { findThemeCookie, setThemeCookie } from '@/features/abstractions/theme/storage'
 
 /**
  * @description Server function to get the theme from the cookie

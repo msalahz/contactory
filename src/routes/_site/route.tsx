@@ -1,7 +1,7 @@
 import { Link, Outlet, createFileRoute } from '@tanstack/react-router'
 
-import { useTheme } from '@/features/abstractions/theme/hooks'
-import { ThemeToggle } from '@/features/abstractions/theme/components'
+import { useTheme } from '@/features/abstractions/theme/useTheme'
+import { ThemeToggle } from '@/features/abstractions/theme/ThemeToggle'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import {
   SiteFooter,
@@ -10,7 +10,7 @@ import {
   SiteHeaderActions,
   SiteHeaderLogo,
   SiteHeaderSignOutButton,
-} from '@/features/abstractions/components/reused/site'
+} from '@/features/abstractions/components/reused/Site'
 
 export const Route = createFileRoute('/_site')({
   component: RouteComponent,
