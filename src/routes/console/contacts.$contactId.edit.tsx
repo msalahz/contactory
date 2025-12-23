@@ -2,7 +2,7 @@ import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 
 import { ContactForm } from '@/features/contacts/components/ContactForm'
-import { findContactQueryOptions } from '@/features/contacts/hooks/queries'
+import { findContactQueryOptions } from '@/features/contacts/queries'
 import { NotFound } from '@/features/abstractions/components/reused/NotFound'
 import {
   Sheet,

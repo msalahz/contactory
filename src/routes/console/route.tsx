@@ -1,11 +1,7 @@
 import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
 import { authRequestMiddleware } from '@/integrations/better-auth/middlewares'
-import {
-  Console,
-  ConsoleInset,
-  ConsoleSidebar,
-} from '@/features/abstractions/components/reused/Console'
+import { Console, ConsoleInset, ConsoleSidebar } from '@/features/abstractions/console/Console'
 
 export const Route = createFileRoute('/console')({
   server: {

@@ -5,11 +5,8 @@ import { useQueryClient, useSuspenseQuery } from '@tanstack/react-query'
 import { ContactInfo } from '@/features/contacts/components/ContactInfo'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import { NotFound } from '@/features/abstractions/components/reused/NotFound'
-import { CONTACTS_QUERY_KEYS, findContactQueryOptions } from '@/features/contacts/hooks/queries'
-import {
-  ConsoleInsetContent,
-  ConsoleInsetHeader,
-} from '@/features/abstractions/components/reused/Console'
+import { CONTACTS_QUERY_KEYS, findContactQueryOptions } from '@/features/contacts/queries'
+import { ConsoleInsetContent, ConsoleInsetHeader } from '@/features/abstractions/console/Console'
 
 export const Route = createFileRoute('/console/contacts/$contactId')({
   component: RouteComponent,

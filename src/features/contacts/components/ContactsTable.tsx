@@ -3,7 +3,7 @@ import { useQueryClient } from '@tanstack/react-query'
 
 import type { Contact } from '@/features/contacts/models'
 
-import { CONTACTS_QUERY_KEYS } from '@/features/contacts/hooks/queries'
+import { CONTACTS_QUERY_KEYS } from '@/features/contacts/queries'
 import { Card, CardContent } from '@/features/abstractions/components/primitives/card'
 import {
   Table,

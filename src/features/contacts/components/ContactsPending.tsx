@@ -1,9 +1,6 @@
 import { Pending } from '@/features/abstractions/components/reused/Pending'
 import { ContactNewBtn } from '@/features/contacts/components/ContactNewBtn'
-import {
-  ConsoleInsetContent,
-  ConsoleInsetHeader,
-} from '@/features/abstractions/components/reused/Console'
+import { ConsoleInsetContent, ConsoleInsetHeader } from '@/features/abstractions/console/Console'
 
 export function ContactsPending() {
   return (

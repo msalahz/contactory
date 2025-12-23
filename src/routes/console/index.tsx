@@ -2,14 +2,11 @@ import { Suspense } from 'react'
 import { createFileRoute } from '@tanstack/react-router'
 
 import { Card } from '@/features/abstractions/components/primitives/card'
+import { getContactsCountQueryOptions } from '@/features/contacts/queries'
 import { ContactsCount } from '@/features/contacts/components/ContactsCount'
-import { getContactsCountQueryOptions } from '@/features/contacts/hooks/queries'
+import { UnderConstruction } from '@/features/abstractions/console/UnderConstruction'
 import { ContactsCountSkeleton } from '@/features/contacts/components/ContactsCountSkeleton'
-import { UnderConstruction } from '@/features/abstractions/components/reused/UnderConstruction'
-import {
-  ConsoleInsetContent,
-  ConsoleInsetHeader,
-} from '@/features/abstractions/components/reused/Console'
+import { ConsoleInsetContent, ConsoleInsetHeader } from '@/features/abstractions/console/Console'
 
 export const Route = createFileRoute('/console/')({
   component: RouteComponent,
