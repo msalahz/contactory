@@ -4,11 +4,6 @@ import { getRequest } from '@tanstack/react-start/server'
 
 import { auth } from '@/integrations/better-auth/auth'
 
-export const findSessionFn = createServerFn().handler(() => {
-  const request = getRequest()
-  return auth.api.getSession({ headers: request.headers })
-})
-
 export const signOutFn = createServerFn({ method: 'POST' }).handler(async () => {
   const request = getRequest()
   const response = await auth.api.signOut({
