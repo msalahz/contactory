@@ -11,7 +11,6 @@ import {
   Users,
 } from 'lucide-react'
 
-import { findSessionFn } from '@/features/users/server/functions'
 import { Button } from '@/features/abstractions/components/primitives/button'
 import {
   Card,
@@ -21,12 +20,11 @@ import {
 } from '@/features/abstractions/components/primitives/card'
 
 export const Route = createFileRoute('/_site/')({
-  loader: () => findSessionFn(),
   component: App,
 })
 
 function App() {
-  const session = Route.useLoaderData()
+  const { session } = Route.useRouteContext()
 
   return (
     <div className="min-h-screen">
