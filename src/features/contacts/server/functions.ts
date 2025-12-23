@@ -1,10 +1,11 @@
 import { and, eq } from 'drizzle-orm'
+import { notFound } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
 
 import { db } from '@/db'
 import { contact } from '@/db/schemas/contacts'
 import { authFnMiddleware } from '@/integrations/better-auth/middlewares'
-import { contactIdInputSchema } from '@/features/contacts/models'
+import { contactIdInputSchema, contactSchema, newContactSchema } from '@/features/contacts/models'
 
 export const getContactsCountFn = createServerFn()
   .middleware([authFnMiddleware])
@@ -26,4 +27,33 @@ export const findContactFn = createServerFn()
       where: and(eq(contact.id, data.contactId), eq(contact.userId, context.user.id)),
     })
     return item ?? null
+  })
+
+export const createContactFn = createServerFn({ method: 'POST' })
+  .middleware([authFnMiddleware])
+  .inputValidator(newContactSchema)
+  .handler(
+    async ({ data, context }) =>
+      await db.insert(contact).values({ ...data, userId: context.user.id }),
+  )
+
+export const updateContactFn = createServerFn({ method: 'POST' })
+  .middleware([authFnMiddleware])
+  .inputValidator(contactSchema)
+  .handler(async ({ data, context }) => {
+    if (data.userId !== context.user.id) {
+      throw new Error('Unauthorized')
+    }
+
+    const [updated] = await db
+      .update(contact)
+      .set(data)
+      .where(and(eq(contact.id, data.id), eq(contact.userId, context.user.id)))
+      .returning({ contactId: contact.id })
+
+    if (!updated?.contactId) {
+      throw notFound()
+    }
+
+    return Promise.resolve()
   })

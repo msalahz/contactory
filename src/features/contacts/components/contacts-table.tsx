@@ -1,7 +1,10 @@
 import { Link } from '@tanstack/react-router'
+import { useQueryClient } from '@tanstack/react-query'
 
 import type { Contact } from '@/features/contacts/models'
 
+import { CONTACTS_QUERY_KEYS } from '@/features/contacts/hooks/queries'
+import { Card, CardContent } from '@/features/abstractions/components/primitives/card'
 import {
   Table,
   TableBody,
@@ -11,13 +14,13 @@ import {
   TableHeader,
   TableRow,
 } from '@/features/abstractions/components/primitives/table'
-import { Card, CardContent } from '@/features/abstractions/components/primitives/card'
 
 export interface ContactsTableProps {
   contacts: Array<Contact>
 }
 
 export function ContactsTable({ contacts }: ContactsTableProps) {
+  const queryClient = useQueryClient()
   return (
     <Card className="size-full">
       <CardContent>
@@ -40,6 +43,9 @@ export function ContactsTable({ contacts }: ContactsTableProps) {
                     to="/console/contacts/$contactId"
                     params={{ contactId: contact.id }}
                     className="text-primary hover:underline"
+                    onMouseDown={() =>
+                      queryClient.setQueryData(CONTACTS_QUERY_KEYS.find(contact.id), contact)
+                    }
                   >
                     {`${contact.firstName} ${contact.lastName}`}
                   </Link>
