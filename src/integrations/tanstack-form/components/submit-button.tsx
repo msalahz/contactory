@@ -11,14 +11,7 @@ export function SubmitButton({ label, ...props }: SubscribeButtonProps) {
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
       {(isSubmitting) => (
-        <Button
-          disabled={isSubmitting}
-          onClick={(event) => {
-            event.preventDefault()
-            form.reset()
-          }}
-          {...props}
-        >
+        <Button disabled={isSubmitting} {...props}>
           {isSubmitting ? <Spinner className="size-4" /> : label}
         </Button>
       )}
