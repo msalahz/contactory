@@ -129,3 +129,7 @@
     @apply font-sans;
   }
 }
+
+@utility gradient-bg {
+  @apply from-primary/5 to-card dark:bg-card grid grid-cols-1 gap-4 bg-linear-to-t shadow-xs xl:grid-cols-2 2xl:grid-cols-4;
+}
