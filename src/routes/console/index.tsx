@@ -3,10 +3,10 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Card } from '@/features/abstractions/components/primitives/card'
 import { getContactsCountQueryOptions } from '@/features/contacts/queries'
-import { ContactsCount } from '@/features/contacts/components/ContactsCount'
 import { UnderConstruction } from '@/features/abstractions/console/UnderConstruction'
-import { ContactsCountSkeleton } from '@/features/contacts/components/ContactsCountSkeleton'
+import { ContactsTotalMetric } from '@/features/contacts/components/ContactsTotalMetric'
 import { ConsoleInsetContent, ConsoleInsetHeader } from '@/features/abstractions/console/Console'
+import { ContactsTotalMetricSkeleton } from '@/features/contacts/components/ContactsTotalMetricSkeleton'
 
 export const Route = createFileRoute('/console/')({
   component: RouteComponent,
@@ -21,23 +21,14 @@ function RouteComponent() {
       <ConsoleInsetHeader />
       <ConsoleInsetContent>
         <div className="flex h-full grow flex-col gap-4">
-          <div className="grid auto-rows-min grid-cols-1 flex-wrap gap-4 md:grid-cols-2 lg:grid-cols-4">
-            <Suspense fallback={<ContactsCountSkeleton />}>
-              <ContactsCount />
+          <div className="grid grid-cols-1 gap-4 xl:grid-cols-2 2xl:grid-cols-4">
+            <Suspense fallback={<ContactsTotalMetricSkeleton />}>
+              <ContactsTotalMetric />
             </Suspense>
-
-            <Card>
-              <UnderConstruction />
-            </Card>
-            <Card>
-              <UnderConstruction />
-            </Card>
-            <Card>
-              <UnderConstruction />
-            </Card>
           </div>
+
           <div className="bg-muted/50 grow rounded-xl md:min-h-min">
-            <Card className="size-full">
+            <Card className="gradient-bg size-full">
               <UnderConstruction />
             </Card>
           </div>
