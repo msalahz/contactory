@@ -1,5 +1,5 @@
-import { Button } from '@/features/abstractions/components/primitives/button'
-import { Spinner } from '@/features/abstractions/components/primitives/spinner'
+import { Button } from '@/integrations/shadcn/components/ui/button'
+import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
 export interface SubscribeButtonProps extends React.ComponentProps<typeof Button> {

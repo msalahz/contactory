@@ -9,274 +9,54 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as ConsoleRouteRouteImport } from './routes/console/route'
-import { Route as SiteRouteRouteImport } from './routes/_site/route'
-import { Route as AuthRouteRouteImport } from './routes/_auth/route'
-import { Route as ConsoleIndexRouteImport } from './routes/console/index'
-import { Route as SiteIndexRouteImport } from './routes/_site/index'
-import { Route as AuthSignupRouteImport } from './routes/_auth/signup'
-import { Route as AuthSigninRouteImport } from './routes/_auth/signin'
-import { Route as AuthResetPasswordRouteImport } from './routes/_auth/reset-password'
-import { Route as AuthForgotPasswordRouteImport } from './routes/_auth/forgot-password'
-import { Route as ConsoleContactsIndexRouteImport } from './routes/console/contacts.index'
-import { Route as ConsoleContactsNewRouteImport } from './routes/console/contacts.new'
-import { Route as ConsoleContactsContactIdRouteImport } from './routes/console/contacts.$contactId'
+import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
-import { Route as ConsoleContactsContactIdEditRouteImport } from './routes/console/contacts.$contactId.edit'
 
-const ConsoleRouteRoute = ConsoleRouteRouteImport.update({
-  id: '/console',
-  path: '/console',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const SiteRouteRoute = SiteRouteRouteImport.update({
-  id: '/_site',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const AuthRouteRoute = AuthRouteRouteImport.update({
-  id: '/_auth',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ConsoleIndexRoute = ConsoleIndexRouteImport.update({
-  id: '/',
+const PublicIndexRoute = PublicIndexRouteImport.update({
+  id: '/_public/',
   path: '/',
-  getParentRoute: () => ConsoleRouteRoute,
+  getParentRoute: () => rootRouteImport,
 } as any)
-const SiteIndexRoute = SiteIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => SiteRouteRoute,
-} as any)
-const AuthSignupRoute = AuthSignupRouteImport.update({
-  id: '/signup',
-  path: '/signup',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
-const AuthSigninRoute = AuthSigninRouteImport.update({
-  id: '/signin',
-  path: '/signin',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
-const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
-  id: '/reset-password',
-  path: '/reset-password',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
-const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
-  id: '/forgot-password',
-  path: '/forgot-password',
-  getParentRoute: () => AuthRouteRoute,
-} as any)
-const ConsoleContactsIndexRoute = ConsoleContactsIndexRouteImport.update({
-  id: '/contacts/',
-  path: '/contacts/',
-  getParentRoute: () => ConsoleRouteRoute,
-} as any)
-const ConsoleContactsNewRoute = ConsoleContactsNewRouteImport.update({
-  id: '/contacts/new',
-  path: '/contacts/new',
-  getParentRoute: () => ConsoleRouteRoute,
-} as any)
-const ConsoleContactsContactIdRoute =
-  ConsoleContactsContactIdRouteImport.update({
-    id: '/contacts/$contactId',
-    path: '/contacts/$contactId',
-    getParentRoute: () => ConsoleRouteRoute,
-  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ConsoleContactsContactIdEditRoute =
-  ConsoleContactsContactIdEditRouteImport.update({
-    id: '/edit',
-    path: '/edit',
-    getParentRoute: () => ConsoleContactsContactIdRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
-  '/console': typeof ConsoleRouteRouteWithChildren
-  '/forgot-password': typeof AuthForgotPasswordRoute
-  '/reset-password': typeof AuthResetPasswordRoute
-  '/signin': typeof AuthSigninRoute
-  '/signup': typeof AuthSignupRoute
-  '/': typeof SiteIndexRoute
-  '/console/': typeof ConsoleIndexRoute
+  '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRouteWithChildren
-  '/console/contacts/new': typeof ConsoleContactsNewRoute
-  '/console/contacts': typeof ConsoleContactsIndexRoute
-  '/console/contacts/$contactId/edit': typeof ConsoleContactsContactIdEditRoute
 }
 export interface FileRoutesByTo {
-  '/forgot-password': typeof AuthForgotPasswordRoute
-  '/reset-password': typeof AuthResetPasswordRoute
-  '/signin': typeof AuthSigninRoute
-  '/signup': typeof AuthSignupRoute
-  '/': typeof SiteIndexRoute
-  '/console': typeof ConsoleIndexRoute
+  '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRouteWithChildren
-  '/console/contacts/new': typeof ConsoleContactsNewRoute
-  '/console/contacts': typeof ConsoleContactsIndexRoute
-  '/console/contacts/$contactId/edit': typeof ConsoleContactsContactIdEditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_auth': typeof AuthRouteRouteWithChildren
-  '/_site': typeof SiteRouteRouteWithChildren
-  '/console': typeof ConsoleRouteRouteWithChildren
-  '/_auth/forgot-password': typeof AuthForgotPasswordRoute
-  '/_auth/reset-password': typeof AuthResetPasswordRoute
-  '/_auth/signin': typeof AuthSigninRoute
-  '/_auth/signup': typeof AuthSignupRoute
-  '/_site/': typeof SiteIndexRoute
-  '/console/': typeof ConsoleIndexRoute
+  '/_public/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
-  '/console/contacts/$contactId': typeof ConsoleContactsContactIdRouteWithChildren
-  '/console/contacts/new': typeof ConsoleContactsNewRoute
-  '/console/contacts/': typeof ConsoleContactsIndexRoute
-  '/console/contacts/$contactId/edit': typeof ConsoleContactsContactIdEditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths:
-    | '/console'
-    | '/forgot-password'
-    | '/reset-password'
-    | '/signin'
-    | '/signup'
-    | '/'
-    | '/console/'
-    | '/api/auth/$'
-    | '/console/contacts/$contactId'
-    | '/console/contacts/new'
-    | '/console/contacts'
-    | '/console/contacts/$contactId/edit'
+  fullPaths: '/' | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/forgot-password'
-    | '/reset-password'
-    | '/signin'
-    | '/signup'
-    | '/'
-    | '/console'
-    | '/api/auth/$'
-    | '/console/contacts/$contactId'
-    | '/console/contacts/new'
-    | '/console/contacts'
-    | '/console/contacts/$contactId/edit'
-  id:
-    | '__root__'
-    | '/_auth'
-    | '/_site'
-    | '/console'
-    | '/_auth/forgot-password'
-    | '/_auth/reset-password'
-    | '/_auth/signin'
-    | '/_auth/signup'
-    | '/_site/'
-    | '/console/'
-    | '/api/auth/$'
-    | '/console/contacts/$contactId'
-    | '/console/contacts/new'
-    | '/console/contacts/'
-    | '/console/contacts/$contactId/edit'
+  to: '/' | '/api/auth/$'
+  id: '__root__' | '/_public/' | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  AuthRouteRoute: typeof AuthRouteRouteWithChildren
-  SiteRouteRoute: typeof SiteRouteRouteWithChildren
-  ConsoleRouteRoute: typeof ConsoleRouteRouteWithChildren
+  PublicIndexRoute: typeof PublicIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/console': {
-      id: '/console'
-      path: '/console'
-      fullPath: '/console'
-      preLoaderRoute: typeof ConsoleRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_site': {
-      id: '/_site'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof SiteRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/_auth': {
-      id: '/_auth'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof AuthRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/console/': {
-      id: '/console/'
-      path: '/'
-      fullPath: '/console/'
-      preLoaderRoute: typeof ConsoleIndexRouteImport
-      parentRoute: typeof ConsoleRouteRoute
-    }
-    '/_site/': {
-      id: '/_site/'
+    '/_public/': {
+      id: '/_public/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof SiteIndexRouteImport
-      parentRoute: typeof SiteRouteRoute
-    }
-    '/_auth/signup': {
-      id: '/_auth/signup'
-      path: '/signup'
-      fullPath: '/signup'
-      preLoaderRoute: typeof AuthSignupRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
-    '/_auth/signin': {
-      id: '/_auth/signin'
-      path: '/signin'
-      fullPath: '/signin'
-      preLoaderRoute: typeof AuthSigninRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
-    '/_auth/reset-password': {
-      id: '/_auth/reset-password'
-      path: '/reset-password'
-      fullPath: '/reset-password'
-      preLoaderRoute: typeof AuthResetPasswordRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
-    '/_auth/forgot-password': {
-      id: '/_auth/forgot-password'
-      path: '/forgot-password'
-      fullPath: '/forgot-password'
-      preLoaderRoute: typeof AuthForgotPasswordRouteImport
-      parentRoute: typeof AuthRouteRoute
-    }
-    '/console/contacts/': {
-      id: '/console/contacts/'
-      path: '/contacts'
-      fullPath: '/console/contacts'
-      preLoaderRoute: typeof ConsoleContactsIndexRouteImport
-      parentRoute: typeof ConsoleRouteRoute
-    }
-    '/console/contacts/new': {
-      id: '/console/contacts/new'
-      path: '/contacts/new'
-      fullPath: '/console/contacts/new'
-      preLoaderRoute: typeof ConsoleContactsNewRouteImport
-      parentRoute: typeof ConsoleRouteRoute
-    }
-    '/console/contacts/$contactId': {
-      id: '/console/contacts/$contactId'
-      path: '/contacts/$contactId'
-      fullPath: '/console/contacts/$contactId'
-      preLoaderRoute: typeof ConsoleContactsContactIdRouteImport
-      parentRoute: typeof ConsoleRouteRoute
+      preLoaderRoute: typeof PublicIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -285,82 +65,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiAuthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/console/contacts/$contactId/edit': {
-      id: '/console/contacts/$contactId/edit'
-      path: '/edit'
-      fullPath: '/console/contacts/$contactId/edit'
-      preLoaderRoute: typeof ConsoleContactsContactIdEditRouteImport
-      parentRoute: typeof ConsoleContactsContactIdRoute
-    }
   }
 }
-
-interface AuthRouteRouteChildren {
-  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
-  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
-  AuthSigninRoute: typeof AuthSigninRoute
-  AuthSignupRoute: typeof AuthSignupRoute
-}
-
-const AuthRouteRouteChildren: AuthRouteRouteChildren = {
-  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
-  AuthResetPasswordRoute: AuthResetPasswordRoute,
-  AuthSigninRoute: AuthSigninRoute,
-  AuthSignupRoute: AuthSignupRoute,
-}
-
-const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
-  AuthRouteRouteChildren,
-)
-
-interface SiteRouteRouteChildren {
-  SiteIndexRoute: typeof SiteIndexRoute
-}
-
-const SiteRouteRouteChildren: SiteRouteRouteChildren = {
-  SiteIndexRoute: SiteIndexRoute,
-}
-
-const SiteRouteRouteWithChildren = SiteRouteRoute._addFileChildren(
-  SiteRouteRouteChildren,
-)
-
-interface ConsoleContactsContactIdRouteChildren {
-  ConsoleContactsContactIdEditRoute: typeof ConsoleContactsContactIdEditRoute
-}
-
-const ConsoleContactsContactIdRouteChildren: ConsoleContactsContactIdRouteChildren =
-  {
-    ConsoleContactsContactIdEditRoute: ConsoleContactsContactIdEditRoute,
-  }
-
-const ConsoleContactsContactIdRouteWithChildren =
-  ConsoleContactsContactIdRoute._addFileChildren(
-    ConsoleContactsContactIdRouteChildren,
-  )
-
-interface ConsoleRouteRouteChildren {
-  ConsoleIndexRoute: typeof ConsoleIndexRoute
-  ConsoleContactsContactIdRoute: typeof ConsoleContactsContactIdRouteWithChildren
-  ConsoleContactsNewRoute: typeof ConsoleContactsNewRoute
-  ConsoleContactsIndexRoute: typeof ConsoleContactsIndexRoute
-}
-
-const ConsoleRouteRouteChildren: ConsoleRouteRouteChildren = {
-  ConsoleIndexRoute: ConsoleIndexRoute,
-  ConsoleContactsContactIdRoute: ConsoleContactsContactIdRouteWithChildren,
-  ConsoleContactsNewRoute: ConsoleContactsNewRoute,
-  ConsoleContactsIndexRoute: ConsoleContactsIndexRoute,
-}
-
-const ConsoleRouteRouteWithChildren = ConsoleRouteRoute._addFileChildren(
-  ConsoleRouteRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
-  AuthRouteRoute: AuthRouteRouteWithChildren,
-  SiteRouteRoute: SiteRouteRouteWithChildren,
-  ConsoleRouteRoute: ConsoleRouteRouteWithChildren,
+  PublicIndexRoute: PublicIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

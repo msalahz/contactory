@@ -3,14 +3,14 @@ import { openAPI } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
-import { db } from '@/db'
-import { senv } from '@/env'
+import { db } from '@/server/db/client'
+import { envServer } from '@/env.server'
 import { sendEmail } from '@/integrations/resend/resend'
 import { VerifyEmail } from '@/integrations/resend/emails/VerifyEmail'
 import { ResetPasswordEmail } from '@/integrations/resend/emails/ResetPassword'
 
 export const auth = betterAuth({
-  plugins: [tanstackStartCookies(), ...(senv.BETTER_AUTH_ENABLE_OPENAPI ? [openAPI()] : [])],
+  plugins: [tanstackStartCookies(), ...(envServer.BETTER_AUTH_ENABLE_OPENAPI ? [openAPI()] : [])],
 
   database: drizzleAdapter(db, {
     provider: 'pg',
@@ -33,7 +33,7 @@ export const auth = betterAuth({
       try {
         await sendEmail({
           to: user.email,
-          from: `Contactory <${senv.RESEND_FROM_EMAIL}>`,
+          from: `Contactory <${envServer.RESEND_FROM_EMAIL}>`,
           subject: 'Contactory - Verify Email',
           react: <VerifyEmail name={user.name} url={url} />,
         })
@@ -58,7 +58,7 @@ export const auth = betterAuth({
       try {
         await sendEmail({
           to: user.email,
-          from: `Contactory <${senv.RESEND_FROM_EMAIL}>`,
+          from: `Contactory <${envServer.RESEND_FROM_EMAIL}>`,
           subject: 'Contactory - Reset Password',
           react: <ResetPasswordEmail name={user.name} url={url} />,
         })
@@ -79,11 +79,11 @@ export const auth = betterAuth({
   },
 
   advanced: {
-    useSecureCookies: senv.BETTER_AUTH_USE_SECURE_COOKIES, // Secure+HttpOnly on HTTPS in prod
+    useSecureCookies: envServer.BETTER_AUTH_USE_SECURE_COOKIES, // Secure+HttpOnly on HTTPS in prod
     defaultCookieAttributes: {
       httpOnly: true,
-      secure: senv.BETTER_AUTH_USE_SECURE_COOKIES,
-      sameSite: senv.BETTER_AUTH_USE_SECURE_COOKIES ? 'strict' : 'lax', // 'lax' OK for subdomains & localhost
+      secure: envServer.BETTER_AUTH_USE_SECURE_COOKIES,
+      sameSite: envServer.BETTER_AUTH_USE_SECURE_COOKIES ? 'strict' : 'lax', // 'lax' OK for subdomains & localhost
       path: '/',
     },
     cookies: {

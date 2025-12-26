@@ -1,22 +1,22 @@
 {
   "$schema": "https://ui.shadcn.com/schema.json",
-  "style": "radix-lyra",
+  "style": "radix-vega",
   "rsc": false,
   "tsx": true,
   "tailwind": {
     "config": "",
     "css": "src/styles.css",
-    "baseColor": "gray",
+    "baseColor": "natural",
     "cssVariables": true,
     "prefix": ""
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@/features/abstractions/components",
-    "utils": "@/features/abstractions/lib/utils",
-    "ui": "@/features/abstractions/components/primitives",
-    "lib": "@/features/abstractions/lib",
-    "hooks": "@/features/abstractions/hooks"
+    "components": "@/integrations/shadcn/components",
+    "utils": "@/integrations/shadcn/lib/utils",
+    "ui": "@/integrations/shadcn/components/ui",
+    "lib": "@/integrations/shadcn/lib",
+    "hooks": "@/integrations/shadcn/hooks"
   },
   "menuColor": "default",
   "menuAccent": "subtle",

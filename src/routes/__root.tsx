@@ -6,33 +6,23 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
 
+import type { Theme } from '@/shared/theme/schemas'
 import type { QueryClient } from '@tanstack/react-query'
+import type { Session, User } from '@/integrations/better-auth/authClient'
 
-import type { User } from '@/features/users/models'
-import type { Theme } from '@/features/abstractions/theme/models'
-import type { Session } from '@/integrations/better-auth/authClient'
-
-import { cn } from '@/features/abstractions/lib/utils'
-import { useTheme } from '@/features/abstractions/theme/useTheme'
-import { ThemeProvider } from '@/features/abstractions/theme/context'
-import { getContextDataFn } from '@/features/abstractions/serverFunctions'
-import { Toaster } from '@/features/abstractions/components/primitives/sonner'
-import { NotFound } from '@/features/abstractions/components/reused/NotFound'
+import { cn } from '@/integrations/shadcn/lib/utils'
+import { useTheme } from '@/shared/theme/useTheme'
+import { ThemeProvider } from '@/shared/theme/providers'
+import { NotFound } from '@/shared/components/NotFound'
 
 interface MyRouterContext {
-  queryClient: QueryClient
+  user: User | null
+  theme: Theme | null
   session: Session | null
-  user: User['id'] | null
-  theme?: Theme
+  queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
-  beforeLoad: async () => {
-    return await getContextDataFn()
-  },
-  loader({ context }) {
-    return { theme: context.theme }
-  },
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
   head: () => ({
@@ -52,12 +42,9 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { theme: hydratedTheme = 'light' } = Route.useLoaderData()
-
   return (
-    <ThemeProvider initialTheme={hydratedTheme}>
+    <ThemeProvider initialTheme={'dark'}>
       <RootDocumentContent>{children}</RootDocumentContent>
-      <Toaster closeButton richColors theme="light" />
       <TanStackDevtools
         config={{ position: 'bottom-right' }}
         plugins={[

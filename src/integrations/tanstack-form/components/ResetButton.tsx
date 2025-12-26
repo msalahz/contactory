@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { Button } from '@/features/abstractions/components/primitives/button'
+import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
 export interface ResetButtonProps extends React.ComponentProps<typeof Button> {

@@ -3,14 +3,14 @@ import { useStore } from '@tanstack/react-form'
 
 import type { ReactNode } from 'react'
 
-import { Switch } from '@/features/abstractions/components/primitives/switch'
+import { Switch } from '@/integrations/shadcn/components/ui/switch'
 import { useFieldContext } from '@/integrations/tanstack-form/hooks/formContext'
 import {
   Field,
   FieldDescription,
   FieldError,
   FieldLabel,
-} from '@/features/abstractions/components/primitives/field'
+} from '@/integrations/shadcn/components/ui/field'
 
 export interface SwitchFieldProps extends React.ComponentProps<typeof Switch> {
   label?: string

@@ -12,14 +12,14 @@ import {
   pixelBasedPreset,
 } from '@react-email/components'
 
-import { senv } from '@/env'
+import { envServer } from '@/env.server'
 
 interface VerifyEmailProps {
   name: string
   url: string
 }
 
-const baseUrl = senv.BASE_URL ? `${senv.BASE_URL}` : ''
+const baseUrl = envServer.BASE_URL ? `${envServer.BASE_URL}` : ''
 
 export function VerifyEmail({ name, url }: VerifyEmailProps) {
   return (
@@ -29,8 +29,8 @@ export function VerifyEmail({ name, url }: VerifyEmailProps) {
         <Body className="font-koala bg-white">
           <Preview>The intelligence platform that helps you manage your contacts.</Preview>
           <Container className="mx-auto py-5 pb-12">
-            <Text className="text-base leading-[26px]">Hi {name},</Text>
-            <Text className="text-base leading-[26px]">
+            <Text className="text-base leading-6.5">Hi {name},</Text>
+            <Text className="text-base leading-6.5">
               Click the button below to verify that this email address belongs to your account at{' '}
               <a href={`${baseUrl}`}>Contactory</a>
             </Text>
@@ -48,7 +48,7 @@ export function VerifyEmail({ name, url }: VerifyEmailProps) {
             <Section className="text-center">
               Button not working? Use this link instead: <a href={url}>Verify Email</a>
             </Section>
-            <Text className="text-base leading-[26px]">
+            <Text className="text-base leading-6.5">
               Best,
               <br />
               The Contactory team

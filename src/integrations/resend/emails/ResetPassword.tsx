@@ -12,14 +12,14 @@ import {
   pixelBasedPreset,
 } from '@react-email/components'
 
-import { senv } from '@/env'
+import { envServer } from '@/env.server'
 
 interface ResetPasswordEmailProps {
   name: string
   url: string
 }
 
-const baseUrl = senv.BASE_URL ? `${senv.BASE_URL}` : ''
+const baseUrl = envServer.BASE_URL ? `${envServer.BASE_URL}` : ''
 
 export function ResetPasswordEmail({ name, url }: ResetPasswordEmailProps) {
   return (
