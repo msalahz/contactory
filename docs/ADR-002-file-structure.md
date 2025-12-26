@@ -35,6 +35,12 @@ src/
 ├── routes/                       # File-based routing
 │   ├── __root.tsx                # Root: providers, head, error boundary
 │   │
+│   ├── api/                      # External API endpoints
+│   │   ├── webhooks/
+│   │   │   └── stripe.ts
+│   │   └── v1/
+│   │       └── users.ts          # REST endpoints for external clients
+│   │
 │   ├── _public/
 │   │   ├── route.tsx             # Public layout
 │   │   ├── index.tsx
@@ -55,6 +61,7 @@ src/
 │   │
 │   ├── business/                 # Pure business logic functions
 │   │   ├── dashboard.ts          # getDashboardMetricsLogic()
+│   │   ├── dashboard.test.ts     # co-located unit tests
 │   │   ├── users.ts              # getUsersListLogic(), getUserByIdLogic()
 │   │   └── users.ts              # updateUserLogic()
 │   │
@@ -68,6 +75,11 @@ src/
 │   │   └── client.ts             # DB instance
 │   │
 │   └── guards.ts                 # requireAuth(), requireAdmin()
+│
+├── schemas/                      # Zod validation schemas
+│   ├── auth.ts
+│   ├── users.ts
+│   └── dashboard.ts
 │
 ├── features/
 │   ├── auth/
