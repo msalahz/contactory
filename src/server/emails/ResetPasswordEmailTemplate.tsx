@@ -29,8 +29,8 @@ export function ResetPasswordEmail({ name, url }: ResetPasswordEmailProps) {
         <Body className="font-koala bg-white">
           <Preview>The intelligence platform that helps you manage your contacts.</Preview>
           <Container className="mx-auto py-5 pb-12">
-            <Text className="text-[16px] leading-[26px]">Hi {name},</Text>
-            <Text className="text-[16px] leading-[26px]">
+            <Text className="text-[16px] leading-6.5">Hi {name},</Text>
+            <Text className="text-[16px] leading-6.5">
               Click the button below to verify that this email address belongs to your account at{' '}
               <a href={`${baseUrl}`}>Contactory</a>
             </Text>
@@ -48,7 +48,7 @@ export function ResetPasswordEmail({ name, url }: ResetPasswordEmailProps) {
             <Section className="text-center">
               Button not working? Use this link instead: <a href={url}>Reset Password</a>
             </Section>
-            <Text className="text-[16px] leading-[26px]">
+            <Text className="text-[16px] leading-6.5">
               Best,
               <br />
               The Contactory team

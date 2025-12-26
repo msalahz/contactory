@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { SignUp } from '@/features/users/signUp'
+import { SignUp } from '@/features/users/components/signUp'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
 
 export const Route = createFileRoute('/_public/sign-up')({

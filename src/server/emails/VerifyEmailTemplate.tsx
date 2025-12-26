@@ -21,7 +21,7 @@ interface VerifyEmailProps {
 
 const baseUrl = envServer.BASE_URL ? `${envServer.BASE_URL}` : ''
 
-export function VerifyEmail({ name, url }: VerifyEmailProps) {
+export function VerifyEmailTemplate({ name, url }: VerifyEmailProps) {
   return (
     <Html>
       <Head />

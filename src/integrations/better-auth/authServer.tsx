@@ -5,11 +5,11 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
 import { db } from '@/server/db/client'
 import { envServer } from '@/env.server'
-import { sendEmail } from '@/integrations/resend/resend'
-import { VerifyEmail } from '@/integrations/resend/emails/VerifyEmail'
-import { ResetPasswordEmail } from '@/integrations/resend/emails/ResetPassword'
+import { sendEmail } from '@/server/emails/sendEmail'
+import { VerifyEmailTemplate } from '@/server/emails/VerifyEmailTemplate'
+import { ResetPasswordEmail } from '@/server/emails/ResetPasswordEmailTemplate'
 
-export const auth = betterAuth({
+export const authServer = betterAuth({
   plugins: [tanstackStartCookies(), ...(envServer.BETTER_AUTH_ENABLE_OPENAPI ? [openAPI()] : [])],
 
   database: drizzleAdapter(db, {
@@ -35,7 +35,7 @@ export const auth = betterAuth({
           to: user.email,
           from: `Contactory <${envServer.RESEND_FROM_EMAIL}>`,
           subject: 'Contactory - Verify Email',
-          react: <VerifyEmail name={user.name} url={url} />,
+          react: <VerifyEmailTemplate name={user.name} url={url} />,
         })
       } catch (error) {
         console.warn(error)
