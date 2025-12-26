@@ -11,6 +11,7 @@ import {
   Users,
 } from 'lucide-react'
 
+import { HeroSection } from '@/features/landing/components/hero-section'
 import {
   Card,
   CardDescription,
@@ -27,6 +28,7 @@ function App() {
     <div className="min-h-screen">
       {/* Hero Section */}
       <Outlet />
+      <HeroSection />
       <section className="relative overflow-hidden px-6 pt-24 text-center">
         <div className="mx-auto max-w-3xl">
           <h1 className="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">

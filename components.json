@@ -6,11 +6,13 @@
   "tailwind": {
     "config": "",
     "css": "src/styles.css",
-    "baseColor": "natural",
+    "baseColor": "neutral",
     "cssVariables": true,
     "prefix": ""
   },
   "iconLibrary": "lucide",
+  "menuColor": "default",
+  "menuAccent": "subtle",
   "aliases": {
     "components": "@/integrations/shadcn/components",
     "utils": "@/integrations/shadcn/lib/utils",
@@ -18,7 +20,7 @@
     "lib": "@/integrations/shadcn/lib",
     "hooks": "@/integrations/shadcn/hooks"
   },
-  "menuColor": "default",
-  "menuAccent": "subtle",
-  "registries": {}
+  "registries": {
+    "@tailark": "https://tailark.com/r/{name}.json"
+  }
 }
