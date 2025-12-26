@@ -7,19 +7,19 @@
 
 ---
 
-Purpose
+## Purpose
 
 - Capture the architecture decision to standardize on a modular monolith structure that enforces strong client/server
   boundaries, feature-sliced layout, and type-safe internal RPC via TanStack Start server functions.
 
-Scope
+## Scope
 
 - Affects repository layout, routing conventions, server-side organization, environment handling, and developer
   workflows across the frontend and backend. Teams impacted: frontend, backend, infra, and QA.
 
 ---
 
-Decision at a glance (TL;DR)
+## Decision at a glance (TL;DR)
 
 - Adopt a feature-sliced modular monolith with a centralized `src/server/` for all server-only logic; prefer TanStack
   Start server functions (RPC) for internal operations and file-based API routes for external endpoints. Split env into
@@ -28,7 +28,91 @@ Decision at a glance (TL;DR)
 
 ---
 
-Context and problem statement
+## Final File Structure
+
+```
+src/
+├── routes/                       # File-based routing
+│   ├── __root.tsx                # Root: providers, head, error boundary
+│   │
+│   ├── _public/
+│   │   ├── route.tsx             # Public layout
+│   │   ├── index.tsx
+│   │   └── about.tsx
+│   │
+│   ├── _dashboard/
+│   │   ├── route.tsx             # Dashboard layout + user guard
+│   │   ├── dashboard.tsx
+│   │   └── users.tsx
+│   │
+│   └── _admin/
+│       ├── route.tsx             # Admin layout + admin guard
+│       └── system.tsx
+│
+├── server/                       # Server-only: functions, business logic, DB
+│   ├── middleware/
+│   │   └── auth.ts               # authMiddleware
+│   │
+│   ├── business/                 # Pure business logic functions
+│   │   ├── dashboard.ts          # getDashboardMetricsLogic()
+│   │   ├── users.ts              # getUsersListLogic(), getUserByIdLogic()
+│   │   └── users.ts              # updateUserLogic()
+│   │
+│   ├── queries/                  # Server fn wrappers
+│   │   └── dashboard.ts          # getDashboardMetricsFn = createServerFn(...)
+│   │
+│   ├── mutations/
+│   │   └── users.ts              # updateUserFn = createServerFn(...)
+│   │
+│   ├── db/
+│   │   └── client.ts             # DB instance
+│   │
+│   └── guards.ts                 # requireAuth(), requireAdmin()
+│
+├── features/
+│   ├── auth/
+│   │   └── hooks/useLoginMutation.ts
+│   │
+│   ├── dashboard/
+│   │   ├── components/DashboardOverview.tsx
+│   │   ├── hooks/useDashboardData.ts
+│   │   ├── keys.ts
+│   │   └── options.ts
+│   │
+│   ├── users/
+│   │   ├── components/UserTable.tsx
+│   │   ├── hooks/
+│   │   │   ├── useUsersQuery.ts
+│   │   │   ├── useUserQuery.ts
+│   │   │   └── useUpdateUserMutation.ts
+│   │   ├── keys.ts
+│   │   └── options.ts
+│   │
+│   └── monitoring/
+│       └── components/SystemLogs.tsx
+│
+├── shared/
+│   ├── components/
+│   │   └── LOGO.tsk
+│   ├── hooks/
+│   ├── utils/
+│   ├── types/
+│   └── query/
+│       ├── client.ts
+│       └── keys.ts
+│
+├── env.client.ts                 # Client env (VITE_ prefixed)
+├── env.server.ts                 # Server env (secrets)
+├── integrations/
+├── assets/
+├── styles.css
+├── routeTree.gen.ts
+└── router.tsx
+```
+
+---
+
+## Context and problem statement
 
 - The repository previously mixed server and client concerns, used barrels for convenience, and had inconsistent routing
   patterns. This led to accidental bundling risk for secrets, unclear import boundaries, and harder audits.
@@ -40,7 +124,7 @@ Context and problem statement
 
 ---
 
-Decision
+## Decision
 
 - Structure: adopt a feature-sliced `src/features/` for client code and a centralized `src/server/` for all server-only
   code (business logic, DB client, server functions, middlewares, guards).
@@ -57,7 +141,7 @@ Decision
   `options.ts`, `hooks/useUsersQuery.ts`). Use factories for keys and options to ensure consistent invalidation and
   reuse.
 
-Checklist (enforced by this decision)
+### Checklist (enforced by this decision)
 
 - [x] Feature-sliced layout under `src/features/...`
 - [x] Centralized `src/server/` for server-only code
@@ -68,9 +152,9 @@ Checklist (enforced by this decision)
 - [x] No barrel `index.ts` exports for cross-domain imports
 - [x] TanStack Query keys/options/hooks colocated in `features/<feature>/`
 
-Decision detail (do/don't rules)
+### Decision detail (do/don't rules)
 
-Do:
+#### Do:
 
 - Place all server-only code in `src/server/` (for example `src/server/db/client.ts`, `src/server/mutations/users.ts`,
   `src/server/middleware/auth.ts`).
@@ -83,7 +167,7 @@ Do:
 - Co-locate TanStack Query artifacts (keys, options, hooks) inside each feature and provide key factories for
   strongly-typed invalidation.
 
-Don't:
+#### Don't:
 
 - Don't import `src/server/` or `src/env.server.ts` from client code. Add lint rules to block such imports.
 - Don't use barrels (`index.ts`) for cross-domain exports; internal barrels within a single feature are acceptable for
@@ -93,7 +177,7 @@ Don't:
 
 ---
 
-Alternatives considered
+## Alternatives considered
 
 - Keep server logic inside feature folders: simpler initial layout but increases risk of accidental secret bundling and
   harder audits.
@@ -101,7 +185,7 @@ Alternatives considered
   type-safety work and loses tight TanStack Query integration.
 - Keep barrel exports: shorter imports but makes import graph unclear and harder to enforce import boundaries.
 
-Rationale (why chosen)
+### Rationale (why chosen)
 
 - Centralizing server code reduces accidental exposure of secrets and simplifies audits and access control (middleware,
   rate limiting, logging).
@@ -112,25 +196,25 @@ Rationale (why chosen)
 
 ---
 
-Consequences
+## Consequences
 
-Positive
+### Positive
 
 - Clear client/server separation; easier security audits and safer deployments.
 - Improved developer experience for data fetching via TanStack Query and server fn integration.
 - Easier testing of pure business logic and server fns (unit tests with Vitest).
 - Easier future extraction of individual features into micro-frontends or services if needed.
 
-Negative
+### Negative
 
 - Slightly deeper folder nesting and more explicit imports.
 - Initial migration cost to reorganize existing code and update many imports.
 
 ---
 
-Implementation plan
+## Implementation plan
 
-Short term (0-2 weeks)
+### Short term (0-2 weeks)
 
 - Add `src/server/` and move existing server fns, DB client, and middlewares into it.
 - Create `src/env.server.ts` and `src/env.client.ts` and migrate env usage.
@@ -140,19 +224,19 @@ Short term (0-2 weeks)
   `src/routes/_dashboard/route.tsx`).
 - Update a small set of core features (`auth`, `users`, `dashboard`) to the new layout as examples.
 
-Mid term (2-8 weeks)
+### Mid term (2-8 weeks)
 
 - Refactor remaining features to colocate keys/options/hooks inside `src/features/<feature>/`.
 - Add factories for TanStack Query keys and options and update hooks to use them.
 - Replace internal API route uses with server fns where appropriate.
 - Add Vitest tests for server/business functions and server fns.
 
-Long term
+### Long term
 
 - Add CI checks (smoke build that fails on disallowed imports), Storybook for shared UI primitives, and auditing
   dashboards for server logs and middleware coverage.
 
-Migration notes
+### Migration notes
 
 - Move files incrementally and update imports using the IDE's rename/move tooling.
 - Where many imports exist, add temporary compatibility modules (in a `migrate/compat` area) with clear TODOs and remove
@@ -160,7 +244,7 @@ Migration notes
 
 ---
 
-Tests and validation
+## Tests and validation
 
 - Unit tests for pure business logic with Vitest live next to `src/server/business/` files.
 - Integration tests for server fns that mock or run against a test DB.
@@ -171,14 +255,14 @@ Tests and validation
 
 ---
 
-Rollback plan
+## Rollback plan
 
 - If migration breaks mainline CI or causes regressions, revert the migration commit(s) and continue with a
   smaller-scope migration branch. Keep the old layout available until the migration is complete for all consumers.
 
 ---
 
-Related ADRs and references
+## Related ADRs and references
 
 - ADR-001: Tech Stack Architecture Decision Record — documents chosen tools and libraries (Vite, TanStack Start,
   TanStack Query, Tailwind, shadcn/ui, Drizzle ORM, Zod, better-auth, Vitest, Playwright, ESLint, Prettier). See
@@ -191,7 +275,7 @@ Related ADRs and references
 
 ---
 
-Implementation examples (short)
+## Implementation examples (short)
 
 - Env server split example:
   - `src/env.server.ts` — validate server secrets (e.g., DATABASE_URL) with `createEnv` and Zod.
@@ -205,14 +289,14 @@ Implementation examples (short)
 
 ---
 
-Consequences review
+## Consequences review
 
 - This ADR prioritizes security and auditability over minimal surface area convenience (barrel exports). The team
   accepts the migration work as tradeoff for long-term maintainability.
 
 ---
 
-Metadata
+## Metadata
 
 - Title: Modular Monolith Fullstack App Architecture
 - Date: 2025-12-26
