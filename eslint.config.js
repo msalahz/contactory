@@ -1,14 +1,15 @@
 //  @ts-check
-import pluginQuery from '@tanstack/eslint-plugin-query'
-import pluginRouter from '@tanstack/eslint-plugin-router'
+import drizzle from 'eslint-plugin-drizzle'
+import { globalIgnores } from 'eslint/config'
 import reactHooks from 'eslint-plugin-react-hooks'
 import prettierConfig from 'eslint-config-prettier'
 import reactRefresh from 'eslint-plugin-react-refresh'
-import drizzle from 'eslint-plugin-drizzle'
-
+import pluginQuery from '@tanstack/eslint-plugin-query'
 import { tanstackConfig } from '@tanstack/eslint-config'
+import pluginRouter from '@tanstack/eslint-plugin-router'
 
 export default [
+  globalIgnores(['bak-src/**']),
   ...tanstackConfig,
   reactHooks.configs.flat['recommended-latest'],
   reactRefresh.configs.recommended,

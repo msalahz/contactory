@@ -60,7 +60,7 @@ function RootDocumentContent({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
 
   return (
-    <html lang="en">
+    <html lang="en" className="scroll-smooth">
       <head>
         <meta rel="icon" />
         <HeadContent />

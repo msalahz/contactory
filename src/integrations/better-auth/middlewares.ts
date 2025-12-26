@@ -8,7 +8,7 @@ export const authRequestMiddleware = createMiddleware().server(async ({ next, re
   const session = await auth.api.getSession({ headers: request.headers })
 
   if (!session) {
-    throw redirect({ to: '/signin' })
+    throw redirect({ to: '/sign-in' })
   }
 
   return next({
@@ -28,7 +28,7 @@ export const authFnMiddleware = createMiddleware({ type: 'function' })
     const session = await auth.api.getSession({ headers: request.headers })
 
     if (!session) {
-      throw redirect({ to: '/signin' })
+      throw redirect({ to: '/sign-in' })
     }
 
     return next({
