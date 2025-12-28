@@ -50,7 +50,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
   const { serverTheme } = Route.useRouteContext()
 
   return (
-    <ThemeProvider initialTheme={serverTheme || 'light'}>
+    <ThemeProvider initialTheme={serverTheme || 'dark'}>
       <RootDocumentContent>{children}</RootDocumentContent>
       <TanStackDevtools
         config={{ position: 'bottom-right' }}
