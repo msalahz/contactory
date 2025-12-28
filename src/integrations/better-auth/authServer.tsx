@@ -10,7 +10,20 @@ import { VerifyEmailTemplate } from '@/server/emails/VerifyEmailTemplate'
 import { ResetPasswordEmail } from '@/server/emails/ResetPasswordEmailTemplate'
 
 export const authServer = betterAuth({
+  baseURL: envServer.BETTER_AUTH_URL,
+
+  socialProviders: {
+    google: {
+      accessType: 'offline',
+      prompt: 'select_account consent',
+      clientId: envServer.BETTER_AUTH_GOOGLE_CLIENT_ID,
+      clientSecret: envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
+    },
+  },
+
   plugins: [tanstackStartCookies(), ...(envServer.BETTER_AUTH_ENABLE_OPENAPI ? [openAPI()] : [])],
+
+  trustedOrigins: [envServer.BETTER_AUTH_URL],
 
   database: drizzleAdapter(db, {
     provider: 'pg',

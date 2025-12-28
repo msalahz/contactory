@@ -20,7 +20,7 @@ export const getRouter = () => {
       session: null,
       serverTheme: null,
     },
-    defaultPreload: 'intent',
+    defaultPreload: false, // 'intent',
     Wrap: (props: { children: React.ReactNode }) => {
       return <TanstackQuery.Provider {...rqContext}>{props.children}</TanstackQuery.Provider>
     },

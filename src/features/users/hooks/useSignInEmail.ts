@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query'
 import { authClient } from '@/integrations/better-auth/authClient'
 
-export async function signinEmail(
+export async function signInEmail(
   props: Pick<
     Parameters<typeof authClient.signIn.email>[0],
     'email' | 'password' | 'rememberMe' | 'callbackURL'
@@ -16,9 +16,9 @@ export async function signinEmail(
   return data
 }
 
-export function useSigninEmail() {
+export function useSignInEmail() {
   return useMutation({
-    mutationKey: ['signin-email'],
-    mutationFn: signinEmail,
+    mutationKey: ['sign-in-email'],
+    mutationFn: signInEmail,
   })
 }

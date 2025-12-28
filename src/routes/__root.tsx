@@ -26,7 +26,9 @@ interface MyRouterContext {
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
-  async beforeLoad() {
+  preloadGcTime: 1000 * 60 * 60, // 60 minutes
+  preloadStaleTime: 1000 * 60 * 60, // 60 minutes,
+  async loader() {
     const serverTheme = await findThemeCookieFn()
     return { serverTheme }
   },
@@ -47,7 +49,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { serverTheme } = Route.useRouteContext()
+  const { serverTheme } = Route.useLoaderData()
 
   return (
     <ThemeProvider initialTheme={serverTheme || 'dark'}>
