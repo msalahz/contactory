@@ -1,12 +1,16 @@
 import * as React from 'react'
-import { Menu, X } from 'lucide-react'
+import { LogOutIcon, Menu, X } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
+import type { Theme } from '@/server/schemas/theme'
+import type { User } from '@/integrations/better-auth/authClient'
+
+import { noop } from '@/shared/utils/noop'
 import { Logo } from '@/shared/components/Logo'
-import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { ThemeDropdownMenu } from '@/shared/theme/ThemeDropdownMenu'
+import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 
 const menuItems = [
   { name: 'Features', href: '#features' },
@@ -14,8 +18,21 @@ const menuItems = [
   { name: 'FAQ', href: '#faq' },
 ]
 
-export const HeroHeader = () => {
-  const { theme, setTheme } = useTheme()
+export interface HeroHeaderProps {
+  user: User | null
+  theme: Theme
+  onThemeChange: (theme: Theme) => void
+  isSigningOut: boolean
+  onSignOutClick: () => void
+}
+
+export const HeroHeader = ({
+  user,
+  theme,
+  onThemeChange = noop,
+  isSigningOut = false,
+  onSignOutClick = noop,
+}: HeroHeaderProps) => {
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
 
@@ -82,27 +99,53 @@ export const HeroHeader = () => {
                 </ul>
               </div>
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
-                <Button
-                  asChild
-                  variant="outline"
-                  size="sm"
-                  className={cn(isScrolled && 'lg:hidden')}
-                >
-                  <Link to="/sign-in">
-                    <span>Login</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm" className={cn(isScrolled && 'lg:hidden')}>
-                  <Link to="/sign-up">
-                    <span>Sign Up</span>
-                  </Link>
-                </Button>
-                <Button asChild size="sm" className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}>
-                  <Link to="/sign-up">
-                    <span>Get Started</span>
-                  </Link>
-                </Button>
-                <ThemeDropdownMenu theme={theme} onChange={setTheme} />
+                {user?.id ? (
+                  <Button asChild size="sm" className={cn('lg:inline-flex')}>
+                    <Link to="/sign-up">
+                      <span>Connections</span>
+                    </Link>
+                  </Button>
+                ) : (
+                  <>
+                    <Button
+                      asChild
+                      variant="outline"
+                      size="sm"
+                      className={cn(isScrolled && 'lg:hidden')}
+                    >
+                      <Link to="/sign-in">
+                        <span>Sign In</span>
+                      </Link>
+                    </Button>
+                    <Button asChild size="sm" className={cn(isScrolled && 'lg:hidden')}>
+                      <Link to="/sign-up">
+                        <span>Sign Up</span>
+                      </Link>
+                    </Button>
+                    <Button
+                      asChild
+                      size="sm"
+                      className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}
+                    >
+                      <Link to="/sign-up">
+                        <span>Get Started</span>
+                      </Link>
+                    </Button>
+                  </>
+                )}
+
+                <ThemeDropdownMenu theme={theme} onChange={onThemeChange} />
+
+                {user?.id ? (
+                  <Button
+                    variant="outline"
+                    size="icon-sm"
+                    disabled={isSigningOut}
+                    onClick={onSignOutClick}
+                  >
+                    {isSigningOut ? <Spinner /> : <LogOutIcon />}
+                  </Button>
+                ) : null}
               </div>
             </div>
           </div>

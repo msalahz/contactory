@@ -6,7 +6,7 @@ import { useMutation } from '@tanstack/react-query'
 import type { Theme } from '@/server/schemas/theme'
 
 import { ThemeContext } from '@/shared/theme/themeContext'
-import { setThemeCookieFn } from '@/server/mutations/setThemeCookieFn'
+import { setThemeCookieFn } from '@/server/mutations/theme'
 
 /**
  * @description Hook to access and update the theme from the shared store

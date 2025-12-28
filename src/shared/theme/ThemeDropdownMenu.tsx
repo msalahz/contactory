@@ -30,9 +30,9 @@ export function ThemeDropdownMenu({
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
-          size="sm"
+          size="icon-sm"
           variant="outline"
-          className={cn('w-19.5 focus-visible:ring-0 focus-visible:outline-0', className)}
+          className={cn('focus-visible:ring-0 focus-visible:outline-0', className)}
           {...props}
         >
           <MoonIcon
@@ -41,7 +41,6 @@ export function ThemeDropdownMenu({
           <SunIcon
             className={cn('hidden transition-all ease-in-out', theme === 'light' ? 'block' : '')}
           />
-          <span>{theme === 'dark' ? 'Dark' : 'Light'}</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-fit">

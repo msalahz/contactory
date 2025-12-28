@@ -6,8 +6,8 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start'
 import { db } from '@/server/db/client'
 import { envServer } from '@/env.server'
 import { sendEmail } from '@/server/emails/sendEmail'
-import { VerifyEmailTemplate } from '@/server/emails/VerifyEmailTemplate'
-import { ResetPasswordEmail } from '@/server/emails/ResetPasswordEmailTemplate'
+import { VerifyEmailTemplate } from '@/server/emails/templates/VerifyEmailTemplate'
+import { ResetPasswordEmail } from '@/server/emails/templates/ResetPasswordEmailTemplate'
 
 export const authServer = betterAuth({
   baseURL: envServer.BETTER_AUTH_URL,
