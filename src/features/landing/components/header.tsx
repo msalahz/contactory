@@ -101,7 +101,7 @@ export const HeroHeader = ({
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 {user?.id ? (
                   <Button asChild size="sm" className={cn('lg:inline-flex')}>
-                    <Link to="/sign-up">
+                    <Link to="/dashboard">
                       <span>Connections</span>
                     </Link>
                   </Button>

@@ -3,6 +3,8 @@ import { ArrowRight, ChevronRight } from 'lucide-react'
 
 import type { Variants } from 'motion/react'
 
+import type { User } from '@/integrations/better-auth/authClient'
+
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { TextEffect } from '@/integrations/shadcn/components/ui/text-effect'
 import { AnimatedGroup } from '@/integrations/shadcn/components/ui/animated-group'
@@ -27,7 +29,11 @@ const transitionVariants: { item: Variants } = {
   },
 }
 
-export function HeroSection() {
+export interface HeroSectionProps {
+  user: User | null
+}
+
+export function HeroSection({ user }: HeroSectionProps) {
   return (
     <main className="overflow-hidden">
       <div
@@ -131,27 +137,42 @@ export function HeroSection() {
                 }}
                 className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
               >
-                <div
-                  key={1}
-                  className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
-                >
-                  <Button asChild size="lg" className="rounded-xl px-5 text-base">
-                    <Link to="/sign-up">
-                      <span className="text-nowrap">Get Started</span>
-                    </Link>
-                  </Button>
-                </div>
-                <Button
-                  key={2}
-                  asChild
-                  size="lg"
-                  variant="ghost"
-                  className="h-10.5 rounded-xl px-5"
-                >
-                  <Link to="/sign-in">
-                    <span className="text-nowrap">Sign In</span>
-                  </Link>
-                </Button>
+                {user?.id ? (
+                  <div
+                    key={1}
+                    className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
+                  >
+                    <Button asChild size="lg" className="rounded-xl px-5 text-base">
+                      <Link to="/dashboard">
+                        <span className="text-nowrap">Manage Connections</span>
+                      </Link>
+                    </Button>
+                  </div>
+                ) : (
+                  <>
+                    <div
+                      key={1}
+                      className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
+                    >
+                      <Button asChild size="lg" className="rounded-xl px-5 text-base">
+                        <Link to="/sign-up">
+                          <span className="text-nowrap">Get Started</span>
+                        </Link>
+                      </Button>
+                    </div>
+                    <Button
+                      key={2}
+                      asChild
+                      size="lg"
+                      variant="ghost"
+                      className="h-10.5 rounded-xl px-5"
+                    >
+                      <Link to="/sign-in">
+                        <span className="text-nowrap">Sign In</span>
+                      </Link>
+                    </Button>
+                  </>
+                )}
               </AnimatedGroup>
             </div>
           </div>

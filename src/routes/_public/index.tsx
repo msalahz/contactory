@@ -32,7 +32,7 @@ function App() {
         onSignOutClick={signOut}
         isSigningOut={isSigningOut}
       />
-      <HeroSection />
+      <HeroSection user={user} />
       <Features />
       <AboutSection />
       <StatsSection />
