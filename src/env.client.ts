@@ -10,6 +10,7 @@ export const envClient = createEnv({
 
   client: {
     VITE_BETTER_AUTH_BASE_URL: z.url(),
+    VITE_BETTER_AUTH_CALLBACK_URL: z.url(),
   },
 
   /**

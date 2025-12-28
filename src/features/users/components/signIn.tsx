@@ -4,18 +4,14 @@ import { LogoIcon } from '@/shared/components/Logo'
 import { Input } from '@/integrations/shadcn/components/ui/input'
 import { Label } from '@/integrations/shadcn/components/ui/label'
 import { Button } from '@/integrations/shadcn/components/ui/button'
-import { useSignInSocial } from '@/features/users/hooks/useSignInSocial'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 
-export function SignIn() {
-  const { mutate: signInSocial, isPending } = useSignInSocial()
+export interface SignInProps {
+  signInGoogle: () => void
+  isSigningInSocial: boolean
+}
 
-  function signInGoogle() {
-    signInSocial({
-      provider: 'google',
-      callbackURL: window.location.origin,
-    })
-  }
+export function SignIn({ signInGoogle, isSigningInSocial }: SignInProps) {
   return (
     <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
       <form action="" className="m-auto h-fit w-full max-w-92">
@@ -33,10 +29,10 @@ export function SignIn() {
               type="button"
               variant="outline"
               className="w-full"
-              disabled={isPending}
+              disabled={isSigningInSocial}
               onClick={signInGoogle}
             >
-              {isPending ? (
+              {isSigningInSocial ? (
                 <Spinner className="size-4" />
               ) : (
                 <svg

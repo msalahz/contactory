@@ -15,6 +15,7 @@ export const authServer = betterAuth({
   socialProviders: {
     google: {
       accessType: 'offline',
+      disableImplicitSignUp: false,
       prompt: 'select_account consent',
       clientId: envServer.BETTER_AUTH_GOOGLE_CLIENT_ID,
       clientSecret: envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
