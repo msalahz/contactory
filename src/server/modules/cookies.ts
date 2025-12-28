@@ -1,8 +1,8 @@
 import { getCookie, setCookie } from '@tanstack/react-start/server'
 
-import type { Theme } from '@/shared/theme/schemas'
+import type { Theme } from '@/server/schemas/theme'
 
-import { themeSchema } from '@/shared/theme/schemas'
+import { themeSchema } from '@/server/schemas/theme'
 
 export const parseThemeCookie = () => {
   const theme = getCookie('theme')

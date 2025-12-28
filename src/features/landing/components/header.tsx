@@ -3,8 +3,10 @@ import { Menu, X } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
 
 import { Logo } from '@/shared/components/Logo'
+import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
+import { ThemeDropdownMenu } from '@/shared/theme/ThemeDropdownMenu'
 
 const menuItems = [
   { name: 'Features', href: '#features' },
@@ -13,6 +15,7 @@ const menuItems = [
 ]
 
 export const HeroHeader = () => {
+  const { theme, setTheme } = useTheme()
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
 
@@ -99,6 +102,7 @@ export const HeroHeader = () => {
                     <span>Get Started</span>
                   </Link>
                 </Button>
+                <ThemeDropdownMenu theme={theme} onChange={setTheme} />
               </div>
             </div>
           </div>

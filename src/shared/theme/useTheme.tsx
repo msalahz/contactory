@@ -3,10 +3,10 @@ import { useStore } from '@tanstack/react-store'
 import { useServerFn } from '@tanstack/react-start'
 import { useMutation } from '@tanstack/react-query'
 
-import type { Theme } from '@/shared/theme/schemas'
+import type { Theme } from '@/server/schemas/theme'
 
-import { ThemeContext } from '@/shared/theme/providers'
-import { setThemeCookieFn } from '@/shared/theme/server/setThemeCookieFn'
+import { ThemeContext } from '@/shared/theme/themeContext'
+import { setThemeCookieFn } from '@/server/mutations/setThemeCookieFn'
 
 /**
  * @description Hook to access and update the theme from the shared store
@@ -31,5 +31,8 @@ export function useTheme() {
     store.setState((state) => ({ ...state, theme: newTheme }))
   }
 
-  return { theme, setTheme }
+  return {
+    theme,
+    setTheme,
+  }
 }

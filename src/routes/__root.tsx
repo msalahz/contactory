@@ -6,25 +6,30 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
 
-import type { Theme } from '@/shared/theme/schemas'
+import type { Theme } from '@/server/schemas/theme'
 import type { QueryClient } from '@tanstack/react-query'
 import type { Session, User } from '@/integrations/better-auth/authClient'
 
-import { cn } from '@/integrations/shadcn/lib/utils'
 import { useTheme } from '@/shared/theme/useTheme'
-import { ThemeProvider } from '@/shared/theme/providers'
+import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
+import { ThemeProvider } from '@/shared/theme/themeContext'
+import { findThemeCookieFn } from '@/server/queries/findThemeCookieFn'
 
 interface MyRouterContext {
   user: User | null
-  theme: Theme | null
   session: Session | null
+  serverTheme: Theme | null
   queryClient: QueryClient
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
+  async beforeLoad() {
+    const serverTheme = await findThemeCookieFn()
+    return { serverTheme }
+  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -42,8 +47,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
+  const { serverTheme } = Route.useRouteContext()
+
   return (
-    <ThemeProvider initialTheme={'dark'}>
+    <ThemeProvider initialTheme={serverTheme || 'light'}>
       <RootDocumentContent>{children}</RootDocumentContent>
       <TanStackDevtools
         config={{ position: 'bottom-right' }}
@@ -60,12 +67,12 @@ function RootDocumentContent({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
 
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <head>
         <meta rel="icon" />
         <HeadContent />
       </head>
-      <body suppressHydrationWarning className={cn(theme === 'dark' ? 'dark' : '')}>
+      <body suppressHydrationWarning className={cn(theme)}>
         {children}
         <Scripts />
       </body>
