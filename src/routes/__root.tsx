@@ -14,7 +14,7 @@ import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
 import { ThemeProvider } from '@/shared/theme/themeContext'
-import { theme } from '@/server/queries/theme'
+import { findThemeCookieFn } from '@/server/queries/theme'
 
 interface MyRouterContext {
   user: User | null
@@ -29,7 +29,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   preloadGcTime: 1000 * 60 * 60, // 60 minutes
   preloadStaleTime: 1000 * 60 * 60, // 60 minutes,
   async loader() {
-    const serverTheme = await theme()
+    const serverTheme = await findThemeCookieFn()
     return { serverTheme }
   },
   head: () => ({
