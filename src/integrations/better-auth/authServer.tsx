@@ -61,7 +61,7 @@ export const authServer = betterAuth({
   },
 
   emailAndPassword: {
-    enabled: false,
+    enabled: true,
     autoSignIn: true,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
@@ -90,21 +90,6 @@ export const authServer = betterAuth({
     window: 10,
     max: 100,
     storage: 'memory',
-  },
-
-  advanced: {
-    useSecureCookies: envServer.BETTER_AUTH_USE_SECURE_COOKIES, // Secure+HttpOnly on HTTPS in prod
-    defaultCookieAttributes: {
-      httpOnly: true,
-      secure: envServer.BETTER_AUTH_USE_SECURE_COOKIES,
-      sameSite: envServer.BETTER_AUTH_USE_SECURE_COOKIES ? 'strict' : 'lax', // 'lax' OK for subdomains & localhost
-      path: '/',
-    },
-    cookies: {
-      session_token: {
-        name: 'contactory_token',
-      },
-    },
   },
 
   telemetry: {

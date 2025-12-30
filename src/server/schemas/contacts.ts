@@ -1,7 +1,7 @@
 import { v7 as uuidv7 } from 'uuid'
 import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
-import type { InferInsertModel, InferSelectModel } from 'drizzle-orm'
+import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
 import { user } from '@/server/schemas/auth'
 
@@ -60,6 +60,7 @@ export const contact = pgTable(
     index('contact_isFavorite_idx').on(table.isFavorite, table.userId),
   ],
 )
-
-export type Contact = InferSelectModel<typeof contact>
-export type NewContact = InferInsertModel<typeof contact>
+export const contactSelectSchema = createSelectSchema(contact)
+export const insertContactSelectSchema = createInsertSchema(contact)
+export type Contact = typeof contact.$inferSelect
+export type InsertContact = typeof contact.$inferInsert
