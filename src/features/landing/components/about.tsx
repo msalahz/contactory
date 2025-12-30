@@ -1,6 +1,8 @@
-export function AboutSection() {
+import { cn } from '@/integrations/shadcn/lib/utils'
+
+export function AboutSection({ className, ...props }: React.ComponentProps<'section'>) {
   return (
-    <section id="about" className="py-16 md:py-32">
+    <section id="about" className={cn('py-16 md:py-32', className)} {...props}>
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-6 md:grid-cols-2 md:gap-12">
           <h2 className="text-4xl font-medium">

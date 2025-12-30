@@ -25,19 +25,21 @@ function App() {
   const { signOut, isSigningOut } = useSignOut()
   return (
     <div className="min-h-screen">
-      <HeroHeader
-        user={user}
-        theme={theme}
-        onThemeChange={setTheme}
-        onSignOutClick={signOut}
-        isSigningOut={isSigningOut}
-      />
-      <HeroSection user={user} />
-      <Features />
+      <div>
+        <HeroHeader
+          user={user}
+          theme={theme}
+          onThemeChange={setTheme}
+          onSignOutClick={signOut}
+          isSigningOut={isSigningOut}
+        />
+        <HeroSection user={user} />
+      </div>
+      <Features className="bg-secondary/20" />
       <AboutSection />
-      <StatsSection />
+      <StatsSection className="bg-secondary/20" />
       <FAQs />
-      <FooterSection />
+      <FooterSection className="bg-secondary/20" />
     </div>
   )
 }

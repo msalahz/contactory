@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { cn } from '@/integrations/shadcn/lib/utils'
 
 const links = [
   { title: 'Features', href: '#features' },
@@ -6,9 +7,9 @@ const links = [
   { title: 'FAQ', href: '#faq' },
 ]
 
-export function FooterSection() {
+export function FooterSection({ className, ...props }: React.ComponentProps<'footer'>) {
   return (
-    <footer className="border-b bg-white py-12 dark:bg-transparent">
+    <footer className={cn('border-b bg-white py-12', className)} {...props}>
       <div className="mx-auto max-w-5xl px-6">
         <div className="flex flex-wrap justify-between gap-6">
           <span className="text-muted-foreground order-last block text-center text-sm md:order-first">

@@ -123,21 +123,21 @@ export function HeroSection({ user }: HeroSectionProps) {
                 features.
               </TextEffect>
 
-              <AnimatedGroup
-                variants={{
-                  container: {
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.05,
-                        delayChildren: 0.75,
+              {user?.id ? (
+                <AnimatedGroup
+                  variants={{
+                    container: {
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.05,
+                          delayChildren: 0.75,
+                        },
                       },
                     },
-                  },
-                  ...transitionVariants,
-                }}
-                className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
-              >
-                {user?.id ? (
+                    ...transitionVariants,
+                  }}
+                  className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
+                >
                   <div
                     key={1}
                     className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
@@ -148,8 +148,22 @@ export function HeroSection({ user }: HeroSectionProps) {
                       </Link>
                     </Button>
                   </div>
-                ) : (
-                  <>
+                </AnimatedGroup>
+              ) : (
+                <AnimatedGroup
+                  variants={{
+                    container: {
+                      visible: {
+                        transition: {
+                          staggerChildren: 0.05,
+                          delayChildren: 0.75,
+                        },
+                      },
+                    },
+                    ...transitionVariants,
+                  }}
+                >
+                  <div className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">
                     <div
                       key={1}
                       className="bg-foreground/10 rounded-[calc(var(--radius-xl)+0.125rem)] border p-0.5"
@@ -171,9 +185,9 @@ export function HeroSection({ user }: HeroSectionProps) {
                         <span className="text-nowrap">Sign In</span>
                       </Link>
                     </Button>
-                  </>
-                )}
-              </AnimatedGroup>
+                  </div>
+                </AnimatedGroup>
+              )}
             </div>
           </div>
 

@@ -1,6 +1,12 @@
-export function FAQs() {
+import { cn } from '@/integrations/shadcn/lib/utils'
+
+export function FAQs({ className, ...props }: React.ComponentProps<'section'>) {
   return (
-    <section id="faq" className="scroll-py-16 py-16 md:scroll-py-32 md:py-32">
+    <section
+      id="faq"
+      className={cn('scroll-py-16 py-16 md:scroll-py-32 md:py-32', className)}
+      {...props}
+    >
       <div className="mx-auto max-w-5xl px-6">
         <div className="grid gap-y-12 px-2 lg:grid-cols-[1fr_auto]">
           <div className="text-center lg:text-left">

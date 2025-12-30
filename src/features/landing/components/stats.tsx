@@ -1,6 +1,8 @@
-export function StatsSection() {
+import { cn } from '@/integrations/shadcn/lib/utils'
+
+export function StatsSection({ className, ...props }: React.ComponentProps<'section'>) {
   return (
-    <section className="py-12 md:py-20">
+    <section className={cn('py-12 md:py-20', className)} {...props}>
       <div className="mx-auto max-w-5xl space-y-8 px-6 md:space-y-16">
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center">
           <h2 className="text-4xl font-semibold lg:text-5xl">Contactory in numbers</h2>

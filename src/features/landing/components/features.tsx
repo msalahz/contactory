@@ -14,6 +14,7 @@ import {
 } from 'lucide-react'
 
 import type { JSX } from 'react'
+import { cn } from '@/integrations/shadcn/lib/utils'
 
 export interface Feature {
   id: string
@@ -110,9 +111,9 @@ export const features: Array<Feature> = [
   },
 ]
 
-export function Features() {
+export function Features({ className, ...props }: React.ComponentProps<'section'>) {
   return (
-    <section id="features" className="py-12 md:py-20">
+    <section id="features" className={cn('py-12 md:py-20', className)} {...props}>
       <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16">
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center md:space-y-12">
           <h2 className="text-4xl font-medium text-balance lg:text-5xl">

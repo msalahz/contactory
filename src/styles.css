@@ -133,3 +133,10 @@
 @utility gradient-bg {
   @apply from-primary/5 to-card dark:bg-card grid grid-cols-1 gap-4 bg-linear-to-t shadow-xs xl:grid-cols-2 2xl:grid-cols-4;
 }
+
+@utility glass-boxs-bg {
+  background-size: 50px 50px;
+  background-image:
+    linear-gradient(to right, var(--border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--border) 1px, transparent 1px);
+}
