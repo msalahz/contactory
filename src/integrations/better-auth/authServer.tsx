@@ -61,7 +61,7 @@ export const authServer = betterAuth({
   },
 
   emailAndPassword: {
-    enabled: true,
+    enabled: false,
     autoSignIn: true,
     requireEmailVerification: true,
     revokeSessionsOnPasswordReset: true,
@@ -101,7 +101,9 @@ export const authServer = betterAuth({
       path: '/',
     },
     cookies: {
-      session_token: { name: 'contactory_token' }, // rename it if you like
+      session_token: {
+        name: 'contactory_token',
+      },
     },
   },
 
