@@ -1,21 +1,78 @@
+import { z } from 'zod'
 import { Link } from '@tanstack/react-router'
 
-import { LogoIcon } from '@/shared/components/Logo'
-import { Input } from '@/integrations/shadcn/components/ui/input'
-import { Label } from '@/integrations/shadcn/components/ui/label'
-import { Button } from '@/integrations/shadcn/components/ui/button'
-import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { noop } from '@/shared/utils/noop'
+import { LogoIcon } from '@/shared/components/Logo'
+import { cn } from '@/integrations/shadcn/lib/utils'
+import { Button } from '@/integrations/shadcn/components/ui/button'
+import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
+import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
+import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
 
-export interface SignUpProps {
+const formSchema = z
+  .object({
+    name: z.string().nonempty('Name is required'),
+    email: z.email('Invalid email address').nonempty('Email is required'),
+    password: z
+      .string()
+      .nonempty('Password is required')
+      .min(10, 'Password must be at least 10 characters long'),
+    passwordConfirm: z.string().nonempty('Please confirm your password'),
+  })
+  .refine((data) => data.password === data.passwordConfirm, {
+    message: 'Passwords do not match',
+    path: ['passwordConfirm'],
+  })
+
+export interface SignUpFormProps extends React.ComponentProps<'div'> {
   signUpGoogle: () => void
   isSigningUpSocial: boolean
+  onFormSubmit?: (data: { name: string; email: string; password: string }) => Promise<void>
 }
 
-export function SignUp({ signUpGoogle = noop, isSigningUpSocial }: SignUpProps) {
+export function SignUpForm({
+  children,
+  className,
+  isSigningUpSocial,
+  signUpGoogle = noop,
+  onFormSubmit = noop,
+  ...props
+}: SignUpFormProps) {
+  const form = useAppForm({
+    defaultValues: {
+      name: '',
+      email: '',
+      password: '',
+      passwordConfirm: '',
+    },
+    validators: {
+      onSubmit: formSchema,
+    },
+    async onSubmit({ value }) {
+      await onFormSubmit({
+        name: value.name,
+        email: value.email,
+        password: value.password,
+      })
+    },
+  })
+
   return (
-    <section className="flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent">
-      <form action="" className="m-auto h-fit w-full max-w-92">
+    <section
+      className={cn(
+        'flex min-h-screen bg-zinc-50 px-4 py-16 md:py-32 dark:bg-transparent',
+        className,
+      )}
+      {...props}
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          void form.handleSubmit()
+        }}
+        className="m-auto h-fit w-full max-w-92"
+      >
         <div className="p-6">
           <div>
             <Link to="/" aria-label="go home">
@@ -71,16 +128,35 @@ export function SignUp({ signUpGoogle = noop, isSigningUpSocial }: SignUpProps) 
             <hr className="border-dashed" />
           </div>
 
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <Label htmlFor="email" className="block text-sm">
-                Email
-              </Label>
-              <Input type="email" required name="email" id="email" />
-            </div>
+          <FieldGroup>
+            {children ? <Field>{children}</Field> : null}
 
-            <Button className="w-full">Continue</Button>
-          </div>
+            <form.AppField
+              name="name"
+              children={(field) => <field.Input type="name" label="Name" placeholder="Jone Doe" />}
+            />
+
+            <form.AppField
+              name="email"
+              children={(field) => (
+                <field.Input type="email" label="Email" placeholder="me@example.com" />
+              )}
+            />
+
+            <form.AppField
+              name="password"
+              children={(field) => <field.Input type="password" label="Password" />}
+            />
+
+            <form.AppField
+              name="passwordConfirm"
+              children={(field) => <field.Input type="password" label="Confirm Password" />}
+            />
+
+            <form.AppForm>
+              <form.SubmitButton label="Sign Up" />
+            </form.AppForm>
+          </FieldGroup>
         </div>
 
         <p className="text-accent-foreground text-center text-sm">
