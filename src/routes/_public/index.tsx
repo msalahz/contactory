@@ -30,8 +30,8 @@ function App() {
           user={user}
           theme={theme}
           onThemeChange={setTheme}
-          onSignOutClick={signOut}
           isSigningOut={isSigningOut}
+          onSignOutClick={() => signOut({ data: { redirectTo: '/' } })}
         />
         <HeroSection user={user} />
       </div>

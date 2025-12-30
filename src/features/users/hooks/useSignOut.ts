@@ -7,7 +7,7 @@ export function useSignOut() {
   const serverSignOut = useServerFn(signOutFn)
   const { mutate: signOut, isPending: isSigningOut } = useMutation({
     mutationKey: ['sign-out'],
-    mutationFn: () => serverSignOut(),
+    mutationFn: serverSignOut,
   })
   return { signOut, isSigningOut }
 }
