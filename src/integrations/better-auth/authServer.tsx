@@ -92,6 +92,21 @@ export const authServer = betterAuth({
     storage: 'memory',
   },
 
+  advanced: {
+    useSecureCookies: envServer.BETTER_AUTH_USE_SECURE_COOKIES, // Secure+HttpOnly on HTTPS in prod
+    defaultCookieAttributes: {
+      httpOnly: true,
+      secure: envServer.BETTER_AUTH_USE_SECURE_COOKIES,
+      sameSite: 'lax', // 'lax' OK for subdomains & localhost
+      path: '/',
+    },
+    cookies: {
+      session_token: {
+        name: 'contactory_token',
+      },
+    },
+  },
+
   telemetry: {
     debug: false,
     enabled: false,
