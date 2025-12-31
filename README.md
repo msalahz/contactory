@@ -1,8 +1,7 @@
 # 📇 Contactory
 
-A simple, fast and secure Contactory management application that helps users organize all their personal and
-professional/
-contacts in one place.
+A modern, type-safe contact management application built with TanStack Start, React 19, and Drizzle ORM. Organize all
+your personal and professional contacts in one secure place with a beautiful, responsive interface.
 
 🔗 **[Live Demo](https://contactory.consultin.dev/)**
 
@@ -23,20 +22,20 @@ contacts in one place.
 
 ## ✨ Features
 
-| Feature              | Status         | Description                                                  |
-| -------------------- | -------------- | ------------------------------------------------------------ |
-| Authentication       | ✅ Implemented | Secure signup, signin, password reset and session management |
-| Theme Support        | 🚧 In Progress | Dark/light mode with system preference detection             |
-| Organize Contacts    | 📅 Coming Soon | CRUD operations for contacts                                 |
-| Search & Filter      | 📅 Coming Soon | Real-time search with advanced filtering                     |
-| Sync                 | 📅 Coming Soon | Cross-device synchronization                                 |
-| Share                | 📅 Coming Soon | Share contacts via link, email or messaging                  |
-| Import/Export        | 📅 Coming Soon | CSV, vCard and JSON support                                  |
-| Groups/Labels        | 📅 Coming Soon | Custom groups with color coding                              |
-| Favorites            | 📅 Coming Soon | Quick access to important contacts                           |
-| Duplicate Detection  | 📅 Coming Soon | Find and merge duplicate contacts                            |
-| QR Code Sharing      | 📅 Coming Soon | Share contact info via scannable QR code                     |
-| Internationalization | 📅 Coming Soon | Bilingual support (English/Arabic) with RTL/LTR layout       |
+| Feature              | Status         | Description                                             |
+| -------------------- | -------------- | ------------------------------------------------------- |
+| Authentication       | ✅ Implemented | Secure signup, signin, password reset with better-auth  |
+| Theme Support        | ✅ Implemented | Dark/light mode with system preference detection        |
+| Organize Contacts    | 🚧 In Progress | CRUD operations for contacts (basic structure in place) |
+| Favorites            | 🚧 In Progress | Mark and manage favorite contacts                       |
+| Search & Filter      | 📅 Coming Soon | Real-time search with advanced filtering                |
+| Sync                 | 📅 Coming Soon | Cross-device synchronization                            |
+| Share                | 📅 Coming Soon | Share contacts via link, email or messaging             |
+| Import/Export        | 📅 Coming Soon | CSV, vCard and JSON support                             |
+| Groups/Labels        | 📅 Coming Soon | Custom groups with color coding                         |
+| Duplicate Detection  | 📅 Coming Soon | Find and merge duplicate contacts                       |
+| QR Code Sharing      | 📅 Coming Soon | Share contact info via scannable QR code                |
+| Internationalization | 📅 Coming Soon | Bilingual support with RTL/LTR layout                   |
 
 ---
 
@@ -46,8 +45,8 @@ contacts in one place.
 
 | Technology     | Purpose                    |
 | -------------- | -------------------------- |
-| TypeScript     | Type-safe JavaScript       |
-| Vite           | Build tool & dev server    |
+| TypeScript 5.9 | Type-safe JavaScript       |
+| Vite 7.3       | Build tool & dev server    |
 | TanStack Start | Full-stack React framework |
 | React 19       | UI library                 |
 
@@ -64,30 +63,33 @@ contacts in one place.
 
 ### UI/UX
 
-| Technology     | Purpose               |
-| -------------- | --------------------- |
-| Tailwind CSS 4 | Utility-first styling |
-| shadcn/ui      | Component library     |
-| Radix UI       | Accessible primitives |
-| Lucide React   | Icons                 |
-| Sonner         | Toast notifications   |
-| next-themes    | Theme management      |
-| CVA            | Component variants    |
+| Technology               | Purpose                |
+| ------------------------ | ---------------------- |
+| Tailwind CSS 4           | Utility-first styling  |
+| shadcn/ui                | Component library      |
+| Radix UI                 | Accessible primitives  |
+| Lucide React             | Icons                  |
+| class-variance-authority | Component variants     |
+| tailwind-merge           | Merge Tailwind classes |
 
 ### Authentication
 
-| Technology  | Purpose      |
-| ----------- | ------------ |
-| better-auth | Auth library |
+| Technology       | Purpose                             |
+| ---------------- | ----------------------------------- |
+| better-auth      | Authentication & session management |
+| @t3-oss/env-core | Environment validation              |
 
-### Testing & Quality
+### Development Tools
 
-| Technology      | Purpose           |
-| --------------- | ----------------- |
-| Vitest          | Unit testing      |
-| Testing Library | Component testing |
-| ESLint          | Linting           |
-| Prettier        | Code formatting   |
+| Technology      | Purpose                |
+| --------------- | ---------------------- |
+| Vitest          | Unit testing framework |
+| Testing Library | Component testing      |
+| ESLint          | Code linting           |
+| Prettier        | Code formatting        |
+| Drizzle Kit     | Database migrations    |
+| React Email     | Email templates        |
+| Resend          | Email delivery service |
 
 ---
 
@@ -96,62 +98,41 @@ contacts in one place.
 ```
 contactory/
 ├── .github/                       # GitHub configuration
-│   ├── copilot-instructions.md    # Copilot code generation guidelines
-│   ├── git-commit-instructions.md # Commit message conventions
-│   └── workflows/
-│       └── ci.yml                 # CI/CD pipeline configuration
+│   ├── workflows/
+│   │   └── ci.yml                # CI/CD pipeline configuration
 ├── docs/                          # Documentation
 │   ├── ADR-001-tech-stack.md      # Architecture decision record
+│   ├── ADR-002-file-structure.md  # Project structure decisions
 │   └── PRD.md                     # Product requirements document
 ├── drizzle/                       # Database migrations
 │   └── meta/                      # Migration metadata
 ├── public/                        # Static assets
 │   ├── favicon.svg
-│   ├── manifest.json
 │   └── robots.txt
 ├── src/
-│   ├── db/                        # Database configuration
-│   │   ├── index.ts               # Database client
-│   │   └── schemas/               # Drizzle ORM schemas
-│   │       ├── auth.ts            # Auth-related tables
-│   │       └── contacts.ts        # Contact tables
 │   ├── features/                  # Feature modules
-│   │   ├── abstractions/          # Shared UI components
-│   │   │   ├── components/
-│   │   │   │   ├── primitives/    # Base UI components (button, input, etc.)
-│   │   │   │   └── reused/        # Composite components (header, footer, etc.)
-│   │   │   └── lib/               # Utility functions
-│   │   │       ├── storage.ts       # cn() and helpers
-│   │   │       └── utils.test.ts  # Unit tests
-│   │   └── users/                 # User feature module
-│   │       ├── components/        # Auth forms
-│   │       └── functions/         # Server functions
+│   │   ├── landing/               # Landing page components
+│   │   │   └── components/        # Reusable UI components
+│   │   └── users/                 # User management
+│   │       ├── components/        # User interface components
+│   │       └── hooks/             # Custom React hooks
 │   ├── integrations/              # Third-party integrations
-│   │   ├── better-auth/           # Auth integration
-│   │   │   ├── auth.ts            # Server auth config
-│   │   │   ├── auth-client.ts     # Client auth config
-│   │   │   ├── hooks/             # Auth mutations
-│   │   │   └── middlewares/       # Auth middlewares
-│   │   ├── tanstack-form/         # Form integration
-│   │   │   ├── components/        # Form field components
-│   │   │   └── hooks/             # useAppForm hook
-│   │   └── tanstack-query/        # Query integration
-│   │       ├── root-provider.tsx  # Query client provider
-│   │       └── devtools.tsx       # Query devtools
-│   ├── routes/                    # TanStack Router routes
+│   │   ├── better-auth/           # Auth configuration
+│   │   └── shadcn/                # UI components
+│   ├── routes/                    # Application routes
 │   │   ├── __root.tsx             # Root layout
-│   │   ├── index.tsx              # Home page
-│   │   ├── _auth/                 # Auth layout routes
-│   │   │   ├── signin.tsx
-│   │   │   ├── signup.tsx
-│   │   │   ├── forgot-password.tsx
-│   │   │   └── reset-password.tsx
-│   │   ├── api/auth/              # Auth API routes
-│   │   └── console/               # Protected routes
-│   ├── env.ts                     # Type-safe environment variables
-│   ├── router.tsx                 # Router configuration
-│   ├── routeTree.gen.ts           # Auto-generated route tree
-│   └── styles.css                 # Global styles
+│   │   ├── _dashboard/            # Protected dashboard routes
+│   │   ├── _public/               # Public routes
+│   │   └── api/                   # API endpoints
+│   ├── server/                    # Server-side code
+│   │   ├── db/                    # Database client and models
+│   │   ├── emails/                # Email templates
+│   │   └── functions/             # Server functions
+│   └── shared/                    # Shared utilities and components
+│       ├── components/            # Reusable components
+│       ├── hooks/                 # Shared React hooks
+│       └── utils/                 # Utility functions
+├── .env.example                   # Example environment variables
 ├── components.json                # shadcn/ui config
 ├── drizzle.config.ts              # Drizzle ORM config
 ├── eslint.config.js               # ESLint config
@@ -169,48 +150,54 @@ contactory/
 
 - Node.js 20+
 - pnpm 9+
-- PostgreSQL database
+- PostgreSQL +14
 
 ### Installation
 
-```bash
-# Clone the repository
-git clone https://github.com/your-username/contactory.git
-cd contactory
+1. Clone the repository:
 
-# Install dependencies
-pnpm install
-```
+   ```bash
+   git clone https://github.com/your-username/contactory.git
+   cd contactory
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   pnpm install
+   ```
+
+3. Set up environment variables:
+
+   ```bash
+   cp .env.example .env.local
+   ```
+
+   Update the `.env.local` file with your configuration.
+
+4. Run database migrations:
+
+   ```bash
+   pnpm db:migrate
+   ```
+
+5. Start the development server:
+   ```bash
+   pnpm dev
+   ```
+   The application will be available at `http://localhost:3000`
 
 ### Environment Variables
 
-Copy the example environment file and configure your variables:
-
-```bash
-cp .env.example .env.local
-```
-
-Then fill in the required environment variables:
-
-| Variable                     | Description                                            | Required |
-| ---------------------------- | ------------------------------------------------------ | -------- |
-| `DATABASE_URL`               | PostgreSQL connection string                           | ✅       |
-| `BETTER_AUTH_SECRET`         | Secret key for authentication                          | ✅       |
-| `BETTER_AUTH_URL`            | Base URL of your app (e.g., `http://localhost:3000`)   | ✅       |
-| `BETTER_AUTH_ENABLE_OPENAPI` | Enable OpenAPI docs (`true` for dev, `false` for prod) | ❌       |
-| `VITE_BETTER_AUTH_BASE_URL`  | Client-side base URL of your app                       | ✅       |
-
-### Running the App
-
-```bash
-# Run database migrations
-pnpm db:migrate
-
-# Start the development server
-pnpm dev
-```
-
-The app will be running at `http://localhost:3000`.
+| Variable                           | Description                      | Required | Default                 |
+| ---------------------------------- | -------------------------------- | -------- | ----------------------- |
+| `DATABASE_URL`                     | PostgreSQL connection string     | ✅       | -                       |
+| `BETTER_AUTH_SECRET`               | Secret key for authentication    | ✅       | -                       |
+| `BETTER_AUTH_URL`                  | Base URL of your app             | ✅       | `http://localhost:3000` |
+| `BETTER_AUTH_GOOGLE_CLIENT_ID`     | Google OAuth client ID           | ❌       | -                       |
+| `BETTER_AUTH_GOOGLE_CLIENT_SECRET` | Google OAuth client secret       | ❌       | -                       |
+| `RESEND_API_KEY`                   | API key for Resend email service | ❌       | -                       |
+| `VITE_BETTER_AUTH_BASE_URL`        | Client-side base URL of your app | ✅       |
 
 ---
 
@@ -237,10 +224,9 @@ The app will be running at `http://localhost:3000`.
 
 ### Project Documentation
 
-| Document                                       | Description                                                |
-| ---------------------------------------------- | ---------------------------------------------------------- |
-| [Product Requirements (PRD)](./docs/PRD.md)    | Feature specifications, user stories and requirements      |
-| [Tech Stack ADR](./docs/ADR-001-tech-stack.md) | Architecture decision record explaining technology choices |
+- [Product Requirements (PRD)](./docs/PRD.md) - Feature specifications and user stories
+- [Tech Stack ADR](./docs/ADR-001-tech-stack.md) - Technology decisions and rationale
+- [File Structure ADR](./docs/ADR-002-file-structure.md) - Project organization and architecture
 
 ### GitHub Configuration
 
@@ -249,8 +235,6 @@ The app will be running at `http://localhost:3000`.
 | [Copilot Instructions](./.github/copilot-instructions.md)       | Code generation guidelines and project conventions for GitHub Copilot |
 | [Git Commit Instructions](./.github/git-commit-instructions.md) | Conventional commit message format and guidelines                     |
 | [CI Workflow](./.github/workflows/ci.yml)                       | GitHub Actions workflow for linting, testing and building             |
-
-### CI/CD Pipeline
 
 The project uses GitHub Actions for continuous integration. The pipeline runs on every push and pull request to `main`:
 

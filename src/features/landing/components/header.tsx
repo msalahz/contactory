@@ -48,11 +48,11 @@ export const HeroHeader = ({
       <nav data-state={menuState && 'active'} className="fixed z-20 w-full px-2">
         <div
           className={cn(
-            'mx-auto mt-2 max-w-6xl px-6 transition-all duration-300 lg:px-12',
+            'mx-auto mt-2 flex max-w-6xl items-center justify-center gap-2 px-6 transition-all duration-300 lg:px-12',
             isScrolled && 'bg-background/50 max-w-4xl rounded-2xl border backdrop-blur-lg lg:px-5',
           )}
         >
-          <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
+          <div className="relative flex flex-1 flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full justify-between lg:w-auto">
               <Link to="/" aria-label="home" className="flex items-center space-x-2">
                 <Logo />
@@ -98,6 +98,7 @@ export const HeroHeader = ({
                   ))}
                 </ul>
               </div>
+
               <div className="flex w-full flex-col space-y-3 sm:flex-row sm:gap-3 sm:space-y-0 md:w-fit">
                 {user?.id ? (
                   <Button asChild size="sm" className={cn('lg:inline-flex')}>
@@ -133,21 +134,22 @@ export const HeroHeader = ({
                     </Button>
                   </>
                 )}
-
-                <ThemeDropdownMenu theme={theme} onChange={onThemeChange} />
-
-                {user?.id ? (
-                  <Button
-                    variant="outline"
-                    size="icon-sm"
-                    disabled={isSigningOut}
-                    onClick={onSignOutClick}
-                  >
-                    {isSigningOut ? <Spinner /> : <LogOutIcon />}
-                  </Button>
-                ) : null}
               </div>
             </div>
+          </div>
+          <div className="flex flex-initial gap-2">
+            <ThemeDropdownMenu theme={theme} onChange={onThemeChange} />
+
+            {user?.id ? (
+              <Button
+                variant="outline"
+                size="icon-sm"
+                disabled={isSigningOut}
+                onClick={onSignOutClick}
+              >
+                {isSigningOut ? <Spinner /> : <LogOutIcon />}
+              </Button>
+            ) : null}
           </div>
         </div>
       </nav>
