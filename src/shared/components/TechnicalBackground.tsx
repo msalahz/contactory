@@ -9,204 +9,225 @@ interface TechnicalBackgroundProps {
 export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
   const { scrollYProgress } = useScroll()
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -100])
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -200])
+  const y1 = useTransform(scrollYProgress, [0, 1], [0, -150])
+  const y2 = useTransform(scrollYProgress, [0, 1], [0, -300])
 
   return (
-    <div className={cn('pointer-events-none fixed inset-0 overflow-hidden', className)}>
-      {/* Slow layer - Dark theme */}
-      <motion.div className="absolute inset-0 hidden opacity-20 dark:block" style={{ y: y1 }}>
+    <div
+      className={cn(
+        'pointer-events-none fixed inset-0 overflow-x-hidden overflow-y-hidden',
+        className,
+      )}
+    >
+      {/* Left side path with icons - Dark theme */}
+      <motion.div
+        className="absolute top-0 left-0 hidden h-[200%] w-[150px] overflow-hidden dark:block"
+        style={{ y: y1 }}
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="shine1-dark" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#94a3b8" stopOpacity="0" />
-              <stop offset="30%" stopColor="#e2e8f0" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="70%" stopColor="#e2e8f0" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#94a3b8" stopOpacity="0" />
-            </linearGradient>
-            <filter id="glow1-dark" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <line
-            x1="0%"
-            y1="20%"
-            x2="40%"
-            y2="35%"
-            stroke="url(#shine1-dark)"
-            strokeWidth="2"
-            filter="url(#glow1-dark)"
+          <path
+            d="M 20 0 Q 70 150, 50 300 Q 30 450, 60 600 Q 90 750, 40 900 Q 10 1050, 50 1200 Q 80 1350, 30 1500"
+            fill="none"
+            stroke="#64748b"
+            strokeWidth="1.5"
+            strokeDasharray="10 10"
+            opacity="0.5"
           />
-          <line
-            x1="100%"
-            y1="55%"
-            x2="60%"
-            y2="40%"
-            stroke="url(#shine1-dark)"
-            strokeWidth="2"
-            filter="url(#glow1-dark)"
-          />
-          <line
-            x1="0%"
-            y1="80%"
-            x2="35%"
-            y2="70%"
-            stroke="url(#shine1-dark)"
-            strokeWidth="2"
-            filter="url(#glow1-dark)"
-          />
+          <g transform="translate(40, 280)" opacity="0.4">
+            <circle cx="12" cy="8" r="8" stroke="#94a3b8" strokeWidth="2" fill="none" />
+            <path
+              d="M 0 32 Q 0 20, 12 20 Q 24 20, 24 32"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+          </g>
+          <g transform="translate(55, 580)" opacity="0.4">
+            <rect
+              x="0"
+              y="4"
+              width="28"
+              height="22"
+              rx="3"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path d="M 0 8 L 14 18 L 28 8" stroke="#94a3b8" strokeWidth="2" fill="none" />
+          </g>
+          <g transform="translate(30, 880)" opacity="0.4">
+            <path
+              d="M 6 0 L 22 0 Q 28 0, 28 6 L 28 28 Q 28 34, 22 34 L 6 34 Q 0 34, 0 28 L 0 6 Q 0 0, 6 0"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+            <circle cx="14" cy="28" r="3" stroke="#94a3b8" strokeWidth="1.5" fill="none" />
+          </g>
+          <g transform="translate(50, 1180)" opacity="0.4">
+            <path
+              d="M 0 6 Q 0 0, 6 0 L 26 0 Q 32 0, 32 6 L 32 20 Q 32 26, 26 26 L 12 26 L 4 34 L 4 26 Q 0 26, 0 20 Z"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+          </g>
         </svg>
       </motion.div>
 
-      {/* Slow layer - Light theme */}
-      <motion.div className="absolute inset-0 block opacity-20 dark:hidden" style={{ y: y1 }}>
+      {/* Right side path with icons - Dark theme */}
+      <motion.div
+        className="absolute top-0 right-0 hidden h-[200%] w-[150px] overflow-hidden dark:block"
+        style={{ y: y2 }}
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="shine1-light" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#475569" stopOpacity="0" />
-              <stop offset="30%" stopColor="#334155" stopOpacity="0.5" />
-              <stop offset="50%" stopColor="#1e293b" stopOpacity="0.8" />
-              <stop offset="70%" stopColor="#334155" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#475569" stopOpacity="0" />
-            </linearGradient>
-            <filter id="glow1-light" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="4" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <line
-            x1="0%"
-            y1="20%"
-            x2="40%"
-            y2="35%"
-            stroke="url(#shine1-light)"
-            strokeWidth="2"
-            filter="url(#glow1-light)"
+          <path
+            d="M 100 100 Q 50 250, 70 400 Q 90 550, 40 700 Q 20 850, 60 1000 Q 100 1150, 50 1300"
+            fill="none"
+            stroke="#475569"
+            strokeWidth="1.5"
+            strokeDasharray="8 12"
+            opacity="0.4"
           />
-          <line
-            x1="100%"
-            y1="55%"
-            x2="60%"
-            y2="40%"
-            stroke="url(#shine1-light)"
-            strokeWidth="2"
-            filter="url(#glow1-light)"
-          />
-          <line
-            x1="0%"
-            y1="80%"
-            x2="35%"
-            y2="70%"
-            stroke="url(#shine1-light)"
-            strokeWidth="2"
-            filter="url(#glow1-light)"
-          />
+          <g transform="translate(70, 380)" opacity="0.35">
+            <circle cx="14" cy="14" r="6" stroke="#64748b" strokeWidth="2" fill="none" />
+            <circle cx="0" cy="0" r="4" stroke="#64748b" strokeWidth="1.5" fill="none" />
+            <circle cx="28" cy="0" r="4" stroke="#64748b" strokeWidth="1.5" fill="none" />
+            <circle cx="28" cy="28" r="4" stroke="#64748b" strokeWidth="1.5" fill="none" />
+            <line x1="10" y1="10" x2="4" y2="4" stroke="#64748b" strokeWidth="1.5" />
+            <line x1="18" y1="10" x2="24" y2="4" stroke="#64748b" strokeWidth="1.5" />
+            <line x1="18" y1="18" x2="24" y2="24" stroke="#64748b" strokeWidth="1.5" />
+          </g>
+          <g transform="translate(30, 680)" opacity="0.35">
+            <path
+              d="M 14 0 Q 28 0, 28 14 Q 28 24, 14 34 Q 0 24, 0 14 Q 0 0, 14 0"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+            <circle cx="14" cy="14" r="5" stroke="#64748b" strokeWidth="1.5" fill="none" />
+          </g>
+          <g transform="translate(60, 980)" opacity="0.35">
+            <rect
+              x="0"
+              y="6"
+              width="28"
+              height="28"
+              rx="3"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+            <line x1="0" y1="14" x2="28" y2="14" stroke="#64748b" strokeWidth="1.5" />
+            <line x1="8" y1="0" x2="8" y2="8" stroke="#64748b" strokeWidth="2" />
+            <line x1="20" y1="0" x2="20" y2="8" stroke="#64748b" strokeWidth="2" />
+          </g>
         </svg>
       </motion.div>
 
-      {/* Fast layer - Dark theme */}
-      <motion.div className="absolute inset-0 hidden opacity-20 dark:block" style={{ y: y2 }}>
+      {/* Left side path with icons - Light theme */}
+      <motion.div
+        className="absolute top-0 left-0 block h-[200%] w-[150px] overflow-hidden dark:hidden"
+        style={{ y: y1 }}
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="shine2-dark" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#cbd5e1" stopOpacity="0" />
-              <stop offset="30%" stopColor="#f1f5f9" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#ffffff" stopOpacity="1" />
-              <stop offset="70%" stopColor="#f1f5f9" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#cbd5e1" stopOpacity="0" />
-            </linearGradient>
-            <filter id="glow2-dark" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <line
-            x1="100%"
-            y1="15%"
-            x2="55%"
-            y2="30%"
-            stroke="url(#shine2-dark)"
-            strokeWidth="2"
-            filter="url(#glow2-dark)"
+          <path
+            d="M 20 0 Q 70 150, 50 300 Q 30 450, 60 600 Q 90 750, 40 900 Q 10 1050, 50 1200 Q 80 1350, 30 1500"
+            fill="none"
+            stroke="#94a3b8"
+            strokeWidth="1.5"
+            strokeDasharray="10 10"
+            opacity="0.6"
           />
-          <line
-            x1="0%"
-            y1="45%"
-            x2="45%"
-            y2="60%"
-            stroke="url(#shine2-dark)"
-            strokeWidth="2"
-            filter="url(#glow2-dark)"
-          />
-          <line
-            x1="100%"
-            y1="85%"
-            x2="65%"
-            y2="75%"
-            stroke="url(#shine2-dark)"
-            strokeWidth="2"
-            filter="url(#glow2-dark)"
-          />
+          <g transform="translate(40, 280)" opacity="0.5">
+            <circle cx="12" cy="8" r="8" stroke="#64748b" strokeWidth="2" fill="none" />
+            <path
+              d="M 0 32 Q 0 20, 12 20 Q 24 20, 24 32"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+          </g>
+          <g transform="translate(55, 580)" opacity="0.5">
+            <rect
+              x="0"
+              y="4"
+              width="28"
+              height="22"
+              rx="3"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+            <path d="M 0 8 L 14 18 L 28 8" stroke="#64748b" strokeWidth="2" fill="none" />
+          </g>
+          <g transform="translate(30, 880)" opacity="0.5">
+            <path
+              d="M 6 0 L 22 0 Q 28 0, 28 6 L 28 28 Q 28 34, 22 34 L 6 34 Q 0 34, 0 28 L 0 6 Q 0 0, 6 0"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+            <circle cx="14" cy="28" r="3" stroke="#64748b" strokeWidth="1.5" fill="none" />
+          </g>
+          <g transform="translate(50, 1180)" opacity="0.5">
+            <path
+              d="M 0 6 Q 0 0, 6 0 L 26 0 Q 32 0, 32 6 L 32 20 Q 32 26, 26 26 L 12 26 L 4 34 L 4 26 Q 0 26, 0 20 Z"
+              stroke="#64748b"
+              strokeWidth="2"
+              fill="none"
+            />
+          </g>
         </svg>
       </motion.div>
 
-      {/* Fast layer - Light theme */}
-      <motion.div className="absolute inset-0 block opacity-20 dark:hidden" style={{ y: y2 }}>
+      {/* Right side path with icons - Light theme */}
+      <motion.div
+        className="absolute top-0 right-0 block h-[200%] w-[150px] overflow-hidden dark:hidden"
+        style={{ y: y2 }}
+      >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="shine2-light" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stopColor="#475569" stopOpacity="0" />
-              <stop offset="30%" stopColor="#334155" stopOpacity="0.5" />
-              <stop offset="50%" stopColor="#1e293b" stopOpacity="0.8" />
-              <stop offset="70%" stopColor="#334155" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#475569" stopOpacity="0" />
-            </linearGradient>
-            <filter id="glow2-light" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="5" result="blur" />
-              <feMerge>
-                <feMergeNode in="blur" />
-                <feMergeNode in="SourceGraphic" />
-              </feMerge>
-            </filter>
-          </defs>
-          <line
-            x1="100%"
-            y1="15%"
-            x2="55%"
-            y2="30%"
-            stroke="url(#shine2-light)"
-            strokeWidth="2"
-            filter="url(#glow2-light)"
+          <path
+            d="M 100 100 Q 50 250, 70 400 Q 90 550, 40 700 Q 20 850, 60 1000 Q 100 1150, 50 1300"
+            fill="none"
+            stroke="#cbd5e1"
+            strokeWidth="1.5"
+            strokeDasharray="8 12"
+            opacity="0.5"
           />
-          <line
-            x1="0%"
-            y1="45%"
-            x2="45%"
-            y2="60%"
-            stroke="url(#shine2-light)"
-            strokeWidth="2"
-            filter="url(#glow2-light)"
-          />
-          <line
-            x1="100%"
-            y1="85%"
-            x2="65%"
-            y2="75%"
-            stroke="url(#shine2-light)"
-            strokeWidth="2"
-            filter="url(#glow2-light)"
-          />
+          <g transform="translate(70, 380)" opacity="0.4">
+            <circle cx="14" cy="14" r="6" stroke="#94a3b8" strokeWidth="2" fill="none" />
+            <circle cx="0" cy="0" r="4" stroke="#94a3b8" strokeWidth="1.5" fill="none" />
+            <circle cx="28" cy="0" r="4" stroke="#94a3b8" strokeWidth="1.5" fill="none" />
+            <circle cx="28" cy="28" r="4" stroke="#94a3b8" strokeWidth="1.5" fill="none" />
+            <line x1="10" y1="10" x2="4" y2="4" stroke="#94a3b8" strokeWidth="1.5" />
+            <line x1="18" y1="10" x2="24" y2="4" stroke="#94a3b8" strokeWidth="1.5" />
+            <line x1="18" y1="18" x2="24" y2="24" stroke="#94a3b8" strokeWidth="1.5" />
+          </g>
+          <g transform="translate(30, 680)" opacity="0.4">
+            <path
+              d="M 14 0 Q 28 0, 28 14 Q 28 24, 14 34 Q 0 24, 0 14 Q 0 0, 14 0"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+            <circle cx="14" cy="14" r="5" stroke="#94a3b8" strokeWidth="1.5" fill="none" />
+          </g>
+          <g transform="translate(60, 980)" opacity="0.4">
+            <rect
+              x="0"
+              y="6"
+              width="28"
+              height="28"
+              rx="3"
+              stroke="#94a3b8"
+              strokeWidth="2"
+              fill="none"
+            />
+            <line x1="0" y1="14" x2="28" y2="14" stroke="#94a3b8" strokeWidth="1.5" />
+            <line x1="8" y1="0" x2="8" y2="8" stroke="#94a3b8" strokeWidth="2" />
+            <line x1="20" y1="0" x2="20" y2="8" stroke="#94a3b8" strokeWidth="2" />
+          </g>
         </svg>
       </motion.div>
     </div>
