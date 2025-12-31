@@ -10,7 +10,7 @@ Approved
 
 ## Project
 
-Qarib MVP
+Contactory
 
 ## Author
 
@@ -18,7 +18,8 @@ Mohammed
 
 ## Context
 
-We need to select a modern, performant technology stack for building the Contacts web application. The application requires:
+We need to select a modern, performant technology stack for building the Contacts web application. The application
+requires:
 
 - Fast development iteration
 - Type safety
@@ -89,29 +90,38 @@ We will use the following technology stack:
 6. **Vitest vs Jest**: Vitest chosen for its speed and compatibility with Vite
 7. **Playwright vs Cypress**: Playwright chosen for its cross-browser capabilities and modern API
 8. **Eslint & Prettier vs Biome**: Chosen for maintaining code quality and consistent formatting across the codebase
-9. **react-i18next vs react-intl**: react-i18next chosen for its flexibility, namespace support, and better TypeScript integration
+9. **react-i18next vs react-intl**: react-i18next chosen for its flexibility, namespace support, and better TypeScript
+   integration
 10. **Tailwind RTL vs CSS-in-JS RTL**: Tailwind CSS RTL plugin chosen for consistency with existing styling approach
-11. **Custom i18n vs Intl API**: Combination approach using react-i18next for text and built-in Intl API for dates/numbers
-12. **Drizzle vs Prisma**: Drizzle ORM chosen for its lightweight nature, SQL-like syntax, and better TypeScript inference
-13. **better-auth vs NextAuth/Clerk**: better-auth chosen for its simplicity, self-hosted nature, and tight integration with modern stacks
+11. **Custom i18n vs Intl API**: Combination approach using react-i18next for text and built-in Intl API for
+    dates/numbers
+12. **Drizzle vs Prisma**: Drizzle ORM chosen for its lightweight nature, SQL-like syntax, and better TypeScript
+    inference
+13. **better-auth vs NextAuth/Clerk**: better-auth chosen for its simplicity, self-hosted nature, and tight integration
+    with modern stacks
 14. **Zod vs Yup**: Zod chosen for its TypeScript-first design and excellent type inference
 15. **Sonner vs react-hot-toast**: Sonner chosen for its modern design and better animation support
 
 ## Rationale
 
-- **MPA Architecture**: MPA with TanStack Start offers better SEO and initial load performance for content-heavy applications
+- **MPA Architecture**: MPA with TanStack Start offers better SEO and initial load performance for content-heavy
+  applications
 - **TypeScript**: Provides static typing, better tooling, and improved developer experience
 - **Vite**: Provides lightning-fast development server and optimized production builds
 - **shadcn/ui**: Offers beautiful, customizable components that can be copied and modified as needed
-- **Tailwind CSS**: Enables rapid UI development with utility-first approach, with excellent RTL support through logical properties
+- **Tailwind CSS**: Enables rapid UI development with utility-first approach, with excellent RTL support through logical
+  properties
 - **TanStack Router**: Provides fully type-safe routing with excellent developer experience
 - **TanStack Query**: Handles server state management, caching and synchronization efficiently
 - **TanStack Table**: Offers powerful, headless table functionality for complex data displays
-- **Drizzle ORM**: Provides type-safe database queries with SQL-like syntax and excellent TypeScript inference, lightweight with no code generation required
-- **better-auth**: Simple, self-hosted authentication with built-in support for email/password, social login, and session management
+- **Drizzle ORM**: Provides type-safe database queries with SQL-like syntax and excellent TypeScript inference,
+  lightweight with no code generation required
+- **better-auth**: Simple, self-hosted authentication with built-in support for email/password, social login, and
+  session management
 - **Zod**: TypeScript-first schema validation with excellent type inference and runtime validation
 - **Sonner**: Modern toast notification library with beautiful animations and stacking support
-- **react-i18next**: Mature, feature-rich internationalization library with excellent TypeScript support and namespace organization
+- **react-i18next**: Mature, feature-rich internationalization library with excellent TypeScript support and namespace
+  organization
 - **Tailwind CSS RTL**: Seamless RTL/LTR switching without CSS-in-JS complexity
 - **Luxon & Intl API**: Provides robust date and number formatting capabilities, leveraging native browser support
 - **Vitest**: Fast and lightweight testing framework that integrates seamlessly with Vite
@@ -142,7 +152,8 @@ We will use the following technology stack:
 
 - shadcn/ui components may require customization for brand-specific needs
 - Learning curve for TanStack libraries if team is not familiar
-- Increased bundle size if not optimized properly, especially with multiple libraries (mitigated by Vite's tree-shaking and code-splitting capabilities)
+- Increased bundle size if not optimized properly, especially with multiple libraries (mitigated by Vite's tree-shaking
+  and code-splitting capabilities)
 - Need to ensure proper configuration and optimization of Vite for production builds
 - Need to ensure proper testing setup with Vitest and Playwright for both unit and E2E tests
 - Additional complexity for managing translation files and RTL/LTR-specific styles
