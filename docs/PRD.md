@@ -1,94 +1,122 @@
 # Product Requirements Document (PRD)
 
-# Contacts Management Application
+# Contactory - Contacts Management Application
 
 ## Overview
 
-A simple, fast, and secure contact management application that helps users organize all their personal and professional
-contacts in one place.
+A modern, type-safe contact management application built with a focus on performance, security, and developer
+experience. The application helps users organize all their personal and professional contacts in one place.
 
 ## Vision
 
-To provide an effortless way to manage, search, and share contacts across devices with a focus on simplicity and user
-experience.
+To provide an effortless way to manage, search, and share contacts across devices with a focus on simplicity, type
+safety, and excellent user experience.
 
 ## Target Users
 
 - Individuals managing personal contacts
 - Professionals organizing work contacts
-- Anyone looking to consolidate contacts from multiple sources
+- Developers looking for a reference implementation of modern web technologies
+
+## Technical Stack
+
+- **Frontend**: React with TypeScript, TanStack Start, shadcn/ui
+- **Styling**: Tailwind CSS v4
+- **State Management**: TanStack Query
+- **Routing**: TanStack Router
+- **Backend**: Node.js with TanStack Start
+- **Database**: PostgreSQL with Drizzle ORM
+- **Authentication**: better-auth
+- **Email**: Resend with React Email
+- **Validation**: Zod
+- **Testing**: Vitest
+- **Build Tool**: Vite
 
 ## Core Features
 
-### 1. Organize
+### 1. Authentication
 
-**Status:** Under Development  
-**Description:** Keep all your contacts in one place, neatly organized and easy to manage.
+**Status:** Implemented  
+**Description:** Secure user authentication and session management.
 
-**Requirements:**
+**Features:**
+
+- Email/password signup and signin
+- Password reset via email
+- Protected routes
+- Session management
+- Theme support (light/dark mode)
+
+### 2. Contact Management
+
+**Status:** In Development  
+**Description:** Manage personal and professional contacts with ease.
+
+**Features:**
 
 - Create, read, update, and delete contacts
-- Store contact information including name, phone number, email, address and notes
-- Clean and intuitive user interface for contact management
-- Efficient data storage and retrieval
+- Mark contacts as favorites
+- Responsive and accessible UI
 
-**Data Model (Implemented):**
+**Data Model:**
 
-The contact database schema has been implemented with the following fields:
+| Field          | Type      | Description                          |
+| -------------- | --------- | ------------------------------------ |
+| `id`           | UUID v7   | Primary key                          |
+| `userId`       | Text      | Foreign key to user (cascade delete) |
+| `firstName`    | Text      | Required first name                  |
+| `lastName`     | Text      | Optional last name                   |
+| `displayName`  | Text      | Computed or custom display name      |
+| `nickname`     | Text      | Optional nickname                    |
+| `primaryEmail` | Text      | Primary email address                |
+| `primaryPhone` | Text      | Primary phone number                 |
+| `company`      | Text      | Company/organization name            |
+| `jobTitle`     | Text      | Job title                            |
+| `department`   | Text      | Department name                      |
+| `street`       | Text      | Street address                       |
+| `city`         | Text      | City                                 |
+| `state`        | Text      | State/Province                       |
+| `postalCode`   | Text      | Postal/ZIP code                      |
+| `country`      | Text      | Country                              |
+| `notes`        | Text      | Additional notes                     |
+| `website`      | Text      | Website URL                          |
+| `isFavorite`   | Boolean   | Favorite flag (default: false)       |
+| `createdAt`    | Timestamp | Creation timestamp                   |
+| `updatedAt`    | Timestamp | Last update timestamp                |
 
-| Field          | Type      | Description                                                              |
-| -------------- | --------- | ------------------------------------------------------------------------ |
-| `id`           | UUID v7   | Primary key                                                              |
-| `userId`       | Text      | Foreign key to user (cascade delete)                                     |
-| `firstName`    | Text      | Required first name                                                      |
-| `lastName`     | Text      | Optional last name                                                       |
-| `displayName`  | Text      | Computed or custom display name                                          |
-| `nickname`     | Text      | Optional nickname                                                        |
-| `primaryEmail` | Text      | Primary email address                                                    |
-| `primaryPhone` | Text      | Primary phone number                                                     |
-| `company`      | Text      | Company/organization name                                                |
-| `jobTitle`     | Text      | Job title                                                                |
-| `department`   | Text      | Department name                                                          |
-| `address`      | JSONB     | Flexible address object (street, city, state, postalCode, country, type) |
-| `notes`        | Text      | Additional notes                                                         |
-| `website`      | Text      | Website URL                                                              |
-| `isFavorite`   | Boolean   | Favorite flag (default: false)                                           |
-| `createdAt`    | Timestamp | Creation timestamp                                                       |
-| `updatedAt`    | Timestamp | Last update timestamp                                                    |
+**Planned Enhancements:**
 
-**Database Indexes:**
+- Contact groups and tags
+- Contact import/export
+- Contact sharing
+- Contact merging for duplicates
+- QR code sharing
 
-- `contact_userId_idx` - User ID lookup
-- `contact_firstName_idx` - First name search
-- `contact_lastName_idx` - Last name search
-- `contact_primaryEmail_idx` - Email search
-- `contact_isFavorite_idx` - Favorites by user (compound index)
+### 3. Search & Filtering
 
-### 2. Search
+**Status:** Planned (Q1 2025)  
+**Description:** Advanced search and filtering capabilities.
 
-**Status:** Coming Soon  
-**Description:** Find anyone instantly with powerful search and filtering options.
+**Planned Features:**
 
-**Requirements:**
+- Real-time search across contact fields
+- Filter by name, email, phone, company
+- Save frequently used filters
+- Search history
+- Full-text search support
 
-- Real-time search across all contact fields
-- Filter contacts by various criteria (name, email, phone, groups, etc.)
-- Advanced search options with multiple parameters
-- Quick access to recently accessed contacts
-- Search history and suggestions
+### 4. Data Sync
 
-### 3. Sync
+**Status:** Planned (Q2 2025)  
+**Description:** Seamless data synchronization across devices.
 
-**Status:** Coming Soon  
-**Description:** Stay up to date across all your devices with automatic syncing.
+**Planned Features:**
 
-**Requirements:**
-
-- Real-time synchronization across multiple devices
-- Conflict resolution for simultaneous edits
-- Offline mode with sync queue
-- Support for web, mobile, and desktop platforms
-- Background sync without user intervention
+- Real-time sync using Tanstack DB
+- Offline-first support
+- Conflict resolution
+- Sync status indicators
+- Selective sync options
 
 ### 4. Share
 
@@ -115,7 +143,7 @@ The contact database schema has been implemented with the following fields:
 - Bulk import with validation and error handling
 - Import from popular contact services (Google Contacts, Apple Contacts, etc.)
 - Preview and mapping of fields during import
-- Export selected contacts or entire contact list
+- Export selected contacts, or the entire contact list
 
 ### 6. Groups/Labels
 
@@ -177,27 +205,39 @@ The contact database schema has been implemented with the following fields:
 - Download or share QR code image
 - Support for vCard format in QR codes
 
-### 10. Authentication & User Management
+## Implementation Status
 
-**Status:** Implemented  
-**Description:** Secure user registration, signin and session management.
+### Completed
 
-**Requirements:**
+- [x] Authentication system
+  - [x] Email/password signup
+  - [x] Email/password signin
+  - [x] Password reset flow
+  - [x] Protected routes
+  - [x] Session management
+- [x] Basic contact management
+  - [x] Contact model and schema
+  - [x] CRUD operations
+  - [x] Favorites functionality
+- [x] Theme support
+  - [x] Light/dark mode
+  - [x] System preference detection
 
-- User signup with email and password
-- User signin with email and password
-- Password reset via email (forgot password flow)
-- Secure session management
-- Sign out functionality
-- Social signin support (future consideration)
-- Account settings and profile management
+### In Progress
 
-**Implementation Notes:**
+- [ ] Advanced contact management
+  - [ ] Contact groups and tags
+  - [ ] Import/export functionality
+  - [ ] Contact sharing
+  - [ ] Duplicate detection and merging
 
-- Authentication powered by better-auth integration
-- Routes implemented:
-  - `/signin` - Email/password signin
-  - `/signup` - Email/password registration
+### Planned
+
+- [ ] Search and filtering
+- [ ] Data synchronization
+- [ ] Mobile responsiveness
+- [ ] API documentation
+- [ ] Comprehensive test coverage
   - `/forgot-password` - Request password reset
   - `/reset-password` - Complete password reset
 - Session management with `findSessionFn` server function
@@ -295,28 +335,14 @@ The contact database schema has been implemented with the following fields:
 - Sync reliability and speed
 - Search accuracy and speed
 
-## Future Considerations
+## Technical Considerations
 
-- Integration with calendar and email applications
-- Contact enrichment from social media profiles
-- Birthday and important date reminders
-- Contact notes and interaction history
-- Custom fields for contacts
-- API for third-party integrations
-- Team collaboration features
-- Contact verification and validation
-
-## Timeline
-
-**Completed:**
-
-- Authentication & User Management (signup, signin, password reset)
-- Contact Database Schema (Drizzle ORM with indexes)
-
-**In Progress:**
-
-- Theme Support (light/dark mode toggle)
-- Organize (CRUD operations for contacts)
+- **Performance**: Optimized database queries and efficient state management
+- **Security**: Secure authentication, input validation, and proper access controls
+- **Type Safety**: Full TypeScript support throughout the stack
+- **Developer Experience**: Comprehensive documentation and testing
+- **Accessibility**: WCAG 2.1 AA compliance
+- **SEO**: Server-side rendering and metadata optimization
 - Favorites (UI implementation)
 
 **Coming Soon:**
@@ -335,4 +361,4 @@ Features will be developed in phases based on priority and user feedback.
 ## Conclusion
 
 This contacts management application aims to provide a comprehensive, user-friendly solution for organizing and managing
-contacts across all devices, with a focus on simplicity, security and performance.
+contacts across all devices, with a focus on simplicity, security, and performance.
