@@ -1,8 +1,9 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, ChevronRight } from 'lucide-react'
 
-import type { Variants } from 'motion/react'
+import { DashboardPreview } from './DashboardPreview'
 
+import type { Variants } from 'motion/react'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { Button } from '@/integrations/shadcn/components/ui/button'
@@ -204,93 +205,8 @@ export function HeroSection({ user }: HeroSectionProps) {
               ...transitionVariants,
             }}
           >
-            <div className="relative mt-8 -mr-56 overflow-hidden mask-b-from-55% px-2 sm:mt-12 sm:mr-0 md:mt-20">
-              <div className="ring-background bg-background relative mx-auto aspect-15/8 max-w-6xl overflow-hidden rounded-2xl border p-4 shadow-lg ring-1 inset-shadow-2xs shadow-zinc-950/15 dark:inset-shadow-black/20">
-                {/* <img
-                    className="bg-background relative hidden aspect-15/8 rounded-2xl dark:block"
-                    src="/mail2.png"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />
-                  <img
-                    className="border-border/25 relative z-2 aspect-15/8 rounded-2xl border dark:hidden"
-                    src="/mail2-light.png"
-                    alt="app screen"
-                    width="2700"
-                    height="1440"
-                  />*/}
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
-                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
-                >
-                  <div
-                    className="from-destructive dark:from-destructive absolute aspect-square animate-[border-beam_8s_linear_infinite_0s] rounded-full bg-linear-to-l via-amber-600 to-transparent max-md:hidden dark:via-amber-400"
-                    style={
-                      {
-                        width: '300px',
-                        offsetPath: 'rect(0px auto auto 0px round 16px)',
-                      } as React.CSSProperties
-                    }
-                  ></div>
-                </div>
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
-                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
-                >
-                  <div
-                    className="absolute aspect-square animate-[border-beam_8s_linear_infinite_-2.67s] rounded-full bg-linear-to-l from-green-600 via-sky-600 to-transparent max-md:hidden dark:from-green-400 dark:via-sky-400"
-                    style={
-                      {
-                        width: '300px',
-                        offsetPath: 'rect(0px auto auto 0px round 16px)',
-                      } as React.CSSProperties
-                    }
-                  ></div>
-                </div>
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
-                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
-                >
-                  <div
-                    className="from-primary/80 via-primary/30 absolute aspect-square animate-[border-beam_8s_linear_infinite_-5.33s] rounded-full bg-linear-to-l to-transparent max-md:hidden"
-                    style={
-                      {
-                        width: '350px',
-                        offsetPath: 'rect(0px auto auto 0px round 16px)',
-                      } as React.CSSProperties
-                    }
-                  ></div>
-                </div>
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
-                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
-                >
-                  <div
-                    className="from-destructive dark:from-destructive absolute aspect-square animate-[border-beam_8s_linear_infinite_0s] rounded-full bg-linear-to-l via-amber-600 to-transparent md:hidden dark:via-amber-400"
-                    style={
-                      {
-                        width: '300px',
-                        offsetPath: 'rect(0px auto auto 0px round 16px)',
-                      } as React.CSSProperties
-                    }
-                  ></div>
-                </div>
-                <div
-                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
-                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
-                >
-                  <div
-                    className="absolute aspect-square animate-[border-beam_8s_linear_infinite_-4s] rounded-full bg-linear-to-l from-green-600 via-sky-600 to-transparent md:hidden dark:from-green-400 dark:via-sky-400"
-                    style={
-                      {
-                        width: '300px',
-                        offsetPath: 'rect(0px auto auto 0px round 16px)',
-                      } as React.CSSProperties
-                    }
-                  ></div>
-                </div>
-              </div>
+            <div className="relative mt-8 overflow-hidden mask-b-from-55% px-2 sm:mt-12 md:mt-20">
+              <DashboardPreview />
             </div>
           </AnimatedGroup>
         </div>
