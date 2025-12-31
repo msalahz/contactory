@@ -13,15 +13,15 @@ export function StatsSection({ className, ...props }: React.ComponentProps<'sect
         </div>
 
         <div className="grid gap-0.5 *:text-center md:grid-cols-3">
-          <div className="space-y-4 rounded-(--radius) border py-12">
+          <div className="space-y-4 rounded-lg border py-12">
             <div className="text-5xl font-bold">+100</div>
             <p>Individual user</p>
           </div>
-          <div className="space-y-4 rounded-(--radius) border py-12">
+          <div className="space-y-4 rounded-lg border py-12">
             <div className="text-5xl font-bold">78%</div>
             <p>Conversion rate</p>
           </div>
-          <div className="space-y-4 rounded-(--radius) border py-12">
+          <div className="space-y-4 rounded-lg border py-12">
             <div className="text-5xl font-bold">+50</div>
             <p>Organization</p>
           </div>
