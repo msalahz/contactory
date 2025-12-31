@@ -220,6 +220,76 @@ export function HeroSection({ user }: HeroSectionProps) {
                     width="2700"
                     height="1440"
                   />*/}
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
+                >
+                  <div
+                    className="from-destructive dark:from-destructive absolute aspect-square animate-[border-beam_8s_linear_infinite_0s] rounded-full bg-linear-to-l via-amber-600 to-transparent max-md:hidden dark:via-amber-400"
+                    style={
+                      {
+                        width: '300px',
+                        offsetPath: 'rect(0px auto auto 0px round 16px)',
+                      } as React.CSSProperties
+                    }
+                  ></div>
+                </div>
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
+                >
+                  <div
+                    className="absolute aspect-square animate-[border-beam_8s_linear_infinite_-2.67s] rounded-full bg-linear-to-l from-green-600 via-sky-600 to-transparent max-md:hidden dark:from-green-400 dark:via-sky-400"
+                    style={
+                      {
+                        width: '300px',
+                        offsetPath: 'rect(0px auto auto 0px round 16px)',
+                      } as React.CSSProperties
+                    }
+                  ></div>
+                </div>
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
+                >
+                  <div
+                    className="from-primary/80 via-primary/30 absolute aspect-square animate-[border-beam_8s_linear_infinite_-5.33s] rounded-full bg-linear-to-l to-transparent max-md:hidden"
+                    style={
+                      {
+                        width: '350px',
+                        offsetPath: 'rect(0px auto auto 0px round 16px)',
+                      } as React.CSSProperties
+                    }
+                  ></div>
+                </div>
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
+                >
+                  <div
+                    className="from-destructive dark:from-destructive absolute aspect-square animate-[border-beam_8s_linear_infinite_0s] rounded-full bg-linear-to-l via-amber-600 to-transparent md:hidden dark:via-amber-400"
+                    style={
+                      {
+                        width: '300px',
+                        offsetPath: 'rect(0px auto auto 0px round 16px)',
+                      } as React.CSSProperties
+                    }
+                  ></div>
+                </div>
+                <div
+                  className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--border-beam-width) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+                  style={{ '--border-beam-width': '1px' } as React.CSSProperties}
+                >
+                  <div
+                    className="absolute aspect-square animate-[border-beam_8s_linear_infinite_-4s] rounded-full bg-linear-to-l from-green-600 via-sky-600 to-transparent md:hidden dark:from-green-400 dark:via-sky-400"
+                    style={
+                      {
+                        width: '300px',
+                        offsetPath: 'rect(0px auto auto 0px round 16px)',
+                      } as React.CSSProperties
+                    }
+                  ></div>
+                </div>
               </div>
             </div>
           </AnimatedGroup>
