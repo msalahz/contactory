@@ -11,6 +11,7 @@
   "window.zoomLevel": 0.2,
   "editor.fontSize": 14,
   "editor.fontLigatures": true,
-  "editor.renderWhitespace": "boundary",
-  "editor.fontFamily": "'JetBrains Mono', 'Courier New', monospace"
+  "editor.renderWhitespace": "none",
+  "editor.fontFamily": "'JetBrains Mono', 'Courier New', monospace",
+  "markdown.validate.enabled": true
 }
