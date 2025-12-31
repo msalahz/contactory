@@ -42,9 +42,10 @@
 ### Translation Management
 
 - **Library**: react-i18next with i18next core
-- **Namespace Organization**: Feature-based namespaces to enable code-splitting and lazy loading
-- **Translation Files**: JSON format stored in `src/locales/{lang}/{namespace}.json`
+- **Namespace Organization**: Feature-based namespaces colocated with feature code
+- **Translation Files**: JSON format stored in `src/features/<feature>/locales/{lang}.json`
 - **Type Safety**: Auto-generated TypeScript types for translation keys
+- **Bundling**: Translations bundled at build time (no HTTP backend)
 
 ### RTL/LTR Layout Support
 
@@ -72,40 +73,179 @@
 - **Guest Users**: localStorage with `i18nextLng` key
 - **Detection Order**: User profile → localStorage → browser language → default (English)
 
-### File Structure
+### File Structure (Feature-Based Colocated)
 
 ```
 src/
-├── locales/
-│   ├── en/
-│   │   ├── common.json          # Shared translations (buttons, labels)
-│   │   ├── auth.json            # Authentication feature
-│   │   ├── contacts.json        # Contacts feature
-│   │   ├── dashboard.json       # Dashboard feature
-│   │   └── validation.json      # Form validation messages
-│   └── ar/
-│       ├── common.json
-│       ├── auth.json
-│       ├── contacts.json
-│       ├── dashboard.json
-│       └── validation.json
-│
-├── integrations/
-│   └── i18n/
-│       ├── config.ts            # i18next configuration
-│       ├── provider.tsx         # I18nextProvider wrapper
-│       ├── types.ts             # TypeScript types for translations
-│       └── utils.ts             # Formatting utilities (dates, numbers)
-│
 ├── features/
+│   ├── auth/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── locales/
+│   │       ├── en.json           # Auth translations (English)
+│   │       └── ar.json           # Auth translations (Arabic)
+│   │
+│   ├── contacts/
+│   │   ├── components/
+│   │   ├── hooks/
+│   │   └── locales/
+│   │       ├── en.json
+│   │       └── ar.json
+│   │
+│   ├── dashboard/
+│   │   ├── components/
+│   │   └── locales/
+│   │       ├── en.json
+│   │       └── ar.json
+│   │
 │   └── settings/
-│       └── components/
-│           └── LanguageSwitcher.tsx
+│       ├── components/
+│       │   └── LanguageSwitcher.tsx
+│       └── locales/
+│           ├── en.json
+│           └── ar.json
 │
-└── shared/
-    └── hooks/
-        ├── useLocale.ts         # Current locale and direction
-        └── useFormatters.ts     # Date, number, currency formatters
+├── shared/
+│   ├── locales/                  # Common translations (buttons, errors, validation)
+│   │   ├── en.json
+│   │   └── ar.json
+│   └── hooks/
+│       ├── useLocale.ts          # Current locale and direction
+│       └── useFormatters.ts      # Date, number, currency formatters
+│
+└── integrations/
+    └── i18n/
+        ├── config.ts             # i18next configuration
+        ├── resources.ts          # Aggregates all feature locales
+        ├── types.ts              # TypeScript types for translations
+        └── utils.ts              # Formatting utilities (dates, numbers)
+```
+
+### i18next Configuration
+
+```typescript
+// src/integrations/i18n/resources.ts
+import authEn from '@/features/auth/locales/en.json'
+import authAr from '@/features/auth/locales/ar.json'
+import contactsEn from '@/features/contacts/locales/en.json'
+import contactsAr from '@/features/contacts/locales/ar.json'
+import dashboardEn from '@/features/dashboard/locales/en.json'
+import dashboardAr from '@/features/dashboard/locales/ar.json'
+import commonEn from '@/shared/locales/en.json'
+import commonAr from '@/shared/locales/ar.json'
+
+// TypeScript strict typing - duplicate namespace keys cause compile error
+export const resources = {
+  en: {
+    common: commonEn,
+    auth: authEn,
+    contacts: contactsEn,
+    dashboard: dashboardEn,
+  },
+  ar: {
+    common: commonAr,
+    auth: authAr,
+    contacts: contactsAr,
+    dashboard: dashboardAr,
+  },
+} as const
+
+// Type exports for strict typing and IDE autocomplete
+export type Resources = typeof resources
+export type Namespace = keyof typeof resources.en
+export type SupportedLanguage = keyof typeof resources
+```
+
+```typescript
+// src/integrations/i18n/config.ts
+import i18n from 'i18next'
+import { initReactI18next } from 'react-i18next'
+import LanguageDetector from 'i18next-browser-languagedetector'
+import { resources, type SupportedLanguage } from './resources'
+
+export const rtlLanguages: SupportedLanguage[] = ['ar']
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources,
+    fallbackLng: 'en',
+    defaultNS: 'common',
+    supportedLngs: Object.keys(resources) as SupportedLanguage[],
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      order: ['localStorage', 'navigator'],
+      caches: ['localStorage'],
+    },
+    debug: import.meta.env.I18N_DEBUG === 'true', // Shows warnings for conflicts in dev
+  })
+
+export default i18n
+```
+
+### Duplicate Detection with ESLint
+
+Install the ESLint plugin for JSON validation:
+
+```bash
+pnpm add -D eslint-plugin-i18n-json
+```
+
+```javascript
+// eslint.config.js (add to existing config)
+import i18nJson from 'eslint-plugin-i18n-json'
+
+export default [
+  // ... existing config
+  {
+    files: ['**/locales/*.json'],
+    plugins: { 'i18n-json': i18nJson },
+    processor: {
+      meta: { name: '.json' },
+      ...i18nJson.processors['.json'],
+    },
+    rules: {
+      ...i18nJson.configs.recommended.rules,
+      'i18n-json/valid-json': 'error',
+      'i18n-json/sorted-keys': 'warn',
+      'i18n-json/identical-keys': [
+        'error',
+        {
+          filePath: {
+            'ar.json': './en.json', // ar.json must have same keys as en.json
+          },
+        },
+      ],
+    },
+  },
+]
+```
+
+**Duplicate Detection Strategy:**
+
+| Layer                 | Detects                                    | When         |
+| --------------------- | ------------------------------------------ | ------------ |
+| TypeScript `as const` | Duplicate namespace keys in `resources.ts` | Compile time |
+| ESLint `i18n-json`    | Duplicate/missing keys inside JSON files   | Lint / CI    |
+| i18next `debug: true` | Runtime key conflicts                      | Dev runtime  |
+
+```tsx
+// Usage in component
+import { useTranslation } from 'react-i18next'
+
+function SignInForm() {
+  const { t } = useTranslation('auth')
+
+  return (
+    <form>
+      <h1>{t('signIn.title')}</h1>
+      <button>{t('signIn.submit')}</button>
+    </form>
+  )
+}
 ```
 
 ---
@@ -119,10 +259,12 @@ src/
 - [ ] Implement `dir` attribute switching on `<html>` element
 - [ ] Replace physical properties with logical properties in all components
 - [ ] Create LanguageSwitcher component
+- [ ] Install luxon for date/time formatting
 - [ ] Implement useLocale and useFormatters hooks
 - [ ] Add language preference to user profile schema
 - [ ] Create date/number formatting utilities with Luxon
 - [ ] Generate TypeScript types for translation keys
+- [ ] Configure ESLint i18n-json plugin for duplicate detection
 - [ ] Add RTL testing to QA checklist
 
 ---
@@ -138,7 +280,7 @@ src/
 - Use Intl API for locale-aware formatting
 - Keep translation keys semantic (e.g., `auth.signIn.title` not `auth.button1`)
 - Support interpolation for dynamic content (e.g., `Hello, {{name}}`)
-- Lazy-load translation namespaces per route
+- Colocate translations with their feature in `src/features/<feature>/locales/`
 
 ### Don't:
 
@@ -148,6 +290,8 @@ src/
 - Don't use CSS transforms for RTL (e.g., `scaleX(-1)`) - use proper logical properties
 - Don't assume LTR layout in any component logic
 - Don't mix multiple languages in a single translation file
+- Don't use centralized `public/locales/` directory (breaks modular architecture)
+- Don't use HTTP backend for loading translations (unnecessary for two languages)
 
 ---
 
@@ -168,12 +312,19 @@ src/
 - **Pros**: Simple, built-in browser support
 - **Cons**: Doesn't handle all layout cases (flexbox, grid), inconsistent icon/image handling
 
+### Centralized public/locales directory
+
+- **Pros**: Simple setup, single file per language, easy for external translators
+- **Cons**: Single file grows large, no code ownership per feature, runtime HTTP requests, harder to tree-shake, breaks modular architecture pattern
+
 ### i18next-http-backend for remote translations
 
 - **Pros**: Update translations without deployment
 - **Cons**: Additional network requests, latency, offline issues; not needed for two languages
 
 ### Rationale (why chosen)
+
+- **Feature-based colocated locales**: Aligns with ADR-002 modular architecture, enables feature ownership, bundled at build time for performance, tree-shakeable
 
 - **react-i18next**: Industry standard, excellent TypeScript support, SSR compatible, namespace support for code-splitting, large community
 - **Tailwind CSS Logical Properties**: Native CSS solution, zero runtime overhead, consistent with existing styling approach, future-proof (CSS standard)
@@ -187,7 +338,10 @@ src/
 
 - Seamless RTL/LTR switching with a single codebase
 - Type-safe translations with autocomplete in IDE
-- Efficient code-splitting of translation bundles
+- Compile-time detection of duplicate namespaces via TypeScript
+- Lint-time detection of duplicate/missing keys via ESLint
+- Feature teams own their translations (clear code ownership)
+- Translations bundled at build time (no runtime HTTP requests)
 - Native performance for date/number formatting
 - Consistent with modern CSS standards
 - Easy to add additional languages in the future
@@ -198,8 +352,9 @@ src/
 - Learning curve for logical properties if team is unfamiliar
 - Need to audit and update existing components for logical properties
 - Additional testing overhead for both layout directions
-- Translation file management overhead
+- Translation file management across multiple directories
 - Initial setup complexity for i18next configuration
+- Need to update `resources.ts` when adding new features
 
 ---
 
