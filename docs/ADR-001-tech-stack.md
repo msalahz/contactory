@@ -8,6 +8,10 @@ Approved
 
 2025-08-11
 
+## Last Updated
+
+2025-12-31
+
 ## Project
 
 Contactory
@@ -28,7 +32,7 @@ requires:
 - Responsive design capabilities
 - Good developer experience
 - Flexible implementation patterns
-- Utilize solid well documented libraries with strong community support
+- Use solid well-documented libraries with strong community support
 - Force best practices and conventions
 - Bilingual support with seamless language switching
 - RTL/LTR layout support for Arabic and English content
@@ -50,7 +54,7 @@ We will use the following technology stack:
 
 - **Routing**: TanStack Router
 - **Data Caching**: TanStack Query
-- **Data Tables**: TanStack Table _(pending)_
+- **Data Tables**: TanStack Table _(not implemented)_
 - **Database ORM**: Drizzle ORM with PostgreSQL
 - **Validation**: Zod
 
@@ -61,19 +65,26 @@ We will use the following technology stack:
 ### UI/UX
 
 - **Icons**: Lucide React
-- **Notifications**: Sonner (toast notifications)
 - **Theme**: next-themes (dark/light mode)
 
-### Internationalization _(pending)_
+### Email
 
-- **i18n Library**: react-i18next
-- **RTL/LTR Support**: Tailwind CSS built-in RTL support & Logical Properties
-- **Date/Number Formatting**: Luxon & Intl API (built-in browser support)
+- **Email Templates**: React Email
+- **Email Delivery**: Resend
+
+### Environment
+
+- **Validation**: @t3-oss/env-core
+
+### Internationalization
+
+- **Status**: Not Started
+- **Future Consideration**: react-i18next with Tailwind RTL support
 
 ### Testing
 
 - **Unit Testing**: Vitest
-- **E2E Testing**: Playwright _(pending)_
+- **E2E Testing**: Not Implemented (Playwright considered)
 
 ### Code Quality
 
@@ -88,19 +99,13 @@ We will use the following technology stack:
 4. **React Router vs TanStack Router**: TanStack Router chosen for better TypeScript support and type-safe routing
 5. **SWR vs TanStack Query**: TanStack Query chosen for comprehensive caching and synchronization features
 6. **Vitest vs Jest**: Vitest chosen for its speed and compatibility with Vite
-7. **Playwright vs Cypress**: Playwright chosen for its cross-browser capabilities and modern API
-8. **Eslint & Prettier vs Biome**: Chosen for maintaining code quality and consistent formatting across the codebase
-9. **react-i18next vs react-intl**: react-i18next chosen for its flexibility, namespace support, and better TypeScript
-   integration
-10. **Tailwind RTL vs CSS-in-JS RTL**: Tailwind CSS RTL plugin chosen for consistency with existing styling approach
-11. **Custom i18n vs Intl API**: Combination approach using react-i18next for text and built-in Intl API for
-    dates/numbers
-12. **Drizzle vs Prisma**: Drizzle ORM chosen for its lightweight nature, SQL-like syntax, and better TypeScript
-    inference
-13. **better-auth vs NextAuth/Clerk**: better-auth chosen for its simplicity, self-hosted nature, and tight integration
-    with modern stacks
-14. **Zod vs Yup**: Zod chosen for its TypeScript-first design and excellent type inference
-15. **Sonner vs react-hot-toast**: Sonner chosen for its modern design and better animation support
+7. **Playwright vs Cypress**: Playwright was considered but not yet implemented
+8. **Eslint & Prettier vs Biome**: Chosen for maintaining code quality and consistent formatting
+9. **Drizzle vs Prisma**: Drizzle ORM chosen for its lightweight nature and SQL-like syntax
+10. **better-auth vs NextAuth/Clerk**: better-auth chosen for its simplicity and self-hosted nature
+11. **Zod vs Yup**: Zod chosen for its TypeScript-first design and excellent type inference
+12. **Environment Management**: @t3-oss/env-core chosen for type-safe environment variables
+13. **Email Solution**: Resend + React Email chosen for transactional emails
 
 ## Rationale
 
@@ -160,22 +165,22 @@ We will use the following technology stack:
 - Testing complexity increases with bilingual content and layout direction changes
 - Initial setup overhead for i18n configuration and translation workflow
 
-## Implementation
+## Implementation Status
 
-1. Initialize Vite project with React and TypeScript template
-2. Install and configure Tailwind CSS v4
-3. Set up shadcn/ui component library
-4. Configure TanStack Router for application routing
-5. Set up TanStack Query for data fetching
-6. Integrate TanStack Table for data display components
-7. Install and configure react-i18next with TypeScript support
-8. Set up translation files for Arabic and English
-9. Implement language switching mechanism and direction detection
-10. Set up Vitest for unit testing (including i18n testing utilities)
-11. Configure Playwright for end-to-end testing (including RTL/LTR scenarios)
-12. Install and configure Eslint and Prettier for code quality
-13. Create development setup guide and coding standards documentation
-14. Create i18n guidelines and translation workflow documentation
+- [x] 1. Initialize Vite project with React and TypeScript template
+- [x] 2. Install and configure Tailwind CSS v4
+- [x] 3. Set up shadcn/ui component library
+- [x] 4. Configure TanStack Router for application routing
+- [x] 5. Set up TanStack Query for data fetching
+- [ ] 6. Integrate TanStack Table for data display components
+- [x] 7. Set up email templates with React Email
+- [x] 8. Configure Resend for email delivery
+- [x] 9. Set up @t3-oss/env-core for environment validation
+- [x] 10. Set up Vitest for unit testing
+- [ ] 11. Configure Playwright for end-to-end testing (pending)
+- [x] 12. Install and configure Eslint and Prettier
+- [x] 13. Create development setup guide and coding standards
+- [ ] 14. Implement internationalization (future)
 
 ## Related Decisions
 
@@ -183,21 +188,19 @@ We will use the following technology stack:
 
 ## References
 
-- [TansStack Start Documentation](https://tanstack.com/start/latest)
+- [TanStack Start Documentation](https://tanstack.com/start/latest)
 - [Vite Documentation](https://vitejs.dev/)
 - [React Documentation](https://reactjs.org/docs/getting-started.html)
 - [shadcn/ui Documentation](https://ui.shadcn.com/)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [RTL Support in Tailwind CSS](https://tailwindcss.com/docs/hover-focus-and-other-states#rtl-support)
-- [Simplified RTL support with logical properties](https://tailwindcss.com/blog/tailwindcss-v3-3#simplified-rtl-support-with-logical-properties)
-- [Logical Properties in Tailwind CSS](https://tailwindcss.com/docs/top-right-bottom-left#using-logical-properties)
-- [Right to Left (RTL) in React - Developer's Guide](https://leancode.co/blog/right-to-left-in-react)
+- [Tailwind CSS v4 Documentation](https://tailwindcss.com/docs)
 - [TanStack Router Documentation](https://tanstack.com/router/latest)
 - [TanStack Query Documentation](https://tanstack.com/query/latest)
-- [TanStack Table Documentation](https://tanstack.com/table/latest)
 - [Drizzle ORM Documentation](https://orm.drizzle.team/)
 - [better-auth Documentation](https://www.better-auth.com/)
 - [Zod Documentation](https://zod.dev/)
+- [Resend Email API](https://resend.com/)
+- [React Email](https://react.email/)
+- [@t3-oss/env-core](https://github.com/t3-oss/t3-env)
 - [Sonner Documentation](https://sonner.emilkowal.ski/)
 - [Lucide React Documentation](https://lucide.dev/guide/packages/lucide-react)
 - [react-i18next Documentation](https://react.i18next.com/)
