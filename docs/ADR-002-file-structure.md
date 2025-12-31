@@ -36,50 +36,48 @@ src/
 │   ├── __root.tsx                # Root: providers, head, error boundary
 │   │
 │   ├── api/                      # External API endpoints
-│   │   ├── webhooks/
-│   │   │   └── stripe.ts
-│   │   └── v1/
-│   │       └── users.ts          # REST endpoints for external clients
 │   │
-│   ├── _public/
+│   ├── _public/                  # Public routes
 │   │   ├── route.tsx             # Public layout
-│   │   ├── index.tsx
-│   │   └── about.tsx
+│   │   ├── index.tsx             # Landing page
+│   │   └── sign-in.tsx
+│   │   └── sign-up.tsx
 │   │
-│   ├── _dashboard/
-│   │   ├── route.tsx             # Dashboard layout + user guard
-│   │   ├── dashboard.tsx
-│   │   └── users.tsx
-│   │
-│   └── _admin/
-│       ├── route.tsx             # Admin layout + admin guard
-│       └── system.tsx
+│   └── _dashboard/               # Protected routes
+│       ├── route.tsx             # Dashboard layout + auth guard
+│       └── dashboard.tsx         # Main dashboard view
 │
-├── server/                       # Server-only: functions, business logic, DB
-│   ├── middleware/
-│   │   └── auth.ts               # authMiddleware
+├── server/                       # Server-only code
+│   ├── db/                       # Database client and models
+│   │   ├── client.ts             # Drizzle DB client
+│   │   ├── schema/               # Database schemas
+│   │   │   ├── auth.ts
+│   │   │   └── users.ts
+│   │   └── seeds/                # Database seed data
 │   │
-│   ├── business/                 # Pure business logic functions
-│   │   ├── dashboard.ts          # getDashboardMetricsLogic()
-│   │   ├── dashboard.test.ts     # co-located unit tests
-│   │   ├── users.ts              # getUsersListLogic(), getUserByIdLogic()
-│   │   └── users.ts              # updateUserLogic()
+│   ├── emails/                   # Email templates
+│   │   ├── templates/            # Reusable email components
+│   │   └── index.ts              # Email sending utilities
 │   │
-│   ├── queries/                  # Server fn wrappers
-│   │   └── dashboard.ts          # getDashboardMetricsFn = createServerFn(...)
+│   ├── middlewares/              # Server middleware
+│   │   └── auth.middleware.ts    # Authentication middleware
 │   │
-│   ├── mutations/
-│   │   └── users.ts              # updateUserFn = createServerFn(...)
+│   ├── modules/                  # Feature modules
+│   │   ├── auth/                 # Authentication module
+│   │   │   ├── auth.service.ts   # Auth business logic
+│   │   │   └── auth.types.ts     # Auth types and interfaces
+│   │   └── users/                # Users module
+│   │       └── users.service.ts  # Users business logic
 │   │
-│   ├── db/
-│   │   └── client.ts             # DB instance
+│   ├── mutations/                # Server mutation functions
+│   │   └── auth.mutations.ts     # Auth-related mutations
 │   │
-│   └── guards.ts                 # requireAuth(), requireAdmin()
-│
-├── schemas/                      # Zod validation schemas
-│   ├── auth.ts
-│   ├── users.ts
-│   └── dashboard.ts
+│   ├── queries/                  # Server query functions
+│   │   └── auth.queries.ts       # Auth-related queries
+│   │
+│   └── schemas/                  # Validation schemas
+│       ├── auth.schema.ts        # Auth validation schemas
+│       └── users.schema.ts       # Users validation schemas
 │
 ├── features/
 │   ├── auth/
@@ -138,54 +136,65 @@ src/
 
 ## Decision
 
-- Structure: adopt a feature-sliced `src/features/` for client code and a centralized `src/server/` for all server-only
-  code (business logic, DB client, server functions, middlewares, guards).
-- Routing: use file-based routing under `src/routes/`. Prefix route groups with `_` for areas (for example `_public`,
-  `_dashboard`, `_admin`) and use `route.tsx` as the layout entry for guards and area-level providers.
-- Server functions: implement internal RPC with TanStack Start's `createServerFn`, name exported server fns with `Fn`
-  suffix (e.g., `getDashboardMetricsFn`), and keep pure business logic in `src/server/business/` (e.g.,
-  `getDashboardMetricsLogic`) that server fns wrap.
-- Env split: use `src/env.server.ts` (server-only secrets such as `DATABASE_URL`) and `src/env.client.ts` (
-  client-exposed VITE\_ vars). Validate env with `@t3-oss/env-core` and Zod schemas.
-- Imports: prefer explicit imports; remove and avoid barrel `index.ts` exports for cross-domain imports to reduce
-  accidental import surface.
-- TanStack Query: colocate keys, options, and hooks inside each feature (e.g., `src/features/users/keys.ts`,
-  `options.ts`, `hooks/useUsersQuery.ts`). Use factories for keys and options to ensure consistent invalidation and
-  reuse.
+- **Structure**: Adopt a feature-sliced `src/features/` for client code and a modular `src/server/` directory for
+  server-side code, organized by feature modules.
+- **Routing**: Use file-based routing under `src/routes/` with route groups prefixed by `_` (e.g., `_public`,
+  `_dashboard`). Each route group has a `route.tsx` for layout and guards.
+- **Server Organization**:
+  - `modules/`: Feature-based business logic (e.g., `auth/`, `users/`)
+  - `mutations/`: Server mutation functions (suffixed with `.mutations.ts`)
+  - `queries/`: Server query functions (suffixed with `.queries.ts`)
+  - `middlewares/`: Request/response middleware
+  - `emails/`: Email templates and utilities
+- **Database**:
+  - `db/client.ts`: Drizzle ORM client
+  - `db/schema/`: Database table definitions
+  - `db/seeds/`: Seed data for development
+- **Environment**:
+  - `env.server.ts`: Server-side environment variables
+  - `env.client.ts`: Client-side environment variables (VITE\_ prefixed)
+  - Validated using `@t3-oss/env-core` and Zod
+- **Code Organization**:
+  - Prefer explicit imports over barrel files
+  - Colocate related files (e.g., `auth.service.ts` with `auth.types.ts`)
+  - Use consistent file naming (e.g., `*.service.ts`, `*.schema.ts`)
 
 ### Checklist (enforced by this decision)
 
 - [x] Feature-sliced layout under `src/features/...`
-- [x] Centralized `src/server/` for server-only code
-- [x] Server functions suffixed with `Fn` (e.g., `getUsersFn`)
-- [x] Business logic separated under `src/server/business/` and kept pure
-- [x] Env split: `src/env.server.ts` vs `src/env.client.ts` (VITE\_ prefix for client)
+- [x] Modular server code under `src/server/`
+- [x] Server functions organized by type (queries/mutations)
+- [x] Business logic in feature-based modules under `src/server/modules/`
+- [x] Environment variables split between server and client
 - [x] Route groups prefixed with `_` and `route.tsx` layout files
-- [x] No barrel `index.ts` exports for cross-domain imports
-- [x] TanStack Query keys/options/hooks colocated in `features/<feature>/`
+- [x] Explicit imports preferred over barrel files
+- [x] Database schema and migrations in `src/server/db/`
+- [x] Email templates in `src/server/emails/`
+- [x] Middleware for cross-cutting concerns in `src/server/middlewares/`
 
 ### Decision detail (do/don't rules)
 
 #### Do:
 
-- Place all server-only code in `src/server/` (for example `src/server/db/client.ts`, `src/server/mutations/users.ts`,
-  `src/server/middleware/auth.ts`).
-- Implement pure business logic in `src/server/business/` and keep functions deterministic and testable.
-- Wrap business logic with server fns in `src/server/queries/` and `src/server/mutations/` using `createServerFn()`.
-- Use `*Fn` naming for server functions and keep files focused (single responsibility per file when complexity grows).
-- Validate environment variables in `src/env.server.ts` and `src/env.client.ts` using `@t3-oss/env-core` and Zod.
-- Enforce route-level guards inside `route.tsx` files for `_dashboard` and `_admin` groups using guard utilities (for
-  example `src/server/guards.ts`).
-- Co-locate TanStack Query artifacts (keys, options, hooks) inside each feature and provide key factories for
-  strongly-typed invalidation.
+- Organize server code by feature in `src/server/modules/<feature>/`
+- Keep business logic in `*.service.ts` files within their respective modules
+- Use `*.queries.ts` for data fetching operations
+- Use `*.mutations.ts` for data modification operations
+- Keep database schema definitions in `src/server/db/schema/`
+- Place email templates in `src/server/emails/templates/`
+- Use middleware for cross-cutting concerns like authentication
+- Validate all environment variables using Zod schemas
+- Use route-level guards in `route.tsx` files for protected routes
+- Keep server-only code out of the client bundle
 
 #### Don't:
 
-- Don't import `src/server/` or `src/env.server.ts` from client code. Add lint rules to block such imports.
-- Don't use barrels (`index.ts`) for cross-domain exports; internal barrels within a single feature are acceptable for
-  convenience but prefer explicit paths for shared modules.
-- Don't use API routes for internal app RPC unless the operation must be externally accessible (use server fns for
-  internal operations).
+- Don't import server code in client components
+- Avoid barrel files (`index.ts`) for cross-feature imports
+- Don't mix business logic with API route handlers
+- Avoid direct database access from route handlers
+- Don't commit sensitive environment variables
+- Avoid complex logic in route handlers (delegate to services)
 
 ---
 
