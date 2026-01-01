@@ -1,3 +1,4 @@
+import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 
 import { cn } from '@/integrations/shadcn/lib/utils'
@@ -7,21 +8,38 @@ interface TechnicalBackgroundProps {
 }
 
 export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
-  const { scrollYProgress } = useScroll()
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end start'],
+  })
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -150])
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -300])
+  const beamOpacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0])
+  const beamScale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.95, 1, 1, 1.05])
 
   return (
     <div
+      ref={containerRef}
       className={cn(
         'pointer-events-none fixed inset-0 overflow-x-hidden overflow-y-hidden',
         className,
       )}
     >
+      {/* Animated beam effect */}
+      <motion.div
+        className="absolute inset-0 bg-linear-to-b from-transparent via-blue-500/5 to-transparent"
+        style={{
+          opacity: beamOpacity,
+          scale: beamScale,
+          maskImage: 'radial-gradient(ellipse at center, black 0%, transparent 60%)',
+          WebkitMaskImage: 'radial-gradient(ellipse at center, black 0%, transparent 60%)',
+        }}
+      />
       {/* Left side path with icons - Dark theme */}
       <motion.div
-        className="absolute top-0 left-0 hidden h-[200%] w-[150px] overflow-hidden dark:block"
+        className="absolute top-0 left-1/5 hidden h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:block"
         style={{ y: y1 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -77,7 +95,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Right side path with icons - Dark theme */}
       <motion.div
-        className="absolute top-0 right-0 hidden h-[200%] w-[150px] overflow-hidden dark:block"
+        className="absolute top-0 right-1/5 hidden h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:block"
         style={{ y: y2 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -127,7 +145,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Left side path with icons - Light theme */}
       <motion.div
-        className="absolute top-0 left-0 block h-[200%] w-[150px] overflow-hidden dark:hidden"
+        className="absolute top-0 left-1/5 h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:hidden"
         style={{ y: y1 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -183,7 +201,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Right side path with icons - Light theme */}
       <motion.div
-        className="absolute top-0 right-0 block h-[200%] w-[150px] overflow-hidden dark:hidden"
+        className="absolute top-0 right-1/5 h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:hidden"
         style={{ y: y2 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
