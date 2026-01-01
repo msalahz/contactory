@@ -141,6 +141,10 @@
     linear-gradient(to bottom, var(--border) 1px, transparent 1px);
 }
 
+@utility fade-in-animate {
+  @apply animate-in fade-in-0 slide-in-from-start-5 duration-350 ease-out;
+}
+
 @keyframes border-beam {
   0% {
     offset-distance: 0;
