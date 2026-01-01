@@ -13,6 +13,7 @@ import { Route as UserRouteRouteImport } from './routes/_user/route'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as UserDashboardRouteImport } from './routes/_user/dashboard'
+import { Route as UserContactsRouteImport } from './routes/_user/contacts'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
 import { Route as AuthSignInRouteImport } from './routes/_auth/sign-in'
 import { Route as AuthResetPasswordRouteImport } from './routes/_auth/reset-password'
@@ -36,6 +37,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
 const UserDashboardRoute = UserDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
+  getParentRoute: () => UserRouteRoute,
+} as any)
+const UserContactsRoute = UserContactsRouteImport.update({
+  id: '/contacts',
+  path: '/contacts',
   getParentRoute: () => UserRouteRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/contacts': typeof UserContactsRoute
   '/dashboard': typeof UserDashboardRoute
   '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -85,6 +92,7 @@ export interface FileRoutesByTo {
   '/reset-password': typeof AuthResetPasswordRoute
   '/sign-in': typeof AuthSignInRoute
   '/sign-up': typeof AuthSignUpRoute
+  '/contacts': typeof UserContactsRoute
   '/dashboard': typeof UserDashboardRoute
   '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/_auth/reset-password': typeof AuthResetPasswordRoute
   '/_auth/sign-in': typeof AuthSignInRoute
   '/_auth/sign-up': typeof AuthSignUpRoute
+  '/_user/contacts': typeof UserContactsRoute
   '/_user/dashboard': typeof UserDashboardRoute
   '/_public/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
@@ -110,6 +119,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/contacts'
     | '/dashboard'
     | '/'
     | '/api/auth/$'
@@ -120,6 +130,7 @@ export interface FileRouteTypes {
     | '/reset-password'
     | '/sign-in'
     | '/sign-up'
+    | '/contacts'
     | '/dashboard'
     | '/'
     | '/api/auth/$'
@@ -132,6 +143,7 @@ export interface FileRouteTypes {
     | '/_auth/reset-password'
     | '/_auth/sign-in'
     | '/_auth/sign-up'
+    | '/_user/contacts'
     | '/_user/dashboard'
     | '/_public/'
     | '/api/auth/$'
@@ -176,6 +188,13 @@ declare module '@tanstack/react-router' {
       path: '/dashboard'
       fullPath: '/dashboard'
       preLoaderRoute: typeof UserDashboardRouteImport
+      parentRoute: typeof UserRouteRoute
+    }
+    '/_user/contacts': {
+      id: '/_user/contacts'
+      path: '/contacts'
+      fullPath: '/contacts'
+      preLoaderRoute: typeof UserContactsRouteImport
       parentRoute: typeof UserRouteRoute
     }
     '/_auth/sign-up': {
@@ -236,10 +255,12 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 )
 
 interface UserRouteRouteChildren {
+  UserContactsRoute: typeof UserContactsRoute
   UserDashboardRoute: typeof UserDashboardRoute
 }
 
 const UserRouteRouteChildren: UserRouteRouteChildren = {
+  UserContactsRoute: UserContactsRoute,
   UserDashboardRoute: UserDashboardRoute,
 }
 

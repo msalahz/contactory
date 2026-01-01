@@ -49,8 +49,8 @@ export function UserSidebarContent({
 }: React.ComponentProps<typeof SidebarContent>) {
   return (
     <SidebarContent className={cn('', className)} {...props}>
-      <SidebarContent className="rounded-md">
-        <SidebarGroup className="pt-4">
+      <SidebarContent>
+        <SidebarGroup>
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Dashboard">
@@ -68,7 +68,7 @@ export function UserSidebarContent({
           <SidebarMenu>
             <SidebarMenuItem>
               <SidebarMenuButton asChild tooltip="Contact list">
-                <Link to="/dashboard">
+                <Link to="/contacts">
                   <ContactIcon />
                   <span>Contact list</span>
                 </Link>
