@@ -37,14 +37,17 @@ src/
 │   │
 │   ├── api/                      # External API endpoints
 │   │
-│   ├── _public/                  # Public routes
-│   │   ├── route.tsx             # Public layout
-│   │   ├── index.tsx             # Landing page
-│   │   └── sign-in.tsx
-│   │   └── sign-up.tsx
+│   ├── _auth/                    # Authentication routes (unauthenticated)
+│   │   ├── sign-in.tsx           # Sign in page
+│   │   ├── sign-up.tsx           # Sign up page
+│   │   ├── forgot-password.tsx   # Password reset request
+│   │   └── reset-password.tsx    # Password reset form
 │   │
-│   ├── _private/                 # Protected routes (authenticated users)
-│   │   ├── route.tsx             # Private layout + auth guard
+│   ├── _public/                  # Public routes
+│   │   └── index.tsx             # Landing page
+│   │
+│   ├── _user/                    # Protected routes (authenticated users)
+│   │   ├── route.tsx             # User layout + auth guard
 │   │   └── dashboard.tsx         # Main dashboard view
 │   │
 │   └── _admin/                   # Admin routes (admin users only)
@@ -54,71 +57,57 @@ src/
 ├── server/                       # Server-only code
 │   ├── db/                       # Database client and models
 │   │   ├── client.ts             # Drizzle DB client
-│   │   ├── schema/               # Database schemas
-│   │   │   ├── auth.ts
-│   │   │   └── users.ts
-│   │   └── seeds/                # Database seed data
+│   │   └── schema/               # Database schemas
 │   │
 │   ├── emails/                   # Email templates
-│   │   ├── templates/            # Reusable email components
-│   │   └── index.ts              # Email sending utilities
+│   │   └── templates/            # Reusable email components
 │   │
 │   ├── middlewares/              # Server middleware
 │   │   └── auth.middleware.ts    # Authentication middleware
 │   │
-│   ├── modules/                  # Feature modules
-│   │   ├── auth/                 # Authentication module
-│   │   │   ├── auth.service.ts   # Auth business logic
-│   │   │   └── auth.types.ts     # Auth types and interfaces
-│   │   └── users/                # Users module
-│   │       └── users.service.ts  # Users business logic
+│   ├── modules/                  # Feature modules (business logic)
+│   │   └── auth/                 # Authentication module
 │   │
 │   ├── mutations/                # Server mutation functions
-│   │   └── auth.mutations.ts     # Auth-related mutations
+│   │   └── auth.ts               # Auth-related mutations
 │   │
 │   ├── queries/                  # Server query functions
-│   │   └── auth.queries.ts       # Auth-related queries
+│   │   └── auth.ts               # Auth-related queries
 │   │
 │   └── schemas/                  # Validation schemas
-│       ├── auth.schema.ts        # Auth validation schemas
-│       └── users.schema.ts       # Users validation schemas
+│       └── auth.ts               # Auth validation schemas
 │
-├── features/
-│   ├── auth/
-│   │   └── hooks/useLoginMutation.ts
+├── features/                     # Client-side feature modules
+│   ├── auth/                     # Authentication feature
+│   │   ├── components/           # Auth UI components
+│   │   │   ├── SignInForm.tsx
+│   │   │   ├── SignUpForm.tsx
+│   │   │   ├── RequestPasswordResetForm.tsx
+│   │   │   └── ResetPasswordForm.tsx
+│   │   └── hooks/                # Auth hooks
+│   │       ├── useSignInEmail.ts
+│   │       ├── useSignInSocial.ts
+│   │       ├── useSignUpEmail.ts
+│   │       ├── useSignOut.ts
+│   │       ├── useRequestPasswordReset.ts
+│   │       └── useResetPassword.ts
 │   │
-│   ├── dashboard/
-│   │   ├── components/DashboardOverview.tsx
-│   │   ├── hooks/useDashboardData.ts
-│   │   ├── keys.ts
-│   │   └── options.ts
-│   │
-│   ├── users/
-│   │   ├── components/UserTable.tsx
-│   │   ├── hooks/
-│   │   │   ├── useUsersQuery.ts
-│   │   │   ├── useUserQuery.ts
-│   │   │   └── useUpdateUserMutation.ts
-│   │   ├── keys.ts
-│   │   └── options.ts
-│   │
-│   └── monitoring/
-│       └── components/SystemLogs.tsx
+│   └── landing/                  # Landing page feature
+│       └── components/           # Landing page components
 │
-├── shared/
-│   ├── components/
-│   │   └── LOGO.tsk
-│   ├── hooks/
-│   ├── utils/
-│   ├── types/
-│   └── query/
-│       ├── client.ts
-│       └── keys.ts
+├── shared/                       # Shared code
+│   ├── components/               # Reusable UI components
+│   ├── theme/                    # Theme configuration
+│   └── utils/                    # Utility functions
+│
+├── integrations/                 # Third-party integrations
+│   ├── better-auth/              # Auth configuration
+│   ├── shadcn/                   # UI components
+│   ├── tanstack-form/            # Form handling
+│   └── tanstack-query/           # Data fetching
 │
 ├── env.client.ts                 # Client env (VITE_ prefixed)
 ├── env.server.ts                 # Server env (secrets)
-├── integrations/
-├── assets/
 ├── styles.css
 ├── routeTree.gen.ts
 └── router.tsx
@@ -142,8 +131,8 @@ src/
 
 - **Structure**: Adopt a feature-sliced `src/features/` for client code and a modular `src/server/` directory for
   server-side code, organized by feature modules.
-- **Routing**: Use file-based routing under `src/routes/` with route groups prefixed by `_` (e.g., `_public`,
-  `_private`, `_admin`). Each route group has a `route.tsx` for layout and guards.
+- **Routing**: Use file-based routing under `src/routes/` with route groups prefixed by `_` (e.g., `_auth`, `_public`,
+  `_user`, `_admin`). Protected route groups have a `route.tsx` for layout and guards.
 - **Server Organization**:
   - `modules/`: Feature-based business logic (e.g., `auth/`, `users/`)
   - `mutations/`: Server mutation functions (suffixed with `.mutations.ts`)
@@ -246,7 +235,7 @@ src/
 - Add ESLint rules to forbid importing server-only modules from client bundles and disallow barrels for cross-feature
   exports.
 - Update route groups to use `_` prefix and ensure each area has `route.tsx` with guards (for example
-  `src/routes/_private/route.tsx` for authenticated users and `src/routes/_admin/route.tsx` for admin users).
+  `src/routes/_user/route.tsx` for authenticated users and `src/routes/_admin/route.tsx` for admin users).
 - Update a small set of core features (`auth`, `users`, `dashboard`) to the new layout as examples.
 
 ### Mid term (2-8 weeks)

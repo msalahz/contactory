@@ -111,27 +111,34 @@ contactory/
 │   └── robots.txt
 ├── src/
 │   ├── features/                  # Feature modules
-│   │   ├── landing/               # Landing page components
-│   │   │   └── components/        # Reusable UI components
-│   │   └── users/                 # User management
-│   │       ├── components/        # User interface components
-│   │       └── hooks/             # Custom React hooks
+│   │   ├── auth/                  # Authentication feature
+│   │   │   ├── components/        # Auth UI components
+│   │   │   └── hooks/             # Auth hooks
+│   │   └── landing/               # Landing page feature
+│   │       └── components/        # Landing page components
 │   ├── integrations/              # Third-party integrations
 │   │   ├── better-auth/           # Auth configuration
-│   │   └── shadcn/                # UI components
+│   │   ├── shadcn/                # UI components
+│   │   ├── tanstack-form/         # Form handling
+│   │   └── tanstack-query/        # Data fetching
 │   ├── routes/                    # Application routes
 │   │   ├── __root.tsx             # Root layout
-│   │   ├── _private/              # Protected routes (authenticated users)
-│   │   ├── _public/               # Public routes
+│   │   ├── _auth/                 # Auth routes (sign-in, sign-up, etc.)
+│   │   ├── _public/               # Public routes (landing page)
+│   │   ├── _user/                 # Protected routes (authenticated users)
 │   │   ├── _admin/                # Admin routes (admin users only)
 │   │   └── api/                   # API endpoints
 │   ├── server/                    # Server-side code
-│   │   ├── db/                    # Database client and models
+│   │   ├── db/                    # Database client and schemas
 │   │   ├── emails/                # Email templates
-│   │   └── functions/             # Server functions
+│   │   ├── middlewares/           # Server middlewares
+│   │   ├── modules/               # Business logic modules
+│   │   ├── mutations/             # Server mutation functions
+│   │   ├── queries/               # Server query functions
+│   │   └── schemas/               # Validation schemas
 │   └── shared/                    # Shared utilities and components
 │       ├── components/            # Reusable components
-│       ├── hooks/                 # Shared React hooks
+│       ├── theme/                 # Theme configuration
 │       └── utils/                 # Utility functions
 ├── .env.example                   # Example environment variables
 ├── components.json                # shadcn/ui config
