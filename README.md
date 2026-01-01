@@ -121,8 +121,9 @@ contactory/
 │   │   └── shadcn/                # UI components
 │   ├── routes/                    # Application routes
 │   │   ├── __root.tsx             # Root layout
-│   │   ├── _dashboard/            # Protected dashboard routes
+│   │   ├── _private/              # Protected routes (authenticated users)
 │   │   ├── _public/               # Public routes
+│   │   ├── _admin/                # Admin routes (admin users only)
 │   │   └── api/                   # API endpoints
 │   ├── server/                    # Server-side code
 │   │   ├── db/                    # Database client and models

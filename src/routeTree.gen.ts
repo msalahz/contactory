@@ -9,14 +9,25 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as PrivateRouteRouteImport } from './routes/_private/route'
+import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as PublicSignUpRouteImport } from './routes/_public/sign-up'
 import { Route as PublicSignInRouteImport } from './routes/_public/sign-in'
 import { Route as PublicResetPasswordRouteImport } from './routes/_public/reset-password'
 import { Route as PublicForgotPasswordRouteImport } from './routes/_public/forgot-password'
-import { Route as DashboardDashboardRouteImport } from './routes/_dashboard/dashboard'
+import { Route as PrivateDashboardRouteImport } from './routes/_private/dashboard'
+import { Route as AdminAdminRouteImport } from './routes/_admin/admin'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
+const PrivateRouteRoute = PrivateRouteRouteImport.update({
+  id: '/_private',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminRouteRoute = AdminRouteRouteImport.update({
+  id: '/_admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/_public/',
   path: '/',
@@ -42,10 +53,15 @@ const PublicForgotPasswordRoute = PublicForgotPasswordRouteImport.update({
   path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
-const DashboardDashboardRoute = DashboardDashboardRouteImport.update({
-  id: '/_dashboard/dashboard',
+const PrivateDashboardRoute = PrivateDashboardRouteImport.update({
+  id: '/dashboard',
   path: '/dashboard',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => PrivateRouteRoute,
+} as any)
+const AdminAdminRoute = AdminAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AdminRouteRoute,
 } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
@@ -54,7 +70,8 @@ const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/dashboard': typeof DashboardDashboardRoute
+  '/admin': typeof AdminAdminRoute
+  '/dashboard': typeof PrivateDashboardRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/reset-password': typeof PublicResetPasswordRoute
   '/sign-in': typeof PublicSignInRoute
@@ -63,7 +80,8 @@ export interface FileRoutesByFullPath {
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
-  '/dashboard': typeof DashboardDashboardRoute
+  '/admin': typeof AdminAdminRoute
+  '/dashboard': typeof PrivateDashboardRoute
   '/forgot-password': typeof PublicForgotPasswordRoute
   '/reset-password': typeof PublicResetPasswordRoute
   '/sign-in': typeof PublicSignInRoute
@@ -73,7 +91,10 @@ export interface FileRoutesByTo {
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/_dashboard/dashboard': typeof DashboardDashboardRoute
+  '/_admin': typeof AdminRouteRouteWithChildren
+  '/_private': typeof PrivateRouteRouteWithChildren
+  '/_admin/admin': typeof AdminAdminRoute
+  '/_private/dashboard': typeof PrivateDashboardRoute
   '/_public/forgot-password': typeof PublicForgotPasswordRoute
   '/_public/reset-password': typeof PublicResetPasswordRoute
   '/_public/sign-in': typeof PublicSignInRoute
@@ -84,6 +105,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/admin'
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
@@ -93,6 +115,7 @@ export interface FileRouteTypes {
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/admin'
     | '/dashboard'
     | '/forgot-password'
     | '/reset-password'
@@ -102,7 +125,10 @@ export interface FileRouteTypes {
     | '/api/auth/$'
   id:
     | '__root__'
-    | '/_dashboard/dashboard'
+    | '/_admin'
+    | '/_private'
+    | '/_admin/admin'
+    | '/_private/dashboard'
     | '/_public/forgot-password'
     | '/_public/reset-password'
     | '/_public/sign-in'
@@ -112,7 +138,8 @@ export interface FileRouteTypes {
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  DashboardDashboardRoute: typeof DashboardDashboardRoute
+  AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  PrivateRouteRoute: typeof PrivateRouteRouteWithChildren
   PublicForgotPasswordRoute: typeof PublicForgotPasswordRoute
   PublicResetPasswordRoute: typeof PublicResetPasswordRoute
   PublicSignInRoute: typeof PublicSignInRoute
@@ -123,6 +150,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/_private': {
+      id: '/_private'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof PrivateRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_admin': {
+      id: '/_admin'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AdminRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_public/': {
       id: '/_public/'
       path: '/'
@@ -158,12 +199,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PublicForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/_dashboard/dashboard': {
-      id: '/_dashboard/dashboard'
+    '/_private/dashboard': {
+      id: '/_private/dashboard'
       path: '/dashboard'
       fullPath: '/dashboard'
-      preLoaderRoute: typeof DashboardDashboardRouteImport
-      parentRoute: typeof rootRouteImport
+      preLoaderRoute: typeof PrivateDashboardRouteImport
+      parentRoute: typeof PrivateRouteRoute
+    }
+    '/_admin/admin': {
+      id: '/_admin/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAdminRouteImport
+      parentRoute: typeof AdminRouteRoute
     }
     '/api/auth/$': {
       id: '/api/auth/$'
@@ -175,8 +223,33 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AdminRouteRouteChildren {
+  AdminAdminRoute: typeof AdminAdminRoute
+}
+
+const AdminRouteRouteChildren: AdminRouteRouteChildren = {
+  AdminAdminRoute: AdminAdminRoute,
+}
+
+const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
+  AdminRouteRouteChildren,
+)
+
+interface PrivateRouteRouteChildren {
+  PrivateDashboardRoute: typeof PrivateDashboardRoute
+}
+
+const PrivateRouteRouteChildren: PrivateRouteRouteChildren = {
+  PrivateDashboardRoute: PrivateDashboardRoute,
+}
+
+const PrivateRouteRouteWithChildren = PrivateRouteRoute._addFileChildren(
+  PrivateRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  DashboardDashboardRoute: DashboardDashboardRoute,
+  AdminRouteRoute: AdminRouteRouteWithChildren,
+  PrivateRouteRoute: PrivateRouteRouteWithChildren,
   PublicForgotPasswordRoute: PublicForgotPasswordRoute,
   PublicResetPasswordRoute: PublicResetPasswordRoute,
   PublicSignInRoute: PublicSignInRoute,

@@ -1,10 +1,10 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 
 import { LogoIcon, LogoWord } from '@/shared/components/Logo'
-import { UnderConstruction } from '@/shared/components/UnderConstruction'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
+import { UnderConstruction } from '@/shared/components/UnderConstruction'
 
-export const Route = createFileRoute('/_dashboard/dashboard')({
+export const Route = createFileRoute('/_private/dashboard')({
   component: RouteComponent,
 })
 

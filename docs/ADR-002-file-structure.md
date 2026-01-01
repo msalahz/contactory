@@ -43,9 +43,13 @@ src/
 │   │   └── sign-in.tsx
 │   │   └── sign-up.tsx
 │   │
-│   └── _dashboard/               # Protected routes
-│       ├── route.tsx             # Dashboard layout + auth guard
-│       └── dashboard.tsx         # Main dashboard view
+│   ├── _private/                 # Protected routes (authenticated users)
+│   │   ├── route.tsx             # Private layout + auth guard
+│   │   └── dashboard.tsx         # Main dashboard view
+│   │
+│   └── _admin/                   # Admin routes (admin users only)
+│       ├── route.tsx             # Admin layout + admin guard
+│       └── admin.tsx             # Admin dashboard
 │
 ├── server/                       # Server-only code
 │   ├── db/                       # Database client and models
@@ -139,7 +143,7 @@ src/
 - **Structure**: Adopt a feature-sliced `src/features/` for client code and a modular `src/server/` directory for
   server-side code, organized by feature modules.
 - **Routing**: Use file-based routing under `src/routes/` with route groups prefixed by `_` (e.g., `_public`,
-  `_dashboard`). Each route group has a `route.tsx` for layout and guards.
+  `_private`, `_admin`). Each route group has a `route.tsx` for layout and guards.
 - **Server Organization**:
   - `modules/`: Feature-based business logic (e.g., `auth/`, `users/`)
   - `mutations/`: Server mutation functions (suffixed with `.mutations.ts`)
@@ -242,7 +246,7 @@ src/
 - Add ESLint rules to forbid importing server-only modules from client bundles and disallow barrels for cross-feature
   exports.
 - Update route groups to use `_` prefix and ensure each area has `route.tsx` with guards (for example
-  `src/routes/_dashboard/route.tsx`).
+  `src/routes/_private/route.tsx` for authenticated users and `src/routes/_admin/route.tsx` for admin users).
 - Update a small set of core features (`auth`, `users`, `dashboard`) to the new layout as examples.
 
 ### Mid term (2-8 weeks)
