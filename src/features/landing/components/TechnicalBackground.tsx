@@ -1,4 +1,3 @@
-import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'motion/react'
 
 import { cn } from '@/integrations/shadcn/lib/utils'
@@ -8,11 +7,7 @@ interface TechnicalBackgroundProps {
 }
 
 export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
-  const containerRef = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  })
+  const { scrollYProgress } = useScroll()
 
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -150])
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -300])
@@ -21,13 +16,11 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
   return (
     <div
-      ref={containerRef}
       className={cn(
         'pointer-events-none fixed inset-0 overflow-x-hidden overflow-y-hidden',
         className,
       )}
     >
-      {/* Animated beam effect */}
       <motion.div
         className="absolute inset-0 bg-linear-to-b from-transparent via-blue-500/5 to-transparent"
         style={{
