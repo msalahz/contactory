@@ -5,7 +5,7 @@ import { useMutation } from '@tanstack/react-query'
 
 import type { Theme } from '@/server/schemas/theme'
 
-import { ThemeContext } from '@/shared/theme/themeContext'
+import { ThemeContext } from '@/shared/theme/ThemeContext'
 import { setThemeCookieFn } from '@/server/mutations/theme'
 
 /**

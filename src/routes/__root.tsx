@@ -13,8 +13,8 @@ import type { Session, User } from '@/integrations/better-auth/authClient'
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
-import { ThemeProvider } from '@/shared/theme/themeContext'
 import { findThemeCookieFn } from '@/server/queries/theme'
+import { ThemeProvider } from '@/shared/theme/ThemeContext'
 
 interface MyRouterContext {
   user: User | null
