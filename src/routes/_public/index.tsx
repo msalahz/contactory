@@ -3,7 +3,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useTheme } from '@/shared/theme/useTheme'
 import { finsSessionFn } from '@/server/queries/auth'
 import { FAQs } from '@/features/landing/components/Faqs'
-import { useSignOut } from '@/features/users/hooks/useSignOut'
+import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { Features } from '@/features/landing/components/Features'
 import { HeroHeader } from '@/features/landing/components/Header'
 import { StatsSection } from '@/features/landing/components/Stats'
@@ -13,14 +13,14 @@ import { HeroSection } from '@/features/landing/components/HeroSection'
 import { TechnicalBackground } from '@/features/landing/components/TechnicalBackground'
 
 export const Route = createFileRoute('/_public/')({
-  component: App,
+  component: LandingPage,
   async loader() {
     const session = await finsSessionFn()
     return { user: session?.user || null }
   },
 })
 
-function App() {
+function LandingPage() {
   const { user } = Route.useLoaderData()
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()

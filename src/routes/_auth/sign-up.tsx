@@ -3,14 +3,14 @@ import { createFileRoute } from '@tanstack/react-router'
 import { envClient } from '@/env.client'
 import { noop } from '@/shared/utils/noop'
 import { AlertBox } from '@/shared/components/AlertBox'
-import { SignUpForm } from '@/features/users/components/SignUpForm'
+import { SignUpForm } from '@/features/auth/components/SignUpForm'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
+import { useSignUpEmail } from '@/features/auth/hooks/useSignUpEmail'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
-import { useSignUpEmail } from '@/features/users/hooks/useSignUpEmail'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
-import { useSignInSocial } from '@/features/users/hooks/useSignInSocial'
+import { useSignInSocial } from '@/features/auth/hooks/useSignInSocial'
 
-export const Route = createFileRoute('/_public/sign-up')({
+export const Route = createFileRoute('/_auth/sign-up')({
   component: RouteComponent,
 })
 

@@ -4,10 +4,10 @@ import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
-import { useRequestPasswordReset } from '@/features/users/hooks/useRequestPasswordReset'
-import { RequestPasswordResetForm } from '@/features/users/components/RequestPasswordResetForm'
+import { useRequestPasswordReset } from '@/features/auth/hooks/useRequestPasswordReset'
+import { RequestPasswordResetForm } from '@/features/auth/components/RequestPasswordResetForm'
 
-export const Route = createFileRoute('/_public/forgot-password')({
+export const Route = createFileRoute('/_auth/forgot-password')({
   component: RouteComponent,
 })
 

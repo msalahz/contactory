@@ -5,10 +5,10 @@ import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
-import { useResetPassword } from '@/features/users/hooks/useResetPassword'
-import { ResetPasswordForm } from '@/features/users/components/ResetPasswordForm'
+import { useResetPassword } from '@/features/auth/hooks/useResetPassword'
+import { ResetPasswordForm } from '@/features/auth/components/ResetPasswordForm'
 
-export const Route = createFileRoute('/_public/reset-password')({
+export const Route = createFileRoute('/_auth/reset-password')({
   validateSearch: z.object({
     token: z.string().optional(),
     error: z.literal('INVALID_TOKEN').optional(),
