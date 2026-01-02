@@ -2,14 +2,22 @@ import { z } from 'zod'
 
 import type { User } from '@/integrations/better-auth/authClient'
 
+import { userSchema } from '@/server/schemas/auth'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
 
-const formSchema = z.object({
-  name: z.string().nonempty('Name is required'),
-  image: z.union([z.url('Invalid URL'), z.literal('')]),
-})
+const formSchema = userSchema
+  .pick({
+    name: true,
+    image: true,
+    email: true,
+  })
+  .extend({
+    name: z.string().nonempty('Name is required'),
+    email: z.email().nonempty('Email is required'),
+    image: z.union([z.url('Invalid URL'), z.literal('')]),
+  })
 
 export type UserProfileFormData = z.infer<typeof formSchema>
 
@@ -22,7 +30,8 @@ export function UserProfileForm({ user, className, onFormSubmit, ...props }: Use
   const form = useAppForm({
     defaultValues: {
       name: user?.name ?? '',
-      image: user?.image ?? '',
+      email: user?.email ?? '',
+      image: '',
     },
     validators: {
       onSubmit: formSchema,
@@ -46,6 +55,11 @@ export function UserProfileForm({ user, className, onFormSubmit, ...props }: Use
         <form.AppField
           name="name"
           children={(field) => <field.Input type="text" label="Name" placeholder="John Doe" />}
+        />
+
+        <form.AppField
+          name="email"
+          children={(field) => <field.Input type="email" label="Email" />}
         />
 
         <form.AppField
