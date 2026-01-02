@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserRouteRouteImport } from './routes/_user/route'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
+import { Route as UserProfileRouteImport } from './routes/_user/profile'
 import { Route as UserDashboardRouteImport } from './routes/_user/dashboard'
 import { Route as UserContactsRouteImport } from './routes/_user/contacts'
 import { Route as AuthSignUpRouteImport } from './routes/_auth/sign-up'
@@ -33,6 +34,11 @@ const PublicIndexRoute = PublicIndexRouteImport.update({
   id: '/_public/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const UserProfileRoute = UserProfileRouteImport.update({
+  id: '/profile',
+  path: '/profile',
+  getParentRoute: () => UserRouteRoute,
 } as any)
 const UserDashboardRoute = UserDashboardRouteImport.update({
   id: '/dashboard',
@@ -83,6 +89,7 @@ export interface FileRoutesByFullPath {
   '/sign-up': typeof AuthSignUpRoute
   '/contacts': typeof UserContactsRoute
   '/dashboard': typeof UserDashboardRoute
+  '/profile': typeof UserProfileRoute
   '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -94,6 +101,7 @@ export interface FileRoutesByTo {
   '/sign-up': typeof AuthSignUpRoute
   '/contacts': typeof UserContactsRoute
   '/dashboard': typeof UserDashboardRoute
+  '/profile': typeof UserProfileRoute
   '/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -108,6 +116,7 @@ export interface FileRoutesById {
   '/_auth/sign-up': typeof AuthSignUpRoute
   '/_user/contacts': typeof UserContactsRoute
   '/_user/dashboard': typeof UserDashboardRoute
+  '/_user/profile': typeof UserProfileRoute
   '/_public/': typeof PublicIndexRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
@@ -121,6 +130,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/contacts'
     | '/dashboard'
+    | '/profile'
     | '/'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/sign-up'
     | '/contacts'
     | '/dashboard'
+    | '/profile'
     | '/'
     | '/api/auth/$'
   id:
@@ -145,6 +156,7 @@ export interface FileRouteTypes {
     | '/_auth/sign-up'
     | '/_user/contacts'
     | '/_user/dashboard'
+    | '/_user/profile'
     | '/_public/'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
@@ -182,6 +194,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof PublicIndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/_user/profile': {
+      id: '/_user/profile'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof UserProfileRouteImport
+      parentRoute: typeof UserRouteRoute
     }
     '/_user/dashboard': {
       id: '/_user/dashboard'
@@ -257,11 +276,13 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
 interface UserRouteRouteChildren {
   UserContactsRoute: typeof UserContactsRoute
   UserDashboardRoute: typeof UserDashboardRoute
+  UserProfileRoute: typeof UserProfileRoute
 }
 
 const UserRouteRouteChildren: UserRouteRouteChildren = {
   UserContactsRoute: UserContactsRoute,
   UserDashboardRoute: UserDashboardRoute,
+  UserProfileRoute: UserProfileRoute,
 }
 
 const UserRouteRouteWithChildren = UserRouteRoute._addFileChildren(

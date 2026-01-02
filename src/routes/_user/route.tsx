@@ -13,6 +13,7 @@ export const Route = createFileRoute('/_user')({
 })
 
 function RouteComponent() {
+  const { user } = Route.useRouteContext()
   return (
     <SidebarProvider
       defaultOpen={true}
@@ -21,7 +22,7 @@ function RouteComponent() {
       <UserSidebar>
         <UserSidebarHeader />
         <UserSidebarContent />
-        <UserSidebarFooter />
+        <UserSidebarFooter user={user} />
       </UserSidebar>
 
       <div className="bg-background/90 relative my-2 ms-2 me-2 flex-1 rounded-md border p-2 md:ms-0">

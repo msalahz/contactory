@@ -6,6 +6,15 @@ import { noop } from '@/shared/utils/noop'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 
+export function ThemeToggleIcon({ theme }: { theme: Theme }) {
+  return (
+    <>
+      <MoonIcon className={cn('hidden', theme === 'dark' ? 'block' : '')} />
+      <SunIcon className={cn('hidden', theme === 'light' ? 'block' : '')} />
+    </>
+  )
+}
+
 export interface ThemeToggleButtonProps extends Omit<
   React.ComponentProps<typeof Button>,
   'onChange'
@@ -15,8 +24,8 @@ export interface ThemeToggleButtonProps extends Omit<
 }
 
 export function ThemeToggleButton({
+  children,
   theme,
-  className,
   onChange = noop,
   ...props
 }: ThemeToggleButtonProps) {
@@ -24,12 +33,11 @@ export function ThemeToggleButton({
     <Button
       size="icon-sm"
       variant="outline"
-      className={cn('', className)}
       onClick={() => onChange(theme === 'light' ? 'dark' : 'light')}
       {...props}
     >
-      <MoonIcon className={cn('hidden', theme === 'dark' ? 'block' : '')} />
-      <SunIcon className={cn('hidden', theme === 'light' ? 'block' : '')} />
+      <ThemeToggleIcon theme={theme} />
+      {children}
     </Button>
   )
 }

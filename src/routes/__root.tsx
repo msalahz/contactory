@@ -12,6 +12,7 @@ import type { Session, User } from '@/integrations/better-auth/authClient'
 
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
+import { finsSessionFn } from '@/server/queries/auth'
 import { NotFound } from '@/shared/components/NotFound'
 import { findThemeCookieFn } from '@/server/queries/theme'
 import { ThemeProvider } from '@/shared/theme/ThemeContext'
@@ -28,6 +29,10 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
   shellComponent: RootDocument,
   preloadGcTime: 1000 * 60 * 60, // 60 minutes
   preloadStaleTime: 1000 * 60 * 60, // 60 minutes,
+  async beforeLoad() {
+    const session = await finsSessionFn()
+    return { session, user: session?.user }
+  },
   async loader() {
     const serverTheme = await findThemeCookieFn()
     return { serverTheme }

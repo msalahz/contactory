@@ -1,10 +1,33 @@
 import { Link } from '@tanstack/react-router'
+import {
+  ContactIcon,
+  EllipsisVerticalIcon,
+  GripVerticalIcon,
+  LayoutDashboardIcon,
+  LogOutIcon,
+  UserCircleIcon,
+} from 'lucide-react'
 
-import { ContactIcon, LayoutDashboardIcon } from 'lucide-react'
-import { useTheme } from '@/shared/theme/useTheme'
+import type { User } from '@/integrations/better-auth/authClient'
+
 import { cn } from '@/integrations/shadcn/lib/utils'
+import { useTheme } from '@/shared/theme/useTheme'
+import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
+import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { LogoIcon, LogoWord } from '@/shared/components/Logo'
-import { ThemeToggleButton } from '@/shared/theme/ThemeToggleButton'
+import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
+import {
+  UserMenu,
+  UserMenuContent,
+  UserMenuTrigger,
+  UserProfile,
+} from '@/features/users/components/UserMenu'
+import {
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+} from '@/integrations/shadcn/components/ui/dropdown-menu'
 import {
   Sidebar,
   SidebarContent,
@@ -15,30 +38,74 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
+  useSidebar,
 } from '@/integrations/shadcn/components/ui/sidebar'
 
-export function UserSidebarFooter({
-  className,
-  ...props
-}: React.ComponentProps<typeof SidebarFooter>) {
-  const { theme, setTheme } = useTheme()
+export interface UserSidebarProps extends React.ComponentProps<typeof SidebarFooter> {
+  user?: User
+}
 
+export function UserSidebarFooter({ user, className, ...props }: UserSidebarProps) {
+  const { theme, setTheme } = useTheme()
+  const { signOut, isSigningOut } = useSignOut()
   return (
     <SidebarFooter className={cn('mt-auto', className)} {...props}>
-      <div className="flex items-start justify-start gap-1 group-data-[collapsible=icon]:flex-col">
-        <ThemeToggleButton
-          theme={theme}
-          onChange={setTheme}
-          className="fade-in-animate hidden size-8 group-data-[state=collapsed]:flex"
-        />
-        <SidebarTrigger className="hidden size-8 md:flex" variant="outline" />
-        <ThemeToggleButton
-          theme={theme}
-          onChange={setTheme}
-          className="fade-in-animate hidden size-8 group-data-[state=expanded]:flex"
-        />
-      </div>
+      {user ? (
+        <UserMenu user={user}>
+          <UserMenuTrigger asChild>
+            <SidebarMenuButton
+              size="lg"
+              className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+            >
+              <UserProfile user={user} />
+              <EllipsisVerticalIcon className="ml-auto size-4" />
+            </SidebarMenuButton>
+          </UserMenuTrigger>
+
+          <UserMenuContent user={user}>
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <UserProfile user={user} />
+              </div>
+            </DropdownMenuLabel>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuGroup>
+              <DropdownMenuItem asChild>
+                <Link to="/profile">
+                  <UserCircleIcon />
+                  Profile
+                </Link>
+              </DropdownMenuItem>
+
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  setTheme(theme === 'light' ? 'dark' : 'light')
+                }}
+              >
+                <ThemeToggleIcon theme={theme} />
+                Toggle Theme
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+
+            <DropdownMenuSeparator />
+
+            <DropdownMenuItem
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                signOut({})
+              }}
+            >
+              {isSigningOut ? <Spinner /> : <LogOutIcon />}
+              Log out
+            </DropdownMenuItem>
+          </UserMenuContent>
+        </UserMenu>
+      ) : null}
     </SidebarFooter>
   )
 }
@@ -103,13 +170,20 @@ export function UserSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const { toggleSidebar } = useSidebar()
   return (
     <Sidebar
-      className={cn('border-none p-2', className)}
+      className={cn('relative border-none p-2', className)}
       variant="sidebar"
       collapsible="icon"
       {...props}
     >
+      <button
+        className="text-secondary-foreground absolute -end-1.25 top-1/2 -translate-y-1/2 transform cursor-pointer"
+        onClick={toggleSidebar}
+      >
+        <GripVerticalIcon className="size-4" />
+      </button>
       {children}
     </Sidebar>
   )
