@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { useTheme } from '@/shared/theme/useTheme'
-import { finsSessionFn } from '@/server/queries/auth'
+import { findSessionFn } from '@/server/queries/auth'
 import { FAQs } from '@/features/landing/components/Faqs'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { Features } from '@/features/landing/components/Features'
@@ -15,7 +15,7 @@ import { TechnicalBackground } from '@/features/landing/components/TechnicalBack
 export const Route = createFileRoute('/_public/')({
   component: LandingPage,
   async loader() {
-    const session = await finsSessionFn()
+    const session = await findSessionFn()
     return { user: session?.user || null }
   },
 })

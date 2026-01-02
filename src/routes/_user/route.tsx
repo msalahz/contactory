@@ -1,5 +1,6 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { requireAuthMiddleware } from '@/server/middlewares/auth'
 import { SidebarProvider } from '@/integrations/shadcn/components/ui/sidebar'
 import {
   UserSidebar,
@@ -11,6 +12,9 @@ import {
 
 export const Route = createFileRoute('/_user')({
   component: RouteComponent,
+  server: {
+    middleware: [requireAuthMiddleware],
+  },
 })
 
 function RouteComponent() {
