@@ -1,10 +1,11 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
-import { SidebarProvider, SidebarTrigger } from '@/integrations/shadcn/components/ui/sidebar'
+import { SidebarProvider } from '@/integrations/shadcn/components/ui/sidebar'
 import {
   UserSidebar,
   UserSidebarContent,
   UserSidebarFooter,
+  UserSidebarGrip,
   UserSidebarHeader,
 } from '@/features/users/components/UserSidebar'
 
@@ -25,8 +26,9 @@ function RouteComponent() {
         <UserSidebarFooter user={user} />
       </UserSidebar>
 
-      <div className="bg-background/90 relative my-2 ms-2 me-2 flex-1 rounded-md border p-2 md:ms-0">
-        <SidebarTrigger className="absolute start-1 top-1 ms-auto md:hidden" />
+      <UserSidebarGrip />
+
+      <div className="bg-background/90 relative m-2 flex-1 rounded-md border p-2 md:ms-0">
         <Outlet />
       </div>
     </SidebarProvider>

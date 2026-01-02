@@ -116,34 +116,32 @@ export function UserSidebarContent({
 }: React.ComponentProps<typeof SidebarContent>) {
   return (
     <SidebarContent className={cn('', className)} {...props}>
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Dashboard">
-                <Link to="/dashboard">
-                  <LayoutDashboardIcon />
-                  <span>Dashboard</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
+      <SidebarGroup>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Dashboard">
+              <Link to="/dashboard">
+                <LayoutDashboardIcon />
+                <span>Dashboard</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
 
-        <SidebarGroup>
-          <SidebarGroupLabel>Contacts</SidebarGroupLabel>
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton asChild tooltip="Contact list">
-                <Link to="/contacts">
-                  <ContactIcon />
-                  <span>Contact list</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroup>
-      </SidebarContent>
+      <SidebarGroup>
+        <SidebarGroupLabel>Contacts</SidebarGroupLabel>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton asChild tooltip="Contact list">
+              <Link to="/contacts">
+                <ContactIcon />
+                <span>Contact list</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
     </SidebarContent>
   )
 }
@@ -154,7 +152,7 @@ export function UserSidebarHeader({
   ...props
 }: React.ComponentProps<typeof SidebarHeader>) {
   return (
-    <SidebarHeader className={cn('', className)} {...props}>
+    <SidebarHeader className={cn('flex items-start justify-start', className)} {...props}>
       <div className="flex items-center justify-start gap-1 group-data-[collapsible=icon]:flex-col">
         <Link to="/" className="flex items-center gap-2">
           <LogoIcon className="size-8" />
@@ -170,7 +168,6 @@ export function UserSidebar({
   className,
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
-  const { toggleSidebar } = useSidebar()
   return (
     <Sidebar
       className={cn('relative border-none p-2', className)}
@@ -178,13 +175,20 @@ export function UserSidebar({
       collapsible="icon"
       {...props}
     >
-      <button
-        className="text-secondary-foreground absolute -end-1.25 top-1/2 -translate-y-1/2 transform cursor-pointer"
-        onClick={toggleSidebar}
-      >
-        <GripVerticalIcon className="size-4" />
-      </button>
       {children}
     </Sidebar>
+  )
+}
+
+export function UserSidebarGrip({ className, ...props }: React.ComponentProps<'button'>) {
+  const { toggleSidebar } = useSidebar()
+  return (
+    <button
+      className="text-secondary-foreground w-2 transform cursor-pointer md:-translate-x-2"
+      onClick={toggleSidebar}
+      {...props}
+    >
+      <GripVerticalIcon className="size-4" />
+    </button>
   )
 }
