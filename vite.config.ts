@@ -1,10 +1,10 @@
 import { defineConfig } from 'vite'
-import viteReact from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
+import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
-import netlify from '@netlify/vite-plugin-tanstack-start'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
+import { cloudflare } from '@cloudflare/vite-plugin'
 
 const config = defineConfig({
   plugins: [
@@ -13,7 +13,7 @@ const config = defineConfig({
     viteTsConfigPaths({
       projects: ['./tsconfig.json'],
     }),
-    netlify(),
+    cloudflare({ viteEnvironment: { name: 'ssr' } }),
     tailwindcss(),
     tanstackStart(),
     viteReact({
