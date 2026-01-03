@@ -1,7 +1,15 @@
+import { config } from 'dotenv'
+import { drizzle } from 'drizzle-orm/postgres-js'
+import postgres from 'postgres'
 import { v7 as uuidv7 } from 'uuid'
 
 import { contact } from '@/server/schemas/contacts'
-import { db } from '@/server/db/client'
+
+config()
+
+// Seeds script uses direct connection (runs outside Cloudflare Workers)
+const client = postgres(process.env.DATABASE_URL)
+const db = drizzle(client)
 
 // Sample data arrays for generating realistic contacts
 const firstNames = [

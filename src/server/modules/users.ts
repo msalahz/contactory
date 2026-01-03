@@ -1,5 +1,6 @@
-import { db } from '@/server/db/client'
+import { getDb } from '@/server/db/client'
 
 export function findUser(userId: string) {
-  return db.query.user.findFirst({ where: (user, { eq }) => eq(user.id, userId) })
+  const db = getDb()
+  return db.query.users.findFirst({ where: (users, { eq }) => eq(users.id, userId) })
 }

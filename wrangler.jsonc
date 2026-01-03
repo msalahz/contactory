@@ -38,5 +38,12 @@
     "RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
     "VITE_BETTER_AUTH_BASE_URL": "https://contactory.consultin.dev",
     "VITE_BETTER_AUTH_CALLBACK_URL": "https://contactory.consultin.dev/dashboard"
-  }
+  },
+  "hyperdrive": [
+    {
+      "binding": "NEON_HYPERDRIVE",
+      "id": "64a46a7a1a104aa9935d3f7a673de244",
+      "localConnectionString": "postgresql://neondb_owner:npg_rm7Ez2AfHewZ@ep-empty-smoke-agmi8an6-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+    }
+  ]
 }

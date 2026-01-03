@@ -1,5 +1,9 @@
+import { env } from 'cloudflare:workers'
 import { Resend } from 'resend'
 
-import { envServer } from '@/env.server'
-
-export const resendServer = new Resend(envServer.RESEND_API_KEY)
+/**
+ * Get Resend client. Must be called within a request context.
+ */
+export function getResend() {
+  return new Resend(env.RESEND_API_KEY)
+}
