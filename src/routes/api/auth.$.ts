@@ -1,15 +1,15 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { authServer } from '@/integrations/better-auth/authServer'
+import { auth } from '@/integrations/better-auth/auth'
 
 export const Route = createFileRoute('/api/auth/$')({
   server: {
     handlers: {
       GET: async ({ request }: { request: Request }) => {
-        return await authServer.handler(request)
+        return await auth.handler(request)
       },
       POST: async ({ request }: { request: Request }) => {
-        return await authServer.handler(request)
+        return await auth.handler(request)
       },
     },
   },

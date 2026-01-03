@@ -9,7 +9,7 @@ import { sendEmail } from '@/server/emails/sendEmail'
 import { VerifyEmailTemplate } from '@/server/emails/templates/VerifyEmailTemplate'
 import { ResetPasswordEmail } from '@/server/emails/templates/ResetPasswordEmailTemplate'
 
-export const authServer = betterAuth({
+export const auth = betterAuth({
   baseURL: envServer.BETTER_AUTH_URL,
 
   socialProviders: {
