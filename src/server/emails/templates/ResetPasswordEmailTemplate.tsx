@@ -12,14 +12,14 @@ import {
   pixelBasedPreset,
 } from '@react-email/components'
 
-import { envServer } from '@/env.server'
+import { env } from 'cloudflare:workers'
 
 interface ResetPasswordEmailProps {
   name: string
   url: string
 }
 
-const baseUrl = envServer.BASE_URL ? `${envServer.BASE_URL}` : ''
+const baseUrl = env.BASE_URL ? `${env.BASE_URL}` : ''
 
 export function ResetPasswordEmail({ name, url }: ResetPasswordEmailProps) {
   return (
