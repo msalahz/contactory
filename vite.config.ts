@@ -4,6 +4,7 @@ import viteReact from '@vitejs/plugin-react'
 import { devtools } from '@tanstack/devtools-vite'
 import viteTsConfigPaths from 'vite-tsconfig-paths'
 import { cloudflare } from '@cloudflare/vite-plugin'
+import { visualizer } from 'rollup-plugin-visualizer'
 import { tanstackStart } from '@tanstack/react-start/plugin/vite'
 
 const config = defineConfig({
@@ -19,6 +20,12 @@ const config = defineConfig({
       babel: {
         plugins: ['babel-plugin-react-compiler'],
       },
+    }),
+    visualizer({
+      open: false,
+      filename: 'stats.html',
+      gzipSize: true,
+      brotliSize: true,
     }),
   ],
 })
