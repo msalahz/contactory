@@ -1,6 +1,5 @@
 import { relations } from 'drizzle-orm'
 import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
-import { createSelectSchema } from 'drizzle-zod'
 
 export const users = pgTable('users', {
   id: text('id').primaryKey(),
@@ -92,5 +91,3 @@ export const accountsRelations = relations(accounts, ({ one }) => ({
     references: [users.id],
   }),
 }))
-
-export const userSchema = createSelectSchema(users)

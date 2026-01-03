@@ -1,8 +1,8 @@
 import { getRequest } from '@tanstack/react-start/server'
 
-import { authServer } from '@/integrations/better-auth/authServer'
+import { auth } from '@/integrations/better-auth/auth'
 
 export async function findSession() {
   const request = getRequest()
-  return await authServer.api.getSession({ headers: request.headers })
+  return await auth.api.getSession({ headers: request.headers })
 }

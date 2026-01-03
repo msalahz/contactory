@@ -3,7 +3,7 @@ import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
-import { user } from '@/server/schemas/auth'
+import { users } from '@/server/schemas/auth'
 
 export const contact = pgTable(
   'contact',
@@ -14,7 +14,7 @@ export const contact = pgTable(
 
     userId: text()
       .notNull()
-      .references(() => user.id, { onDelete: 'cascade' }),
+      .references(() => users.id, { onDelete: 'cascade' }),
 
     // Basic Info
     firstName: text().notNull(),
