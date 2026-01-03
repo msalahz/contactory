@@ -6,14 +6,15 @@
     "nodejs_compat"
   ],
   "main": "@tanstack/react-start/server-entry",
-  "workers_dev": false,
-  "preview_urls": false,
-  "r2_buckets": [
+  "routes": [
     {
-      "binding": "contactory R2 bucket",
-      "bucket_name": "contactory"
+      "pattern": "contactory.consultin.dev",
+      "zone_name": "consultin.dev",
+      "custom_domain": true
     }
   ],
+  "workers_dev": false,
+  "preview_urls": false,
   "observability": {
     "enabled": false,
     "head_sampling_rate": 1,
@@ -37,12 +38,5 @@
     "RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
     "VITE_BETTER_AUTH_BASE_URL": "https://contactory.consultin.dev",
     "VITE_BETTER_AUTH_CALLBACK_URL": "https://contactory.consultin.dev/dashboard"
-  },
-  "routes": [
-    {
-      "pattern": "contactory.consultin.dev",
-      "zone_name": "consultin.dev",
-      "custom_domain": true
-    }
-  ]
+  }
 }
