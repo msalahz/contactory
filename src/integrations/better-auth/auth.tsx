@@ -6,8 +6,6 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
 import { getDb } from '@/server/db/client'
 import { sendEmail } from '@/server/emails/sendEmail'
-import { VerifyEmailTemplate } from '@/server/emails/templates/VerifyEmailTemplate'
-import { ResetPasswordEmail } from '@/server/emails/templates/ResetPasswordEmailTemplate'
 
 /**
  * Create an auth instance. Must be called within a request context.
@@ -52,6 +50,8 @@ export function getAuth() {
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
         try {
+          const { VerifyEmailTemplate } =
+            await import('@/server/emails/templates/VerifyEmailTemplate')
           await sendEmail({
             to: user.email,
             from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
@@ -75,6 +75,8 @@ export function getAuth() {
       resetPasswordTokenExpiresIn: 3600, // 1hour
       async sendResetPassword({ url, user }) {
         try {
+          const { ResetPasswordEmail } =
+            await import('@/server/emails/templates/ResetPasswordEmailTemplate')
           await sendEmail({
             to: user.email,
             from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
