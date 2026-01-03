@@ -4,3 +4,4 @@ ignoredBuiltDependencies:
   - msw
   - sharp
   - unrs-resolver
+  - workerd
