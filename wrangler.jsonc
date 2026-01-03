@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "contactory",
+  "compatibility_date": "2025-09-02",
+  "compatibility_flags": ["nodejs_compat"],
+  "main": "@tanstack/react-start/server-entry",
+  "vars": {
+    "BASE_URL": "http://localhost:3000",
+    "BETTER_AUTH_URL": "http://localhost:3000",
+    "BETTER_AUTH_ENABLE_OPENAPI": "false",
+    "BETTER_AUTH_USE_SECURE_COOKIES": "true",
+    "RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
+    "VITE_BETTER_AUTH_BASE_URL": "http://localhost:3000",
+    "VITE_BETTER_AUTH_CALLBACK_URL": "http://localhost:3000/dashboard",
+  },
+}
