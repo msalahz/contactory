@@ -13,7 +13,3 @@ count.txt
 .vinxi
 todos.json
 .idea/*
-
-# Local Netlify folder
-.netlify
-bak-src
