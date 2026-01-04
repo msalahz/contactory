@@ -21,14 +21,13 @@ import {
   FieldGroup,
   FieldLabel,
   FieldLegend,
-  FieldSeparator,
   FieldSet,
 } from '@/integrations/shadcn/components/ui/field'
 
 export function UserProfile({ children, className, ...props }: React.ComponentProps<'main'>) {
   return (
     <main
-      className={cn('mx-auto flex w-full items-start gap-6 p-2 md:pt-10', className)}
+      className={cn('mx-auto flex w-full items-start gap-6 p-4 md:pt-10', className)}
       {...props}
     >
       {children}
@@ -40,28 +39,57 @@ export interface UserProfileProps extends React.ComponentProps<typeof FieldSet> 
 
 export function UserProfileContent({ children, className, ...props }: UserProfileProps) {
   return (
-    <FieldSet className={cn('mx-auto max-w-4xl grow', className)} {...props}>
+    <FieldSet className={cn('mx-auto max-w-2xl grow space-y-6', className)} {...props}>
       <FieldLegend>
-        <h1 className="text-4xl font-semibold">Profile Settings</h1>
+        <h1 className="text-3xl font-semibold">Profile Settings</h1>
       </FieldLegend>
-      <FieldDescription>Manage your profile settings</FieldDescription>
-      <FieldSeparator />
-      <FieldGroup>{children}</FieldGroup>
+      <FieldDescription>Manage your account settings and preferences</FieldDescription>
+      {children}
     </FieldSet>
   )
 }
 
-export interface UserAvatarFieldProps extends React.ComponentProps<typeof Input> {
-  user?: Partial<Pick<User, 'name' | 'image'>>
+export interface ProfileSectionProps extends React.ComponentProps<'div'> {
+  title: string
+  description?: string
+  htmlFor?: string
 }
 
-export function UserAvatarField({ user, children, className, ...props }: UserAvatarFieldProps) {
+export function ProfileSection({
+  title,
+  description,
+  htmlFor,
+  children,
+  className,
+  ...props
+}: ProfileSectionProps) {
+  return (
+    <FieldGroup className={cn('bg-card rounded-lg border p-6 shadow-sm', className)} {...props}>
+      <FieldContent className="mb-4 gap-0.5">
+        <FieldLabel htmlFor={htmlFor} className="text-lg font-medium">
+          {title}
+        </FieldLabel>
+        {description && <FieldDescription>{description}</FieldDescription>}
+      </FieldContent>
+      {children}
+    </FieldGroup>
+  )
+}
+
+export interface UserAvatarFormProps {
+  user?: Partial<Pick<User, 'name' | 'image'>>
+  onFormSubmit?: (data: { image: string }) => Promise<void>
+  className?: string
+}
+
+export function UserAvatarForm({ user, onFormSubmit = noop, className }: UserAvatarFormProps) {
   const { image, name } = user ?? {}
   const [isPending, startTransition] = useTransition()
   const [avatarPreview, setAvatarPreview] = React.useState<string | null>(image ?? null)
+  const [hasChanges, setHasChanges] = React.useState(false)
   const fileRef = useRef<HTMLInputElement>(null)
 
-  function handleAvatarClick() {
+  function handleUploadClick() {
     fileRef.current?.click()
   }
 
@@ -71,47 +99,100 @@ export function UserAvatarField({ user, children, className, ...props }: UserAva
       startTransition(async () => {
         const base64File = await convertFileToBase64(file)
         setAvatarPreview(base64File)
+        setHasChanges(true)
       })
     }
   }
 
+  function handleRemove() {
+    setAvatarPreview(null)
+    setHasChanges(true)
+    if (fileRef.current) {
+      fileRef.current.value = ''
+    }
+  }
+
+  function handleReset() {
+    setAvatarPreview(image ?? null)
+    setHasChanges(false)
+    if (fileRef.current) {
+      fileRef.current.value = ''
+    }
+  }
+
+  async function handleSave() {
+    if (avatarPreview !== null) {
+      await onFormSubmit({ image: avatarPreview })
+      setHasChanges(false)
+    }
+  }
+
   return (
-    <FieldGroup id="avatar">
-      <Field orientation="responsive" {...props}>
-        <FieldContent>
-          <FieldLabel>Avatar {isPending && <Spinner className="size-4" />}</FieldLabel>
-          <FieldDescription>Change your avatar</FieldDescription>
-        </FieldContent>
-        <div className="flex items-center gap-2">
-          <Avatar className={cn('size-20 cursor-pointer', className)} onClick={handleAvatarClick}>
+    <ProfileSection title="Avatar" description="Update your profile picture" className={className}>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex items-center gap-4">
+          <Avatar
+            className="ring-border ring-offset-background size-20 cursor-pointer ring-2 ring-offset-2"
+            onClick={handleUploadClick}
+          >
             <AvatarImage src={avatarPreview || undefined} />
-            <AvatarFallback>{name ? getUserNameInitials({ name: name }) : 'UN'}</AvatarFallback>
+            <AvatarFallback className="text-lg">
+              {name ? getUserNameInitials({ name }) : 'UN'}
+            </AvatarFallback>
           </Avatar>
-          <Input
-            name="avatar"
-            ref={fileRef}
-            type="file"
-            accept="image/*"
-            className={cn('hidden', className)}
-            onChange={handleFileChange}
-            {...props}
-          />
+          <div className="flex flex-col gap-2">
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              onClick={handleUploadClick}
+              disabled={isPending}
+            >
+              {isPending ? <Spinner className="mr-2 size-4" /> : null}
+              Upload new
+            </Button>
+            {avatarPreview && (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={handleRemove}
+                className="text-destructive hover:text-destructive"
+              >
+                Remove
+              </Button>
+            )}
+          </div>
         </div>
-      </Field>
-    </FieldGroup>
+        <Input
+          ref={fileRef}
+          type="file"
+          accept="image/*"
+          className="hidden"
+          onChange={handleFileChange}
+        />
+      </div>
+      {hasChanges && (
+        <div className="mt-4 flex justify-end gap-2 border-t pt-4">
+          <Button type="button" variant="outline" size="sm" onClick={handleReset}>
+            Reset
+          </Button>
+          <Button type="button" size="sm" onClick={handleSave}>
+            Save
+          </Button>
+        </div>
+      )}
+    </ProfileSection>
   )
 }
 
-export interface UserNameFieldProps extends React.ComponentProps<typeof Input> {
+export interface UserNameFormProps {
   user?: Partial<Pick<User, 'name'>>
   onFormSubmit?: (data: Pick<User, 'name'>) => Promise<void>
+  className?: string
 }
-export function UserNameField({
-  user,
-  children,
-  onFormSubmit = noop,
-  ...props
-}: UserNameFieldProps) {
+
+export function UserNameForm({ user, onFormSubmit = noop, className }: UserNameFormProps) {
   const form = useAppForm({
     defaultValues: {
       name: user?.name ?? '',
@@ -127,73 +208,208 @@ export function UserNameField({
   })
 
   return (
-    <form
-      onSubmit={(e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        void form.handleSubmit()
-      }}
+    <ProfileSection
+      title="Display Name"
+      description="This is your public display name"
+      className={className}
     >
-      <FieldGroup id="name">
-        <Field orientation="responsive" {...props}>
-          <FieldContent>
-            <FieldLabel>Name</FieldLabel>
-            <FieldDescription>Change your name</FieldDescription>
-          </FieldContent>
-
-          <form.AppField
-            name="name"
-            children={(field) => (
-              <field.Input type="text" className="min-w-full sm:min-w-75 lg:min-w-99" />
-            )}
-          />
-
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          void form.handleSubmit()
+        }}
+      >
+        <FieldGroup>
           <Field>
-            <form.AppForm>
-              <form.SubmitButton label="Save" className="ms-auto md:w-full" />
-            </form.AppForm>
+            <FieldContent>
+              <FieldLabel>Name</FieldLabel>
+              <form.AppField
+                name="name"
+                children={(field) => (
+                  <field.Input
+                    id="name"
+                    type="text"
+                    placeholder="Enter your name"
+                    className="max-w-sm"
+                  />
+                )}
+              />
+            </FieldContent>
           </Field>
-        </Field>
-      </FieldGroup>
-    </form>
+          <div className="flex justify-end gap-2 border-t pt-4 *:min-w-20">
+            <form.AppForm>
+              <form.ResetButton variant="outline" size="sm" label="Reset" />
+              <form.SubmitButton size="sm" label="Save" />
+            </form.AppForm>
+          </div>
+        </FieldGroup>
+      </form>
+    </ProfileSection>
   )
 }
 
-export interface UserPasswordFieldProps extends React.ComponentProps<typeof Input> {}
+const passwordSchema = z
+  .object({
+    currentPassword: z.string().min(1, 'Current password is required'),
+    newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+    confirmPassword: z.string().min(1, 'Please confirm your password'),
+  })
+  .refine((data) => data.newPassword === data.confirmPassword, {
+    message: 'Passwords do not match',
+    path: ['confirmPassword'],
+  })
 
-export function UserPasswordField({ children, ...props }: UserPasswordFieldProps) {
+export interface UserPasswordFormProps {
+  onFormSubmit?: (data: { currentPassword: string; newPassword: string }) => Promise<void>
+  className?: string
+}
+
+export function UserPasswordForm({ onFormSubmit = noop, className }: UserPasswordFormProps) {
+  const form = useAppForm({
+    defaultValues: {
+      currentPassword: '',
+      newPassword: '',
+      confirmPassword: '',
+    },
+    validators: {
+      onSubmit: passwordSchema,
+    },
+    async onSubmit({ value }) {
+      await onFormSubmit?.({
+        currentPassword: value.currentPassword,
+        newPassword: value.newPassword,
+      })
+    },
+  })
+
   return (
-    <FieldGroup id="password">
-      <Field orientation="responsive" {...props}>
-        <FieldContent>
-          <FieldLabel>Password</FieldLabel>
-          <FieldDescription>Change your password</FieldDescription>
-        </FieldContent>
-
-        <Input {...props} />
-        <Input {...props} />
-        <Button className="ms-auto">Save</Button>
-      </Field>
-    </FieldGroup>
+    <ProfileSection
+      title="Password"
+      description="Change your password to keep your account secure"
+      className={className}
+    >
+      <form
+        onSubmit={(e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          void form.handleSubmit()
+        }}
+      >
+        <FieldGroup className="space-y-4">
+          <Field>
+            <FieldContent>
+              <FieldLabel htmlFor="currentPassword">Current Password</FieldLabel>
+              <form.AppField
+                name="currentPassword"
+                children={(field) => (
+                  <field.Input
+                    id="currentPassword"
+                    type="password"
+                    placeholder="Enter current password"
+                    className="max-w-sm"
+                  />
+                )}
+              />
+            </FieldContent>
+          </Field>
+          <Field>
+            <FieldContent>
+              <FieldLabel htmlFor="newPassword">New Password</FieldLabel>
+              <form.AppField
+                name="newPassword"
+                children={(field) => (
+                  <field.Input
+                    id="newPassword"
+                    type="password"
+                    placeholder="Enter new password"
+                    className="max-w-sm"
+                  />
+                )}
+              />
+            </FieldContent>
+          </Field>
+          <Field>
+            <FieldContent>
+              <FieldLabel htmlFor="confirmPassword">Confirm New Password</FieldLabel>
+              <form.AppField
+                name="confirmPassword"
+                children={(field) => (
+                  <field.Input
+                    id="confirmPassword"
+                    type="password"
+                    placeholder="Confirm new password"
+                    className="max-w-sm"
+                  />
+                )}
+              />
+            </FieldContent>
+          </Field>
+          <div className="flex justify-end gap-2 border-t pt-4">
+            <form.AppForm>
+              <form.ResetButton variant="outline" size="sm" label="Reset" className="min-w-20" />
+              <form.SubmitButton size="sm" label="Update Password" className="min-w-40" />
+            </form.AppForm>
+          </div>
+        </FieldGroup>
+      </form>
+    </ProfileSection>
   )
 }
 
-export interface UserSocialLinkFieldProps extends React.ComponentProps<typeof Input> {}
+export interface UserSocialFormProps {
+  connectedAccounts?: Array<{ provider: string; email?: string }>
+  onConnect?: (provider: string) => Promise<void>
+  onDisconnect?: (provider: string) => Promise<void>
+  className?: string
+}
 
-export function UserSocialLinkField({ children, ...props }: UserSocialLinkFieldProps) {
+export function UserSocialForm({
+  connectedAccounts = [],
+  onConnect = noop,
+  onDisconnect = noop,
+  className,
+}: UserSocialFormProps) {
+  const isGoogleConnected = connectedAccounts.some((acc) => acc.provider === 'google')
+  const googleAccount = connectedAccounts.find((acc) => acc.provider === 'google')
+
   return (
-    <FieldGroup id="sociallink">
-      <Field orientation="responsive" {...props}>
-        <FieldContent>
-          <FieldLabel>Social Link</FieldLabel>
-          <FieldDescription>Link your social accounts</FieldDescription>
-        </FieldContent>
-        <div className="flex flex-col gap-2">
-          <Button variant="outline">
-            <GoogleIcon /> Google
-          </Button>
+    <ProfileSection
+      title="Connected Accounts"
+      description="Connect your social accounts for easier sign-in"
+      className={className}
+    >
+      <div className="space-y-3">
+        <div className="flex items-center justify-between rounded-lg border p-4">
+          <div className="flex items-center gap-3">
+            <div className="bg-muted flex size-10 items-center justify-center rounded-full">
+              <GoogleIcon className="size-5" />
+            </div>
+            <div>
+              <p className="font-medium">Google</p>
+              {isGoogleConnected && googleAccount?.email ? (
+                <p className="text-muted-foreground text-sm">{googleAccount.email}</p>
+              ) : (
+                <p className="text-muted-foreground text-sm">Not connected</p>
+              )}
+            </div>
+          </div>
+          {isGoogleConnected ? (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => onDisconnect('google')}
+              className="text-destructive hover:text-destructive"
+            >
+              Disconnect
+            </Button>
+          ) : (
+            <Button variant="outline" size="sm" onClick={() => onConnect('google')}>
+              Connect
+            </Button>
+          )}
         </div>
-      </Field>
-    </FieldGroup>
+      </div>
+    </ProfileSection>
   )
 }
