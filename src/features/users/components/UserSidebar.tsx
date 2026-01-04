@@ -175,7 +175,7 @@ export function UserSidebar({
 }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar
-      className={cn('relative border-none p-2', className)}
+      className={cn('border-none p-2', className)}
       variant="sidebar"
       collapsible="icon"
       {...props}
