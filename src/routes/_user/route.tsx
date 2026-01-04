@@ -1,5 +1,6 @@
 import { Outlet, createFileRoute } from '@tanstack/react-router'
 
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { requireAuthMiddleware } from '@/server/middlewares/auth'
 import { SidebarProvider } from '@/integrations/shadcn/components/ui/sidebar'
 import {
@@ -9,21 +10,21 @@ import {
   UserSidebarGrip,
   UserSidebarHeader,
 } from '@/features/users/components/UserSidebar'
-import { findAuthUserFn } from '@/server/queries/auth'
+import { authOptions } from '@/features/auth/options'
 
 export const Route = createFileRoute('/_user')({
   component: RouteComponent,
   server: {
     middleware: [requireAuthMiddleware],
   },
-  async loader() {
-    const authUser = await findAuthUserFn()
-    return { authUser }
+  loader({ context }) {
+    return context.queryClient.ensureQueryData(authOptions.authUser())
   },
 })
 
 function RouteComponent() {
-  const { authUser } = Route.useLoaderData()
+  const { data: authUser } = useSuspenseQuery(authOptions.authUser())
+
   return (
     <SidebarProvider
       defaultOpen={true}
