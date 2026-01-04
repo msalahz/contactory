@@ -9,16 +9,21 @@ import {
   UserSidebarGrip,
   UserSidebarHeader,
 } from '@/features/users/components/UserSidebar'
+import { findAuthUserFn } from '@/server/queries/auth'
 
 export const Route = createFileRoute('/_user')({
   component: RouteComponent,
   server: {
     middleware: [requireAuthMiddleware],
   },
+  async loader() {
+    const authUser = await findAuthUserFn()
+    return { authUser }
+  },
 })
 
 function RouteComponent() {
-  const { user } = Route.useRouteContext()
+  const { authUser } = Route.useLoaderData()
   return (
     <SidebarProvider
       defaultOpen={true}
@@ -27,7 +32,7 @@ function RouteComponent() {
       <UserSidebar>
         <UserSidebarHeader />
         <UserSidebarContent />
-        <UserSidebarFooter user={user} />
+        <UserSidebarFooter user={authUser} />
       </UserSidebar>
 
       <UserSidebarGrip />

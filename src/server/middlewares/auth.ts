@@ -7,7 +7,7 @@ export const requireAuthMiddleware = createMiddleware().server(async ({ next }) 
 
   return next({
     context: {
-      ...session,
+      authUser: session.user,
     },
   })
 })

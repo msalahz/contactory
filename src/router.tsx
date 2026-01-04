@@ -16,9 +16,7 @@ export const getRouter = () => {
     routeTree,
     context: {
       ...rqContext,
-      user: null,
-      session: null,
-      serverTheme: null,
+      authUser: null,
     },
     defaultPreload: false, // 'intent',
     Wrap: (props: { children: React.ReactNode }) => {

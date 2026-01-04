@@ -1,9 +1,9 @@
 import { redirect } from '@tanstack/react-router'
 
-import { findSession } from '@/server/modules/auth'
+import { findAuthSession } from '@/server/modules/auth'
 
 export async function requireAuth() {
-  const session = await findSession()
+  const session = await findAuthSession()
 
   if (!session) {
     throw redirect({ to: '/sign-in' })
