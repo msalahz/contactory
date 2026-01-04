@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 
 import { useTheme } from '@/shared/theme/useTheme'
-import { findSessionFn } from '@/server/queries/auth'
+import { findAuthUserFn } from '@/server/queries/auth'
 import { FAQs } from '@/features/landing/components/Faqs'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { Features } from '@/features/landing/components/Features'
@@ -15,13 +15,13 @@ import { TechnicalBackground } from '@/features/landing/components/TechnicalBack
 export const Route = createFileRoute('/_public/')({
   component: LandingPage,
   async loader() {
-    const session = await findSessionFn()
-    return { user: session?.user || null }
+    const authUser = await findAuthUserFn()
+    return { authUser }
   },
 })
 
 function LandingPage() {
-  const { user } = Route.useLoaderData()
+  const { authUser } = Route.useLoaderData()
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
   return (
@@ -30,13 +30,13 @@ function LandingPage() {
       <div className="bg-background/5 relative z-10">
         <div>
           <HeroHeader
-            user={user}
+            user={authUser}
             theme={theme}
             onThemeChange={setTheme}
             isSigningOut={isSigningOut}
             onSignOutClick={() => signOut({ data: { redirectTo: '/' } })}
           />
-          <HeroSection user={user} />
+          <HeroSection user={authUser} />
         </div>
         <Features className="bg-secondary/20" />
         <AboutSection className="bg-background/20" />
