@@ -48,5 +48,12 @@
   ],
   "limits": {
     "cpu_ms": 250
-  }
+  },
+  "r2_buckets": [
+    {
+      "bucket_name": "contactory-r2-bucket",
+      "binding": "CONTACTORY_R2_BUCKET",
+      "remote": true
+    }
+  ]
 }
