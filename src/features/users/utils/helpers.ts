@@ -5,4 +5,5 @@ export function getUserNameInitials(user: Partial<User>) {
     ?.split(' ')
     .map((name: string) => name[0])
     .join('')
+    .toUpperCase()
 }
