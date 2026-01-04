@@ -9,10 +9,10 @@ import { cn } from '@/integrations/shadcn/lib/utils'
 import { GoogleIcon } from '@/shared/components/GoogleIcon'
 import { Input } from '@/integrations/shadcn/components/ui/input'
 import { Button } from '@/integrations/shadcn/components/ui/button'
-import { getUserNameInitials } from '@/features/users/utils/helpers'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { convertFileToBase64 } from '@/shared/utils/convertFileToBase64'
+import { getUserNameInitials } from '@/features/users/lib/getUserNameInitials'
 import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/components/ui/avatar'
 import {
   Field,
