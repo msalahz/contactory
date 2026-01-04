@@ -4,7 +4,7 @@ import { envClient } from '@/env.client'
 import { noop } from '@/shared/utils/noop'
 import { AlertBox } from '@/shared/components/AlertBox'
 import { SignUpForm } from '@/features/auth/components/SignUpForm'
-import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
+import { ItemDescription, ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { useSignUpEmail } from '@/features/auth/hooks/useSignUpEmail'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
 import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/sign-up')({
 })
 
 function RouteComponent() {
-  const { mutateAsync: signUpEmail, error } = useSignUpEmail()
+  const { mutateAsync: signUpEmail, error, isSuccess } = useSignUpEmail()
   const { mutate: signInSocial, isPending: isSigningInSocial } = useSignInSocial()
 
   function signUpGoogle() {
@@ -43,6 +43,13 @@ function RouteComponent() {
           <AlertBox type="error">
             <ItemTitle>Sign Up Failed</ItemTitle>
             <FieldError errors={[error]} />
+          </AlertBox>
+        ) : null}
+
+        {isSuccess ? (
+          <AlertBox type="success">
+            <ItemTitle>Account created successfully</ItemTitle>
+            <ItemDescription>Check your email for a verification link.</ItemDescription>
           </AlertBox>
         ) : null}
       </SignUpForm>
