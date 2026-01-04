@@ -1,8 +1,8 @@
 import type { User } from '@/integrations/better-auth/authClient'
 
-export function getUserNameInitials(user: User) {
+export function getUserNameInitials(user: Partial<User>) {
   return user.name
-    .split(' ')
+    ?.split(' ')
     .map((name: string) => name[0])
     .join('')
 }
