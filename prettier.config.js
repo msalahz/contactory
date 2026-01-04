@@ -3,7 +3,7 @@
 /** @type {import('prettier').Config} */
 const config = {
   semi: false,
-  printWidth: 100,
+  printWidth: 120,
   singleQuote: true,
   trailingComma: 'all',
   plugins: ['prettier-plugin-tailwindcss'],
