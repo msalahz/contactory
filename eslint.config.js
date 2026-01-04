@@ -10,7 +10,7 @@ import pluginRouter from '@tanstack/eslint-plugin-router'
 import noBarrelFiles from 'eslint-plugin-no-barrel-files'
 
 export default [
-  globalIgnores(['dist/**', '.output/**']),
+  globalIgnores(['dist/**', '.output/**', '.wrangler/**']),
   ...tanstackConfig,
   reactHooks.configs.flat['recommended-latest'],
   reactRefresh.configs.recommended,
