@@ -26,10 +26,14 @@ export function getAuth() {
       },
     },
 
-    plugins: [
-      tanstackStartCookies(),
-      ...(env.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : []),
-    ],
+    account: {
+      accountLinking: {
+        enabled: false,
+        trustedProviders: ['google'],
+      },
+    },
+
+    plugins: [tanstackStartCookies(), ...(env.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : [])],
 
     trustedOrigins: [env.BETTER_AUTH_URL],
 
@@ -50,8 +54,7 @@ export function getAuth() {
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
         try {
-          const { VerifyEmailTemplate } =
-            await import('@/server/emails/templates/VerifyEmailTemplate')
+          const { VerifyEmailTemplate } = await import('@/server/emails/templates/VerifyEmailTemplate')
           await sendEmail({
             to: user.email,
             from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
@@ -75,8 +78,7 @@ export function getAuth() {
       resetPasswordTokenExpiresIn: 3600, // 1hour
       async sendResetPassword({ url, user }) {
         try {
-          const { ResetPasswordEmail } =
-            await import('@/server/emails/templates/ResetPasswordEmailTemplate')
+          const { ResetPasswordEmail } = await import('@/server/emails/templates/ResetPasswordEmailTemplate')
           await sendEmail({
             to: user.email,
             from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
