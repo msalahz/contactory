@@ -33,7 +33,10 @@ export function getAuth() {
       },
     },
 
-    plugins: [tanstackStartCookies(), ...(env.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : [])],
+    plugins: [
+      tanstackStartCookies(),
+      ...(env.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : []),
+    ],
 
     trustedOrigins: [env.BETTER_AUTH_URL],
 
@@ -53,20 +56,14 @@ export function getAuth() {
       sendOnSignUp: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
-        try {
-          const { VerifyEmailTemplate } = await import('@/server/emails/templates/VerifyEmailTemplate')
-          await sendEmail({
-            to: user.email,
-            from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
-            subject: 'Contactory - Verify Email',
-            react: <VerifyEmailTemplate name={user.name} url={url} />,
-          })
-        } catch (error) {
-          console.warn(error)
-          return Promise.reject()
-        }
-
-        return Promise.resolve()
+        const { VerifyEmailTemplate } =
+          await import('@/server/emails/templates/VerifyEmailTemplate')
+        void sendEmail({
+          to: user.email,
+          from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
+          subject: 'Contactory - Verify Email',
+          react: <VerifyEmailTemplate name={user.name} url={url} />,
+        }).catch(console.warn)
       },
     },
 
@@ -77,20 +74,14 @@ export function getAuth() {
       revokeSessionsOnPasswordReset: true,
       resetPasswordTokenExpiresIn: 3600, // 1hour
       async sendResetPassword({ url, user }) {
-        try {
-          const { ResetPasswordEmail } = await import('@/server/emails/templates/ResetPasswordEmailTemplate')
-          await sendEmail({
-            to: user.email,
-            from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
-            subject: 'Contactory - Reset Password',
-            react: <ResetPasswordEmail name={user.name} url={url} />,
-          })
-        } catch (error) {
-          console.warn(error)
-          return Promise.reject()
-        }
-
-        return Promise.resolve()
+        const { ResetPasswordEmail } =
+          await import('@/server/emails/templates/ResetPasswordEmailTemplate')
+        void sendEmail({
+          to: user.email,
+          from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
+          subject: 'Contactory - Reset Password',
+          react: <ResetPasswordEmail name={user.name} url={url} />,
+        }).catch(console.warn)
       },
     },
 
