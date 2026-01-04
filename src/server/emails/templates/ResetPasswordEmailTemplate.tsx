@@ -1,3 +1,4 @@
+import { env } from 'cloudflare:workers'
 import {
   Body,
   Button,
@@ -11,8 +12,6 @@ import {
   Text,
   pixelBasedPreset,
 } from '@react-email/components'
-
-import { env } from 'cloudflare:workers'
 
 interface ResetPasswordEmailProps {
   name: string
