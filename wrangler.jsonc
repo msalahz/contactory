@@ -45,5 +45,8 @@
       "id": "64a46a7a1a104aa9935d3f7a673de244",
       "localConnectionString": "postgresql://neondb_owner:npg_rm7Ez2AfHewZ@ep-empty-smoke-agmi8an6-pooler.c-2.eu-central-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
     }
-  ]
+  ],
+  "limits": {
+    "cpu_ms": 250
+  }
 }
