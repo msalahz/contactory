@@ -8,8 +8,8 @@ import type { User } from '@/integrations/better-auth/authClient'
 import { noop } from '@/shared/utils/noop'
 import { Logo } from '@/shared/components/Logo'
 import { cn } from '@/integrations/shadcn/lib/utils'
+import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
 import { Button } from '@/integrations/shadcn/components/ui/button'
-import { ThemeDropdownMenu } from '@/shared/theme/ThemeDropdownMenu'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 
 const menuItems = [
@@ -103,7 +103,7 @@ export const HeroHeader = ({
                 {user?.id ? (
                   <Button asChild size="sm" className={cn('lg:inline-flex')}>
                     <Link to="/dashboard">
-                      <span>Connections</span>
+                      <span>My Account</span>
                     </Link>
                   </Button>
                 ) : (
@@ -138,7 +138,17 @@ export const HeroHeader = ({
             </div>
           </div>
           <div className="flex flex-initial gap-2">
-            <ThemeDropdownMenu theme={theme} onChange={onThemeChange} />
+            <Button
+              variant="outline"
+              size="icon-sm"
+              onClick={(e) => {
+                e.preventDefault()
+                e.stopPropagation()
+                onThemeChange(theme === 'light' ? 'dark' : 'light')
+              }}
+            >
+              <ThemeToggleIcon theme={theme} />
+            </Button>
 
             {user?.id ? (
               <Button
