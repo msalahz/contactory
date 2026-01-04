@@ -1,8 +1,8 @@
 import { Link } from '@tanstack/react-router'
 import {
+  ChevronsLeftRightIcon,
   ContactIcon,
   EllipsisVerticalIcon,
-  GripVerticalIcon,
   LayoutDashboardIcon,
   LogOutIcon,
   UserCircleIcon,
@@ -16,6 +16,11 @@ import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { LogoIcon, LogoWord } from '@/shared/components/Logo'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/integrations/shadcn/components/ui/tooltip'
 import {
   UserMenu,
   UserMenuContent,
@@ -42,7 +47,7 @@ import {
 } from '@/integrations/shadcn/components/ui/sidebar'
 
 export interface UserSidebarProps extends React.ComponentProps<typeof SidebarFooter> {
-  user?: User
+  user: User | null
 }
 
 export function UserSidebarFooter({ user, className, ...props }: UserSidebarProps) {
@@ -184,11 +189,16 @@ export function UserSidebarGrip({ className, ...props }: React.ComponentProps<'b
   const { toggleSidebar } = useSidebar()
   return (
     <button
-      className="text-secondary-foreground w-2 transform cursor-pointer md:-translate-x-2"
+      className="text-secondary-foreground z-50 -ms-2 transform cursor-pointer"
       onClick={toggleSidebar}
       {...props}
     >
-      <GripVerticalIcon className="size-4" />
+      <Tooltip>
+        <TooltipTrigger asChild>
+          <ChevronsLeftRightIcon className="size-4" />
+        </TooltipTrigger>
+        <TooltipContent className="z-50">Toggle Sidebar</TooltipContent>
+      </Tooltip>
     </button>
   )
 }
