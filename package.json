@@ -8,6 +8,7 @@
     "build": "vite build",
     "serve": "vite preview",
     "test": "vitest run",
+    "test:workers": "vitest run --config vitest.workers.config.ts",
     "preview": "vite preview",
     "lint": "eslint",
     "format": "prettier --write .",
