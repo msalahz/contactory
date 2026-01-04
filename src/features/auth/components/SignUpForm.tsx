@@ -108,7 +108,7 @@ export function SignUpForm({
 
             <form.AppField
               name="name"
-              children={(field) => <field.Input type="name" label="Name" placeholder="Jone Doe" />}
+              children={(field) => <field.Input type="text" label="Name" placeholder="Jone Doe" />}
             />
 
             <form.AppField
