@@ -3,15 +3,12 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { noop } from '@/shared/utils/noop'
 import { authOptions } from '@/features/auth/options'
+import { UserNameForm } from '@/features/users/components/UserNameForm'
+import { UserSocialForm } from '@/features/users/components/UserSocialForm'
+import { UserAvatarForm } from '@/features/users/components/UserAvatarForm'
 import { useUpdateAuthUser } from '@/features/auth/hooks/useUpdateAuthUser'
-import {
-  UserAvatarForm,
-  UserNameForm,
-  UserPasswordForm,
-  UserProfile,
-  UserProfileContent,
-  UserSocialForm,
-} from '@/features/users/components/UserProfile'
+import { UserPasswordForm } from '@/features/users/components/UserPasswordForm'
+import { UserProfile, UserProfileContent } from '@/features/users/components/UserProfile'
 
 export const Route = createFileRoute('/_user/profile')({
   component: RouteComponent,
