@@ -53,7 +53,7 @@
     {
       "bucket_name": "contactory-r2-bucket",
       "binding": "CONTACTORY_R2_BUCKET",
-      "remote": true
+      "remote": false
     }
   ]
 }
