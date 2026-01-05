@@ -5,13 +5,8 @@ import type { User } from '@/integrations/better-auth/authClient'
 import { noop } from '@/shared/utils/noop'
 import { userSchema } from '@/server/schemas/auth'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
+import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
 import { ProfileSection } from '@/features/users/components/ProfileSection'
-import {
-  Field,
-  FieldContent,
-  FieldGroup,
-  FieldLabel,
-} from '@/integrations/shadcn/components/ui/field'
 
 export interface UserNameFormProps {
   user?: Partial<Pick<User, 'name'>>
@@ -48,22 +43,19 @@ export function UserNameForm({ user, onFormSubmit = noop, className }: UserNameF
         }}
       >
         <FieldGroup>
-          <Field>
-            <FieldContent>
-              <FieldLabel>Name</FieldLabel>
-              <form.AppField
-                name="name"
-                children={(field) => (
-                  <field.Input
-                    id="name"
-                    type="text"
-                    placeholder="Enter your name"
-                    className="max-w-sm"
-                  />
-                )}
+          <form.AppField
+            name="name"
+            children={(field) => (
+              <field.Input
+                id="name"
+                label="Name"
+                type="text"
+                placeholder="Enter your name"
+                className="max-w-sm"
               />
-            </FieldContent>
-          </Field>
+            )}
+          />
+
           <div className="flex justify-end gap-2 border-t pt-4 *:min-w-20">
             <form.AppForm>
               <form.ResetButton variant="outline" size="sm" label="Reset" />
