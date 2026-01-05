@@ -34,7 +34,12 @@ function RouteComponent() {
   }
 
   async function handlePasswordSubmit(data: UserPasswordFormValues) {
-    await changePassword(data).catch(noop)
+    try {
+      const result = await changePassword(data)
+      return !!result?.user?.id
+    } catch {
+      return false
+    }
   }
 
   async function handleSocialConnect(provider: string) {

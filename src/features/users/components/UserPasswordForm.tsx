@@ -26,7 +26,7 @@ const formSchema = z
 
 export interface UserPasswordFormProps {
   children?: ReactNode
-  onFormSubmit?: (data: UserPasswordFormValues) => Promise<void>
+  onFormSubmit?: (data: UserPasswordFormValues) => Promise<boolean>
   className?: string
 }
 
@@ -45,12 +45,13 @@ export function UserPasswordForm({
     validators: {
       onSubmit: formSchema,
     },
-    async onSubmit({ value }) {
-      await onFormSubmit?.({
+    async onSubmit({ value, formApi }) {
+      const success = await onFormSubmit?.({
         currentPassword: value.currentPassword,
         newPassword: value.newPassword,
         revokeOtherSessions: value.revokeOtherSessions,
       })
+      if (success) formApi.reset()
     },
   })
 
