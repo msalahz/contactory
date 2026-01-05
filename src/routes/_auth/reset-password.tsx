@@ -24,12 +24,15 @@ function RouteComponent() {
     <AnimatedPresence>
       <ResetPasswordForm
         onFormSubmit={async (data: { newPassword: string }) => {
-          return mutateAsync({
-            newPassword: data.newPassword,
-            token,
-          })
-            .then((result) => Promise.resolve(result.status === true))
-            .catch(() => Promise.reject(false))
+          try {
+            const result = await mutateAsync({
+              newPassword: data.newPassword,
+              token,
+            })
+            return result.status === true
+          } catch {
+            return false
+          }
         }}
       >
         {!token || invalidTokenError ? (

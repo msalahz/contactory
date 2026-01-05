@@ -18,12 +18,15 @@ function RouteComponent() {
     <AnimatedPresence>
       <RequestPasswordResetForm
         onFormSubmit={async ({ email }: { email: string }) => {
-          return mutateAsync({
-            email,
-            redirectTo: '/reset-password',
-          })
-            .then((result) => Promise.resolve(result.status === true))
-            .catch(() => Promise.reject(false))
+          try {
+            const result = await mutateAsync({
+              email,
+              redirectTo: '/reset-password',
+            })
+            return result.status === true
+          } catch {
+            return false
+          }
         }}
       >
         {isSuccess ? (
