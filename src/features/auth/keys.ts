@@ -8,4 +8,5 @@ export const authKeys = {
   signInSocial: ['auth', 'sign-in-social'] as const,
   signUpEmail: ['auth', 'sign-up-email'] as const,
   signOut: ['auth', 'sign-out'] as const,
+  changePassword: ['auth', 'change-password'] as const,
 }
