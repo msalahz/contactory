@@ -1,6 +1,6 @@
-import { env } from 'cloudflare:workers'
 import { betterAuth } from 'better-auth'
 import { openAPI } from 'better-auth/plugins'
+import { env, waitUntil } from 'cloudflare:workers'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
@@ -56,14 +56,19 @@ export function getAuth() {
       sendOnSignUp: true,
       autoSignInAfterVerification: true,
       async sendVerificationEmail({ user, url }) {
+        console.info('SEND VERIFICATION EMAIL')
         const { VerifyEmailTemplate } =
           await import('@/server/emails/templates/VerifyEmailTemplate')
-        void sendEmail({
-          to: user.email,
-          from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
-          subject: 'Contactory - Verify Email',
-          react: <VerifyEmailTemplate name={user.name} url={url} />,
-        }).catch(console.warn)
+        waitUntil(
+          sendEmail({
+            to: user.email,
+            from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
+            subject: 'Contactory - Verify Email',
+            react: <VerifyEmailTemplate name={user.name} url={url} />,
+          })
+            .then(() => console.info('SEND VERIFICATION EMAIL SUCCEED'))
+            .catch((error) => console.warn('SEND VERIFICATION EMAIL FAILED', error)),
+        )
       },
     },
 
@@ -74,14 +79,19 @@ export function getAuth() {
       revokeSessionsOnPasswordReset: true,
       resetPasswordTokenExpiresIn: 3600, // 1hour
       async sendResetPassword({ url, user }) {
+        console.info('SEND RESET PASSWORD')
         const { ResetPasswordEmail } =
           await import('@/server/emails/templates/ResetPasswordEmailTemplate')
-        void sendEmail({
-          to: user.email,
-          from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
-          subject: 'Contactory - Reset Password',
-          react: <ResetPasswordEmail name={user.name} url={url} />,
-        }).catch(console.warn)
+        waitUntil(
+          sendEmail({
+            to: user.email,
+            from: `Contactory <${env.RESEND_FROM_EMAIL}>`,
+            subject: 'Contactory - Reset Password',
+            react: <ResetPasswordEmail name={user.name} url={url} />,
+          })
+            .then(() => console.info('SEND RESET PASSWORD SUCCEED'))
+            .catch((error) => console.warn('SEND RESET PASSWORD FAILED', error)),
+        )
       },
     },
 
