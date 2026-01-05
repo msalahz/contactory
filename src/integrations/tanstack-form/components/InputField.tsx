@@ -34,20 +34,20 @@ export function InputField({
     <Field data-invalid={isInvalid} {...fieldProps}>
       {label ? (
         <div className="flex w-full items-center justify-between">
-          <FieldLabel htmlFor={`${field.name}-form-field`}>{label}</FieldLabel>
+          <FieldLabel htmlFor={InputProps.id || `${field.name}-form-field`}>{label}</FieldLabel>
           {labelChildren}
         </div>
       ) : null}
 
       <Input
         autoComplete="on"
-        {...InputProps}
         id={`${field.name}-form-field`}
         name={field.name}
         value={field.state.value}
         onBlur={field.handleBlur}
         onChange={(e) => field.handleChange(e.target.value)}
         aria-invalid={isInvalid}
+        {...InputProps}
       />
 
       {description ? <FieldDescription>{description}</FieldDescription> : null}

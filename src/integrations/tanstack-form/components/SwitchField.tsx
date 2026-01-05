@@ -34,19 +34,19 @@ export function SwitchField({
     <Field data-invalid={isInvalid} {...fieldProps}>
       {label ? (
         <div className="flex w-full items-center justify-between">
-          <FieldLabel htmlFor={`${field.name}-form-field`}>{label}</FieldLabel>
+          <FieldLabel htmlFor={SwitchProps.id || `${field.name}-form-field`}>{label}</FieldLabel>
           {labelChildren}
         </div>
       ) : null}
 
       <Switch
-        {...SwitchProps}
         id={`${field.name}-form-field`}
         name={field.name}
         checked={field.state.value}
         onBlur={field.handleBlur}
         onCheckedChange={field.handleChange}
         aria-invalid={isInvalid}
+        {...SwitchProps}
       />
 
       {description ? <FieldDescription>{description}</FieldDescription> : null}
