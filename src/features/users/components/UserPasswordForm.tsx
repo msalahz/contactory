@@ -1,20 +1,23 @@
 import { z } from 'zod'
+import type { ReactNode } from 'react'
 
 import { noop } from '@/shared/utils/noop'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
+import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
 import { ProfileSection } from '@/features/users/components/ProfileSection'
-import {
-  Field,
-  FieldContent,
-  FieldGroup,
-  FieldLabel,
-} from '@/integrations/shadcn/components/ui/field'
 
-const passwordSchema = z
+export interface UserPasswordFormValues {
+  currentPassword: string
+  newPassword: string
+  revokeOtherSessions: boolean
+}
+
+const formSchema = z
   .object({
     currentPassword: z.string().min(1, 'Current password is required'),
     newPassword: z.string().min(8, 'Password must be at least 8 characters'),
     confirmPassword: z.string().min(1, 'Please confirm your password'),
+    revokeOtherSessions: z.boolean(),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: 'Passwords do not match',
@@ -22,24 +25,31 @@ const passwordSchema = z
   })
 
 export interface UserPasswordFormProps {
-  onFormSubmit?: (data: { currentPassword: string; newPassword: string }) => Promise<void>
+  children?: ReactNode
+  onFormSubmit?: (data: UserPasswordFormValues) => Promise<void>
   className?: string
 }
 
-export function UserPasswordForm({ onFormSubmit = noop, className }: UserPasswordFormProps) {
+export function UserPasswordForm({
+  children,
+  onFormSubmit = noop,
+  className,
+}: UserPasswordFormProps) {
   const form = useAppForm({
     defaultValues: {
       currentPassword: '',
       newPassword: '',
       confirmPassword: '',
+      revokeOtherSessions: false,
     },
     validators: {
-      onSubmit: passwordSchema,
+      onSubmit: formSchema,
     },
     async onSubmit({ value }) {
       await onFormSubmit?.({
         currentPassword: value.currentPassword,
         newPassword: value.newPassword,
+        revokeOtherSessions: value.revokeOtherSessions,
       })
     },
   })
@@ -50,6 +60,7 @@ export function UserPasswordForm({ onFormSubmit = noop, className }: UserPasswor
       description="Change your password to keep your account secure"
       className={className}
     >
+      {children}
       <form
         onSubmit={(e) => {
           e.preventDefault()
@@ -58,54 +69,56 @@ export function UserPasswordForm({ onFormSubmit = noop, className }: UserPasswor
         }}
       >
         <FieldGroup className="space-y-4">
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="currentPassword">Current Password</FieldLabel>
-              <form.AppField
-                name="currentPassword"
-                children={(field) => (
-                  <field.Input
-                    id="currentPassword"
-                    type="password"
-                    placeholder="Enter current password"
-                    className="max-w-sm"
-                  />
-                )}
+          <form.AppField
+            name="currentPassword"
+            children={(field) => (
+              <field.Input
+                id="currentPassword"
+                type="password"
+                label="Current Password"
+                placeholder="Enter current password"
+                className="max-w-sm"
               />
-            </FieldContent>
-          </Field>
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="newPassword">New Password</FieldLabel>
-              <form.AppField
-                name="newPassword"
-                children={(field) => (
-                  <field.Input
-                    id="newPassword"
-                    type="password"
-                    placeholder="Enter new password"
-                    className="max-w-sm"
-                  />
-                )}
+            )}
+          />
+
+          <form.AppField
+            name="newPassword"
+            children={(field) => (
+              <field.Input
+                id="newPassword"
+                type="password"
+                label="New Password"
+                placeholder="Enter new password"
+                className="max-w-sm"
               />
-            </FieldContent>
-          </Field>
-          <Field>
-            <FieldContent>
-              <FieldLabel htmlFor="confirmPassword">Confirm New Password</FieldLabel>
-              <form.AppField
-                name="confirmPassword"
-                children={(field) => (
-                  <field.Input
-                    id="confirmPassword"
-                    type="password"
-                    placeholder="Confirm new password"
-                    className="max-w-sm"
-                  />
-                )}
+            )}
+          />
+
+          <form.AppField
+            name="confirmPassword"
+            children={(field) => (
+              <field.Input
+                id="confirmPassword"
+                type="password"
+                label="Confirm New Password"
+                placeholder="Confirm new password"
+                className="max-w-sm"
               />
-            </FieldContent>
-          </Field>
+            )}
+          />
+
+          <form.AppField
+            name="revokeOtherSessions"
+            children={(field) => (
+              <field.Checkbox
+                id="revokeOtherSessions"
+                label="Revoke other sessions"
+                description="Revoke all other sessions"
+              />
+            )}
+          />
+
           <div className="flex justify-end gap-2 border-t pt-4">
             <form.AppForm>
               <form.ResetButton variant="outline" size="sm" label="Reset" className="min-w-20" />
