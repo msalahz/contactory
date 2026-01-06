@@ -12,12 +12,14 @@ import {
   pixelBasedPreset,
 } from '@react-email/components'
 
+import { envServer } from '@/env.server'
+
 interface VerifyEmailProps {
   name: string
   url: string
 }
 
-const baseUrl = process.env.BASE_URL ? `${process.env.BASE_URL}` : ''
+const baseUrl = envServer.BASE_URL ? `${envServer.BASE_URL}` : ''
 
 export function VerifyEmailTemplate({ name, url }: VerifyEmailProps) {
   return (
