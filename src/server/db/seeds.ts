@@ -597,11 +597,10 @@ function generatePostalCode(): string {
 async function seedContacts() {
   console.log('🌱 Seeding contacts...')
 
-  // For this seed, we'll use a fixed userId. In a real scenario, you'd want to:
-  // 1. Query existing users from the database
-  // 2. Distribute contacts across multiple users
-  // For now, using a placeholder UUID
-
+  // NOTE: This seed file is for development/testing only.
+  // The hardcoded userId below is intentional for local development seeding.
+  // In production, contacts are created through the application with real user IDs.
+  // To use: ensure a user with this ID exists or updates to match your test user.
   const userId = 'KHxzt1HBTGEhtt770pI0VffWRHmTd7RT'
 
   const contacts = []

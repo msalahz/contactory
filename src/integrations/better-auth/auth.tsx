@@ -96,6 +96,9 @@ export function getAuth() {
       },
     },
 
+    // NOTE: In-memory rate limiting is acceptable for Cloudflare Workers as each
+    // isolating handles requests independently. For distributed rate limiting across
+    // multiple regions, consider using Cloudflare's native rate limiting or Durable Objects.
     rateLimit: {
       enabled: true,
       window: 10,
