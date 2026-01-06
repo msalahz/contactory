@@ -66,7 +66,7 @@ function RootDocumentContent({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
 
   return (
-    <html lang="en">
+    <html lang="en" dir="ltr">
       <head>
         <meta rel="icon" />
         <HeadContent />

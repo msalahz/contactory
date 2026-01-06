@@ -32,7 +32,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
       />
       {/* Left side path with icons - Dark theme */}
       <motion.div
-        className="absolute top-0 left-1/5 hidden h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:block"
+        className="absolute start-1/5 top-0 hidden h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:block"
         style={{ y: y1 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -88,7 +88,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Right side path with icons - Dark theme */}
       <motion.div
-        className="absolute top-0 right-1/5 hidden h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:block"
+        className="absolute end-1/5 top-0 hidden h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:block"
         style={{ y: y2 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -138,7 +138,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Left side path with icons - Light theme */}
       <motion.div
-        className="absolute top-0 left-1/5 h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:hidden"
+        className="absolute start-1/5 top-0 h-[200%] w-37.5 -translate-x-1/2 overflow-hidden dark:hidden"
         style={{ y: y1 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">
@@ -194,7 +194,7 @@ export function TechnicalBackground({ className }: TechnicalBackgroundProps) {
 
       {/* Right side path with icons - Light theme */}
       <motion.div
-        className="absolute top-0 right-1/5 h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:hidden"
+        className="absolute end-1/5 top-0 h-[200%] w-37.5 translate-x-1/2 overflow-hidden dark:hidden"
         style={{ y: y2 }}
       >
         <svg className="h-full w-full" xmlns="http://www.w3.org/2000/svg">

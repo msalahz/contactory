@@ -63,13 +63,13 @@ export function UserSidebarFooter({ user, className, ...props }: UserSidebarProp
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <UserProfile user={user} />
-              <EllipsisVerticalIcon className="ml-auto size-4" />
+              <EllipsisVerticalIcon className="ms-auto size-4" />
             </SidebarMenuButton>
           </UserMenuTrigger>
 
           <UserMenuContent user={user}>
             <DropdownMenuLabel className="p-0 font-normal">
-              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-start text-sm">
                 <UserProfile user={user} />
               </div>
             </DropdownMenuLabel>

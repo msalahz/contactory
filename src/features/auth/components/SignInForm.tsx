@@ -128,7 +128,7 @@ export function SignInForm({
                     labelChildren={
                       <Link
                         to="/forgot-password"
-                        className="text-foreground ml-auto text-sm underline-offset-4 hover:underline"
+                        className="text-foreground ms-auto text-sm underline-offset-4 hover:underline"
                       >
                         Forgot your password?
                       </Link>
