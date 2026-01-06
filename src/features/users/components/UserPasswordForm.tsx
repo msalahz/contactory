@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { Undo2Icon } from 'lucide-react'
 import type { ReactNode } from 'react'
 
 import { noop } from '@/shared/utils/noop'
@@ -122,8 +123,13 @@ export function UserPasswordForm({
 
           <div className="flex justify-end gap-2 border-t pt-4">
             <form.AppForm>
-              <form.ResetButton variant="outline" size="sm" label="Reset" className="min-w-20" />
-              <form.SubmitButton size="sm" label="Update Password" className="min-w-40" />
+              <form.ResetButton variant="outline" size="sm" className="min-w-20">
+                <Undo2Icon />
+                Reset
+              </form.ResetButton>
+              <form.SubmitButton size="sm" className="min-w-40">
+                Update Password
+              </form.SubmitButton>
             </form.AppForm>
           </div>
         </FieldGroup>
