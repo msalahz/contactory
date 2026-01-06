@@ -1,60 +1,62 @@
 {
-	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "contactory",
-	"compatibility_date": "2026-01-03",
-	"compatibility_flags": [
-		"nodejs_compat"
-	],
-	"main": "@tanstack/react-start/server-entry",
-	"routes": [
-		{
-			"pattern": "contactory.consultin.dev",
-			"zone_name": "consultin.dev",
-			"custom_domain": true
-		}
-	],
-	"workers_dev": false,
-	"preview_urls": false,
-	"observability": {
-		"enabled": false,
-		"head_sampling_rate": 1,
-		"logs": {
-			"enabled": true,
-			"head_sampling_rate": 1,
-			"persist": true,
-			"invocation_logs": true
-		},
-		"traces": {
-			"enabled": false,
-			"persist": true,
-			"head_sampling_rate": 1
-		}
-	},
-	"vars": {
-		"BASE_URL": "https://contactory.consultin.dev",
-		"BETTER_AUTH_URL": "https://contactory.consultin.dev",
-		"BETTER_AUTH_ENABLE_OPENAPI": "false",
-		"BETTER_AUTH_USE_SECURE_COOKIES": "true",
-		"RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
-		"R2_PUBLIC_URL": "https://cdn.contactory.consultin.dev",
-		"VITE_BETTER_AUTH_BASE_URL": "https://contactory.consultin.dev",
-		"VITE_BETTER_AUTH_CALLBACK_URL": "https://contactory.consultin.dev/dashboard"
-	},
-	"hyperdrive": [
-		{
-			"binding": "NEON_HYPERDRIVE",
-			"id": "64a46a7a1a104aa9935d3f7a673de244",
-			"localConnectionString": "postgresql://contactory_owner:dbpassword@localhost:5432/contactory"
-		}
-	],
-	"limits": {
-		"cpu_ms": 250
-	},
-	"r2_buckets": [
-		{
-			"bucket_name": "contactory-r2-bucket",
-			"binding": "CONTACTORY_R2_BUCKET",
-			"remote": true
-		}
-	]
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "contactory",
+  "compatibility_date": "2026-01-03",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "main": "@tanstack/react-start/server-entry",
+  "routes": [
+    {
+      "pattern": "contactory.consultin.dev",
+      "zone_name": "consultin.dev",
+      "custom_domain": true
+    }
+  ],
+  "workers_dev": false,
+  "preview_urls": false,
+  "observability": {
+    "enabled": false,
+    "head_sampling_rate": 1,
+    "logs": {
+      "enabled": true,
+      "head_sampling_rate": 1,
+      "persist": true,
+      "invocation_logs": true
+    },
+    "traces": {
+      "enabled": false,
+      "persist": true,
+      "head_sampling_rate": 1
+    }
+  },
+  "vars": {
+    "BASE_URL": "https://contactory.consultin.dev",
+    "BETTER_AUTH_URL": "https://contactory.consultin.dev",
+    "BETTER_AUTH_ENABLE_OPENAPI": "false",
+    "BETTER_AUTH_USE_SECURE_COOKIES": "true",
+    "RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
+    "R2_PUBLIC_URL": "https://cdn.contactory.consultin.dev",
+    "VITE_BETTER_AUTH_BASE_URL": "https://contactory.consultin.dev",
+    "VITE_BETTER_AUTH_CALLBACK_URL": "https://contactory.consultin.dev/dashboard"
+  },
+  "assets": {
+  },
+  "hyperdrive": [
+    {
+      "binding": "NEON_HYPERDRIVE",
+      "id": "64a46a7a1a104aa9935d3f7a673de244",
+      "localConnectionString": "postgresql://contactory_owner:dbpassword@localhost:5432/contactory"
+    }
+  ],
+  "limits": {
+    "cpu_ms": 250
+  },
+  "r2_buckets": [
+    {
+      "bucket_name": "contactory-r2-bucket",
+      "binding": "CONTACTORY_R2_BUCKET",
+      "remote": true
+    }
+  ]
 }
