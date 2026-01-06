@@ -1,27 +1,26 @@
 import { z } from 'zod'
-import { Trash2Icon } from 'lucide-react'
-import { useRef, useTransition } from 'react'
+import { useRef } from 'react'
+import { Trash2Icon, Undo2Icon } from 'lucide-react'
 
 import type { ReactNode } from 'react'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { noop } from '@/shared/utils/noop'
 import { Button } from '@/integrations/shadcn/components/ui/button'
-import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
-import { convertFileToBase64 } from '@/shared/utils/convertFileToBase64'
 import { ProfileSection } from '@/features/users/components/ProfileSection'
 import { getUserNameInitials } from '@/features/users/lib/getUserNameInitials'
 import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/components/ui/avatar'
-
-export const MAX_IMAGE_FILE_SIZE = 1000 * 1000 * 5 // 5 MB
-export const ACCEPTED_IMAGE_FILE_TYPE = 'image/*'
+import {
+  USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE,
+  USER_AVATAR_MAX_IMAGE_FILE_SIZE,
+} from '@/server/schemas/users'
 
 export interface UserInfoFormValues {
   name: string
-  imageFile?: File
-  imageUrl?: string
+  avatarFile?: File
+  avatarUrl?: string
 }
 
 export interface UserInfoFormProps {
@@ -33,14 +32,17 @@ export interface UserInfoFormProps {
 
 const formSchema = z.object({
   name: z.string().nonempty('Name is required'),
-  imageUrl: z.string(),
-  imageFile: z.union([
+  avatarUrl: z.string(),
+  avatarFile: z.union([
     z
       .file()
       .refine((file) => file.size > 0, 'Media file is too small (min 1 byte)')
-      .refine((file) => file.size < MAX_IMAGE_FILE_SIZE, 'Image file is too large (max 5MB)')
       .refine(
-        (file) => file.type.startsWith(ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
+        (file) => file.size < USER_AVATAR_MAX_IMAGE_FILE_SIZE,
+        'Image file is too large (max 5MB)',
+      )
+      .refine(
+        (file) => file.type.startsWith(USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
         'Unsupported image file type',
       ),
     z.literal(''),
@@ -55,23 +57,23 @@ export function UserInfoForm({
 }: UserInfoFormProps) {
   const { image, name } = user ?? {}
   const fileRef = useRef<HTMLInputElement>(null)
-  const [isEncoding, startEncodingTransition] = useTransition()
 
   const form = useAppForm({
     defaultValues: {
       name: name ?? '',
-      imageUrl: image ?? '',
-      imageFile: '' as z.infer<typeof formSchema>['imageFile'],
+      avatarUrl: image ?? '',
+      avatarFile: '' as z.infer<typeof formSchema>['avatarFile'],
     },
     validators: {
       onSubmit: formSchema,
     },
-    onSubmit({ value }) {
-      return onFormSubmit?.({
+    async onSubmit({ value, formApi }) {
+      await onFormSubmit?.({
         name: value.name,
-        imageUrl: value.imageUrl,
-        imageFile: value.imageFile || undefined,
+        avatarUrl: value.avatarUrl,
+        avatarFile: value.avatarFile || undefined,
       })
+      formApi.reset()
     },
   })
 
@@ -80,17 +82,14 @@ export function UserInfoForm({
   }
 
   function handleRemoveAvatar() {
-    form.setFieldValue('imageUrl', '')
-    form.setFieldValue('imageFile', '')
+    form.setFieldValue('avatarUrl', '')
+    form.setFieldValue('avatarFile', '')
   }
 
-  function onImageFileChange(data?: { value: File }) {
+  function onAvatarFileChange(data?: { value: File }) {
     const file = data?.value
     if (file) {
-      startEncodingTransition(async () => {
-        const base64File = await convertFileToBase64(file)
-        form.setFieldValue('imageUrl', base64File)
-      })
+      form.setFieldValue('avatarUrl', URL.createObjectURL(file))
     }
   }
 
@@ -117,8 +116,8 @@ export function UserInfoForm({
                 onClick={handleUploadClick}
               >
                 <form.Subscribe
-                  selector={(state) => state.values.imageUrl}
-                  children={(imageUrl) => <AvatarImage src={imageUrl || undefined} />}
+                  selector={(state) => state.values.avatarUrl}
+                  children={(avatarUrl) => <AvatarImage src={avatarUrl || undefined} />}
                 />
 
                 <form.Subscribe
@@ -130,24 +129,10 @@ export function UserInfoForm({
                   )}
                 />
               </Avatar>
-
-              <form.AppField
-                name="imageFile"
-                listeners={{ onChange: onImageFileChange }}
-                children={(field) => (
-                  <field.File
-                    id="profile-avatar-file"
-                    accept={ACCEPTED_IMAGE_FILE_TYPE}
-                    ref={fileRef}
-                    type="file"
-                    className="hidden"
-                  />
-                )}
-              />
             </div>
 
             {/* Name Field Section */}
-            <div className="flex-1">
+            <div>
               <form.AppField
                 name="name"
                 children={(field) => (
@@ -160,35 +145,63 @@ export function UserInfoForm({
                   />
                 )}
               />
+              <div className="mt-2">
+                <form.AppField
+                  name="avatarFile"
+                  listeners={{ onChange: onAvatarFileChange }}
+                  children={(field) => (
+                    <field.File
+                      id="profile-avatar-file"
+                      accept={USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE}
+                      ref={fileRef}
+                      type="file"
+                      className="hidden"
+                    />
+                  )}
+                />
+              </div>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center justify-end gap-2 border-t pt-4">
+          <div className="flex flex-col items-center justify-end gap-2 border-t pt-4 *:w-full md:flex-row md:*:w-auto">
             <form.AppForm>
-              {isEncoding ? <Spinner className="mr-2 size-4" /> : null}
-              <Button
-                type="button"
-                size="sm"
-                variant="outline"
-                className="min-w-20"
-                onClick={handleRemoveAvatar}
-              >
-                <Trash2Icon />
-                Remove Avatar
-              </Button>
-              <form.ResetButton
-                size="sm"
-                variant="outline"
-                label="Reset"
-                className="min-w-20"
-                disabled={isEncoding}
-              />
-              <form.SubmitButton
-                size="sm"
-                label="Save Changes"
-                className="min-w-35"
-                disabled={isEncoding}
+              <form.Subscribe
+                selector={(state) => ({
+                  isDefaultValue: state.isDefaultValue,
+                  isSubmitting: state.isSubmitting,
+                })}
+                children={({ isDefaultValue, isSubmitting }) => (
+                  <>
+                    <Button
+                      type="button"
+                      size="sm"
+                      variant="outline"
+                      className="me-auto min-w-20"
+                      onClick={handleRemoveAvatar}
+                      disabled={isSubmitting}
+                    >
+                      <Trash2Icon />
+                      Remove Avatar
+                    </Button>
+                    <form.ResetButton
+                      size="sm"
+                      variant="outline"
+                      className="min-w-20"
+                      disabled={isSubmitting || isDefaultValue}
+                    >
+                      <Undo2Icon />
+                      Reset
+                    </form.ResetButton>
+                    <form.SubmitButton
+                      size="sm"
+                      className="min-w-35"
+                      disabled={isSubmitting || isDefaultValue}
+                    >
+                      Save Changes
+                    </form.SubmitButton>
+                  </>
+                )}
               />
             </form.AppForm>
           </div>
