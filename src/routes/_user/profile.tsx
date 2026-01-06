@@ -16,6 +16,7 @@ import { useChangePassword } from '@/features/auth/hooks/useChangePassword'
 import { UserPasswordForm } from '@/features/users/components/UserPasswordForm'
 import { useUploadUserAvatarToR2 } from '@/features/users/hooks/useUploadUserAvatarToR2'
 import { UserProfile, UserProfileContent } from '@/features/users/components/UserProfile'
+import { stripFileMetadata } from '@/shared/utils/stripFileMetadata'
 
 export const Route = createFileRoute('/_user/profile')({
   component: RouteComponent,
@@ -33,9 +34,9 @@ function RouteComponent() {
 
   async function handleUserInfoSubmit(data: UserInfoFormValues) {
     if (data.avatarFile) {
-      // const avatarFile = await stripFileMetadata(data.avatarFile)
+      const avatarFile = await stripFileMetadata(data.avatarFile)
       const formData = new FormData()
-      formData.append('avatar', data.avatarFile)
+      formData.append('avatar', avatarFile)
       await uploadUserAvatar({ data: formData })
         .then((url) =>
           updateAuthUser({
