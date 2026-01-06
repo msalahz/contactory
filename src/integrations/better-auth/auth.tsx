@@ -4,6 +4,7 @@ import { admin, openAPI } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
+import { envServer } from '@/env.server'
 import { getDb } from '@/server/db/client'
 import { sendEmail } from '@/server/emails/sendEmail'
 
@@ -14,15 +15,15 @@ export function getAuth() {
   const db = getDb()
 
   return betterAuth({
-    baseURL: process.env.BETTER_AUTH_URL,
+    baseURL: envServer.BETTER_AUTH_URL,
 
     socialProviders: {
       google: {
         accessType: 'offline',
         disableImplicitSignUp: false,
         prompt: 'select_account consent',
-        clientId: process.env.BETTER_AUTH_GOOGLE_CLIENT_ID,
-        clientSecret: process.env.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
+        clientId: envServer.BETTER_AUTH_GOOGLE_CLIENT_ID,
+        clientSecret: envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
       },
     },
 
@@ -36,10 +37,10 @@ export function getAuth() {
     plugins: [
       admin(),
       tanstackStartCookies(),
-      ...(process.env.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : []),
+      ...(envServer.BETTER_AUTH_ENABLE_OPENAPI === 'true' ? [openAPI()] : []),
     ],
 
-    trustedOrigins: [process.env.BETTER_AUTH_URL],
+    trustedOrigins: [envServer.BETTER_AUTH_URL],
 
     database: drizzleAdapter(db, {
       provider: 'pg',
@@ -63,7 +64,7 @@ export function getAuth() {
         waitUntil(
           sendEmail({
             to: user.email,
-            from: `Contactory <${process.env.RESEND_FROM_EMAIL}>`,
+            from: `Contactory <${envServer.RESEND_FROM_EMAIL}>`,
             subject: 'Contactory - Verify Email',
             react: <VerifyEmailTemplate name={user.name} url={url} />,
           })
@@ -86,7 +87,7 @@ export function getAuth() {
         waitUntil(
           sendEmail({
             to: user.email,
-            from: `Contactory <${process.env.RESEND_FROM_EMAIL}>`,
+            from: `Contactory <${envServer.RESEND_FROM_EMAIL}>`,
             subject: 'Contactory - Reset Password',
             react: <ResetPasswordEmail name={user.name} url={url} />,
           })
@@ -107,10 +108,10 @@ export function getAuth() {
     },
 
     advanced: {
-      useSecureCookies: process.env.BETTER_AUTH_USE_SECURE_COOKIES === 'true',
+      useSecureCookies: envServer.BETTER_AUTH_USE_SECURE_COOKIES === 'true',
       defaultCookieAttributes: {
         httpOnly: true,
-        secure: process.env.BETTER_AUTH_USE_SECURE_COOKIES === 'true',
+        secure: envServer.BETTER_AUTH_USE_SECURE_COOKIES === 'true',
         sameSite: 'lax', // 'lax' OK for subdomains & localhost
         path: '/',
       },
