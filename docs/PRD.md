@@ -238,13 +238,10 @@ safety, and excellent user experience.
 - [ ] Mobile responsiveness
 - [ ] API documentation
 - [ ] Comprehensive test coverage
-  - `/forgot-password` - Request password reset
-  - `/reset-password` - Complete password reset
-- Session management with `findSessionFn` server function
-- Auth-aware landing page CTA (shows "My Contacts" when logged in)
-- Route guards redirect authenticated users away from auth pages
 
-### 11. Internationalization (i18n)
+## Additional Features
+
+### 10. Internationalization (i18n)
 
 **Status:** Coming Soon  
 **Description:** Support for multiple languages with seamless language switching.
@@ -259,9 +256,9 @@ safety, and excellent user experience.
 - Locale-aware number formatting
 - Persistent language preference per user
 
-### 12. Theme Support
+### 11. Theme Support
 
-**Status:** Under Development
+**Status:** Implemented
 **Description:** Dark and light theme modes for user preference.
 
 **Requirements:**
@@ -343,20 +340,6 @@ safety, and excellent user experience.
 - **Developer Experience**: Comprehensive documentation and testing
 - **Accessibility**: WCAG 2.1 AA compliance
 - **SEO**: Server-side rendering and metadata optimization
-- Favorites (UI implementation)
-
-**Coming Soon:**
-
-- Search
-- Sync
-- Share
-- Import/Export
-- Groups/Labels
-- Duplicate Detection
-- QR Code Sharing
-- Internationalization (i18n)
-
-Features will be developed in phases based on priority and user feedback.
 
 ## Conclusion
 

@@ -55,7 +55,7 @@ We will use the following technology stack:
 - **Routing**: TanStack Router
 - **Data Caching**: TanStack Query
 - **Data Tables**: TanStack Table _(not implemented)_
-- **Database ORM**: Drizzle ORM with PostgreSQL
+- **Database ORM**: Drizzle ORM with PostgreSQL (via `postgres` package)
 - **Validation**: Zod
 
 ### Authentication
@@ -65,7 +65,8 @@ We will use the following technology stack:
 ### UI/UX
 
 - **Icons**: Lucide React
-- **Theme**: next-themes (dark/light mode)
+- **Theme**: TanStack Store (dark/light mode with custom implementation)
+- **Animation**: Motion (formerly Framer Motion)
 
 ### Email
 
@@ -76,9 +77,15 @@ We will use the following technology stack:
 
 - **Validation**: @t3-oss/env-core
 
+### Deployment
+
+- **Platform**: Cloudflare Workers (Serverless)
+- **Storage**: Cloudflare R2
+- **CLI**: Wrangler
+
 ### Internationalization
 
-- **Status**: Not Started
+- **Status**: Proposed (see ADR-003)
 - **Future Consideration**: react-i18next with Tailwind RTL support
 
 ### Testing
@@ -103,9 +110,10 @@ We will use the following technology stack:
 8. **Eslint & Prettier vs Biome**: Chosen for maintaining code quality and consistent formatting
 9. **Drizzle vs Prisma**: Drizzle ORM chosen for its lightweight nature and SQL-like syntax
 10. **better-auth vs NextAuth/Clerk**: better-auth chosen for its simplicity and self-hosted nature
-11. **Zod vs Yup**: Zod chosen for its TypeScript-first design and excellent type inference
-12. **Environment Management**: @t3-oss/env-core chosen for type-safe environment variables
-13. **Email Solution**: Resend + React Email chosen for transactional emails
+11. **postgres vs pg**: `postgres` package chosen for modern ESM support and better TypeScript types
+12. **Zod vs Yup**: Zod chosen for its TypeScript-first design and excellent type inference
+13. **Environment Management**: @t3-oss/env-core chosen for type-safe environment variables
+14. **Email Solution**: Resend + React Email chosen for transactional emails
 
 ## Rationale
 
@@ -124,7 +132,9 @@ We will use the following technology stack:
 - **better-auth**: Simple, self-hosted authentication with built-in support for email/password, social login, and
   session management
 - **Zod**: TypeScript-first schema validation with excellent type inference and runtime validation
-- **Sonner**: Modern toast notification library with beautiful animations and stacking support
+- **TanStack Store**: Lightweight state management for theme preferences with React integration
+- **Motion**: Modern animation library with excellent React integration and performance
+- **Cloudflare Workers**: Edge deployment for low-latency responses globally
 - **react-i18next**: Mature, feature-rich internationalization library with excellent TypeScript support and namespace
   organization
 - **Tailwind CSS RTL**: Seamless RTL/LTR switching without CSS-in-JS complexity

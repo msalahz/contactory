@@ -31,22 +31,46 @@ This project uses TypeScript with the following conventions:
 
 ```
 src/
-├── db/                    # Database schemas and config
-│   └── schemas/           # Drizzle ORM schemas
 ├── features/              # Feature modules
-│   ├── abstractions/      # Shared UI components
-│   │   ├── components/
-│   │   │   ├── primitives/  # Base UI components
-│   │   │   └── reused/      # Composite components
-│   │   └── lib/           # Utility functions
-│   └── [feature]/         # Feature-specific code
-│       ├── components/    # Feature components
-│       └── functions/     # Server functions
+│   ├── auth/              # Authentication feature
+│   │   ├── components/    # Auth UI components
+│   │   ├── hooks/         # Auth hooks
+│   │   └── lib/           # Auth utilities
+│   ├── landing/           # Landing page feature
+│   │   └── components/    # Landing page components
+│   └── users/             # User management feature
+│       ├── components/    # User UI components
+│       ├── hooks/         # User hooks
+│       ├── lib/           # User utilities
+│       └── utils/         # Helper functions
 ├── integrations/          # Third-party integrations
 │   ├── better-auth/       # Auth integration
+│   ├── shadcn/            # UI components
 │   ├── tanstack-form/     # Form integration
 │   └── tanstack-query/    # Query integration
-└── routes/                # TanStack Router routes
+├── routes/                # TanStack Router routes
+│   ├── __root.tsx         # Root layout
+│   ├── _auth/             # Auth routes
+│   ├── _public/           # Public routes
+│   ├── _user/             # Protected user routes
+│   ├── _admin/            # Admin routes
+│   └── api/               # API endpoints
+├── server/                # Server-side code
+│   ├── db/                # Database configuration
+│   │   ├── client.ts      # Drizzle DB client
+│   │   ├── migrations/    # Database migrations
+│   │   └── seeds.ts       # Seed data
+│   ├── emails/            # Email templates
+│   ├── middlewares/       # Server middlewares
+│   ├── modules/           # Business logic modules
+│   ├── mutations/         # Server mutation functions
+│   ├── queries/           # Server query functions
+│   └── schemas/           # Validation schemas
+├── shared/                # Shared utilities
+│   ├── components/        # Reusable components
+│   ├── theme/             # Theme configuration
+│   └── utils/             # Utility functions
+└── env.client.ts          # Client environment variables
 ```
 
 ---

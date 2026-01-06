@@ -43,12 +43,12 @@ your personal and professional contacts in one secure place with a beautiful, re
 
 ### Core
 
-| Technology     | Purpose                    |
-| -------------- | -------------------------- |
-| TypeScript 5.9 | Type-safe JavaScript       |
-| Vite 7.3       | Build tool & dev server    |
-| TanStack Start | Full-stack React framework |
-| React 19       | UI library                 |
+| Technology       | Purpose                    |
+| ---------------- | -------------------------- |
+| TypeScript 5.9.3 | Type-safe JavaScript       |
+| Vite 7.3.0       | Build tool & dev server    |
+| TanStack Start   | Full-stack React framework |
+| React 19.2.3     | UI library                 |
 
 ### Data & State
 
@@ -56,7 +56,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 | --------------- | ------------------------- |
 | TanStack Router | Type-safe routing         |
 | TanStack Query  | Data fetching & caching   |
-| TanStack Store  | State management          |
+| TanStack Store  | State management & theme  |
 | TanStack Form   | Form handling             |
 | Drizzle ORM     | Database ORM (PostgreSQL) |
 | Zod             | Schema validation         |
@@ -79,6 +79,13 @@ your personal and professional contacts in one secure place with a beautiful, re
 | better-auth      | Authentication & session management |
 | @t3-oss/env-core | Environment validation              |
 
+### Deployment
+
+| Technology         | Purpose             |
+| ------------------ | ------------------- |
+| Cloudflare Workers | Edge deployment     |
+| Wrangler           | Cloudflare CLI tool |
+
 ### Development Tools
 
 | Technology      | Purpose                |
@@ -90,6 +97,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 | Drizzle Kit     | Database migrations    |
 | React Email     | Email templates        |
 | Resend          | Email delivery service |
+| Motion          | Animation library      |
 
 ---
 
@@ -103,9 +111,9 @@ contactory/
 ├── docs/                          # Documentation
 │   ├── ADR-001-tech-stack.md      # Architecture decision record
 │   ├── ADR-002-file-structure.md  # Project structure decisions
-│   └── PRD.md                     # Product requirements document
-├── drizzle/                       # Database migrations
-│   └── meta/                      # Migration metadata
+│   ├── ADR-003-internationalization.md  # i18n architecture (proposed)
+│   ├── PRD.md                     # Product requirements document
+│   └── SECURITY-AUDIT.md          # Security audit findings
 ├── public/                        # Static assets
 │   ├── favicon.svg
 │   └── robots.txt
@@ -113,9 +121,15 @@ contactory/
 │   ├── features/                  # Feature modules
 │   │   ├── auth/                  # Authentication feature
 │   │   │   ├── components/        # Auth UI components
-│   │   │   └── hooks/             # Auth hooks
-│   │   └── landing/               # Landing page feature
-│   │       └── components/        # Landing page components
+│   │   │   ├── hooks/             # Auth hooks
+│   │   │   └── lib/               # Auth utilities
+│   │   ├── landing/               # Landing page feature
+│   │   │   └── components/        # Landing page components
+│   │   └── users/                 # User management feature
+│   │       ├── components/        # User UI components
+│   │       ├── hooks/             # User hooks
+│   │       ├── lib/               # User utilities
+│   │       └── utils/             # User helper functions
 │   ├── integrations/              # Third-party integrations
 │   │   ├── better-auth/           # Auth configuration
 │   │   ├── shadcn/                # UI components
@@ -124,15 +138,31 @@ contactory/
 │   ├── routes/                    # Application routes
 │   │   ├── __root.tsx             # Root layout
 │   │   ├── _auth/                 # Auth routes (sign-in, sign-up, etc.)
+│   │   │   ├── sign-in.tsx        # Sign in page
+│   │   │   ├── sign-up.tsx        # Sign up page
+│   │   │   ├── forgot-password.tsx # Password reset request
+│   │   │   └── reset-password.tsx # Password reset form
 │   │   ├── _public/               # Public routes (landing page)
 │   │   ├── _user/                 # Protected routes (authenticated users)
+│   │   │   ├── route.tsx          # User layout + auth guard
+│   │   │   ├── dashboard.tsx      # Main dashboard view
+│   │   │   ├── contacts.tsx       # Contacts management
+│   │   │   └── profile.tsx        # User profile page
 │   │   ├── _admin/                # Admin routes (admin users only)
 │   │   └── api/                   # API endpoints
 │   ├── server/                    # Server-side code
-│   │   ├── db/                    # Database client and schemas
+│   │   ├── db/                    # Database configuration
+│   │   │   ├── client.ts          # Drizzle DB client
+│   │   │   ├── migrations/        # Database migrations
+│   │   │   └── seeds.ts           # Seed data for development
 │   │   ├── emails/                # Email templates
 │   │   ├── middlewares/           # Server middlewares
 │   │   ├── modules/               # Business logic modules
+│   │   │   ├── auth.ts            # Auth business logic
+│   │   │   ├── guards.ts          # Route guards
+│   │   │   ├── r2.ts              # Cloudflare R2 storage
+│   │   │   ├── theme.ts           # Theme management
+│   │   │   └── users.ts           # User business logic
 │   │   ├── mutations/             # Server mutation functions
 │   │   ├── queries/               # Server query functions
 │   │   └── schemas/               # Validation schemas
@@ -211,20 +241,25 @@ contactory/
 
 ## 📜 Scripts
 
-| Script             | Description                          |
-| ------------------ | ------------------------------------ |
-| `pnpm dev`         | Start development server (port 3000) |
-| `pnpm build`       | Build for production                 |
-| `pnpm serve`       | Preview production build             |
-| `pnpm test`        | Run unit tests                       |
-| `pnpm lint`        | Lint codebase                        |
-| `pnpm format`      | Format code with Prettier            |
-| `pnpm check`       | Format and lint with auto-fix        |
-| `pnpm typecheck`   | Run TypeScript type checking         |
-| `pnpm db:generate` | Generate database migrations         |
-| `pnpm db:migrate`  | Run database migrations              |
-| `pnpm db:push`     | Push schema changes to database      |
-| `pnpm db:studio`   | Open Drizzle Studio                  |
+| Script              | Description                            |
+| ------------------- | -------------------------------------- |
+| `pnpm dev`          | Start development server (port 3000)   |
+| `pnpm build`        | Build for production                   |
+| `pnpm serve`        | Preview production build               |
+| `pnpm test`         | Run unit tests                         |
+| `pnpm test:workers` | Run Cloudflare Workers tests           |
+| `pnpm lint`         | Lint codebase                          |
+| `pnpm format`       | Format code with Prettier              |
+| `pnpm check`        | Format and lint with auto-fix          |
+| `pnpm typecheck`    | Run TypeScript type checking           |
+| `pnpm db:generate`  | Generate database migrations           |
+| `pnpm db:migrate`   | Run database migrations                |
+| `pnpm db:push`      | Push schema changes to database        |
+| `pnpm db:pull`      | Pull schema from database              |
+| `pnpm db:studio`    | Open Drizzle Studio                    |
+| `pnpm db:seeds`     | Run database seed script               |
+| `pnpm deploy`       | Build and deploy to Cloudflare Workers |
+| `pnpm cf-typegen`   | Generate Cloudflare Workers types      |
 
 ---
 
@@ -235,6 +270,8 @@ contactory/
 - [Product Requirements (PRD)](./docs/PRD.md) - Feature specifications and user stories
 - [Tech Stack ADR](./docs/ADR-001-tech-stack.md) - Technology decisions and rationale
 - [File Structure ADR](./docs/ADR-002-file-structure.md) - Project organization and architecture
+- [Internationalization ADR](./docs/ADR-003-internationalization.md) - i18n architecture (proposed)
+- [Security Audit](./docs/SECURITY-AUDIT.md) - Security audit findings and recommendations
 
 ### GitHub Configuration
 
@@ -260,40 +297,40 @@ The project uses GitHub Actions for continuous integration. The pipeline runs on
 
 | Package                    | Version  | Description                |
 | -------------------------- | -------- | -------------------------- |
-| `react`                    | ^19.2.1  | UI library                 |
-| `react-dom`                | ^19.2.1  | React DOM renderer         |
-| `@tanstack/react-start`    | ^1.132.0 | Full-stack React framework |
-| `@tanstack/react-router`   | ^1.132.0 | Type-safe routing          |
-| `@tanstack/react-query`    | ^5.66.5  | Data fetching & caching    |
-| `@tanstack/react-form`     | ^1.0.0   | Form handling              |
-| `@tanstack/react-store`    | ^0.7.0   | State management           |
-| `drizzle-orm`              | ^0.39.0  | Database ORM               |
-| `pg`                       | ^8.11.0  | PostgreSQL client          |
-| `better-auth`              | ^1.4.5   | Authentication library     |
-| `zod`                      | ^4.1.11  | Schema validation          |
-| `tailwindcss`              | ^4.0.6   | CSS framework              |
+| `react`                    | ^19.2.3  | UI library                 |
+| `react-dom`                | ^19.2.3  | React DOM renderer         |
+| `@tanstack/react-start`    | ^1.145.7 | Full-stack React framework |
+| `@tanstack/react-router`   | ^1.145.7 | Type-safe routing          |
+| `@tanstack/react-query`    | ^5.90.16 | Data fetching & caching    |
+| `@tanstack/react-form`     | ^1.27.7  | Form handling              |
+| `@tanstack/react-store`    | ^0.7.7   | State management & theme   |
+| `drizzle-orm`              | ^0.45.1  | Database ORM               |
+| `postgres`                 | ^3.4.7   | PostgreSQL client          |
+| `better-auth`              | ^1.4.10  | Authentication library     |
+| `zod`                      | ^4.3.5   | Schema validation          |
+| `tailwindcss`              | ^4.1.18  | CSS framework              |
 | `class-variance-authority` | ^0.7.1   | Component variants         |
 | `clsx`                     | ^2.1.1   | Class name utility         |
-| `tailwind-merge`           | ^3.0.2   | Tailwind class merging     |
-| `@radix-ui/*`              | various  | Accessible UI primitives   |
+| `tailwind-merge`           | ^3.4.0   | Tailwind class merging     |
+| `radix-ui`                 | ^1.4.3   | Accessible UI primitives   |
 | `lucide-react`             | ^0.544.0 | Icon library               |
-| `sonner`                   | ^2.0.7   | Toast notifications        |
-| `next-themes`              | ^0.4.6   | Theme management           |
-| `@t3-oss/env-core`         | ^0.13.8  | Type-safe env variables    |
+| `motion`                   | ^12.24.0 | Animation library          |
+| `@t3-oss/env-core`         | ^0.13.10 | Type-safe env variables    |
 | `uuid`                     | ^13.0.0  | UUID generation            |
 
 ### Development
 
-| Package                               | Version | Description         |
-| ------------------------------------- | ------- | ------------------- |
-| `typescript`                          | ^5.7.2  | TypeScript compiler |
-| `vite`                                | ^7.1.7  | Build tool          |
-| `vitest`                              | ^3.0.5  | Test runner         |
-| `@testing-library/react`              | ^16.2.0 | Component testing   |
-| `eslint`                              | ^9.39.1 | Linting             |
-| `prettier`                            | ^3.5.3  | Code formatting     |
-| `drizzle-kit`                         | ^0.30.0 | Drizzle CLI tools   |
-| `@netlify/vite-plugin-tanstack-start` | ^1.2.2  | Netlify deployment  |
+| Package                   | Version | Description               |
+| ------------------------- | ------- | ------------------------- |
+| `typescript`              | ^5.9.3  | TypeScript compiler       |
+| `vite`                    | ^7.3.0  | Build tool                |
+| `vitest`                  | ^3.2.4  | Test runner               |
+| `@testing-library/react`  | ^16.3.1 | Component testing         |
+| `eslint`                  | ^9.39.2 | Linting                   |
+| `prettier`                | ^3.7.4  | Code formatting           |
+| `drizzle-kit`             | ^0.31.8 | Drizzle CLI tools         |
+| `@cloudflare/vite-plugin` | ^1.17.1 | Cloudflare Workers plugin |
+| `wrangler`                | ^4.54.0 | Cloudflare CLI            |
 
 ---
 

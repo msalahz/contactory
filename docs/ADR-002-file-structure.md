@@ -48,7 +48,9 @@ src/
 │   │
 │   ├── _user/                    # Protected routes (authenticated users)
 │   │   ├── route.tsx             # User layout + auth guard
-│   │   └── dashboard.tsx         # Main dashboard view
+│   │   ├── dashboard.tsx         # Main dashboard view
+│   │   ├── contacts.tsx          # Contacts management
+│   │   └── profile.tsx           # User profile page
 │   │
 │   └── _admin/                   # Admin routes (admin users only)
 │       ├── route.tsx             # Admin layout + admin guard
@@ -57,7 +59,8 @@ src/
 ├── server/                       # Server-only code
 │   ├── db/                       # Database client and models
 │   │   ├── client.ts             # Drizzle DB client
-│   │   └── schema/               # Database schemas
+│   │   ├── migrations/           # Database migrations
+│   │   └── seeds.ts              # Seed data for development
 │   │
 │   ├── emails/                   # Email templates
 │   │   └── templates/            # Reusable email components
@@ -66,7 +69,11 @@ src/
 │   │   └── auth.middleware.ts    # Authentication middleware
 │   │
 │   ├── modules/                  # Feature modules (business logic)
-│   │   └── auth/                 # Authentication module
+│   │   ├── auth.ts               # Authentication logic
+│   │   ├── guards.ts             # Route guards
+│   │   ├── r2.ts                 # Cloudflare R2 storage
+│   │   ├── theme.ts              # Theme management
+│   │   └── users.ts              # User management logic
 │   │
 │   ├── mutations/                # Server mutation functions
 │   │   └── auth.ts               # Auth-related mutations
@@ -84,16 +91,23 @@ src/
 │   │   │   ├── SignUpForm.tsx
 │   │   │   ├── RequestPasswordResetForm.tsx
 │   │   │   └── ResetPasswordForm.tsx
-│   │   └── hooks/                # Auth hooks
-│   │       ├── useSignInEmail.ts
-│   │       ├── useSignInSocial.ts
-│   │       ├── useSignUpEmail.ts
-│   │       ├── useSignOut.ts
-│   │       ├── useRequestPasswordReset.ts
-│   │       └── useResetPassword.ts
+│   │   ├── hooks/                # Auth hooks
+│   │   │   ├── useSignInEmail.ts
+│   │   │   ├── useSignInSocial.ts
+│   │   │   ├── useSignUpEmail.ts
+│   │   │   ├── useSignOut.ts
+│   │   │   ├── useRequestPasswordReset.ts
+│   │   │   └── useResetPassword.ts
+│   │   └── lib/                  # Auth utilities
 │   │
-│   └── landing/                  # Landing page feature
-│       └── components/           # Landing page components
+│   ├── landing/                  # Landing page feature
+│   │   └── components/           # Landing page components
+│   │
+│   └── users/                    # User management feature
+│       ├── components/           # User UI components
+│       ├── hooks/                # User hooks
+│       ├── lib/                  # User utilities
+│       └── utils/                # Helper functions
 │
 ├── shared/                       # Shared code
 │   ├── components/               # Reusable UI components
@@ -107,7 +121,6 @@ src/
 │   └── tanstack-query/           # Data fetching
 │
 ├── env.client.ts                 # Client env (VITE_ prefixed)
-├── env.server.ts                 # Server env (secrets)
 ├── styles.css
 ├── routeTree.gen.ts
 └── router.tsx
@@ -141,12 +154,12 @@ src/
   - `emails/`: Email templates and utilities
 - **Database**:
   - `db/client.ts`: Drizzle ORM client
-  - `db/schema/`: Database table definitions
-  - `db/seeds/`: Seed data for development
+  - `db/migrations/`: Database migrations
+  - `db/seeds.ts`: Seed data for development
 - **Environment**:
-  - `env.server.ts`: Server-side environment variables
   - `env.client.ts`: Client-side environment variables (VITE\_ prefixed)
   - Validated using `@t3-oss/env-core` and Zod
+  - Server environment variables accessed via `process.env` in server modules
 - **Code Organization**:
   - Prefer explicit imports over barrel files
   - Colocate related files (e.g., `auth.service.ts` with `auth.types.ts`)
