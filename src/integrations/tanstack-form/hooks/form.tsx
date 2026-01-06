@@ -1,5 +1,6 @@
 import { createFormHook } from '@tanstack/react-form'
 
+import { FileField } from '@/integrations/tanstack-form/components/FileField'
 import { InputField } from '@/integrations/tanstack-form/components/InputField'
 import { SwitchField } from '@/integrations/tanstack-form/components/SwitchField'
 import { ResetButton } from '@/integrations/tanstack-form/components/ResetButton'
@@ -9,6 +10,7 @@ import { fieldContext, formContext } from '@/integrations/tanstack-form/hooks/fo
 
 export const { useAppForm, withForm, withFieldGroup } = createFormHook({
   fieldComponents: {
+    File: FileField,
     Input: InputField,
     Switch: SwitchField,
     Checkbox: CheckboxField,
