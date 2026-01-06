@@ -70,7 +70,7 @@ export function RequestPasswordResetForm({
                 )}
               />
               <form.AppForm>
-                <form.SubmitButton label="Send password reset email" />
+                <form.SubmitButton>Send password reset email</form.SubmitButton>
               </form.AppForm>
             </FieldGroup>
           </div>

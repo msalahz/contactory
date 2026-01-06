@@ -129,7 +129,7 @@ export function SignUpForm({
             />
 
             <form.AppForm>
-              <form.SubmitButton label="Sign Up" />
+              <form.SubmitButton>Sign Up</form.SubmitButton>
             </form.AppForm>
           </FieldGroup>
         </div>

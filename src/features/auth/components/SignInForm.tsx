@@ -137,7 +137,7 @@ export function SignInForm({
                 )}
               />
               <form.AppForm>
-                <form.SubmitButton label="Sign in" className="w-full" />
+                <form.SubmitButton className="w-full">Sign in</form.SubmitButton>
               </form.AppForm>
             </FieldGroup>
           </div>

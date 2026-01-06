@@ -84,7 +84,7 @@ export function ResetPasswordForm({
               />
 
               <form.AppForm>
-                <form.SubmitButton label="Submit" />
+                <form.SubmitButton>Submit</form.SubmitButton>
               </form.AppForm>
             </FieldGroup>
           </div>

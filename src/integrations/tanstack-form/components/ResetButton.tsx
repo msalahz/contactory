@@ -1,12 +1,9 @@
-import * as React from 'react'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
-export interface ResetButtonProps extends React.ComponentProps<typeof Button> {
-  label: string
-}
+export interface ResetButtonProps extends React.ComponentProps<typeof Button> {}
 
-export function ResetButton({ label = 'Reset', ...props }: ResetButtonProps) {
+export function ResetButton({ ...props }: ResetButtonProps) {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
@@ -19,9 +16,7 @@ export function ResetButton({ label = 'Reset', ...props }: ResetButtonProps) {
             form.reset()
           }}
           {...props}
-        >
-          {label}
-        </Button>
+        />
       )}
     </form.Subscribe>
   )
