@@ -5,7 +5,7 @@ import type { ReactNode } from 'react'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { noop } from '@/shared/utils/noop'
-import { Input } from '@/integrations/shadcn/components/ui/input'
+import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
@@ -15,9 +15,12 @@ import { ProfileSection } from '@/features/users/components/ProfileSection'
 import { getUserNameInitials } from '@/features/users/lib/getUserNameInitials'
 import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/components/ui/avatar'
 
+export const MAX_IMAGE_FILE_SIZE = 1000 * 1000 * 5 // 5 MB
+export const ACCEPTED_IMAGE_FILE_TYPE = 'image/*'
+
 export interface UserInfoFormValues {
   name: string
-  image: string | null
+  imageFile: File | ''
 }
 
 export interface UserInfoFormProps {
@@ -29,7 +32,17 @@ export interface UserInfoFormProps {
 
 const formSchema = z.object({
   name: z.string().nonempty('Name is required'),
-  image: z.string(),
+  imageFile: z.union([
+    z
+      .file()
+      .refine((file) => file.size > 0, 'Media file is too small (min 1 byte)')
+      .refine((file) => file.size < MAX_IMAGE_FILE_SIZE, 'Image file is too large (max 200MB)')
+      .refine(
+        (file) => file.type.startsWith(ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
+        'Unsupported image file type',
+      ),
+    z.literal(''),
+  ]),
 })
 
 export function UserInfoForm({
@@ -39,25 +52,23 @@ export function UserInfoForm({
   className,
 }: UserInfoFormProps) {
   const { image, name } = user ?? {}
+  const fileRef = useRef<HTMLInputElement>(null)
   const [isPending, startTransition] = useTransition()
   const [avatarPreview, setAvatarPreview] = useState<string | null>(image ?? null)
-  const [hasAvatarChanges, setHasAvatarChanges] = useState(false)
-  const fileRef = useRef<HTMLInputElement>(null)
 
   const form = useAppForm({
     defaultValues: {
       name: name ?? '',
-      image: image ?? '',
+      imageFile: '' as z.infer<typeof formSchema>['imageFile'],
     },
     validators: {
       onSubmit: formSchema,
     },
-    async onSubmit({ value }) {
-      await onFormSubmit?.({
+    onSubmit({ value }) {
+      return onFormSubmit?.({
         name: value.name,
-        image: avatarPreview,
+        imageFile: value.imageFile,
       })
-      setHasAvatarChanges(false)
     },
   })
 
@@ -65,35 +76,10 @@ export function UserInfoForm({
     fileRef.current?.click()
   }
 
-  function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0]
-    if (file) {
-      startTransition(async () => {
-        const base64File = await convertFileToBase64(file)
-        setAvatarPreview(base64File)
-        setHasAvatarChanges(true)
-      })
-    }
-  }
-
   function handleRemoveAvatar() {
     setAvatarPreview(null)
-    setHasAvatarChanges(true)
-    if (fileRef.current) {
-      fileRef.current.value = ''
-    }
+    form.setFieldValue('imageFile', '')
   }
-
-  function handleFullReset() {
-    setAvatarPreview(image ?? null)
-    setHasAvatarChanges(false)
-    if (fileRef.current) {
-      fileRef.current.value = ''
-    }
-    form.reset()
-  }
-
-  const displayName = form.state.values.name || name
 
   return (
     <ProfileSection
@@ -119,9 +105,10 @@ export function UserInfoForm({
               >
                 <AvatarImage src={avatarPreview || undefined} />
                 <AvatarFallback className="text-xl font-medium">
-                  {displayName ? getUserNameInitials({ name: displayName }) : 'UN'}
+                  {name ? getUserNameInitials({ name }) : 'UN'}
                 </AvatarFallback>
               </Avatar>
+
               <div className="flex flex-col gap-1.5">
                 <Button
                   type="button"
@@ -129,29 +116,63 @@ export function UserInfoForm({
                   size="sm"
                   onClick={handleUploadClick}
                   disabled={isPending}
-                  className="min-w-[100px]"
+                  className="min-w-25"
                 >
-                  {isPending ? <Spinner className="mr-2 size-4" /> : null}
-                  {avatarPreview ? 'Change' : 'Upload'}
+                  {isPending ? (
+                    <Spinner className="mr-2 size-4" />
+                  ) : avatarPreview ? (
+                    'Change'
+                  ) : (
+                    'Upload'
+                  )}
                 </Button>
-                {avatarPreview && (
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleRemoveAvatar}
-                    className="text-destructive hover:text-destructive min-w-[100px]"
-                  >
-                    Remove
-                  </Button>
-                )}
+
+                <Button
+                  type="button"
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleRemoveAvatar}
+                  className={cn(
+                    'text-destructive hover:text-destructive min-w-25',
+                    avatarPreview ? 'visible' : 'invisible',
+                  )}
+                >
+                  Remove
+                </Button>
               </div>
-              <Input
-                ref={fileRef}
-                type="file"
-                accept="image/*"
-                className="hidden"
-                onChange={handleFileChange}
+
+              <form.Subscribe
+                selector={(state) => state.isDefaultValue}
+                children={(isDefaultValue) => {
+                  if (isDefaultValue) {
+                    setAvatarPreview(image || null)
+                  }
+
+                  return null
+                }}
+              />
+              <form.AppField
+                name="imageFile"
+                listeners={{
+                  onChange: ({ value }) => {
+                    const file = value
+                    if (file) {
+                      startTransition(async () => {
+                        const base64File = await convertFileToBase64(file)
+                        setAvatarPreview(base64File)
+                      })
+                    }
+                  },
+                }}
+                children={(field) => (
+                  <field.File
+                    id="profile-avatar-file"
+                    accept={ACCEPTED_IMAGE_FILE_TYPE}
+                    ref={fileRef}
+                    type="file"
+                    className="hidden"
+                  />
+                )}
               />
             </div>
 
@@ -174,23 +195,9 @@ export function UserInfoForm({
 
           {/* Action Buttons */}
           <div className="flex justify-end gap-2 border-t pt-4">
-            <Button
-              type="button"
-              variant="outline"
-              size="sm"
-              onClick={handleFullReset}
-              disabled={!form.state.isDirty && !hasAvatarChanges}
-              className="min-w-20"
-            >
-              Reset
-            </Button>
             <form.AppForm>
-              <form.SubmitButton
-                size="sm"
-                label="Save Changes"
-                className="min-w-20"
-                disabled={!form.state.isDirty && !hasAvatarChanges}
-              />
+              <form.ResetButton size="sm" variant="outline" label="Reset" className="min-w-20" />
+              <form.SubmitButton size="sm" label="Save Changes" className="min-w-35" />
             </form.AppForm>
           </div>
         </FieldGroup>
