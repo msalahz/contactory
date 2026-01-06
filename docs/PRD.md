@@ -205,6 +205,15 @@ safety, and excellent user experience.
 - Download or share QR code image
 - Support for vCard format in QR codes
 
+### 10. Reminders
+
+**Status:** Coming Soon
+**Description:** TBD
+
+**Requirements:**
+
+- TBD
+
 ## Implementation Status
 
 ### Completed
