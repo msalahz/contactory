@@ -1,4 +1,3 @@
-import { env } from 'cloudflare:workers'
 import {
   Body,
   Button,
@@ -18,7 +17,7 @@ interface ResetPasswordEmailProps {
   url: string
 }
 
-const baseUrl = env.BASE_URL ? `${env.BASE_URL}` : ''
+const baseUrl = process.env.BASE_URL ? `${process.env.BASE_URL}` : ''
 
 export function ResetPasswordEmail({ name, url }: ResetPasswordEmailProps) {
   return (
