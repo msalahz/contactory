@@ -8,15 +8,16 @@ import { noop } from '@/shared/utils/noop'
 import { authOptions } from '@/features/auth/options'
 import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
+import { stripFileMetadata } from '@/shared/utils/stripFileMetadata'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
 import { UserInfoForm } from '@/features/users/components/UserInfoForm'
 import { UserSocialForm } from '@/features/users/components/UserSocialForm'
 import { useUpdateAuthUser } from '@/features/auth/hooks/useUpdateAuthUser'
 import { useChangePassword } from '@/features/auth/hooks/useChangePassword'
 import { UserPasswordForm } from '@/features/users/components/UserPasswordForm'
+import { AnimatedGroup } from '@/integrations/shadcn/components/ui/animated-group'
 import { useUploadUserAvatarToR2 } from '@/features/users/hooks/useUploadUserAvatarToR2'
 import { UserProfile, UserProfileContent } from '@/features/users/components/UserProfile'
-import { stripFileMetadata } from '@/shared/utils/stripFileMetadata'
 
 export const Route = createFileRoute('/_user/profile')({
   component: RouteComponent,
@@ -75,36 +76,38 @@ function RouteComponent() {
   return (
     <UserProfile>
       <UserProfileContent>
-        <UserInfoForm user={{ name, image }} onFormSubmit={handleUserInfoSubmit}>
-          {uploadUserAvatarError ? (
-            <AlertBox type="error">
-              <ItemTitle>Failed to upload avatar</ItemTitle>
-              <FieldError errors={[uploadUserAvatarError]} />
-            </AlertBox>
-          ) : null}
+        <AnimatedGroup preset="blur" className="space-y-6">
+          <UserInfoForm user={{ name, image }} onFormSubmit={handleUserInfoSubmit}>
+            {uploadUserAvatarError ? (
+              <AlertBox type="error">
+                <ItemTitle>Failed to upload avatar</ItemTitle>
+                <FieldError errors={[uploadUserAvatarError]} />
+              </AlertBox>
+            ) : null}
 
-          {updateAuthUserError ? (
-            <AlertBox type="error">
-              <ItemTitle>Failed to update profile</ItemTitle>
-              <FieldError errors={[updateAuthUserError]} />
-            </AlertBox>
-          ) : null}
-        </UserInfoForm>
+            {updateAuthUserError ? (
+              <AlertBox type="error">
+                <ItemTitle>Failed to update profile</ItemTitle>
+                <FieldError errors={[updateAuthUserError]} />
+              </AlertBox>
+            ) : null}
+          </UserInfoForm>
 
-        <UserPasswordForm onFormSubmit={handlePasswordSubmit}>
-          {changePasswordError ? (
-            <AlertBox type="error">
-              <ItemTitle>Failed to change password</ItemTitle>
-              <FieldError errors={[changePasswordError]} />
-            </AlertBox>
-          ) : null}
-        </UserPasswordForm>
+          <UserPasswordForm onFormSubmit={handlePasswordSubmit}>
+            {changePasswordError ? (
+              <AlertBox type="error">
+                <ItemTitle>Failed to change password</ItemTitle>
+                <FieldError errors={[changePasswordError]} />
+              </AlertBox>
+            ) : null}
+          </UserPasswordForm>
 
-        <UserSocialForm
-          connectedAccounts={[]}
-          onConnect={handleSocialConnect}
-          onDisconnect={handleSocialDisconnect}
-        />
+          <UserSocialForm
+            connectedAccounts={[]}
+            onConnect={handleSocialConnect}
+            onDisconnect={handleSocialDisconnect}
+          />
+        </AnimatedGroup>
       </UserProfileContent>
     </UserProfile>
   )
