@@ -36,9 +36,7 @@
     "BETTER_AUTH_ENABLE_OPENAPI": "false",
     "BETTER_AUTH_USE_SECURE_COOKIES": "true",
     "RESEND_FROM_EMAIL": "noreply@contactory.consultin.dev",
-    "R2_PUBLIC_URL": "https://cdn.contactory.consultin.dev",
-    "VITE_BETTER_AUTH_BASE_URL": "https://contactory.consultin.dev",
-    "VITE_BETTER_AUTH_CALLBACK_URL": "https://contactory.consultin.dev/dashboard"
+    "R2_PUBLIC_URL": "https://cdn.contactory.consultin.dev"
   },
   "assets": {
   },
