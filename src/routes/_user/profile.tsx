@@ -14,6 +14,7 @@ import { UserSocialForm } from '@/features/users/components/UserSocialForm'
 import { useUpdateAuthUser } from '@/features/auth/hooks/useUpdateAuthUser'
 import { useChangePassword } from '@/features/auth/hooks/useChangePassword'
 import { UserPasswordForm } from '@/features/users/components/UserPasswordForm'
+import { useUploadUserAvatarToR2 } from '@/features/users/hooks/useUploadUserAvatarToR2'
 import { UserProfile, UserProfileContent } from '@/features/users/components/UserProfile'
 
 export const Route = createFileRoute('/_user/profile')({
@@ -26,11 +27,29 @@ export const Route = createFileRoute('/_user/profile')({
 function RouteComponent() {
   const { mutateAsync: updateAuthUser, error: updateAuthUserError } = useUpdateAuthUser()
   const { mutateAsync: changePassword, error: changePasswordError } = useChangePassword()
+  const { mutateAsync: uploadUserAvatar, error: uploadUserAvatarError } = useUploadUserAvatarToR2()
   const { data: authUser } = useSuspenseQuery(authOptions.authUser())
   const { name, image } = authUser || {}
 
-  async function handleUSerInfoSubmit(data: UserInfoFormValues) {
-    await updateAuthUser(data).catch(noop)
+  async function handleUserInfoSubmit(data: UserInfoFormValues) {
+    if (data.avatarFile) {
+      // const avatarFile = await stripFileMetadata(data.avatarFile)
+      const formData = new FormData()
+      formData.append('avatar', data.avatarFile)
+      await uploadUserAvatar({ data: formData })
+        .then((url) =>
+          updateAuthUser({
+            name: data.name,
+            image: url,
+          }),
+        )
+        .catch(noop)
+    }
+
+    await updateAuthUser({
+      name: data.name,
+      image: data.avatarUrl || null,
+    }).catch(noop)
   }
 
   async function handlePasswordSubmit(data: UserPasswordFormValues) {
@@ -55,7 +74,14 @@ function RouteComponent() {
   return (
     <UserProfile>
       <UserProfileContent>
-        <UserInfoForm user={{ name, image }} onFormSubmit={handleUSerInfoSubmit}>
+        <UserInfoForm user={{ name, image }} onFormSubmit={handleUserInfoSubmit}>
+          {uploadUserAvatarError ? (
+            <AlertBox type="error">
+              <ItemTitle>Failed to upload avatar</ItemTitle>
+              <FieldError errors={[uploadUserAvatarError]} />
+            </AlertBox>
+          ) : null}
+
           {updateAuthUserError ? (
             <AlertBox type="error">
               <ItemTitle>Failed to update profile</ItemTitle>
