@@ -2,6 +2,16 @@
   "name": "contactory",
   "private": true,
   "type": "module",
+  "pnpm": {
+    "ignoredBuiltDependencies": [
+      "@parcel/watcher",
+      "esbuild",
+      "msw",
+      "sharp",
+      "unrs-resolver",
+      "workerd"
+    ]
+  },
   "author": "Mohammed Zaghloul <m.salahz86@gmail.com>",
   "scripts": {
     "dev": "vite dev --port 3000",
