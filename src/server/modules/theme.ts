@@ -13,5 +13,8 @@ export function setThemeCookie(theme: Theme) {
   setCookie('theme', theme, {
     path: '/',
     maxAge: 365 * 24 * 60 * 60, // 1 year
+    secure: true,
+    httpOnly: true,
+    sameSite: 'lax',
   })
 }
