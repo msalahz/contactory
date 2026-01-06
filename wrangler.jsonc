@@ -1,7 +1,7 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "contactory",
-  "compatibility_date": "2026-01-03",
+  "compatibility_date": "2025-12-10",
   "compatibility_flags": [
     "nodejs_compat"
   ],
