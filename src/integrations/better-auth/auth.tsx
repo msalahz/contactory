@@ -127,5 +127,3 @@ export function getAuth() {
     },
   })
 }
-
-export const auth = getAuth()
