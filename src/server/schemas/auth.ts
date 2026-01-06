@@ -1,6 +1,6 @@
 import { relations } from 'drizzle-orm'
-import { createSelectSchema } from 'drizzle-zod'
 import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
+import { createSelectSchema } from 'drizzle-zod'
 
 export const users = pgTable('users', {
   id: text('id').primaryKey(),
@@ -13,6 +13,10 @@ export const users = pgTable('users', {
     .defaultNow()
     .$onUpdate(() => /* @__PURE__ */ new Date())
     .notNull(),
+  role: text('role'),
+  banned: boolean('banned').default(false),
+  banReason: text('ban_reason'),
+  banExpires: timestamp('ban_expires'),
 })
 
 export const sessions = pgTable(
@@ -30,6 +34,7 @@ export const sessions = pgTable(
     userId: text('user_id')
       .notNull()
       .references(() => users.id, { onDelete: 'cascade' }),
+    impersonatedBy: text('impersonated_by'),
   },
   (table) => [index('sessions_userId_idx').on(table.userId)],
 )
