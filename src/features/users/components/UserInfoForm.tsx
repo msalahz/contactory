@@ -1,11 +1,11 @@
 import { z } from 'zod'
-import { useRef, useState, useTransition } from 'react'
+import { Trash2Icon } from 'lucide-react'
+import { useRef, useTransition } from 'react'
 
 import type { ReactNode } from 'react'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { noop } from '@/shared/utils/noop'
-import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
@@ -20,7 +20,8 @@ export const ACCEPTED_IMAGE_FILE_TYPE = 'image/*'
 
 export interface UserInfoFormValues {
   name: string
-  imageFile: File | ''
+  imageFile?: File
+  imageUrl?: string
 }
 
 export interface UserInfoFormProps {
@@ -32,11 +33,12 @@ export interface UserInfoFormProps {
 
 const formSchema = z.object({
   name: z.string().nonempty('Name is required'),
+  imageUrl: z.string(),
   imageFile: z.union([
     z
       .file()
       .refine((file) => file.size > 0, 'Media file is too small (min 1 byte)')
-      .refine((file) => file.size < MAX_IMAGE_FILE_SIZE, 'Image file is too large (max 200MB)')
+      .refine((file) => file.size < MAX_IMAGE_FILE_SIZE, 'Image file is too large (max 5MB)')
       .refine(
         (file) => file.type.startsWith(ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
         'Unsupported image file type',
@@ -53,12 +55,12 @@ export function UserInfoForm({
 }: UserInfoFormProps) {
   const { image, name } = user ?? {}
   const fileRef = useRef<HTMLInputElement>(null)
-  const [isPending, startTransition] = useTransition()
-  const [avatarPreview, setAvatarPreview] = useState<string | null>(image ?? null)
+  const [isEncoding, startEncodingTransition] = useTransition()
 
   const form = useAppForm({
     defaultValues: {
       name: name ?? '',
+      imageUrl: image ?? '',
       imageFile: '' as z.infer<typeof formSchema>['imageFile'],
     },
     validators: {
@@ -67,7 +69,8 @@ export function UserInfoForm({
     onSubmit({ value }) {
       return onFormSubmit?.({
         name: value.name,
-        imageFile: value.imageFile,
+        imageUrl: value.imageUrl,
+        imageFile: value.imageFile || undefined,
       })
     },
   })
@@ -77,8 +80,18 @@ export function UserInfoForm({
   }
 
   function handleRemoveAvatar() {
-    setAvatarPreview(null)
+    form.setFieldValue('imageUrl', '')
     form.setFieldValue('imageFile', '')
+  }
+
+  function onImageFileChange(data?: { value: File }) {
+    const file = data?.value
+    if (file) {
+      startEncodingTransition(async () => {
+        const base64File = await convertFileToBase64(file)
+        form.setFieldValue('imageUrl', base64File)
+      })
+    }
   }
 
   return (
@@ -103,67 +116,24 @@ export function UserInfoForm({
                 className="ring-border ring-offset-background size-24 cursor-pointer ring-2 ring-offset-2 transition-opacity hover:opacity-80"
                 onClick={handleUploadClick}
               >
-                <AvatarImage src={avatarPreview || undefined} />
-                <AvatarFallback className="text-xl font-medium">
-                  {name ? getUserNameInitials({ name }) : 'UN'}
-                </AvatarFallback>
+                <form.Subscribe
+                  selector={(state) => state.values.imageUrl}
+                  children={(imageUrl) => <AvatarImage src={imageUrl || undefined} />}
+                />
+
+                <form.Subscribe
+                  selector={(state) => state.values.name}
+                  children={(userName) => (
+                    <AvatarFallback className="text-xl font-medium">
+                      {userName ? getUserNameInitials({ name: userName }) : 'UN'}
+                    </AvatarFallback>
+                  )}
+                />
               </Avatar>
 
-              <div className="flex flex-col gap-1.5">
-                <Button
-                  type="button"
-                  variant="outline"
-                  size="sm"
-                  onClick={handleUploadClick}
-                  disabled={isPending}
-                  className="min-w-25"
-                >
-                  {isPending ? (
-                    <Spinner className="mr-2 size-4" />
-                  ) : avatarPreview ? (
-                    'Change'
-                  ) : (
-                    'Upload'
-                  )}
-                </Button>
-
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleRemoveAvatar}
-                  className={cn(
-                    'text-destructive hover:text-destructive min-w-25',
-                    avatarPreview ? 'visible' : 'invisible',
-                  )}
-                >
-                  Remove
-                </Button>
-              </div>
-
-              <form.Subscribe
-                selector={(state) => state.isDefaultValue}
-                children={(isDefaultValue) => {
-                  if (isDefaultValue) {
-                    setAvatarPreview(image || null)
-                  }
-
-                  return null
-                }}
-              />
               <form.AppField
                 name="imageFile"
-                listeners={{
-                  onChange: ({ value }) => {
-                    const file = value
-                    if (file) {
-                      startTransition(async () => {
-                        const base64File = await convertFileToBase64(file)
-                        setAvatarPreview(base64File)
-                      })
-                    }
-                  },
-                }}
+                listeners={{ onChange: onImageFileChange }}
                 children={(field) => (
                   <field.File
                     id="profile-avatar-file"
@@ -194,10 +164,32 @@ export function UserInfoForm({
           </div>
 
           {/* Action Buttons */}
-          <div className="flex justify-end gap-2 border-t pt-4">
+          <div className="flex items-center justify-end gap-2 border-t pt-4">
             <form.AppForm>
-              <form.ResetButton size="sm" variant="outline" label="Reset" className="min-w-20" />
-              <form.SubmitButton size="sm" label="Save Changes" className="min-w-35" />
+              {isEncoding ? <Spinner className="mr-2 size-4" /> : null}
+              <Button
+                type="button"
+                size="sm"
+                variant="outline"
+                className="min-w-20"
+                onClick={handleRemoveAvatar}
+              >
+                <Trash2Icon />
+                Remove Avatar
+              </Button>
+              <form.ResetButton
+                size="sm"
+                variant="outline"
+                label="Reset"
+                className="min-w-20"
+                disabled={isEncoding}
+              />
+              <form.SubmitButton
+                size="sm"
+                label="Save Changes"
+                className="min-w-35"
+                disabled={isEncoding}
+              />
             </form.AppForm>
           </div>
         </FieldGroup>
