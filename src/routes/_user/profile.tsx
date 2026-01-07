@@ -58,6 +58,7 @@ function RouteComponent() {
         image: data.avatarUrl || null,
       }).catch(noop)
     }
+    // TODO: It will be a better user flow if the user can delete the avatar directly from the profile page without a need for form submission
     // delete old avatar if it exists
     const avatarUrl = z.url().safeParse(image).data
     if (avatarUrl) {
