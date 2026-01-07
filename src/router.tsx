@@ -2,6 +2,7 @@ import { createRouter } from '@tanstack/react-router'
 import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 
 import { routeTree } from '@/routeTree.gen'
+import { getI18n } from '@/integrations/i18n/i18n'
 import * as TanstackQuery from '@/integrations/tanstack-query/rootProvider'
 
 // Import the generated route tree
@@ -10,14 +11,17 @@ import { DefaultCatchBoundary } from '@/shared/components/DefaultCatchBoundary'
 
 // Create a new router instance
 export const getRouter = () => {
+  const i18n = getI18n()
   const rqContext = TanstackQuery.getContext()
 
   const router = createRouter({
     routeTree,
     context: {
+      i18n,
       ...rqContext,
-      initialTheme: null,
       authUser: null,
+      initialTheme: null,
+      initialLanguage: null,
     },
     defaultPreload: 'intent',
     Wrap: (props: { children: React.ReactNode }) => {

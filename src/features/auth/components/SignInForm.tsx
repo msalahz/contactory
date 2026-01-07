@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { noop } from '@/shared/utils/noop'
 import { LogoIcon } from '@/shared/components/Logo'
@@ -8,7 +9,7 @@ import { GoogleIcon } from '@/shared/components/GoogleIcon'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
-import { Field, FieldGroup, FieldSeparator } from '@/integrations/shadcn/components/ui/field'
+import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
 
 const formSchema = z.object({
   email: z.email('Invalid email address').nonempty('Email is required'),
@@ -47,6 +48,7 @@ export function SignInForm({
       })
     },
   })
+  const { t } = useTranslation('auth')
 
   return (
     <section
@@ -69,8 +71,8 @@ export function SignInForm({
             <Link to="/" aria-label="go home">
               <LogoIcon />
             </Link>
-            <h1 className="mt-4 mb-1 text-xl font-semibold">Sign In to Contactory</h1>
-            <p>Welcome back! Sign in to continue</p>
+            <h1 className="mt-4 mb-1 text-xl font-semibold">{t('Sign In to Contactory')}</h1>
+            <p>{t('Welcome back! Sign in to continue')}</p>
           </div>
 
           <div className="mt-6">
@@ -83,40 +85,23 @@ export function SignInForm({
             >
               {isSigningInSocial ? <Spinner className="size-4" /> : <GoogleIcon />}
 
-              <span>Google</span>
+              <span>{t('Google')}</span>
             </Button>
           </div>
 
           <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
             <hr className="border-dashed" />
-            <span className="text-muted-foreground text-xs">Or continue With</span>
+            <span className="text-muted-foreground text-xs">{t('Or continue With')}</span>
             <hr className="border-dashed" />
           </div>
 
           <div className="space-y-6">
             <FieldGroup>
               {children ? <Field>{children}</Field> : null}
-              <Field hidden>
-                <Button variant="outline" type="button">
-                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path
-                      d="M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z"
-                      fill="currentColor"
-                    />
-                  </svg>
-                  Login with Google
-                </Button>
-              </Field>
-              <FieldSeparator
-                hidden
-                className="*:data-[slot=field-separator-content]:bg-card uppercase"
-              >
-                Or continue with email
-              </FieldSeparator>
               <form.AppField
                 name="email"
                 children={(field) => (
-                  <field.Input type="email" label="Email" placeholder="me@example.com" />
+                  <field.Input type="email" label={t('Email')} placeholder="me@example.com" />
                 )}
               />
               <form.AppField
@@ -124,29 +109,29 @@ export function SignInForm({
                 children={(field) => (
                   <field.Input
                     type="password"
-                    label="Password"
+                    label={t('Password')}
                     labelChildren={
                       <Link
                         to="/forgot-password"
                         className="text-foreground ms-auto text-sm underline-offset-4 hover:underline"
                       >
-                        Forgot your password?
+                        {t('Forgot your password?')}
                       </Link>
                     }
                   />
                 )}
               />
               <form.AppForm>
-                <form.SubmitButton className="w-full">Sign in</form.SubmitButton>
+                <form.SubmitButton className="w-full">{t('Sign in')}</form.SubmitButton>
               </form.AppForm>
             </FieldGroup>
           </div>
         </div>
 
         <p className="text-accent-foreground text-center text-sm">
-          Don't have an account ?
+          {t("Don't have an account?")}
           <Button asChild variant="link" className="px-2">
-            <Link to="/sign-up">Create account</Link>
+            <Link to="/sign-up">{t('Create account')}</Link>
           </Button>
         </p>
       </form>

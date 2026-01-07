@@ -6,28 +6,33 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
 
-import type { Theme } from '@/server/schemas/theme'
+import type { i18n } from 'i18next'
 import type { QueryClient } from '@tanstack/react-query'
+import type { Language, Theme } from '@/server/schemas/shared'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
+import { defaultNS } from '@/integrations/i18n/resources'
 import { ThemeProvider } from '@/shared/theme/ThemeContext'
-import { getInitialPreferencesFn } from '@/server/queries/global'
+import { I18nProvider } from '@/integrations/i18n/rootProvider'
+import { getInitialPreferencesFn } from '@/server/queries/shared'
 
 interface MyRouterContext {
-  authUser: User | null
+  i18n: i18n
   queryClient: QueryClient
+  authUser: User | null
   initialTheme: Theme | null
+  initialLanguage: Language | null
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
   async beforeLoad() {
-    const { initialTheme } = await getInitialPreferencesFn()
-    return { initialTheme }
+    const { initialTheme, initialLanguage } = await getInitialPreferencesFn()
+    return { initialTheme, initialLanguage }
   },
   preloadGcTime: 1000 * 60 * 60, // 60 minutes
   preloadStaleTime: 1000 * 60 * 60, // 60 minutes,
@@ -48,19 +53,22 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { initialTheme } = Route.useRouteContext()
-  return (
-    <ThemeProvider initialTheme={initialTheme}>
-      <RootDocumentContent>{children}</RootDocumentContent>
+  const { initialTheme, initialLanguage, i18n } = Route.useRouteContext()
 
-      <TanStackDevtools
-        config={{ position: 'bottom-right' }}
-        plugins={[
-          { name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
-          TanStackQueryDevtools,
-        ]}
-      />
-    </ThemeProvider>
+  return (
+    <I18nProvider i18n={i18n} initialLanguage={initialLanguage} defaultNS={defaultNS}>
+      <ThemeProvider initialTheme={initialTheme}>
+        <RootDocumentContent>{children}</RootDocumentContent>
+
+        <TanStackDevtools
+          config={{ position: 'bottom-right' }}
+          plugins={[
+            { name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
+            TanStackQueryDevtools,
+          ]}
+        />
+      </ThemeProvider>
+    </I18nProvider>
   )
 }
 

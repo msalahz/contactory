@@ -1,7 +1,7 @@
 import { createServerFn } from '@tanstack/react-start'
 
-import { themeSchema } from '@/server/schemas/theme'
-import { setThemeCookie } from '@/server/modules/theme'
+import { themeSchema } from '@/server/schemas/shared'
+import { setThemeCookie } from '@/server/modules/shared'
 
 export const setThemeCookieFn = createServerFn({ method: 'POST' })
   .inputValidator(themeSchema)

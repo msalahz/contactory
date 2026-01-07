@@ -1,8 +1,9 @@
 import * as React from 'react'
-import { LogOutIcon, Menu, X } from 'lucide-react'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
+import { LogOutIcon, Menu, X } from 'lucide-react'
 
-import type { Theme } from '@/server/schemas/theme'
+import type { Language, Theme } from '@/server/schemas/shared'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { noop } from '@/shared/utils/noop'
@@ -11,6 +12,7 @@ import { cn } from '@/integrations/shadcn/lib/utils'
 import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
+import { LanguageToggleButton } from '@/integrations/i18n/LanguageToggle'
 
 const menuItems = [
   { name: 'Features', href: '#features' },
@@ -35,6 +37,7 @@ export const HeroHeader = ({
 }: HeroHeaderProps) => {
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
+  const { i18n } = useTranslation()
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -149,6 +152,11 @@ export const HeroHeader = ({
             >
               <ThemeToggleIcon theme={theme} />
             </Button>
+
+            <LanguageToggleButton
+              language={i18n.language as Language}
+              onChange={(language) => i18n.changeLanguage(language)}
+            />
 
             {user?.id ? (
               <Button

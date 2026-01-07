@@ -1,6 +1,8 @@
 import { z } from 'zod'
 import { createEnv } from '@t3-oss/env-core'
 
+const booleanStringSchema = z.union([z.literal('true'), z.literal('false')])
+
 export const envClient = createEnv({
   /**
    * The prefix that client-side variables must have. This is enforced both at
@@ -11,6 +13,7 @@ export const envClient = createEnv({
   client: {
     VITE_BETTER_AUTH_BASE_URL: z.url(),
     VITE_BETTER_AUTH_CALLBACK_URL: z.url(),
+    VITE_I18N_DEBUG: booleanStringSchema.default('false'),
   },
 
   /**

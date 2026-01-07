@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import type { Theme } from '@/server/schemas/theme'
+
+import type { Theme } from '@/server/schemas/shared'
 
 export interface PrefersColorSchemeReturn {
   prefersColorScheme: Exclude<Theme, 'system'>

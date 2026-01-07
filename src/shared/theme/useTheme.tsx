@@ -3,7 +3,7 @@ import { useStore } from '@tanstack/react-store'
 import { useServerFn } from '@tanstack/react-start'
 import { useMutation } from '@tanstack/react-query'
 
-import type { Theme } from '@/server/schemas/theme'
+import type { Theme } from '@/server/schemas/shared'
 
 import { ThemeContext } from '@/shared/theme/ThemeContext'
 import { setThemeCookieFn } from '@/server/mutations/theme'
