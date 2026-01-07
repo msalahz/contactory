@@ -7,8 +7,8 @@ import { Button } from '@/integrations/shadcn/components/ui/button'
 export function LanguageToggleIcon({ language }: { language: Language }) {
   return (
     <>
-      <span className={cn('m-auto hidden text-xs', language === 'ar' ? 'block' : '')}>AR</span>
-      <span className={cn('m-auto hidden text-xs', language === 'en' ? 'block' : '')}>EN</span>
+      <span className={cn('hidden text-xs', language === 'ar' ? 'block' : '')}>AR</span>
+      <span className={cn('hidden text-xs', language === 'en' ? 'block' : '')}>EN</span>
     </>
   )
 }

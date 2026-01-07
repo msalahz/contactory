@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 import {
   ChevronsLeftRightIcon,
   ContactIcon,
@@ -7,12 +8,12 @@ import {
   LogOutIcon,
   UserCircleIcon,
 } from 'lucide-react'
-import { useTranslation } from 'react-i18next'
 
 import type { User } from '@/integrations/better-auth/authClient'
 
-import { cn } from '@/integrations/shadcn/lib/utils'
+import type { Language } from '@/server/schemas/shared'
 import { useTheme } from '@/shared/theme/useTheme'
+import { cn } from '@/integrations/shadcn/lib/utils'
 import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'
 import { LogoIcon, LogoWord } from '@/shared/components/Logo'
@@ -46,13 +47,14 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from '@/integrations/shadcn/components/ui/sidebar'
+import { LanguageToggleIcon } from '@/integrations/i18n/LanguageToggle'
 
 export interface UserSidebarProps extends React.ComponentProps<typeof SidebarFooter> {
   user: User | null
 }
 
 export function UserSidebarFooter({ user, className, ...props }: UserSidebarProps) {
-  const { t } = useTranslation('users')
+  const { t, i18n } = useTranslation('users')
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
   return (
@@ -96,8 +98,18 @@ export function UserSidebarFooter({ user, className, ...props }: UserSidebarProp
                 <ThemeToggleIcon theme={theme} />
                 {t('Toggle Theme')}
               </DropdownMenuItem>
-            </DropdownMenuGroup>
 
+              <DropdownMenuItem
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  i18n.changeLanguage(i18n.language === 'en' ? 'ar' : 'en')
+                }}
+              >
+                <LanguageToggleIcon language={i18n.language as Language} />
+                {t('Toggle Language')}
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
             <DropdownMenuSeparator />
 
             <DropdownMenuItem

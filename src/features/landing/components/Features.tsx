@@ -25,97 +25,97 @@ export interface Feature {
   icon: JSX.Element
   badge?: string
 }
-// TODO: translate features
-export const features: Array<Feature> = [
-  {
-    id: 'search',
-    title: 'Search',
-    description: 'Find anyone instantly with powerful search and filtering options.',
-    icon: <Search className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'sync',
-    title: 'Sync',
-    description: 'Stay up to date across all your devices with automatic syncing.',
-    icon: <RefreshCw className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'security',
-    title: 'Security',
-    description: 'Your contacts are safe with us. We prioritize your privacy and data security.',
-    icon: <Fingerprint className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'import-export',
-    title: 'Import/Export',
-    description: 'Quickly import or export your contacts in various formats.',
-    icon: <ArrowUpDown className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'share',
-    title: 'Share',
-    description: 'Easily share contacts with friends, family, or colleagues.',
-    icon: <Share2 className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'organize',
-    title: 'Organize',
-    description: 'Keep all your contacts in one place, neatly organized and easy to manage.',
-    icon: <Contact className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'duplicate-detection',
-    title: 'Duplicate Detection',
-    description: 'Find and merge duplicate contacts automatically.',
-    icon: <GitMerge className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'groups-labels',
-    title: 'Groups/Labels',
-    description: 'Organize contacts into custom groups like Family, Work, or Friends.',
-    icon: <FolderHeart className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'teams',
-    title: 'Teams',
-    description: 'Collaborate and share contacts seamlessly in your organization.',
-    icon: <Users className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'favorites',
-    title: 'Favorites',
-    description: 'Mark important contacts for quick and easy access.',
-    icon: <Star className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'ask-ai',
-    title: 'Ask AI',
-    description: 'Leverage AI to get insights and suggestions about your contacts.',
-    icon: <Sparkles className="size-4" />,
-    badge: 'Coming Soon',
-  },
-  {
-    id: 'qr-code-sharing',
-    title: 'QR Code Sharing',
-    description: 'Share contact info via scannable QR code.',
-    icon: <QrCode className="size-4" />,
-    badge: 'Coming Soon',
-  },
-]
 
 export function Features({ className, ...props }: React.ComponentProps<'section'>) {
   const { t } = useTranslation('landing')
-
+  const features: Array<Feature> = [
+    {
+      id: 'search',
+      title: t('Search'),
+      description: t('Find anyone instantly with powerful search and filtering options.'),
+      icon: <Search className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'sync',
+      title: t('Sync'),
+      description: t('Stay up to date across all your devices with automatic syncing.'),
+      icon: <RefreshCw className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'security',
+      title: t('Security'),
+      description: t(
+        'Your contacts are safe with us. We prioritize your privacy and data security.',
+      ),
+      icon: <Fingerprint className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'import-export',
+      title: t('Import/Export'),
+      description: t('Quickly import or export your contacts in various formats.'),
+      icon: <ArrowUpDown className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'share',
+      title: t('Share'),
+      description: t('Easily share contacts with friends, family, or colleagues.'),
+      icon: <Share2 className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'organize',
+      title: t('Organize'),
+      description: t('Keep all your contacts in one place, neatly organized and easy to manage.'),
+      icon: <Contact className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'duplicate-detection',
+      title: t('Duplicate Detection'),
+      description: t('Find and merge duplicate contacts automatically.'),
+      icon: <GitMerge className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'groups-labels',
+      title: t('Groups/Labels'),
+      description: t('Organize contacts into custom groups like Family, Work, or Friends.'),
+      icon: <FolderHeart className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'teams',
+      title: t('Teams'),
+      description: t('Collaborate and share contacts seamlessly in your organization.'),
+      icon: <Users className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'favorites',
+      title: t('Favorites'),
+      description: t('Mark important contacts for quick and easy access.'),
+      icon: <Star className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'ask-ai',
+      title: t('Ask AI'),
+      description: t('Leverage AI to get insights and suggestions about your contacts.'),
+      icon: <Sparkles className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+    {
+      id: 'qr-code-sharing',
+      title: t('QR Code Sharing'),
+      description: t('Share contact info via scannable QR code.'),
+      icon: <QrCode className="size-4" />,
+      badge: t('Coming Soon'),
+    },
+  ]
   return (
     <section id="features" className={cn('py-12 md:py-20', className)} {...props}>
       <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16">

@@ -1,18 +1,13 @@
-import { useTranslation } from 'react-i18next'
-
 import { cn } from '@/integrations/shadcn/lib/utils'
 
 export function LogoIcon({ className, ...props }: React.ComponentProps<'img'>) {
-  const { t } = useTranslation('common')
-  return <img src="/logo.svg" alt={t('Logo')} className={cn('size-8', className)} {...props} />
+  return <img src="/logo.svg" alt="Contactory" className={cn('size-8', className)} {...props} />
 }
 
 export function LogoWord({ className, ...props }: React.ComponentProps<'span'>) {
-  const { t } = useTranslation('common')
-
   return (
     <span className={cn('', className)} {...props}>
-      {t('Contactory')}
+      Contactory
     </span>
   )
 }
