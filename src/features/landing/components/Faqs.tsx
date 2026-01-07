@@ -15,7 +15,7 @@ export function FAQs({ className, ...props }: React.ComponentProps<'section'>) {
         <div className="grid gap-y-12 px-2 lg:grid-cols-[1fr_auto]">
           <div className="text-center lg:text-start">
             <h2 className="mb-4 text-3xl font-semibold md:text-4xl">
-              <Trans ns="landing" i18nKey="Frequently Asked Questions">
+              <Trans t={t} ns="landing" i18nKey="Frequently Asked Questions">
                 Frequently <br className="hidden lg:block" /> Asked{' '}
                 <br className="hidden lg:block" /> Questions
               </Trans>
