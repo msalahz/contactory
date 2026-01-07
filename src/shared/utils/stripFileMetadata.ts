@@ -41,7 +41,7 @@ export async function stripFileMetadata(file: File, quality = 0.9): Promise<File
     ctx.drawImage(img, 0, 0)
 
     const blob = await canvasToBlob(canvas, file.type, quality)
-    return new File([blob], file.name, { type: file.type })
+    return new File([blob], file.name.split('.').slice(0, -1).join('.jpeg'), { type: 'image/jpeg' })
   } finally {
     URL.revokeObjectURL(url)
   }

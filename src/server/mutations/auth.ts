@@ -4,9 +4,11 @@ import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
 import { getAuth } from '@/integrations/better-auth/auth'
+import { requireAuthMiddleware } from '@/server/middlewares/auth'
 
 export const signOutFn = createServerFn({ method: 'POST' })
   .inputValidator(z.object({ redirectTo: z.string() }).optional())
+  .middleware([requireAuthMiddleware])
   .handler(async ({ data }) => {
     const request = getRequest()
     const auth = getAuth()

@@ -2,6 +2,7 @@ import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import z from 'zod'
 import type { UserInfoFormValues } from '@/features/users/components/UserInfoForm'
 import type { UserPasswordFormValues } from '@/features/users/components/UserPasswordForm'
 
@@ -19,6 +20,7 @@ import { UserPasswordForm } from '@/features/users/components/UserPasswordForm'
 import { AnimatedGroup } from '@/integrations/shadcn/components/ui/animated-group'
 import { useUploadUserAvatarToR2 } from '@/features/users/hooks/useUploadUserAvatarToR2'
 import { UserProfile, UserProfileContent } from '@/features/users/components/UserProfile'
+import { useDeleteUserAvatarFromR2 } from '@/features/users/hooks/userDeleteUserAvatarFromR2'
 
 export const Route = createFileRoute('/_user/profile')({
   component: RouteComponent,
@@ -32,6 +34,8 @@ function RouteComponent() {
   const { mutateAsync: updateAuthUser, error: updateAuthUserError } = useUpdateAuthUser()
   const { mutateAsync: changePassword, error: changePasswordError } = useChangePassword()
   const { mutateAsync: uploadUserAvatar, error: uploadUserAvatarError } = useUploadUserAvatarToR2()
+  const { mutateAsync: deleteUserAvatarFromR2, error: deleteUserAvatarFromR2Error } =
+    useDeleteUserAvatarFromR2()
   const { data: authUser } = useSuspenseQuery(authOptions.authUser())
   const { name, image } = authUser || {}
 
@@ -41,18 +45,23 @@ function RouteComponent() {
       const formData = new FormData()
       formData.append('avatar', avatarFile)
       await uploadUserAvatar({ data: formData })
-        .then((url) =>
-          updateAuthUser({
+        .then((url) => {
+          return updateAuthUser({
             name: data.name,
             image: url,
-          }),
-        )
+          })
+        })
         .catch(noop)
     } else {
       await updateAuthUser({
         name: data.name,
         image: data.avatarUrl || null,
       }).catch(noop)
+    }
+    // delete old avatar if it exists
+    const avatarUrl = z.url().safeParse(image).data
+    if (avatarUrl) {
+      await deleteUserAvatarFromR2({ data: { avatarUrl } }).catch(noop)
     }
   }
 
@@ -82,6 +91,13 @@ function RouteComponent() {
       <UserProfileContent>
         <AnimatedGroup preset="blur" className="space-y-6">
           <UserInfoForm user={{ name, image }} onFormSubmit={handleUserInfoSubmit}>
+            {deleteUserAvatarFromR2Error ? (
+              <AlertBox type="error">
+                <ItemTitle>{t('Failed to delete avatar')}</ItemTitle>
+                <FieldError errors={[deleteUserAvatarFromR2Error]} />
+              </AlertBox>
+            ) : null}
+
             {uploadUserAvatarError ? (
               <AlertBox type="error">
                 <ItemTitle>{t('Failed to upload avatar')}</ItemTitle>
