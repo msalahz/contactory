@@ -1,5 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, ChevronRight } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import { DashboardPreview } from './DashboardPreview'
 
@@ -35,6 +36,8 @@ export interface HeroSectionProps {
 }
 
 export function HeroSection({ user }: HeroSectionProps) {
+  const { t } = useTranslation('landing')
+
   return (
     <main className="overflow-hidden">
       <div
@@ -88,7 +91,9 @@ export function HeroSection({ user }: HeroSectionProps) {
                   to="/"
                   className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 ps-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
                 >
-                  <span className="text-foreground text-sm">Introducing Support for Ask AI</span>
+                  <span className="text-foreground text-sm">
+                    {t('Introducing Support for Ask AI')}
+                  </span>
                   <span className="dark:border-background block h-4 w-0.5 border-s bg-white dark:bg-zinc-700"></span>
 
                   <div className="bg-background group-hover:bg-muted size-6 overflow-hidden rounded-full duration-500">
@@ -110,7 +115,7 @@ export function HeroSection({ user }: HeroSectionProps) {
                 as="h1"
                 className="mx-auto mt-8 max-w-4xl text-5xl text-balance max-md:font-semibold md:text-7xl lg:mt-16 xl:text-[5.25rem]"
               >
-                Manage Contacts Effortlessly
+                {t('Manage Contacts Effortlessly')}
               </TextEffect>
               <TextEffect
                 per="line"
@@ -120,8 +125,9 @@ export function HeroSection({ user }: HeroSectionProps) {
                 as="p"
                 className="mx-auto mt-8 max-w-2xl text-lg text-balance"
               >
-                Professional contact management made easy with our intuitive interface and powerful
-                features.
+                {t(
+                  'Professional contact management made easy with our intuitive interface and powerful features.',
+                )}
               </TextEffect>
 
               {user?.id ? (
@@ -145,7 +151,7 @@ export function HeroSection({ user }: HeroSectionProps) {
                   >
                     <Button asChild size="lg" className="rounded-xl px-5 text-base">
                       <Link to="/dashboard">
-                        <span className="text-nowrap">Manage Connections</span>
+                        <span className="text-nowrap">{t('Manage Connections')}</span>
                       </Link>
                     </Button>
                   </div>
@@ -171,7 +177,7 @@ export function HeroSection({ user }: HeroSectionProps) {
                     >
                       <Button asChild size="lg" className="rounded-xl px-5 text-base">
                         <Link to="/sign-up">
-                          <span className="text-nowrap">Get Started</span>
+                          <span className="text-nowrap">{t('Get Started')}</span>
                         </Link>
                       </Button>
                     </div>
@@ -183,7 +189,7 @@ export function HeroSection({ user }: HeroSectionProps) {
                       className="h-10.5 rounded-xl px-5"
                     >
                       <Link to="/sign-in">
-                        <span className="text-nowrap">Sign In</span>
+                        <span className="text-nowrap">{t('Sign In')}</span>
                       </Link>
                     </Button>
                   </div>
@@ -215,7 +221,7 @@ export function HeroSection({ user }: HeroSectionProps) {
         <div className="group relative m-auto max-w-5xl px-6">
           <div className="absolute inset-0 z-10 flex scale-95 items-center justify-center opacity-0 duration-500 group-hover:scale-100 group-hover:opacity-100">
             <Link to="/" className="block text-sm duration-150 hover:opacity-75">
-              <span> Meet Our Customers</span>
+              <span>{t('Meet Our Customers')}</span>
 
               <ChevronRight className="ms-1 inline-block size-3" />
             </Link>

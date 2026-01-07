@@ -1,4 +1,5 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import type { Theme } from '@/server/schemas/shared'
 
@@ -26,6 +27,8 @@ export function ThemeDropdownMenu({
   onChange = noop,
   ...props
 }: ThemeDropdownMenuProps) {
+  const { t } = useTranslation('common')
+
   return (
     <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
@@ -46,11 +49,11 @@ export function ThemeDropdownMenu({
       <DropdownMenuContent align="end" className="min-w-fit">
         <DropdownMenuItem onClick={() => onChange('light')}>
           <SunIcon />
-          Light
+          {t('Light')}
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => onChange('dark')}>
           <MoonIcon />
-          Dark
+          {t('Dark')}
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

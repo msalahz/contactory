@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { envClient } from '@/env.client'
 import { noop } from '@/shared/utils/noop'
@@ -15,6 +16,7 @@ export const Route = createFileRoute('/_auth/sign-up')({
 })
 
 function RouteComponent() {
+  const { t } = useTranslation('auth')
   const { mutateAsync: signUpEmail, error, isSuccess } = useSignUpEmail()
   const { mutate: signInSocial, isPending: isSigningInSocial } = useSignInSocial()
 
@@ -41,15 +43,15 @@ function RouteComponent() {
       >
         {error ? (
           <AlertBox type="error">
-            <ItemTitle>Sign Up Failed</ItemTitle>
+            <ItemTitle>{t('Sign Up Failed')}</ItemTitle>
             <FieldError errors={[error]} />
           </AlertBox>
         ) : null}
 
         {isSuccess ? (
           <AlertBox type="success">
-            <ItemTitle>Account created successfully</ItemTitle>
-            <ItemDescription>Check your email for a verification link.</ItemDescription>
+            <ItemTitle>{t('Account created successfully')}</ItemTitle>
+            <ItemDescription>{t('Check your email for a verification link.')}</ItemDescription>
           </AlertBox>
         ) : null}
       </SignUpForm>

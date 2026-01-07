@@ -1,5 +1,6 @@
 import { z } from 'zod'
 import { createFileRoute } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
@@ -17,6 +18,7 @@ export const Route = createFileRoute('/_auth/reset-password')({
 })
 
 function RouteComponent() {
+  const { t } = useTranslation('auth')
   const { token, error: invalidTokenError } = Route.useSearch()
   const { mutateAsync, error, isSuccess } = useResetPassword()
 
@@ -37,19 +39,19 @@ function RouteComponent() {
       >
         {!token || invalidTokenError ? (
           <AlertBox type="error">
-            <ItemTitle>Invalid token</ItemTitle>
+            <ItemTitle>{t('Invalid token')}</ItemTitle>
           </AlertBox>
         ) : null}
 
         {isSuccess ? (
           <AlertBox type="success">
-            <ItemTitle>Password reset successfully</ItemTitle>
+            <ItemTitle>{t('Password reset successfully')}</ItemTitle>
           </AlertBox>
         ) : null}
 
         {error ? (
           <AlertBox type="error">
-            <ItemTitle>Reset password failed</ItemTitle>
+            <ItemTitle>{t('Reset password failed')}</ItemTitle>
             <FieldError errors={[error]} />
           </AlertBox>
         ) : null}

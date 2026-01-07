@@ -1,6 +1,7 @@
 import { z } from 'zod'
-import { useRef } from 'react'
+import { useMemo, useRef } from 'react'
 import { Trash2Icon, Undo2Icon } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import type { ReactNode } from 'react'
 import type { User } from '@/integrations/better-auth/authClient'
@@ -30,33 +31,38 @@ export interface UserInfoFormProps {
   className?: string
 }
 
-const formSchema = z.object({
-  name: z.string().nonempty('Name is required'),
-  avatarUrl: z.string(),
-  avatarFile: z.union([
-    z
-      .file()
-      .refine((file) => file.size > 0, 'Media file is too small (min 1 byte)')
-      .refine(
-        (file) => file.size < USER_AVATAR_MAX_IMAGE_FILE_SIZE,
-        'Image file is too large (max 5MB)',
-      )
-      .refine(
-        (file) => file.type.startsWith(USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
-        'Unsupported image file type',
-      ),
-    z.literal(''),
-  ]),
-})
-
 export function UserInfoForm({
   children,
   user,
   onFormSubmit = noop,
   className,
 }: UserInfoFormProps) {
+  const { t } = useTranslation('users')
   const { image, name } = user ?? {}
   const fileRef = useRef<HTMLInputElement>(null)
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        name: z.string().nonempty(t('Name is required')),
+        avatarUrl: z.string(),
+        avatarFile: z.union([
+          z
+            .file()
+            .refine((file) => file.size > 0, t('Media file is too small (min 1 byte)'))
+            .refine(
+              (file) => file.size < USER_AVATAR_MAX_IMAGE_FILE_SIZE,
+              t('Image file is too large (max 5MB)'),
+            )
+            .refine(
+              (file) => file.type.startsWith(USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE.replace('*', '')),
+              t('Unsupported image file type'),
+            ),
+          z.literal(''),
+        ]),
+      }),
+    [t],
+  )
 
   const form = useAppForm({
     defaultValues: {
@@ -95,8 +101,8 @@ export function UserInfoForm({
 
   return (
     <ProfileSection
-      title="Profile Information"
-      description="Update your profile photo and display name"
+      title={t('Profile Information')}
+      description={t('Update your profile photo and display name')}
       className={className}
     >
       {children}
@@ -124,7 +130,7 @@ export function UserInfoForm({
                   selector={(state) => state.values.name}
                   children={(userName) => (
                     <AvatarFallback className="text-xl font-medium">
-                      {userName ? getUserNameInitials({ name: userName }) : 'UN'}
+                      {userName ? getUserNameInitials({ name: userName }) : t('UN')}
                     </AvatarFallback>
                   )}
                 />
@@ -138,10 +144,10 @@ export function UserInfoForm({
                 children={(field) => (
                   <field.Input
                     id="profile-name"
-                    label="Display Name"
+                    label={t('Display Name')}
                     type="text"
-                    placeholder="Enter your name"
-                    description="This is your public display name visible to others"
+                    placeholder={t('Enter your name')}
+                    description={t('This is your public display name visible to others')}
                   />
                 )}
               />
@@ -182,7 +188,7 @@ export function UserInfoForm({
                       disabled={isSubmitting}
                     >
                       <Trash2Icon />
-                      Remove Avatar
+                      {t('Remove Avatar')}
                     </Button>
                     <form.ResetButton
                       size="sm"
@@ -191,14 +197,14 @@ export function UserInfoForm({
                       disabled={isSubmitting || isDefaultValue}
                     >
                       <Undo2Icon />
-                      Reset
+                      {t('Reset')}
                     </form.ResetButton>
                     <form.SubmitButton
                       size="sm"
                       className="min-w-35"
                       disabled={isSubmitting || isDefaultValue}
                     >
-                      Save Changes
+                      {t('Save Changes')}
                     </form.SubmitButton>
                   </>
                 )}

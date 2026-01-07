@@ -1,5 +1,6 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import type { UserInfoFormValues } from '@/features/users/components/UserInfoForm'
 import type { UserPasswordFormValues } from '@/features/users/components/UserPasswordForm'
@@ -27,6 +28,7 @@ export const Route = createFileRoute('/_user/profile')({
 })
 
 function RouteComponent() {
+  const { t } = useTranslation('users')
   const { mutateAsync: updateAuthUser, error: updateAuthUserError } = useUpdateAuthUser()
   const { mutateAsync: changePassword, error: changePasswordError } = useChangePassword()
   const { mutateAsync: uploadUserAvatar, error: uploadUserAvatarError } = useUploadUserAvatarToR2()
@@ -63,14 +65,16 @@ function RouteComponent() {
     }
   }
 
-  async function handleSocialConnect(provider: string) {
+  function handleSocialConnect(provider: string) {
     // TODO: Implement social account connection
     console.log('Connect:', provider)
+    return Promise.resolve()
   }
 
-  async function handleSocialDisconnect(provider: string) {
+  function handleSocialDisconnect(provider: string) {
     // TODO: Implement social account disconnection
     console.log('Disconnect:', provider)
+    return Promise.resolve()
   }
 
   return (
@@ -80,14 +84,14 @@ function RouteComponent() {
           <UserInfoForm user={{ name, image }} onFormSubmit={handleUserInfoSubmit}>
             {uploadUserAvatarError ? (
               <AlertBox type="error">
-                <ItemTitle>Failed to upload avatar</ItemTitle>
+                <ItemTitle>{t('Failed to upload avatar')}</ItemTitle>
                 <FieldError errors={[uploadUserAvatarError]} />
               </AlertBox>
             ) : null}
 
             {updateAuthUserError ? (
               <AlertBox type="error">
-                <ItemTitle>Failed to update profile</ItemTitle>
+                <ItemTitle>{t('Failed to update profile')}</ItemTitle>
                 <FieldError errors={[updateAuthUserError]} />
               </AlertBox>
             ) : null}
@@ -96,7 +100,7 @@ function RouteComponent() {
           <UserPasswordForm onFormSubmit={handlePasswordSubmit}>
             {changePasswordError ? (
               <AlertBox type="error">
-                <ItemTitle>Failed to change password</ItemTitle>
+                <ItemTitle>{t('Failed to change password')}</ItemTitle>
                 <FieldError errors={[changePasswordError]} />
               </AlertBox>
             ) : null}

@@ -7,6 +7,7 @@ import {
   LogOutIcon,
   UserCircleIcon,
 } from 'lucide-react'
+import { useTranslation } from 'react-i18next'
 
 import type { User } from '@/integrations/better-auth/authClient'
 
@@ -51,6 +52,7 @@ export interface UserSidebarProps extends React.ComponentProps<typeof SidebarFoo
 }
 
 export function UserSidebarFooter({ user, className, ...props }: UserSidebarProps) {
+  const { t } = useTranslation('users')
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
   return (
@@ -80,7 +82,7 @@ export function UserSidebarFooter({ user, className, ...props }: UserSidebarProp
               <DropdownMenuItem asChild>
                 <Link to="/profile">
                   <UserCircleIcon />
-                  Profile
+                  {t('Profile')}
                 </Link>
               </DropdownMenuItem>
 
@@ -92,7 +94,7 @@ export function UserSidebarFooter({ user, className, ...props }: UserSidebarProp
                 }}
               >
                 <ThemeToggleIcon theme={theme} />
-                Toggle Theme
+                {t('Toggle Theme')}
               </DropdownMenuItem>
             </DropdownMenuGroup>
 
@@ -106,7 +108,7 @@ export function UserSidebarFooter({ user, className, ...props }: UserSidebarProp
               }}
             >
               {isSigningOut ? <Spinner /> : <LogOutIcon />}
-              Log out
+              {t('Log out')}
             </DropdownMenuItem>
           </UserMenuContent>
         </UserMenu>
@@ -119,15 +121,17 @@ export function UserSidebarContent({
   className,
   ...props
 }: React.ComponentProps<typeof SidebarContent>) {
+  const { t } = useTranslation('users')
+
   return (
     <SidebarContent className={cn('', className)} {...props}>
       <SidebarGroup>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Dashboard">
+            <SidebarMenuButton asChild tooltip={t('Dashboard')}>
               <Link to="/dashboard">
                 <LayoutDashboardIcon />
-                <span>Dashboard</span>
+                <span>{t('Dashboard')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -135,13 +139,13 @@ export function UserSidebarContent({
       </SidebarGroup>
 
       <SidebarGroup>
-        <SidebarGroupLabel>Contacts</SidebarGroupLabel>
+        <SidebarGroupLabel>{t('Contacts')}</SidebarGroupLabel>
         <SidebarMenu>
           <SidebarMenuItem>
-            <SidebarMenuButton asChild tooltip="Contact list">
+            <SidebarMenuButton asChild tooltip={t('Contact list')}>
               <Link to="/contacts">
                 <ContactIcon />
-                <span>Contact list</span>
+                <span>{t('Contact list')}</span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -186,6 +190,7 @@ export function UserSidebar({
 }
 
 export function UserSidebarGrip({ className, ...props }: React.ComponentProps<'button'>) {
+  const { t } = useTranslation('users')
   const { toggleSidebar } = useSidebar()
   return (
     <button
@@ -197,7 +202,7 @@ export function UserSidebarGrip({ className, ...props }: React.ComponentProps<'b
         <TooltipTrigger asChild>
           <ChevronsLeftRightIcon className="size-4" />
         </TooltipTrigger>
-        <TooltipContent className="z-50">Toggle Sidebar</TooltipContent>
+        <TooltipContent className="z-50">{t('Toggle Sidebar')}</TooltipContent>
       </Tooltip>
     </button>
   )

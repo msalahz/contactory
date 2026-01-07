@@ -1,5 +1,7 @@
 import { z } from 'zod'
 import { Link } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
 
 import { noop } from '@/shared/utils/noop'
 import { LogoIcon } from '@/shared/components/Logo'
@@ -7,19 +9,6 @@ import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
-
-const formSchema = z
-  .object({
-    password: z
-      .string()
-      .nonempty('Password is required')
-      .min(10, 'Password must be at least 10 characters long'),
-    passwordConfirm: z.string().nonempty('Please confirm your password'),
-  })
-  .refine((data) => data.password === data.passwordConfirm, {
-    message: 'Passwords do not match',
-    path: ['passwordConfirm'],
-  })
 
 export interface ResetPasswordFormProps extends React.ComponentProps<'div'> {
   onFormSubmit?: (data: { newPassword: string }) => Promise<boolean>
@@ -31,6 +20,25 @@ export function ResetPasswordForm({
   children,
   ...props
 }: ResetPasswordFormProps) {
+  const { t } = useTranslation('auth')
+
+  const formSchema = useMemo(
+    () =>
+      z
+        .object({
+          password: z
+            .string()
+            .nonempty(t('Password is required'))
+            .min(10, t('Password must be at least 10 characters long')),
+          passwordConfirm: z.string().nonempty(t('Please confirm your password')),
+        })
+        .refine((data) => data.password === data.passwordConfirm, {
+          message: t('Passwords do not match'),
+          path: ['passwordConfirm'],
+        }),
+    [t],
+  )
+
   const form = useAppForm({
     defaultValues: {
       password: '',
@@ -63,11 +71,11 @@ export function ResetPasswordForm({
       >
         <div className="space-y-4 p-6">
           <div>
-            <Link to="/" aria-label="go home">
+            <Link to="/" aria-label={t('Go home')}>
               <LogoIcon />
             </Link>
-            <h1 className="mt-4 mb-1 text-xl font-semibold">Update Contactory password</h1>
-            <p>You need to change your password.</p>
+            <h1 className="mt-4 mb-1 text-xl font-semibold">{t('Update Contactory password')}</h1>
+            <p>{t('You need to change your password.')}</p>
           </div>
 
           <div className="space-y-6">
@@ -75,16 +83,16 @@ export function ResetPasswordForm({
               {children ? <Field>{children}</Field> : null}
               <form.AppField
                 name="password"
-                children={(field) => <field.Input type="password" label="Password" />}
+                children={(field) => <field.Input type="password" label={t('Password')} />}
               />
 
               <form.AppField
                 name="passwordConfirm"
-                children={(field) => <field.Input type="password" label="Confirm Password" />}
+                children={(field) => <field.Input type="password" label={t('Confirm Password')} />}
               />
 
               <form.AppForm>
-                <form.SubmitButton>Submit</form.SubmitButton>
+                <form.SubmitButton>{t('Submit')}</form.SubmitButton>
               </form.AppForm>
             </FieldGroup>
           </div>
@@ -92,7 +100,7 @@ export function ResetPasswordForm({
 
         <p className="text-accent-foreground text-center text-sm">
           <Button asChild variant="link" className="px-2">
-            <Link to="/sign-in">Sign In</Link>
+            <Link to="/sign-in">{t('Sign In')}</Link>
           </Button>
         </p>
       </form>

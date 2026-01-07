@@ -1,4 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { useTranslation } from 'react-i18next'
 
 import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
@@ -12,6 +13,7 @@ export const Route = createFileRoute('/_auth/forgot-password')({
 })
 
 function RouteComponent() {
+  const { t } = useTranslation('auth')
   const { mutateAsync, data, error, isSuccess } = useRequestPasswordReset()
 
   return (
@@ -33,14 +35,16 @@ function RouteComponent() {
           <AlertBox type="success">
             <ItemTitle>
               {data.message ||
-                'If an account with that email exists, check your email for a password reset link.'}
+                t(
+                  'If an account with that email exists, check your email for a password reset link.',
+                )}
             </ItemTitle>
           </AlertBox>
         ) : null}
 
         {error ? (
           <AlertBox type="error">
-            <ItemTitle>Request Failed</ItemTitle>
+            <ItemTitle>{t('Request Failed')}</ItemTitle>
             <FieldError errors={[error]} />
           </AlertBox>
         ) : null}

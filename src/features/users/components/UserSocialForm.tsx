@@ -1,3 +1,5 @@
+import { useTranslation } from 'react-i18next'
+
 import { noop } from '@/shared/utils/noop'
 import { GoogleIcon } from '@/shared/components/GoogleIcon'
 import { Button } from '@/integrations/shadcn/components/ui/button'
@@ -16,13 +18,14 @@ export function UserSocialForm({
   onDisconnect = noop,
   className,
 }: UserSocialFormProps) {
+  const { t } = useTranslation('users')
   const isGoogleConnected = connectedAccounts.some((acc) => acc.provider === 'google')
   const googleAccount = connectedAccounts.find((acc) => acc.provider === 'google')
 
   return (
     <ProfileSection
-      title="Connected Accounts"
-      description="Connect your social accounts for easier sign-in"
+      title={t('Connected Accounts')}
+      description={t('Connect your social accounts for easier sign-in')}
       className={className}
     >
       <div className="space-y-3">
@@ -32,11 +35,11 @@ export function UserSocialForm({
               <GoogleIcon className="size-5" />
             </div>
             <div>
-              <p className="font-medium">Google</p>
+              <p className="font-medium">{t('Google')}</p>
               {isGoogleConnected && googleAccount?.email ? (
                 <p className="text-muted-foreground text-sm">{googleAccount.email}</p>
               ) : (
-                <p className="text-muted-foreground text-sm">Not connected</p>
+                <p className="text-muted-foreground text-sm">{t('Not connected')}</p>
               )}
             </div>
           </div>
@@ -47,11 +50,11 @@ export function UserSocialForm({
               onClick={() => onDisconnect('google')}
               className="text-destructive hover:text-destructive"
             >
-              Disconnect
+              {t('Disconnect')}
             </Button>
           ) : (
             <Button variant="outline" size="sm" onClick={() => onConnect('google')}>
-              Connect
+              {t('Connect')}
             </Button>
           )}
         </div>

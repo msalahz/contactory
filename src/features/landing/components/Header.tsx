@@ -14,12 +14,6 @@ import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { LanguageToggleButton } from '@/integrations/i18n/LanguageToggle'
 
-const menuItems = [
-  { name: 'Features', href: '#features' },
-  { name: 'About', href: '#about' },
-  { name: 'FAQ', href: '#faq' },
-]
-
 export interface HeroHeaderProps {
   user: User | null
   theme: Theme
@@ -37,7 +31,16 @@ export const HeroHeader = ({
 }: HeroHeaderProps) => {
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
-  const { i18n } = useTranslation()
+  const { t, i18n } = useTranslation('landing')
+
+  const menuItems = React.useMemo(
+    () => [
+      { name: t('Features'), href: '#features' },
+      { name: t('About'), href: '#about' },
+      { name: t('FAQ'), href: '#faq' },
+    ],
+    [t],
+  )
 
   React.useEffect(() => {
     const handleScroll = () => {
@@ -57,13 +60,13 @@ export const HeroHeader = ({
         >
           <div className="relative flex flex-1 flex-wrap items-center justify-between gap-6 py-3 lg:gap-0 lg:py-4">
             <div className="flex w-full justify-between lg:w-auto">
-              <Link to="/" aria-label="home" className="flex items-center space-x-2">
+              <Link to="/" aria-label={t('Home')} className="flex items-center space-x-2">
                 <Logo />
               </Link>
 
               <button
                 onClick={() => setMenuState(!menuState)}
-                aria-label={menuState ? 'Close Menu' : 'Open Menu'}
+                aria-label={menuState ? t('Close menu') : t('Open menu')}
                 className="relative z-20 -m-2.5 -me-4 block cursor-pointer p-2.5 lg:hidden"
               >
                 <Menu className="m-auto size-6 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
@@ -106,7 +109,7 @@ export const HeroHeader = ({
                 {user?.id ? (
                   <Button asChild size="sm" className={cn('lg:inline-flex')}>
                     <Link to="/dashboard">
-                      <span>My Account</span>
+                      <span>{t('My Account')}</span>
                     </Link>
                   </Button>
                 ) : (
@@ -118,12 +121,12 @@ export const HeroHeader = ({
                       className={cn(isScrolled && 'lg:hidden')}
                     >
                       <Link to="/sign-in">
-                        <span>Sign In</span>
+                        <span>{t('Sign In')}</span>
                       </Link>
                     </Button>
                     <Button asChild size="sm" className={cn(isScrolled && 'lg:hidden')}>
                       <Link to="/sign-up">
-                        <span>Sign Up</span>
+                        <span>{t('Sign Up')}</span>
                       </Link>
                     </Button>
                     <Button
@@ -132,7 +135,7 @@ export const HeroHeader = ({
                       className={cn(isScrolled ? 'lg:inline-flex' : 'hidden')}
                     >
                       <Link to="/sign-up">
-                        <span>Get Started</span>
+                        <span>{t('Get Started')}</span>
                       </Link>
                     </Button>
                   </>

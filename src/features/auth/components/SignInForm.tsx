@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { useMemo } from 'react'
 
 import { noop } from '@/shared/utils/noop'
 import { LogoIcon } from '@/shared/components/Logo'
@@ -10,14 +11,6 @@ import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
-
-const formSchema = z.object({
-  email: z.email('Invalid email address').nonempty('Email is required'),
-  password: z
-    .string()
-    .nonempty('Password is required')
-    .min(10, 'Password must be at least 10 characters long'),
-})
 
 export interface SignInFormProps extends React.ComponentProps<'div'> {
   signInGoogle: () => void
@@ -33,6 +26,20 @@ export function SignInForm({
   onFormSubmit = noop,
   ...props
 }: SignInFormProps) {
+  const { t } = useTranslation('auth')
+
+  const formSchema = useMemo(
+    () =>
+      z.object({
+        email: z.email(t('Invalid email address')).nonempty(t('Email is required')),
+        password: z
+          .string()
+          .nonempty(t('Password is required'))
+          .min(10, t('Password must be at least 10 characters long')),
+      }),
+    [t],
+  )
+
   const form = useAppForm({
     defaultValues: {
       email: '',
@@ -48,7 +55,6 @@ export function SignInForm({
       })
     },
   })
-  const { t } = useTranslation('auth')
 
   return (
     <section
@@ -68,7 +74,7 @@ export function SignInForm({
       >
         <div className="p-6">
           <div>
-            <Link to="/" aria-label="go home">
+            <Link to="/" aria-label={t('Go home')}>
               <LogoIcon />
             </Link>
             <h1 className="mt-4 mb-1 text-xl font-semibold">{t('Sign In to Contactory')}</h1>
@@ -101,7 +107,7 @@ export function SignInForm({
               <form.AppField
                 name="email"
                 children={(field) => (
-                  <field.Input type="email" label={t('Email')} placeholder="me@example.com" />
+                  <field.Input type="email" label={t('Email')} placeholder={t('me@example.com')} />
                 )}
               />
               <form.AppField

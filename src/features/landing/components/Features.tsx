@@ -13,7 +13,9 @@ import {
   Users,
 } from 'lucide-react'
 
+import { useTranslation } from 'react-i18next'
 import type { JSX } from 'react'
+
 import { cn } from '@/integrations/shadcn/lib/utils'
 
 export interface Feature {
@@ -23,7 +25,7 @@ export interface Feature {
   icon: JSX.Element
   badge?: string
 }
-
+// TODO: translate features
 export const features: Array<Feature> = [
   {
     id: 'search',
@@ -112,17 +114,19 @@ export const features: Array<Feature> = [
 ]
 
 export function Features({ className, ...props }: React.ComponentProps<'section'>) {
+  const { t } = useTranslation('landing')
+
   return (
     <section id="features" className={cn('py-12 md:py-20', className)} {...props}>
       <div className="mx-auto max-w-6xl space-y-8 px-6 md:space-y-16">
         <div className="relative z-10 mx-auto max-w-xl space-y-6 text-center md:space-y-12">
           <h2 className="text-4xl font-medium text-balance lg:text-5xl">
-            The foundation for creative contact management
+            {t('The foundation for creative contact management')}
           </h2>
           <p>
-            Contactory is evolving to be more than just a CRUD solution. It supports an entire
-            ecosystem helping users & organizations manage, link, share, control, sync, and innovate
-            with their contacts.
+            {t(
+              'Contactory is evolving to be more than just a CRUD solution. It supports an entire ecosystem helping users & organizations manage, link, share, control, sync, and innovate with their contacts.',
+            )}
           </p>
         </div>
 
@@ -131,9 +135,13 @@ export function Features({ className, ...props }: React.ComponentProps<'section'
             <div key={feature.id} className="space-y-2">
               <div className="flex items-center gap-2">
                 {feature.icon}
-                <h3 className="text-sm font-medium">{feature.title}</h3>
+                <h3 className="text-sm font-medium">
+                  {t(feature.title, { defaultValue: feature.title })}
+                </h3>
               </div>
-              <p className="text-sm">{feature.description}</p>
+              <p className="text-sm">
+                {t(feature.description, { defaultValue: feature.description })}
+              </p>
             </div>
           ))}
         </div>
