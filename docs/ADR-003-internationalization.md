@@ -9,17 +9,22 @@
 
 ## Purpose
 
-- Establish the architecture and implementation strategy for bilingual support (English and Arabic) with seamless RTL/LTR layout switching using react-i18next and Tailwind CSS logical properties.
+- Establish the architecture and implementation strategy for bilingual support (English and Arabic) with seamless
+  RTL/LTR layout switching using react-i18next and Tailwind CSS logical properties.
 
 ## Scope
 
-- Affects all UI components, layouts, routing, date/number formatting, and user preferences. Teams impacted: frontend, design, and QA.
+- Affects all UI components, layouts, routing, date/number formatting, and user preferences. Teams impacted: frontend,
+  design, and QA.
 
 ---
 
 ## Decision at a glance (TL;DR)
 
-- Adopt react-i18next for translation management with namespace-based organization; use Tailwind CSS v4 logical properties (e.g., `ms-*`, `me-*`, `ps-*`, `pe-*`, `start`, `end`) for automatic RTL/LTR layout adaptation; leverage native Intl API and Luxon for locale-aware date and number formatting; persist language preference in user settings with localStorage fallback.
+- Adopt react-i18next for translation management with namespace-based organization; use Tailwind CSS v4 logical
+  properties (e.g., `ms-*`, `me-*`, `ps-*`, `pe-*`, `start`, `end`) for automatic RTL/LTR layout adaptation; leverage
+  native Intl API and Luxon for locale-aware date and number formatting; persist language preference in user settings
+  with localStorage fallback.
 
 ---
 
@@ -33,7 +38,8 @@
   - Locale-aware number formatting
   - Persistent language preference per user
 - The application must support both directions without maintaining separate stylesheets or duplicating layout logic.
-- ADR-001 (Tech Stack) identified react-i18next and Tailwind CSS RTL support as the planned approach. This ADR details the implementation strategy.
+- ADR-001 (Tech Stack) identified react-i18next and Tailwind CSS RTL support as the planned approach. This ADR details
+  the implementation strategy.
 
 ---
 
@@ -315,7 +321,8 @@ function SignInForm() {
 ### Centralized public/locales directory
 
 - **Pros**: Simple setup, single file per language, easy for external translators
-- **Cons**: Single file grows large, no code ownership per feature, runtime HTTP requests, harder to tree-shake, breaks modular architecture pattern
+- **Cons**: Single file grows large, no code ownership per feature, runtime HTTP requests, harder to tree-shake, breaks
+  modular architecture pattern
 
 ### i18next-http-backend for remote translations
 
@@ -324,11 +331,15 @@ function SignInForm() {
 
 ### Rationale (why chosen)
 
-- **Feature-based colocated locales**: Aligns with ADR-002 modular architecture, enables feature ownership, bundled at build time for performance, tree-shakeable
+- **Feature-based colocated locales**: Aligns with ADR-002 modular architecture, enables feature ownership, bundled at
+  build time for performance, tree-shakeable
 
-- **react-i18next**: Industry standard, excellent TypeScript support, SSR compatible, namespace support for code-splitting, large community
-- **Tailwind CSS Logical Properties**: Native CSS solution, zero runtime overhead, consistent with existing styling approach, future-proof (CSS standard)
-- **Intl API + Luxon**: Native browser support, comprehensive formatting options, timezone handling, no additional bundle size for Intl
+- **react-i18next**: Industry standard, excellent TypeScript support, SSR compatible, namespace support for
+  code-splitting, large community
+- **Tailwind CSS Logical Properties**: Native CSS solution, zero runtime overhead, consistent with existing styling
+  approach, future-proof (CSS standard)
+- **Intl API + Luxon**: Native browser support, comprehensive formatting options, timezone handling, no additional
+  bundle size for Intl
 
 ---
 
@@ -359,6 +370,27 @@ function SignInForm() {
 ---
 
 ## Implementation plan
+
+### Implementation TODO list
+
+- [ ] Add dependencies: `react-i18next`, `i18next`, `i18next-browser-languagedetector`, `luxon`
+- [ ] Create `src/integrations/i18n/` structure (`config.ts`, `resources.ts`, `types.ts`, `utils.ts`)
+- [ ] Wire i18n initialization and provider in `__root.tsx`
+- [ ] Implement language detection order: user profile → localStorage → browser → default
+- [ ] Implement `lang` + `dir` switching on the `<html>` element
+- [ ] Add shared `common` translations under `src/shared/locales/` (en/ar)
+- [ ] Add feature namespaces under `src/features/<feature>/locales/` (en/ar)
+- [ ] Aggregate all namespaces in `resources.ts` and ensure no duplicate namespace keys
+- [ ] Implement `useLocale` hook (current language + direction)
+- [ ] Implement `useFormatters` hook (dates, numbers, currency)
+- [ ] Add `LanguageSwitcher` component in settings
+- [x] Audit UI for physical direction styles and replace with logical properties (`ms-*`, `me-*`, `ps-*`, `pe-*`,
+      `start-*`, `end-*`, `text-start`, `text-end`)
+- [ ] Extract hardcoded user-facing strings into translation files
+- [ ] Persist language preference for authenticated users (DB + API)
+- [ ] Configure ESLint `eslint-plugin-i18n-json` rules for key parity (en/ar) and valid JSON
+- [ ] Add CI checks for missing/extra translation keys
+- [ ] Add RTL/LTR QA coverage (manual checklist) and RTL visual regression tests (Playwright screenshots)
 
 ### Short term (0-2 weeks)
 
@@ -411,7 +443,8 @@ function SignInForm() {
 
 ## Related ADRs and references
 
-- ADR-001: Tech Stack Architecture Decision Record — establishes react-i18next and Tailwind CSS RTL as the planned approach
+- ADR-001: Tech Stack Architecture Decision Record — establishes react-i18next and Tailwind CSS RTL as the planned
+  approach
 - ADR-002: Modular Monolith Architecture — defines file structure conventions
 
 ### External References
