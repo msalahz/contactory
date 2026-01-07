@@ -46,12 +46,12 @@ function RouteComponent() {
           }),
         )
         .catch(noop)
+    } else {
+      await updateAuthUser({
+        name: data.name,
+        image: data.avatarUrl || null,
+      }).catch(noop)
     }
-
-    await updateAuthUser({
-      name: data.name,
-      image: data.avatarUrl || null,
-    }).catch(noop)
   }
 
   async function handlePasswordSubmit(data: UserPasswordFormValues) {
