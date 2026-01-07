@@ -2,6 +2,7 @@ import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
 
+import { useTranslation } from 'react-i18next'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
@@ -74,9 +75,10 @@ function RootDocument({ children }: { children: React.ReactNode }) {
 
 function RootDocumentContent({ children }: { children: React.ReactNode }) {
   const { theme } = useTheme()
+  const { i18n } = useTranslation()
 
   return (
-    <html lang="en" dir="ltr">
+    <html lang={i18n.language} dir={i18n.dir(i18n.language)}>
       <head>
         <meta rel="icon" />
         <HeadContent />

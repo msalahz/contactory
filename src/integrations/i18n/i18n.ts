@@ -6,11 +6,9 @@ import { resources } from './resources'
 
 import type { InitOptions } from 'i18next'
 
-import type { Direction, Language } from '@/server/schemas/shared'
+import type { Language } from '@/server/schemas/shared'
 import { envClient } from '@/env.client'
 import { LANGUAGE_COOKIE_NAME } from '@/server/schemas/shared'
-
-export const rtlLanguages: Array<Language> = ['ar']
 
 const i18nInitOptions: InitOptions = {
   resources,
@@ -36,9 +34,4 @@ void i18n.use(LanguageDetector).use(initReactI18next).init(i18nInitOptions)
 
 export function getI18n() {
   return i18n
-}
-
-export function updateDocument(language: Language, dir: Direction) {
-  document.documentElement.dir = dir
-  document.documentElement.lang = language
 }
