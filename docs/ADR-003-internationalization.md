@@ -1,8 +1,9 @@
 # ADR-003: Internationalization and Bilingual Support
 
-**Status:** Proposed  
+**Status:** Approved  
 **Date:** 2025-12-31  
-**Authors:** Mohammed  
+**Authors:** Mohammed
+**Implementation:** Done
 **Tags:** i18n, internationalization, rtl, ltr, bilingual, react-i18next, tailwind
 
 ---

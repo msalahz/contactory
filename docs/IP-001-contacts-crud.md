@@ -4,13 +4,15 @@
 **Date:** 2026-01-07  
 **Author:** Mohammed  
 **Related:** PRD.md, ADR-001-tech-stack.md, ADR-002-file-structure.md  
-**Decision:** Hybrid Approach (Path B routing + Path A UX)
+**Decision:** Hybrid Approach (Path B routing and Path A UX)
 
 ---
 
 ## Executive Summary
 
-This document outlines the implementation plan for the Contacts CRUD functionality in Contactory. The chosen approach combines **URL-driven nested routes** with **fast sheet/modal interactions**, leveraging TanStack Router's layout routes to achieve both URL state reflection AND smooth UI transitions.
+This document outlines the implementation plan for the Contacts CRUD functionality in Contactory. The chosen approach
+combines **URL-driven nested routes** with **fast sheet/modal interactions**, leveraging TanStack Router's layout routes
+to achieve both URL state reflection AND smooth UI transitions.
 
 ---
 
@@ -40,7 +42,8 @@ Add these fields to the contacts schema:
 
 ```sql
 -- Additions to the contact table
-avatarUrl       TEXT        -- Contact photo URL (uses R2 storage)
+avatarUrl
+TEXT        -- Contact photo URL (uses R2 storage)
 birthday        TEXT        -- ISO date string (YYYY-MM-DD)
 deletedAt       TIMESTAMP   -- Soft delete support for undo functionality
 lastContactedAt TIMESTAMP   -- For "recently contacted" sorting
@@ -102,7 +105,8 @@ src/routes/_user/
     └── $contactId_.edit.tsx   → EditContactSheet
 ```
 
-**Note:** The `$contactId.tsx` acts as a layout for the edit route, allowing the detail sheet to stay open while navigating to edit.
+**Note:** The `$contactId.tsx` acts as a layout for the edit route, allowing the detail sheet to stay open while
+navigating to edit.
 
 ### Component Architecture
 
@@ -133,7 +137,8 @@ src/features/contacts/
     └── formatContact.ts         → Display name, initials, etc.
 ```
 
-**Note:** Routes handle Sheet/Dialog wrapper components. Feature components are pure UI that receive data and callbacks via props.
+**Note:** Routes handle Sheet/Dialog wrapper components. Feature components are pure UI that receive data and callbacks
+via props.
 
 ---
 
@@ -489,10 +494,18 @@ Add new fields:
 
 ```typescript
 avatarUrl: text(),
-birthday: text(),
-deletedAt: timestamp(),
-lastContactedAt: timestamp(),
-sortOrder: integer().default(0),
+  birthday
+:
+text(),
+  deletedAt
+:
+timestamp(),
+  lastContactedAt
+:
+timestamp(),
+  sortOrder
+:
+integer().default(0),
 ```
 
 Add new index:
@@ -518,7 +531,8 @@ Generate and run migration.
 **Files:**
 
 - `src/server/queries/contacts.ts` — `listContactsFn`, `getContactFn`
-- `src/server/mutations/contacts.ts` — `createContactFn`, `updateContactFn`, `deleteContactFn`, `restoreContactFn`, `toggleFavoriteFn`
+- `src/server/mutations/contacts.ts` — `createContactFn`, `updateContactFn`, `deleteContactFn`, `restoreContactFn`,
+  `toggleFavoriteFn`
 
 #### 1.4 Feature Module Setup
 
@@ -548,11 +562,11 @@ export const Route = createFileRoute('/_user/contacts')({
   component: ContactsLayout,
 })
 
-function ContactsLayout() {
+function ContactsLayout () {
   return (
     <>
-      <ContactsPage />
-      <Outlet />
+      <ContactsPage / >
+    <Outlet / >
     </>
   )
 }
@@ -562,6 +576,7 @@ function ContactsLayout() {
 
 ```typescript
 import { createFileRoute } from '@tanstack/react-router'
+
 export const Route = createFileRoute('/_user/contacts/')({ component: () => null })
 ```
 
@@ -569,7 +584,7 @@ export const Route = createFileRoute('/_user/contacts/')({ component: () => null
 
 ```typescript
 // Route handles Sheet wrapper, ContactForm is pure UI
-function CreateContactRoute() {
+function CreateContactRoute () {
   const navigate = useNavigate()
   const { createContact, isPending } = useCreateContact()
 
@@ -580,15 +595,23 @@ function CreateContactRoute() {
   }
 
   return (
-    <Sheet open={true} onOpenChange={(open) => !open && handleClose()}>
-      <SheetContent>
-        <SheetHeader>
-          <SheetTitle>New Contact</SheetTitle>
-        </SheetHeader>
-        <ContactForm onSubmit={handleSubmit} isPending={isPending} />
-      </SheetContent>
-    </Sheet>
-  )
+    <Sheet open = { true }
+  onOpenChange = {(open)
+=>
+  !open && handleClose()
+}>
+  <SheetContent>
+    <SheetHeader>
+      <SheetTitle>New
+  Contact < /SheetTitle>
+  < /SheetHeader>
+  < ContactForm
+  onSubmit = { handleSubmit }
+  isPending = { isPending }
+  />
+  < /SheetContent>
+  < /Sheet>
+)
 }
 ```
 
@@ -596,7 +619,7 @@ function CreateContactRoute() {
 
 ```typescript
 // Route handles Sheet wrapper, ContactDetail is pure UI
-function ContactDetailRoute() {
+function ContactDetailRoute () {
   const navigate = useNavigate()
   const { contactId } = Route.useParams()
   const { data: contact } = useSuspenseQuery(contactOptions.detail(contactId))
@@ -605,12 +628,19 @@ function ContactDetailRoute() {
   const handleEdit = () => navigate({ to: '/contacts/$contactId/edit', params: { contactId } })
 
   return (
-    <Sheet open={true} onOpenChange={(open) => !open && handleClose()}>
-      <SheetContent>
-        <ContactDetail contact={contact} onEdit={handleEdit} onClose={handleClose} />
-      </SheetContent>
-    </Sheet>
-  )
+    <Sheet open = { true }
+  onOpenChange = {(open)
+=>
+  !open && handleClose()
+}>
+  <SheetContent>
+    <ContactDetail contact = { contact }
+  onEdit = { handleEdit }
+  onClose = { handleClose }
+  />
+  < /SheetContent>
+  < /Sheet>
+)
 }
 ```
 
