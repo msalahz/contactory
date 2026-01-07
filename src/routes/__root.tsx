@@ -6,29 +6,31 @@ import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
 
+import type { Theme } from '@/server/schemas/theme'
 import type { QueryClient } from '@tanstack/react-query'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
-import { findThemeCookieFn } from '@/server/queries/theme'
 import { ThemeProvider } from '@/shared/theme/ThemeContext'
+import { getInitialPreferencesFn } from '@/server/queries/global'
 
 interface MyRouterContext {
   authUser: User | null
   queryClient: QueryClient
+  initialTheme: Theme | null
 }
 
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   notFoundComponent: () => <NotFound />,
   shellComponent: RootDocument,
+  async beforeLoad() {
+    const { initialTheme } = await getInitialPreferencesFn()
+    return { initialTheme }
+  },
   preloadGcTime: 1000 * 60 * 60, // 60 minutes
   preloadStaleTime: 1000 * 60 * 60, // 60 minutes,
-  async loader() {
-    const serverTheme = await findThemeCookieFn()
-    return { serverTheme }
-  },
   head: () => ({
     meta: [
       { charSet: 'utf-8' },
@@ -46,11 +48,11 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
 })
 
 function RootDocument({ children }: { children: React.ReactNode }) {
-  const { serverTheme } = Route.useLoaderData()
-
+  const { initialTheme } = Route.useRouteContext()
   return (
-    <ThemeProvider initialTheme={serverTheme || 'dark'}>
+    <ThemeProvider initialTheme={initialTheme}>
       <RootDocumentContent>{children}</RootDocumentContent>
+
       <TanStackDevtools
         config={{ position: 'bottom-right' }}
         plugins={[
