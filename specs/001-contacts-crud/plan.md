@@ -15,9 +15,9 @@ TanStack Query for data management, running on Cloudflare Workers with Neon Post
 **Primary Dependencies**:
 
 - Framework: React 19, TanStack Start
-- State/Routing: TanStack Query, TanStack Router
+- State/Routing: TanStack Query, TanStack Router, TanStack Table
 - Forms: TanStack Form, Zod
-- UI: Shadcn/UI, TailwindCSS, Lucide React
+- UI: Shadcn/UI, TailwindCSS, Lucide React, TanStack Virtual
 - Data: Drizzle ORM, Postgres (Neon)
 - Storage: Cloudflare R2 (for avatars)
   **Storage**: PostgreSQL (via Hyperdrive), Cloudflare R2

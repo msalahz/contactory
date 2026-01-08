@@ -5,7 +5,7 @@
 
 ## Phase 1: Setup
 
-- [ ] T001 Install `@tanstack/react-virtual` dependency in `package.json`
+- [ ] T001 Install `@tanstack/react-virtual` and `@tanstack/react-table` dependencies
 - [ ] T002 Verify R2 bucket bindings in `wrangler.jsonc` and `src/server/modules/r2.ts` readiness
 
 ## Phase 2: Foundation (Blocking)
@@ -18,12 +18,15 @@
 - [ ] T008 Implement server Mutation RPCs in `src/server/mutations/contacts.ts`
 - [ ] T009 [P] Create Query Keys factory in `src/features/contacts/keys.ts`
 - [ ] T010 [P] Create Query Options factory in `src/features/contacts/options.ts`
+- [ ] T039 [P] Create integration tests for contacts RPCs in `src/server/mutations/contacts.test.ts`
 
 ## Phase 3: View Contact List [US1]
 
-- [ ] T011 [P] [US1] Create `ContactRow` component in `src/features/contacts/components/ContactRow.tsx`
-- [ ] T012 [US1] Create `ContactList` component with virtual scrolling in `src/features/contacts/components/ContactList.tsx`
-- [ ] T013 [US1] Create `ContactsLayout` component in `src/features/contacts/components/ContactsLayout.tsx`
+- [ ] T040 [P] [US1] Create `ContactAvatar` component in `src/features/contacts/components/ContactAvatar.tsx` (initials fallback, colorful backgrounds)
+- [ ] T011 [P] [US1] Create `ContactRow` component in `src/features/contacts/components/ContactRow.tsx` (modern styling, hover actions)
+- [ ] T012 [US1] Create `ContactList` component using `useReactTable` + `useVirtualizer` in `src/features/contacts/components/ContactList.tsx`
+- [ ] T041 [US1] Implement sticky table headers and skeleton loading states for infinite scroll
+- [ ] T013 [US1] Create `ContactsLayout` component in `src/features/contacts/components/ContactsLayout.tsx` (Sidebar navigation: Contacts, Favorites, Trash)
 - [ ] T014 [US1] Implement layout route in `src/routes/_user/contacts/route.tsx`
 - [ ] T015 [US1] Implement index route (empty/placeholder) in `src/routes/_user/contacts/index.tsx`
 
@@ -31,14 +34,14 @@
 
 - [ ] T016 [US2] Implement avatar upload RPC in `src/server/mutations/contacts.ts` using R2
 - [ ] T017 [P] [US2] Create `ContactForm` component in `src/features/contacts/components/ContactForm.tsx` with Zod validation
-- [ ] T018 [US2] Create `useCreateContact` hook in `src/features/contacts/hooks/useCreateContact.ts`
+- [ ] T018 [US2] Create `useCreateContact` hook in `src/features/contacts/hooks/useCreateContact.ts` (with optimistic updates)
 - [ ] T019 [US2] Implement create sheet route in `src/routes/_user/contacts/new.tsx`
 
 ## Phase 5: View & Edit Details [US3] [US4]
 
 - [ ] T020 [P] [US3] Create `ContactDetail` component in `src/features/contacts/components/ContactDetail.tsx`
 - [ ] T021 [US3] Implement detail sheet route in `src/routes/_user/contacts/$contactId.tsx`
-- [ ] T022 [US4] Create `useUpdateContact` hook in `src/features/contacts/hooks/useUpdateContact.ts`
+- [ ] T022 [US4] Create `useUpdateContact` hook in `src/features/contacts/hooks/useUpdateContact.ts` (with optimistic updates)
 - [ ] T023 [US4] Implement edit sheet route in `src/routes/_user/contacts/$contactId.edit.tsx`
 
 ## Phase 6: Delete Contact [US5]
@@ -49,11 +52,11 @@
 
 ## Phase 7: Search, Favorites & Sort [US6] [US7] [US8]
 
-- [ ] T027 [US6] Update `listContacts` in `src/server/modules/contacts.ts` to handle search filters
+- [ ] T027 [US6] Update `listContacts` in `src/server/modules/contacts.ts` to handle search/sort/filter
 - [ ] T028 [P] [US6] Create `ContactSearch` input component in `src/features/contacts/components/ContactSearch.tsx`
 - [ ] T029 [US7] Create `FavoriteButton` component in `src/features/contacts/components/FavoriteButton.tsx`
 - [ ] T030 [US7] Implement `toggleFavorite` mutation in `src/server/mutations/contacts.ts`
-- [ ] T031 [US8] Add sorting controls to `ContactsLayout` headers
+- [ ] T031 [US8] Add sorting controls to `ContactsLayout` headers (integrated with TanStack Table sorting state)
 
 ## Phase 8: Manage Trash [US9]
 
