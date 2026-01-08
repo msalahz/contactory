@@ -14,6 +14,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 - [Project Structure](#-project-structure)
 - [Getting Started](#-getting-started)
 - [Scripts](#-scripts)
+- [Code Review Workflows](#-code-review-workflows)
 - [Documentation](#-documentation)
 - [Dependencies](#-dependencies)
 - [License](#-license)
@@ -260,6 +261,64 @@ contactory/
 | `pnpm db:seeds`     | Run database seed script               |
 | `pnpm deploy`       | Build and deploy to Cloudflare Workers |
 | `pnpm cf-typegen`   | Generate Cloudflare Workers types      |
+
+---
+
+## 🔍 Code Review Workflows
+
+This repo includes Claude/Windsurf workflows under `.windsurf/workflows/` prefixed with
+`code-review*`. These workflows follow a multi-agent code review approach (constitution
+compliance, bug detection, security, performance) and use confidence scoring to reduce false
+positives.
+
+### Available workflows
+
+- **Project-wide review**: `code-review.project`
+  - **Use when**: You want an overall health report for the repo.
+  - **Examples**:
+    - `code-review.project`
+    - `code-review.project quick`
+    - `code-review.project focus:security`
+
+- **Pull request review**: `code-review.pr`
+  - **Use when**: Reviewing a GitHub PR via `gh`.
+  - **Examples**:
+    - `code-review.pr`
+    - `code-review.pr 123`
+
+- **Git diff review**: `code-review.git`
+  - **Use when**: Reviewing local changes without a PR.
+  - **Examples**:
+    - `code-review.git`
+    - `code-review.git staged`
+    - `code-review.git unstaged`
+    - `code-review.git HEAD~3`
+    - `code-review.git commit1..commit2`
+
+- **Pre-commit staged review**: `code-review.staged`
+  - **Use when**: Quick gate-style check before committing.
+  - **Examples**:
+    - `code-review.staged`
+    - `code-review.staged --strict`
+
+- **Feature-scope review**: `code-review.feature`
+  - **Use when**: Deep review for a feature folder (architecture, UX/i18n consistency, tests).
+  - **Examples**:
+    - `code-review.feature auth`
+    - `code-review.feature src/features/users`
+
+- **Single-file review**: `code-review.file`
+  - **Use when**: You want detailed, line-by-line feedback for one file.
+  - **Examples**:
+    - `code-review.file src/router.tsx`
+
+### What the workflows check
+
+- **Code Quality**: TypeScript strictness, lint/format consistency, error handling patterns
+- **Testing**: coverage gaps and test quality for changes
+- **UX Consistency**: i18n usage, accessibility, consistent shadcn/ui patterns
+- **Performance**: expensive imports, unnecessary re-renders, route loading patterns
+- **Security**: secrets, authz/authn correctness, input validation
 
 ---
 
