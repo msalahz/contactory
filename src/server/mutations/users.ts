@@ -1,11 +1,10 @@
 import { z } from 'zod'
 
 import { createServerFn } from '@tanstack/react-start'
-import { deleteFromR2 } from '@/server/modules/r2'
 import { userAvatarFileSchema } from '@/server/schemas/users'
 import { uploadUserAvatarToR2 } from '@/server/modules/users'
 import { requireAuthMiddleware } from '@/server/middlewares/auth'
-import { getUserAvatarR2KeyFromUrl } from '@/features/users/lib/getUserAvatarR2KeyFromUrl'
+import { deleteFromR2, getUserAvatarR2KeyFromUrl } from '@/server/modules/r2'
 
 export const uploadUserAvatarToR2Fn = createServerFn({ method: 'POST' })
   .inputValidator((data: FormData) => {
