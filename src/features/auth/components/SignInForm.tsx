@@ -15,6 +15,8 @@ import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
 export interface SignInFormProps extends React.ComponentProps<'div'> {
   signInGoogle: () => void
   isSigningInSocial: boolean
+  isGoogleEnabled: boolean
+  isEmailEnabled: boolean
   onFormSubmit?: (data: { email: string; password: string }) => Promise<void>
 }
 
@@ -23,6 +25,8 @@ export function SignInForm({
   className,
   signInGoogle,
   isSigningInSocial = false,
+  isGoogleEnabled,
+  isEmailEnabled,
   onFormSubmit = noop,
   ...props
 }: SignInFormProps) {
@@ -81,25 +85,29 @@ export function SignInForm({
             <p>{t('Welcome back! Sign in to continue')}</p>
           </div>
 
-          <div className="mt-6">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={isSigningInSocial}
-              onClick={signInGoogle}
-            >
-              {isSigningInSocial ? <Spinner className="size-4" /> : <GoogleIcon />}
+          {isGoogleEnabled ? (
+            <>
+              <div className="mt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  disabled={isSigningInSocial}
+                  onClick={signInGoogle}
+                >
+                  {isSigningInSocial ? <Spinner className="size-4" /> : <GoogleIcon />}
 
-              <span>{t('Google')}</span>
-            </Button>
-          </div>
+                  <span>{t('Google')}</span>
+                </Button>
+              </div>
 
-          <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-            <hr className="border-dashed" />
-            <span className="text-muted-foreground text-xs">{t('Or continue With')}</span>
-            <hr className="border-dashed" />
-          </div>
+              <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <hr className="border-dashed" />
+                <span className="text-muted-foreground text-xs">{t('Or continue With')}</span>
+                <hr className="border-dashed" />
+              </div>
+            </>
+          ) : null}
 
           <div className="space-y-6">
             <FieldGroup>
@@ -117,12 +125,14 @@ export function SignInForm({
                     type="password"
                     label={t('Password')}
                     labelChildren={
-                      <Link
-                        to="/forgot-password"
-                        className="text-foreground ms-auto text-sm underline-offset-4 hover:underline"
-                      >
-                        {t('Forgot your password?')}
-                      </Link>
+                      isEmailEnabled ? (
+                        <Link
+                          to="/forgot-password"
+                          className="text-foreground ms-auto text-sm underline-offset-4 hover:underline"
+                        >
+                          {t('Forgot your password?')}
+                        </Link>
+                      ) : null
                     }
                   />
                 )}

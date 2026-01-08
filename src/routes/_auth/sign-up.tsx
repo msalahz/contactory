@@ -20,7 +20,13 @@ function RouteComponent() {
   const { mutateAsync: signUpEmail, error, isSuccess } = useSignUpEmail()
   const { mutate: signInSocial, isPending: isSigningInSocial } = useSignInSocial()
 
+  const isGoogleEnabled = envClient.VITE_BETTER_AUTH_ENABLE_GOOGLE === 'true'
+
   function signUpGoogle() {
+    if (!isGoogleEnabled) {
+      return
+    }
+
     signInSocial({
       provider: 'google',
       requestSignUp: true,
@@ -32,6 +38,7 @@ function RouteComponent() {
       <SignUpForm
         signUpGoogle={signUpGoogle}
         isSigningUpSocial={isSigningInSocial}
+        isGoogleEnabled={isGoogleEnabled}
         onFormSubmit={async (data: { name: string; email: string; password: string }) => {
           await signUpEmail({
             name: data.name,

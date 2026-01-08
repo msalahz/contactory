@@ -11,10 +11,10 @@ export const envServer = createEnv({
     BETTER_AUTH_SECRET: z.string(),
     BETTER_AUTH_ENABLE_OPENAPI: booleanStringSchema.default('false'),
     BETTER_AUTH_USE_SECURE_COOKIES: booleanStringSchema.default('false'),
-    RESEND_API_KEY: z.string(),
-    RESEND_FROM_EMAIL: z.email(),
-    BETTER_AUTH_GOOGLE_CLIENT_ID: z.string(),
-    BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string(),
+    RESEND_API_KEY: z.string().optional(),
+    RESEND_FROM_EMAIL: z.email().optional(),
+    BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().optional(),
+    BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().optional(),
   },
 
   /**

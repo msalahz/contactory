@@ -14,23 +14,30 @@ import { sendEmail } from '@/server/emails/sendEmail'
 export function getAuth() {
   const db = getDb()
 
+  const isGoogleEnabled = Boolean(
+    envServer.BETTER_AUTH_GOOGLE_CLIENT_ID && envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
+  )
+
+  const isEmailEnabled = Boolean(envServer.RESEND_API_KEY && envServer.RESEND_FROM_EMAIL)
+
   return betterAuth({
     baseURL: envServer.BETTER_AUTH_URL,
 
     socialProviders: {
       google: {
+        enabled: isGoogleEnabled,
         accessType: 'offline',
         disableImplicitSignUp: false,
         prompt: 'select_account consent',
-        clientId: envServer.BETTER_AUTH_GOOGLE_CLIENT_ID,
-        clientSecret: envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET,
+        clientId: envServer.BETTER_AUTH_GOOGLE_CLIENT_ID!,
+        clientSecret: envServer.BETTER_AUTH_GOOGLE_CLIENT_SECRET!,
       },
     },
 
     account: {
       accountLinking: {
         enabled: false,
-        trustedProviders: ['google'],
+        trustedProviders: isGoogleEnabled ? ['google'] : [],
       },
     },
 
@@ -47,17 +54,16 @@ export function getAuth() {
       usePlural: true,
     }),
 
-    session: {
-      maxAge: 60 * 60 * 24, // 24 hours
-      updateAge: 60 * 60, // 1 hour
-    },
-
     emailVerification: {
       expiresIn: 3600, // 1 hour
-      sendOnSignIn: true,
-      sendOnSignUp: true,
-      autoSignInAfterVerification: true,
+      sendOnSignIn: isEmailEnabled,
+      sendOnSignUp: isEmailEnabled,
+      autoSignInAfterVerification: isEmailEnabled,
       async sendVerificationEmail({ user, url }) {
+        if (!isEmailEnabled) {
+          throw new Error('Email is not enabled')
+        }
+
         console.info('SEND VERIFICATION EMAIL')
         const { VerifyEmailTemplate } =
           await import('@/server/emails/templates/VerifyEmailTemplate')
@@ -77,10 +83,14 @@ export function getAuth() {
     emailAndPassword: {
       enabled: true,
       autoSignIn: true,
-      requireEmailVerification: true,
+      requireEmailVerification: isEmailEnabled,
       revokeSessionsOnPasswordReset: true,
       resetPasswordTokenExpiresIn: 3600, // 1hour
       async sendResetPassword({ url, user }) {
+        if (!isEmailEnabled) {
+          throw new Error('Email is not enabled')
+        }
+
         console.info('SEND RESET PASSWORD')
         const { ResetPasswordEmail } =
           await import('@/server/emails/templates/ResetPasswordEmailTemplate')

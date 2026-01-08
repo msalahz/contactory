@@ -13,8 +13,16 @@ export async function requireAuth() {
 
 export async function requireAdmin() {
   const session = await findAuthSession()
+
+  const roleString = session?.user?.role || undefined
+
+  const roles = roleString
+    ?.split(',')
+    .map((r) => r.trim())
+    .filter(Boolean)
+
   // if the user is not logged in or is not an admin
-  if (!session || !session.user.role?.includes('admin')) {
+  if (!session || !roles?.includes('admin')) {
     throw redirect({ to: '/' })
   }
   return session

@@ -14,6 +14,8 @@ export const envClient = createEnv({
     VITE_BETTER_AUTH_BASE_URL: z.url(),
     VITE_BETTER_AUTH_CALLBACK_URL: z.url(),
     VITE_I18N_DEBUG: booleanStringSchema.default('false'),
+    VITE_BETTER_AUTH_ENABLE_GOOGLE: booleanStringSchema.default('false'),
+    VITE_BETTER_AUTH_ENABLE_EMAIL: booleanStringSchema.default('false'),
   },
 
   /**

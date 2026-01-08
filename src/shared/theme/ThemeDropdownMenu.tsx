@@ -27,7 +27,7 @@ export function ThemeDropdownMenu({
   onChange = noop,
   ...props
 }: ThemeDropdownMenuProps) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('shared')
 
   return (
     <DropdownMenu modal={false}>

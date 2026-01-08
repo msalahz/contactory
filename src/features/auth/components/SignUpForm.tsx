@@ -15,6 +15,7 @@ import { Field, FieldGroup } from '@/integrations/shadcn/components/ui/field'
 export interface SignUpFormProps extends React.ComponentProps<'div'> {
   signUpGoogle: () => void
   isSigningUpSocial: boolean
+  isGoogleEnabled: boolean
   onFormSubmit?: (data: { name: string; email: string; password: string }) => Promise<void>
 }
 
@@ -23,6 +24,7 @@ export function SignUpForm({
   className,
   isSigningUpSocial,
   signUpGoogle = noop,
+  isGoogleEnabled,
   onFormSubmit = noop,
   ...props
 }: SignUpFormProps) {
@@ -91,25 +93,28 @@ export function SignUpForm({
             <p>{t('Welcome! Create an account to get started')}</p>
           </div>
 
-          <div className="mt-6">
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full"
-              disabled={isSigningUpSocial}
-              onClick={signUpGoogle}
-            >
-              {isSigningUpSocial ? <Spinner className="size-4" /> : <GoogleIcon />}
+          {isGoogleEnabled ? (
+            <>
+              <div className="mt-6">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-full"
+                  disabled={isSigningUpSocial}
+                  onClick={signUpGoogle}
+                >
+                  {isSigningUpSocial ? <Spinner className="size-4" /> : <GoogleIcon />}
 
-              <span>{t('Google')}</span>
-            </Button>
-          </div>
-
-          <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
-            <hr className="border-dashed" />
-            <span className="text-muted-foreground text-xs">{t('Or continue With')}</span>
-            <hr className="border-dashed" />
-          </div>
+                  <span>{t('Google')}</span>
+                </Button>
+              </div>
+              <div className="my-6 grid grid-cols-[1fr_auto_1fr] items-center gap-3">
+                <hr className="border-dashed" />
+                <span className="text-muted-foreground text-xs">{t('Or continue With')}</span>
+                <hr className="border-dashed" />
+              </div>
+            </>
+          ) : null}
 
           <FieldGroup>
             {children ? <Field>{children}</Field> : null}

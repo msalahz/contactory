@@ -2,7 +2,7 @@ import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
 export function NotFound({ children }: { children?: any }) {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('shared')
 
   return (
     <div className="space-y-2 p-2">

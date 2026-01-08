@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { envClient } from '@/env.client'
 import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
@@ -21,6 +22,10 @@ function RouteComponent() {
   const { t } = useTranslation('auth')
   const { token, error: invalidTokenError } = Route.useSearch()
   const { mutateAsync, error, isSuccess } = useResetPassword()
+
+  if (envClient.VITE_BETTER_AUTH_ENABLE_EMAIL !== 'true') {
+    return null
+  }
 
   return (
     <AnimatedPresence>

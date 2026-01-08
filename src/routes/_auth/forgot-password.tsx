@@ -1,6 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
+import { envClient } from '@/env.client'
 import { AlertBox } from '@/shared/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
@@ -15,6 +16,10 @@ export const Route = createFileRoute('/_auth/forgot-password')({
 function RouteComponent() {
   const { t } = useTranslation('auth')
   const { mutateAsync, data, error, isSuccess } = useRequestPasswordReset()
+
+  if (envClient.VITE_BETTER_AUTH_ENABLE_EMAIL !== 'true') {
+    return null
+  }
 
   return (
     <AnimatedPresence>

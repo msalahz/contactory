@@ -2,7 +2,7 @@ import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 
-import { resources } from './resources'
+import { defaultNS, resources } from './resources'
 
 import type { InitOptions } from 'i18next'
 
@@ -13,7 +13,7 @@ import { LANGUAGE_COOKIE_NAME } from '@/server/schemas/shared'
 const i18nInitOptions: InitOptions = {
   resources,
   fallbackLng: 'en',
-  defaultNS: 'common',
+  defaultNS,
   supportedLngs: Object.keys(resources) as Array<Language>,
   interpolation: {
     escapeValue: false,

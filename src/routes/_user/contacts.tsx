@@ -10,7 +10,7 @@ export const Route = createFileRoute('/_user/contacts')({
 })
 
 function RouteComponent() {
-  const { t } = useTranslation('common')
+  const { t } = useTranslation('shared')
 
   return (
     <AnimatedPresence className="flex h-full items-center justify-center">

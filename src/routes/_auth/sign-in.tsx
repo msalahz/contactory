@@ -20,7 +20,13 @@ function RouteComponent() {
   const { mutateAsync: singInEmail, error } = useSignInEmail()
   const { mutate: signInSocial, isPending: isSigningInSocial } = useSignInSocial()
 
+  const isGoogleEnabled = envClient.VITE_BETTER_AUTH_ENABLE_GOOGLE === 'true'
+
   function signInGoogle() {
+    if (!isGoogleEnabled) {
+      return
+    }
+
     signInSocial({
       provider: 'google',
       callbackURL: envClient.VITE_BETTER_AUTH_CALLBACK_URL,
@@ -32,6 +38,8 @@ function RouteComponent() {
       <SignInForm
         signInGoogle={signInGoogle}
         isSigningInSocial={isSigningInSocial}
+        isGoogleEnabled={isGoogleEnabled}
+        isEmailEnabled={envClient.VITE_BETTER_AUTH_ENABLE_EMAIL === 'true'}
         onFormSubmit={async (data) => {
           await singInEmail({
             ...data,

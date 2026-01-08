@@ -12,4 +12,12 @@ export const authClient = createAuthClient({
 export const { useSession } = createAuthClient()
 
 export type Session = typeof authClient.$Infer.Session
-export type User = typeof authClient.$Infer.Session.user
+export type User = Omit<
+  typeof authClient.$Infer.Session.user,
+  'banned' | 'role' | 'banReason' | 'banExpires'
+> & {
+  banned?: boolean | null
+  role?: string | null
+  banReason?: string | null
+  banExpires?: Date | null
+}
