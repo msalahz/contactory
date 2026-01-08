@@ -1,73 +1,118 @@
-# [PROJECT_NAME] Constitution
+<!--
+SYNC IMPACT REPORT
+==================
+Version change: 0.0.0 → 1.0.0 (initial creation)
 
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+Added Principles:
+- I. Code Quality
+- II. Testing Standards
+- III. User Experience Consistency
+- IV. Performance Requirements
+
+Added Sections:
+- Development Workflow
+- Quality Gates
+
+Removed Sections: None (initial creation)
+
+Templates Status:
+- .specify/templates/plan-template.md ✅ compatible (Constitution Check section aligns)
+- .specify/templates/spec-template.md ✅ compatible (success criteria align)
+- .specify/templates/tasks-template.md ✅ compatible (test phases align)
+
+Follow-up TODOs: None
+-->
+
+# Contactory Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
+### I. Code Quality
 
-<!-- Example: I. Library-First -->
+All code MUST adhere to strict quality standards to ensure maintainability and reliability.
 
-[PRINCIPLE_1_DESCRIPTION]
+- TypeScript strict mode MUST be enabled; no implicit `any` types allowed
+- ESLint MUST pass with zero warnings (`--max-warnings=0`)
+- Prettier MUST be used for consistent code formatting
+- Explicit `any` types require inline justification comment
+- All imports MUST be at the top of files; no mid-file imports
+- Error handling MUST use typed errors; no silent failures
+- No commented-out code in production branches
 
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+**Rationale**: Strict typing and linting catch bugs early, reduce cognitive load during reviews, and maintain codebase
+consistency across contributors.
 
-### [PRINCIPLE_2_NAME]
+### II. Testing Standards
 
-<!-- Example: II. CLI Interface -->
+Testing ensures reliability and enables confident refactoring.
 
-[PRINCIPLE_2_DESCRIPTION]
+- Unit tests MUST cover business logic and utility functions
+- Integration tests MUST cover API endpoints and database operations
+- E2E tests SHOULD cover critical user flows (authentication, core features)
+- Test files MUST be co-located with source or in dedicated `__tests__` directories
+- External dependencies MUST be mocked in unit tests
+- Tests MUST be deterministic; no flaky tests allowed in CI
 
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Rationale**: Comprehensive testing prevents regressions, documents expected behavior, and enables safe refactoring.
 
-### [PRINCIPLE_3_NAME]
+### III. User Experience Consistency
 
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
+The application MUST provide a consistent, accessible, and internationalized experience.
 
-[PRINCIPLE_3_DESCRIPTION]
+- All user-facing strings MUST use i18n translation keys (plain English as keys)
+- i18n namespaces: `shared`, `auth`, `landing`, `users` (feature-specific)
+- Accessibility MUST target WCAG 2.1 AA compliance
+- Responsive design MUST follow a mobile-first approach
+- UI components MUST use shadcn/ui with Tailwind CSS
+- Loading states MUST display spinners or skeletons for async operations
+- Error states MUST show user-friendly messages with recovery options
 
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+**Rationale**: Consistent UX builds user trust, accessibility ensures inclusivity, and i18n enables global reach.
 
-### [PRINCIPLE_4_NAME]
+### IV. Performance Requirements
 
-<!-- Example: IV. Integration Testing -->
+The application MUST meet performance targets for optimal user experience.
 
-[PRINCIPLE_4_DESCRIPTION]
+- Initial page load MUST complete within 3 seconds on 3G networks
+- Time to Interactive (TTI) MUST be under 5 seconds
+- Routes MUST be lazy-loaded to minimize initial bundle size
+- Images MUST be optimized and use modern formats (WebP, AVIF)
+- Database queries MUST be optimized; N+1 queries are prohibited
+- Cloudflare Workers constraints MUST be respected (CPU time, memory limits)
+- Core Web Vitals SHOULD meet "Good" thresholds (LCP < 2.5s, FID < 100ms, CLS < 0.1)
 
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+**Rationale**: Performance directly impacts user retention, SEO rankings, and serverless cost efficiency.
 
-### [PRINCIPLE_5_NAME]
+## Development Workflow
 
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
+All development MUST follow established workflow practices.
 
-[PRINCIPLE_5_DESCRIPTION]
+- Feature branches MUST follow naming convention: `[issue-number]-feature-name`
+- Commits MUST follow Conventional Commits specification
+- Pull requests MUST include a description of changes and testing performed
+- Code reviews MUST be completed before merging to the main branch
+- Husky pre-commit hooks MUST pass before commits are allowed
+- CI pipeline MUST pass before PR can be merged
 
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+## Quality Gates
 
-## [SECTION_2_NAME]
+All code MUST pass quality gates before deployment.
 
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+- **TypeScript Gate**: `pnpm tsc --noEmit` MUST pass with no errors
+- **Lint Gate**: `pnpm eslint src --max-warnings=0` MUST pass
+- **Format Gate**: Code MUST be formatted with Prettier
+- **Test Gate**: All tests MUST pass in CI
+- **Build Gate**: Production build MUST complete successfully
+- **i18n Gate**: No hardcoded user-facing strings; all keys present in locale files
 
 ## Governance
 
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution supersedes ad-hoc decisions and establishes binding development practices.
 
-[GOVERNANCE_RULES]
+- All pull requests MUST verify compliance with constitution principles
+- Violations require explicit justification and team approval
+- Amendments MUST be documented with version bump and rationale
+- Version follows semantic versioning: MAJOR (breaking changes), MINOR (additions), PATCH (clarifications)
+- Compliance reviews SHOULD occur quarterly or after major feature releases
 
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-01-08 | **Last Amended**: 2026-01-08
