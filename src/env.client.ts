@@ -16,6 +16,7 @@ export const envClient = createEnv({
     VITE_I18N_DEBUG: booleanStringSchema.default('false'),
     VITE_BETTER_AUTH_ENABLE_GOOGLE: booleanStringSchema.default('false'),
     VITE_BETTER_AUTH_ENABLE_EMAIL: booleanStringSchema.default('false'),
+    VITE_ENABLE_TANSTACK_DEVTOOLS: booleanStringSchema.default('false'),
   },
 
   /**

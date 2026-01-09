@@ -1,8 +1,8 @@
+import { useTranslation } from 'react-i18next'
 import { TanStackDevtools } from '@tanstack/react-devtools'
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { HeadContent, Scripts, createRootRouteWithContext } from '@tanstack/react-router'
 
-import { useTranslation } from 'react-i18next'
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
 
 import appCss from '../styles.css?url'
@@ -12,6 +12,7 @@ import type { QueryClient } from '@tanstack/react-query'
 import type { Language, Theme } from '@/server/schemas/shared'
 import type { User } from '@/integrations/better-auth/authClient'
 
+import { envClient } from '@/env.client'
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { NotFound } from '@/shared/components/NotFound'
@@ -19,6 +20,7 @@ import { defaultNS } from '@/integrations/i18n/resources'
 import { ThemeProvider } from '@/shared/theme/ThemeContext'
 import { I18nProvider } from '@/integrations/i18n/rootProvider'
 import { getInitialPreferencesFn } from '@/server/queries/shared'
+import { Toaster } from '@/integrations/shadcn/components/ui/sonner'
 
 interface MyRouterContext {
   i18n: i18n
@@ -60,14 +62,16 @@ function RootDocument({ children }: { children: React.ReactNode }) {
     <I18nProvider i18n={i18n} initialLanguage={initialLanguage} defaultNS={defaultNS}>
       <ThemeProvider initialTheme={initialTheme}>
         <RootDocumentContent>{children}</RootDocumentContent>
-
-        <TanStackDevtools
-          config={{ position: 'bottom-right' }}
-          plugins={[
-            { name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
-            TanStackQueryDevtools,
-          ]}
-        />
+        <Toaster richColors theme="light" />
+        {envClient.VITE_ENABLE_TANSTACK_DEVTOOLS === 'true' ? (
+          <TanStackDevtools
+            config={{ position: 'bottom-right', theme: 'light' }}
+            plugins={[
+              { name: 'Tanstack Router', render: <TanStackRouterDevtoolsPanel /> },
+              TanStackQueryDevtools,
+            ]}
+          />
+        ) : null}
       </ThemeProvider>
     </I18nProvider>
   )
