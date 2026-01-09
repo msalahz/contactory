@@ -1,6 +1,8 @@
-import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
+import { authOptions } from '@/features/auth/options'
+import { findAuthUserFn } from '@/server/queries/auth'
 import { requireAuthMiddleware } from '@/server/middlewares/auth'
 import { SidebarProvider } from '@/integrations/shadcn/components/ui/sidebar'
 import {
@@ -10,12 +12,18 @@ import {
   UserSidebarGrip,
   UserSidebarHeader,
 } from '@/features/users/components/UserSidebar'
-import { authOptions } from '@/features/auth/options'
 
 export const Route = createFileRoute('/_user')({
   component: RouteComponent,
   server: {
     middleware: [requireAuthMiddleware],
+  },
+  async beforeLoad() {
+    const authUser = await findAuthUserFn()
+    if (!authUser) {
+      throw redirect({ to: '/sign-in' })
+    }
+    return { context: { authUser } }
   },
   loader({ context }) {
     return context.queryClient.ensureQueryData(authOptions.authUser())
