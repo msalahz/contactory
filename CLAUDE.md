@@ -201,3 +201,7 @@ export const Route = createFileRoute('/_user')({
 - **Security**: Audit findings in `docs/SECURITY-AUDIT.md`
 - **Copilot Instructions**: `.github/copilot-instructions.md` (detailed coding conventions)
 - **Commit Guidelines**: `.github/git-commit-instructions.md`
+
+# Summary instructions
+
+- When using compact, focus on test output and code changes
