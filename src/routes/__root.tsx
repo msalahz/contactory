@@ -9,7 +9,7 @@ import appCss from '../styles.css?url'
 
 import type { i18n } from 'i18next'
 import type { QueryClient } from '@tanstack/react-query'
-import type { Language, Theme } from '@/server/schemas/shared'
+import type { Language, Theme } from '@/server/schemas/preferences'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { envClient } from '@/env.client'
@@ -19,7 +19,7 @@ import { NotFound } from '@/shared/components/NotFound'
 import { defaultNS } from '@/integrations/i18n/resources'
 import { ThemeProvider } from '@/shared/theme/ThemeContext'
 import { I18nProvider } from '@/integrations/i18n/rootProvider'
-import { getInitialPreferencesFn } from '@/server/queries/shared'
+import { getInitialPreferencesFn } from '@/server/queries/preferences'
 import { Toaster } from '@/integrations/shadcn/components/ui/sonner'
 
 interface MyRouterContext {

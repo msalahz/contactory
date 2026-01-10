@@ -7,7 +7,7 @@ import type { ReactNode } from 'react'
 import { noop } from '@/shared/utils/noop'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
-import { ProfileSection } from '@/features/users/components/ProfileSection'
+import { ProfileSection } from '@/features/auth/components/ProfileSection'
 
 export interface UserPasswordFormValues {
   currentPassword: string
@@ -26,7 +26,7 @@ export function UserPasswordForm({
   onFormSubmit = noop,
   className,
 }: UserPasswordFormProps) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
 
   const formSchema = useMemo(
     () =>

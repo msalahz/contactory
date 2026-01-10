@@ -17,7 +17,7 @@ export function UserProfile({ children, className, ...props }: React.ComponentPr
 export interface UserProfileProps extends React.ComponentProps<typeof FieldSet> {}
 
 export function UserProfileContent({ children, className, ...props }: UserProfileProps) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
 
   return (
     <FieldSet className={cn('mx-auto max-w-2xl grow space-y-6', className)} {...props}>

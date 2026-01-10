@@ -11,7 +11,7 @@ import {
 
 import type { User } from '@/integrations/better-auth/authClient'
 
-import type { Language } from '@/server/schemas/shared'
+import type { Language } from '@/server/schemas/preferences'
 import { useTheme } from '@/shared/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
@@ -28,7 +28,7 @@ import {
   UserMenuContent,
   UserMenuTrigger,
   UserProfile,
-} from '@/features/users/components/UserMenu'
+} from '@/features/auth/components/UserMenu'
 import {
   DropdownMenuGroup,
   DropdownMenuItem,
@@ -54,7 +54,7 @@ export interface UserSidebarProps extends React.ComponentProps<typeof SidebarFoo
 }
 
 export function UserSidebarFooter({ user, className, ...props }: UserSidebarProps) {
-  const { t, i18n } = useTranslation('users')
+  const { t, i18n } = useTranslation('auth')
   const { theme, setTheme } = useTheme()
   const { signOut, isSigningOut } = useSignOut()
   return (
@@ -133,7 +133,7 @@ export function UserSidebarContent({
   className,
   ...props
 }: React.ComponentProps<typeof SidebarContent>) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
 
   return (
     <SidebarContent className={cn('', className)} {...props}>
@@ -202,7 +202,7 @@ export function UserSidebar({
 }
 
 export function UserSidebarGrip({ className, ...props }: React.ComponentProps<'button'>) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
   const { toggleSidebar } = useSidebar()
   return (
     <button

@@ -1,6 +1,6 @@
 import { MoonIcon, SunIcon } from 'lucide-react'
 
-import type { Theme } from '@/server/schemas/shared'
+import type { Theme } from '@/server/schemas/preferences'
 
 import { noop } from '@/shared/utils/noop'
 import { cn } from '@/integrations/shadcn/lib/utils'

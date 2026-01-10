@@ -3,7 +3,7 @@ import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 import { v7 as uuidv7 } from 'uuid'
 
-import { contact } from '@/server/schemas/contacts'
+import { contact } from '@/integrations/drizzle/schemas/contacts'
 
 config()
 

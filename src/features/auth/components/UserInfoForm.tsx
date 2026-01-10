@@ -10,13 +10,13 @@ import { noop } from '@/shared/utils/noop'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
-import { ProfileSection } from '@/features/users/components/ProfileSection'
-import { getUserNameInitials } from '@/features/users/lib/getUserNameInitials'
+import { ProfileSection } from '@/features/auth/components/ProfileSection'
+import { getUserNameInitials } from '@/features/auth/utils/getUserNameInitials'
 import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/components/ui/avatar'
 import {
   USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE,
   USER_AVATAR_MAX_IMAGE_FILE_SIZE,
-} from '@/server/schemas/users'
+} from '@/server/schemas/auth'
 
 export interface UserInfoFormValues {
   name: string
@@ -37,7 +37,7 @@ export function UserInfoForm({
   onFormSubmit = noop,
   className,
 }: UserInfoFormProps) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
   const { image, name } = user ?? {}
   const fileRef = useRef<HTMLInputElement>(null)
 

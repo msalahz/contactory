@@ -6,9 +6,9 @@ import { defaultNS, resources } from './resources'
 
 import type { InitOptions } from 'i18next'
 
-import type { Language } from '@/server/schemas/shared'
+import type { Language } from '@/server/schemas/preferences'
 import { envClient } from '@/env.client'
-import { LANGUAGE_COOKIE_NAME } from '@/server/schemas/shared'
+import { LANGUAGE_COOKIE_NAME } from '@/server/schemas/preferences'
 
 const i18nInitOptions: InitOptions = {
   resources,

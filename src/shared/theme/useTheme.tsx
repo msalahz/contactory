@@ -3,10 +3,10 @@ import { useStore } from '@tanstack/react-store'
 import { useServerFn } from '@tanstack/react-start'
 import { useMutation } from '@tanstack/react-query'
 
-import type { Theme } from '@/server/schemas/shared'
+import type { Theme } from '@/server/schemas/preferences'
 
 import { ThemeContext } from '@/shared/theme/ThemeContext'
-import { setThemeCookieFn } from '@/server/mutations/shared'
+import { setThemeCookieFn } from '@/server/mutations/preferences'
 
 /**
  * @description Hook to access and update the theme from the shared store

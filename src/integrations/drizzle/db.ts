@@ -2,8 +2,8 @@ import { env } from 'cloudflare:workers'
 import { drizzle } from 'drizzle-orm/postgres-js'
 import postgres from 'postgres'
 
-import * as auth from '@/server/schemas/auth'
-import * as contact from '@/server/schemas/contacts'
+import * as auth from '@/integrations/drizzle/schemas/auth'
+import * as contact from '@/integrations/drizzle/schemas/contacts'
 
 const schema = { ...auth, ...contact }
 

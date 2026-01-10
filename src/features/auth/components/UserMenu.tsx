@@ -1,7 +1,7 @@
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { useIsMobile } from '@/integrations/shadcn/hooks/use-mobile'
-import { getUserNameInitials } from '@/features/users/lib/getUserNameInitials'
+import { getUserNameInitials } from '@/features/auth/utils/getUserNameInitials'
 import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/components/ui/avatar'
 import {
   DropdownMenu,

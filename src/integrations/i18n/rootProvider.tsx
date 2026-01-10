@@ -1,6 +1,6 @@
 import { I18nextProvider } from 'react-i18next'
 
-import type { Language } from '@/server/schemas/shared'
+import type { Language } from '@/server/schemas/preferences'
 
 export interface I18nProviderProps extends React.ComponentProps<typeof I18nextProvider> {
   initialLanguage: Language

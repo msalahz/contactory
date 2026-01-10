@@ -11,7 +11,7 @@ import {
   UserSidebarFooter,
   UserSidebarGrip,
   UserSidebarHeader,
-} from '@/features/users/components/UserSidebar'
+} from '@/features/auth/components/UserSidebar'
 
 export const Route = createFileRoute('/_user')({
   component: RouteComponent,

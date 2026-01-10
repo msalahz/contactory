@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { noop } from '@/shared/utils/noop'
 import { GoogleIcon } from '@/shared/components/GoogleIcon'
 import { Button } from '@/integrations/shadcn/components/ui/button'
-import { ProfileSection } from '@/features/users/components/ProfileSection'
+import { ProfileSection } from '@/features/auth/components/ProfileSection'
 
 export interface UserSocialFormProps {
   connectedAccounts?: Array<{ provider: string; email?: string }>
@@ -18,7 +18,7 @@ export function UserSocialForm({
   onDisconnect = noop,
   className,
 }: UserSocialFormProps) {
-  const { t } = useTranslation('users')
+  const { t } = useTranslation('auth')
   const isGoogleConnected = connectedAccounts.some((acc) => acc.provider === 'google')
   const googleAccount = connectedAccounts.find((acc) => acc.provider === 'google')
 

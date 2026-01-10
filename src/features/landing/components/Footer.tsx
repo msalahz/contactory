@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
-import type { Language } from '@/server/schemas/shared'
+import type { Language } from '@/server/schemas/preferences'
 import { formatYear } from '@/shared/utils/format'
 import { cn } from '@/integrations/shadcn/lib/utils'
 

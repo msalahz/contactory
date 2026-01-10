@@ -3,7 +3,7 @@ import { boolean, index, pgTable, text, timestamp } from 'drizzle-orm/pg-core'
 
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod'
 
-import { users } from '@/server/schemas/auth'
+import { users } from '@/integrations/drizzle/schemas/auth'
 
 export const contact = pgTable(
   'contact',
