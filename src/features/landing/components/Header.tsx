@@ -29,9 +29,9 @@ export const HeroHeader = ({
   isSigningOut = false,
   onSignOutClick = noop,
 }: HeroHeaderProps) => {
+  const { t, i18n } = useTranslation('landing')
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
-  const { t, i18n } = useTranslation('landing')
 
   const menuItems = React.useMemo(
     () => [
@@ -49,6 +49,7 @@ export const HeroHeader = ({
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
+
   return (
     <header>
       <nav data-state={menuState && 'active'} className="fixed z-20 w-full px-2">
