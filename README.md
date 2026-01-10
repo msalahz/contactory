@@ -326,11 +326,12 @@ positives.
 
 ### Project Documentation
 
-- [Product Requirements (PRD)](./docs/PRD.md) - Feature specifications and user stories
-- [Tech Stack ADR](./docs/ADR-001-tech-stack.md) - Technology decisions and rationale
-- [File Structure ADR](./docs/ADR-002-file-structure.md) - Project organization and architecture
-- [Internationalization ADR](./docs/ADR-003-internationalization.md) - i18n architecture (proposed)
-- [Security Audit](./docs/SECURITY-AUDIT.md) - Security audit findings and recommendations
+- [Project Overview](docs/project-overview.md) - Product vision, features, requirements
+- [Project Architecture](docs/project-architecture.md) - High-level project structure and design decisions
+
+### Specifications
+
+- [001 Contacts CRUD](specs/001-contacts-crud/spec.md)
 
 ### GitHub Configuration
 
