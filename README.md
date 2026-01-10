@@ -110,11 +110,8 @@ contactory/
 │   ├── workflows/
 │   │   └── ci.yml                # CI/CD pipeline configuration
 ├── docs/                          # Documentation
-│   ├── ADR-001-tech-stack.md      # Architecture decision record
-│   ├── ADR-002-file-structure.md  # Project structure decisions
-│   ├── ADR-003-internationalization.md  # i18n architecture (proposed)
-│   ├── PRD.md                     # Product requirements document
-│   └── SECURITY-AUDIT.md          # Security audit findings
+│   ├── project-overview.md         # Product vision, features, requirements
+│   └── project-architecture.md   # Technical stack, patterns, guidelines
 ├── public/                        # Static assets
 │   ├── favicon.svg
 │   └── robots.txt

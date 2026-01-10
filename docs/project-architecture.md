@@ -5,14 +5,23 @@ This document is intended for technical stakeholders who have a technical backgr
 
 # Project Architecture: Contactory
 
-## Overview
+## Executive Summary
 
-Contactory is built using a **feature-sliced modular monolith** architecture with a clean separation between client and
-server code. This document details the technical stack, architectural patterns, and implementation guidelines.
+Contactory is a modern contact management application built with cutting-edge web technologies. It serves as a digital address book with advanced features like cloud storage, internationalization, and real-time collaboration capabilities.
+
+**Key Characteristics:**
+
+- **Full-Stack TypeScript**: End-to-end type safety from database to user interface
+- **Feature-Sliced Architecture**: Modular organization that scales with team growth
+- **Serverless Deployment**: Zero-configuration hosting on Cloudflare Workers
+- **Bilingual Support**: Native English and Arabic interfaces with RTL layout support
+- **Performance Optimized**: Virtual scrolling, cursor-based pagination, and image optimization
+
+**Target Audience:** Small to medium businesses needing professional contact management with modern web standards.
 
 ---
 
-## Technology Stack
+## Technical Foundation
 
 ### Core Framework
 
@@ -105,16 +114,46 @@ server code. This document details the technical stack, architectural patterns, 
 | **Cloudflare Workers** | Latest  | Serverless compute |
 | **Cloudflare Pages**   | Latest  | Static hosting     |
 
-### Utilities
+### Environment Variables
 
-| Technology                | Version | Purpose                |
-| ------------------------- | ------- | ---------------------- |
-| **UUID**                  | 13.0.0  | UUID generation        |
-| **@tanstack/react-start** | 1.145.7 | Server functions (RPC) |
+#### Client Environment (VITE\_ prefix)
+
+```typescript
+// src/env.client.ts
+export const env = createEnv({
+  client: {
+    VITE_BETTER_AUTH_BASE_URL: z.string().url(),
+  },
+  runtimeEnv: import.meta.env,
+})
+```
+
+**Variables:**
+
+- `VITE_BETTER_AUTH_BASE_URL` - Client-side auth base URL
+
+#### Server Environment
+
+```typescript
+// src/env.server.ts
+export const env = createEnv({
+  server: {
+    DATABASE_URL: z.string().url(),
+    BETTER_AUTH_SECRET: z.string(),
+    BETTER_AUTH_URL: z.string().url(),
+    R2_BUCKET: z.string(),
+    R2_PUBLIC_URL: z.string().url(),
+    RESEND_API_KEY: z.string(),
+  },
+  runtimeEnv: process.env,
+})
+```
+
+**Never expose server environment variables to client code.**
 
 ---
 
-## Architecture Patterns
+## System Architecture
 
 ### 1. Feature-Sliced Monolith
 
@@ -169,7 +208,9 @@ export const listContactsFn = createServerFn()
     const session = await requireAuth()
     return listContacts(session.user.id, data)
   })
+```
 
+```typescript
 // Client usage - fully type-safe
 const { data } = useQuery(contactOptions.list(filters))
 ```
@@ -233,10 +274,12 @@ Component Re-render
 
 ```typescript
 // src/features/contacts/components/ContactForm.tsx
-function ContactForm ({ contact, onSubmit, isPending }) {
-  return <form>
-...
-  </form>
+function ContactForm({ contact, onSubmit, isPending }) {
+  return (
+    <form>
+      {/* ... */}
+    </form>
+  )
 }
 ```
 
@@ -258,22 +301,20 @@ export function useCreateContact() {
 
 ```typescript
 // src/routes/_user/contacts/new.tsx
-function CreateContactRoute () {
+function CreateContactRoute() {
   const navigate = useNavigate()
   const { mutate } = useCreateContact()
 
   return (
-    <Sheet open = { true }
-  onOpenChange = {(open)
-=>
-  !open && navigate({ to: '/contacts' })
-}>
-  <SheetContent>
-    <ContactForm onSubmit = { mutate }
-  />
-  < /SheetContent>
-  < /Sheet>
-)
+    <Sheet
+      open={true}
+      onOpenChange={(open) => !open && navigate({ to: '/contacts' })}
+    >
+      <SheetContent>
+        <ContactForm onSubmit={mutate} />
+      </SheetContent>
+    </Sheet>
+  )
 }
 ```
 
@@ -319,11 +360,9 @@ export const contactOptions = {
 - Type-safe cache invalidation
 - Consistent naming conventions
 
----
+### Database Architecture
 
-## Database Architecture
-
-### Schema Pattern (Drizzle ORM)
+#### Schema Pattern (Drizzle ORM)
 
 ```typescript
 // src/backend/schemas/contacts.ts
@@ -357,7 +396,7 @@ export const contact = pgTable(
 )
 ```
 
-### Soft Delete Pattern
+#### Soft Delete Pattern
 
 **Query Pattern**: Always filter `WHERE deletedAt IS NULL`
 
@@ -383,11 +422,9 @@ db.update(contact).set({ deletedAt: null }).where(...)
 db.delete(contact).where(...)
 ```
 
----
+### Authentication & Authorization
 
-## Authentication & Authorization
-
-### Pattern: Session-Based Authentication
+#### Pattern: Session-Based Authentication
 
 **Provider**: better-auth
 **Session Storage**: Secure HTTP-only cookies
@@ -397,7 +434,7 @@ db.delete(contact).where(...)
 - `httpOnly: true` (No JavaScript access)
 - `sameSite: 'lax'` (CSRF protection)
 
-### Authorization Guards
+#### Authorization Guards
 
 **Route-level Guard**:
 
@@ -439,48 +476,11 @@ const contacts = await db
 
 ---
 
-## Environment Variables
+## Features & Quality
 
-### Client Environment (VITE\_ prefix)
+### Internationalization Architecture
 
-```typescript
-// src/env.client.ts
-export const env = createEnv({
-  client: {
-    VITE_BETTER_AUTH_BASE_URL: z.string().url(),
-  },
-  runtimeEnv: import.meta.env,
-})
-```
-
-**Variables:**
-
-- `VITE_BETTER_AUTH_BASE_URL` - Client-side auth base URL
-
-### Server Environment
-
-```typescript
-// src/env.server.ts
-export const env = createEnv({
-  server: {
-    DATABASE_URL: z.string().url(),
-    BETTER_AUTH_SECRET: z.string(),
-    BETTER_AUTH_URL: z.string().url(),
-    R2_BUCKET: z.string(),
-    R2_PUBLIC_URL: z.string().url(),
-    RESEND_API_KEY: z.string(),
-  },
-  runtimeEnv: process.env,
-})
-```
-
-**Never expose server environment variables to client code.**
-
----
-
-## Internationalization Architecture
-
-### File Structure (Feature-Based Colocated)
+#### File Structure (Feature-Based Colocated)
 
 ```
 src/
@@ -499,7 +499,7 @@ src/
         └── ar.json
 ```
 
-### Namespace Aggregation
+#### Namespace Aggregation
 
 ```typescript
 // src/integrations/i18n/resources.ts
@@ -522,7 +522,7 @@ export const resources = {
 } as const
 ```
 
-### RTL/LTR Layout
+#### RTL/LTR Layout
 
 **Direction Detection**:
 
@@ -563,11 +563,9 @@ export function formatNumber(num: number, locale: string) {
 }
 ```
 
----
+### File Upload & Storage Architecture
 
-## File Upload & Storage Architecture
-
-### Avatar Upload Flow
+#### Avatar Upload Flow
 
 1. **Client-Side**:
    - Resize/compress image (max 512x512)
@@ -585,7 +583,7 @@ export function formatNumber(num: number, locale: string) {
    - **Public URL**: `https://cdn.contactory.consultin.dev/`
    - **Access**: Read-only public URLs for images
 
-### Deletion Pattern
+#### Deletion Pattern
 
 ```typescript
 // When permanently deleting a contact:
@@ -602,11 +600,9 @@ async function permanentDeleteContact(contactId: string) {
 }
 ```
 
----
+### Performance Optimization Strategies
 
-## Performance Optimization Strategies
-
-### 1. Virtual Scrolling
+#### 1. Virtual Scrolling
 
 **Library**: TanStack Virtual
 
@@ -633,7 +629,7 @@ const virtualRows = virtualizer.getVirtualItems()
 - Handles 1000+ items smoothly
 - Maintains 60 FPS scrolling
 
-### 2. Cursor-Based Pagination
+#### 2. Cursor-Based Pagination
 
 **Pattern**: Use last item ID instead of offset
 
@@ -666,7 +662,7 @@ export async function listContacts(
 - Consistent results
 - Better performance with large datasets
 
-### 3. Image Optimization
+#### 3. Image Optimization
 
 **Client-Side**:
 
@@ -685,7 +681,7 @@ const resized = await resizeImage(file, {
 - Set appropriate cache headers
 - Use CDN for distribution
 
-### 4. Database Indexing
+#### 4. Database Indexing
 
 **Indexes on contacts table**:
 
@@ -695,11 +691,9 @@ const resized = await resizeImage(file, {
 - `primaryEmail` - Search
 - `isFavorite` - Favorite filtering
 
----
+### Error Handling Patterns
 
-## Error Handling Patterns
-
-### Server Function Error Handling
+#### Server Function Error Handling
 
 ```typescript
 export const createContactFn = createServerFn()
@@ -717,7 +711,7 @@ export const createContactFn = createServerFn()
   })
 ```
 
-### Client Error Handling
+#### Client Error Handling
 
 ```typescript
 const { mutate, isPending, error } = useMutation({
@@ -732,7 +726,7 @@ const { mutate, isPending, error } = useMutation({
 })
 ```
 
-### Optimistic Error Recovery
+#### Optimistic Error Recovery
 
 ```typescript
 const { mutate } = useMutation({
@@ -753,9 +747,11 @@ const { mutate } = useMutation({
 
 ---
 
-## Testing Strategy
+## Development & Operations
 
-### Unit Tests (Vitest)
+### Testing Strategy
+
+#### Unit Tests (Vitest)
 
 ```typescript
 // src/features/contacts/lib/formatContact.test.ts
@@ -767,7 +763,7 @@ describe('formatContact', () => {
 })
 ```
 
-### Integration Tests
+#### Integration Tests
 
 ```typescript
 // src/backend/mutations/contacts.test.ts
@@ -782,15 +778,14 @@ describe('createContactFn', () => {
 })
 ```
 
-### Component Tests
+#### Component Tests
 
 ```typescript
 // src/features/contacts/components/ContactForm.test.ts
 describe('ContactForm', () => {
   it('submits form with valid data', async () => {
     const onSubmit = vi.fn()
-    render(<ContactForm onSubmit = { onSubmit }
-    />)
+    render(<ContactForm onSubmit={onSubmit} />)
 
     fireEvent.change(screen.getByLabelText('First Name'), {
       target: { value: 'John' },
@@ -804,11 +799,62 @@ describe('ContactForm', () => {
 })
 ```
 
----
+### Security Considerations
 
-## Build & Deployment
+#### Input Validation
 
-### Development
+- All user inputs validated with Zod schemas
+- Server-side validation before database operations
+- Client-side validation for UX feedback
+
+#### Authentication
+
+- Session-based auth with HTTP-only cookies
+- CSRF protection via SameSite cookie attribute
+- Rate limiting on auth endpoints
+
+#### Authorization
+
+- User isolation at database level
+- Query-level filtering by authenticated user ID
+- Middleware guards on protected routes
+
+#### Data Security
+
+- HTTPS-only communication
+- Secure R2 storage with public read access
+- Encrypted passwords via better-auth
+- No sensitive data in URLs or localStorage
+
+#### File Upload Security
+
+- File type validation (JPG, PNG, WebP)
+- File size limits (5MB max)
+- Client-side compression to prevent abuse
+- Unique keys for uploaded files
+
+### Monitoring & Observability
+
+#### Error Tracking
+
+- Unhandled errors logged to console (dev)
+- Production errors tracked (future: Sentry)
+
+#### Performance Monitoring
+
+- Database query performance monitoring
+- React component render tracking
+- Bundle size analysis
+
+#### Logging
+
+- Server function execution logging
+- Database operation logging
+- Authentication event logging
+
+### Build & Deployment
+
+#### Development
 
 ```bash
 pnpm dev           # Start dev server on :3000
@@ -817,14 +863,14 @@ pnpm lint          # ESLint
 pnpm format        # Prettier
 ```
 
-### Production Build
+#### Production Build
 
 ```bash
 pnpm build         # Production build
 pnpm deploy        # Deploy to Cloudflare Workers
 ```
 
-### Database Management
+#### Database Management
 
 ```bash
 pnpm db:generate   # Generate migrations from schema
@@ -834,9 +880,11 @@ pnpm db:studio     # Drizzle Studio GUI
 
 ---
 
-## Coding Conventions
+## Guidelines & Standards
 
-### Naming Conventions
+### Coding Conventions
+
+#### Naming Conventions
 
 | Type           | Pattern                     | Example                         |
 | -------------- | --------------------------- | ------------------------------- |
@@ -847,7 +895,7 @@ pnpm db:studio     # Drizzle Studio GUI
 | **Constants**  | UPPER_SNAKE_CASE            | `MAX_CONTACTS`                  |
 | **Types**      | PascalCase                  | `Contact`, `CreateContactInput` |
 
-### Import Style
+#### Import Style
 
 ```typescript
 // Use explicit imports, not barrels
@@ -859,7 +907,7 @@ import { ContactForm } from '@/features/contacts/components' // ✅
 import { ContactForm } from '../../../features/contacts' // ❌
 ```
 
-### React Patterns
+#### React Patterns
 
 ```typescript
 // Use function declarations for components
@@ -887,66 +935,89 @@ const buttonVariants = cva('btn', {
 })
 ```
 
+### Development Guidelines (Do's & Don'ts)
+
+#### Architecture Enforcement
+
+**Do:**
+
+- Keep `src/backend/*` completely separate from client code
+- Always filter by authenticated user ID at database level
+- Use TanStack Start server functions for internal operations
+- Organize features in `src/features/*/` with clear boundaries
+- Use explicit imports, avoid barrel files (index.ts exports)
+- Keep business logic in `modules/`, not in routes or components
+
+**Don't:**
+
+- Import server code in client components (build will fail)
+- Use barrel exports for cross-feature imports
+- Store server secrets in client-accessible code
+- Skip authentication guards on protected server functions
+- Mix business logic with UI components
+- Create shared utilities that mix server and client code
+
+#### Internationalization Enforcement
+
+**Do:**
+
+- Use logical CSS properties (`ms-*`, `me-*`, `start-*`, `end-*`) for layouts
+- Extract all user-facing strings to translation files
+- Organize translations by feature namespace
+- Test all layouts in both LTR and RTL directions
+- Use semantic translation keys (`auth.signIn.title` not `button1`)
+
+**Don't:**
+
+- Use physical properties (`ml-*`, `mr-*`, `left-*`, `right-*`) for directional layouts
+- Hardcode strings in components
+- Centralize all translations in single file
+- Use CSS transforms for RTL (scaleX(-1))
+- Assume LTR layout in component logic
+
+#### Database Patterns
+
+**Do:**
+
+- Use soft delete with `deletedAt` field for restorable records
+- Always filter `isNull(deletedAt)` in active queries
+- Index frequently filtered/searched columns
+- Use cursor-based pagination for large datasets
+- Validate all inputs with Zod before database operations
+
+**Don't:**
+
+- Hard-delete records without backups
+- Forget to filter soft-deleted records
+- Create N+1 query situations
+- Use offset-based pagination with large datasets
+- Store unvalidated user input
+
+#### Testing Standards
+
+**Unit Tests:**
+
+- Pure utility functions (formatters, validators)
+- Business logic in modules
+- Component props/behaviors
+- Target: >80% coverage for new code
+
+**Integration Tests:**
+
+- Server functions with database
+- Auth flows
+- Data isolation (user can't access other's data)
+- Error handling paths
+
+**Not Required (yet):**
+
+- E2E tests (Playwright considered for future)
+- Visual regression tests
+- Performance benchmarks
+
 ---
 
-## Security Considerations
-
-### Input Validation
-
-- All user inputs validated with Zod schemas
-- Server-side validation before database operations
-- Client-side validation for UX feedback
-
-### Authentication
-
-- Session-based auth with HTTP-only cookies
-- CSRF protection via SameSite cookie attribute
-- Rate limiting on auth endpoints
-
-### Authorization
-
-- User isolation at database level
-- Query-level filtering by authenticated user ID
-- Middleware guards on protected routes
-
-### Data Security
-
-- HTTPS-only communication
-- Secure R2 storage with public read access
-- Encrypted passwords via better-auth
-- No sensitive data in URLs or localStorage
-
-### File Upload Security
-
-- File type validation (JPG, PNG, WebP)
-- File size limits (5MB max)
-- Client-side compression to prevent abuse
-- Unique keys for uploaded files
-
----
-
-## Monitoring & Observability
-
-### Error Tracking
-
-- Unhandled errors logged to console (dev)
-- Production errors tracked (future: Sentry)
-
-### Performance Monitoring
-
-- Database query performance monitoring
-- React component render tracking
-- Bundle size analysis
-
-### Logging
-
-- Server function execution logging
-- Database operation logging
-- Authentication event logging
-
----
-
-## Architecture Decision Rationale
+## Architecture Decisions & Rationale
 
 ### Technology Stack Choices
 
@@ -1031,96 +1102,6 @@ const buttonVariants = cva('btn', {
 
 ---
 
-## Development Guidelines (Do's & Don'ts)
-
-### Architecture Enforcement
-
-**Do:**
-
-- Keep `src/backend/*` completely separate from client code
-- Always filter by authenticated user ID at database level
-- Use TanStack Start server functions for internal operations
-- Organize features in `src/features/*/` with clear boundaries
-- Use explicit imports, avoid barrel files (index.ts exports)
-- Keep business logic in `modules/`, not in routes or components
-
-**Don't:**
-
-- Import server code in client components (build will fail)
-- Use barrel exports for cross-feature imports
-- Store server secrets in client-accessible code
-- Skip authentication guards on protected server functions
-- Mix business logic with UI components
-- Create shared utilities that mix server and client code
-
-### Internationalization Enforcement
-
-**Do:**
-
-- Use logical CSS properties (`ms-*`, `me-*`, `start-*`, `end-*`) for layouts
-- Extract all user-facing strings to translation files
-- Organize translations by feature namespace
-- Test all layouts in both LTR and RTL directions
-- Use semantic translation keys (`auth.signIn.title` not `button1`)
-
-**Don't:**
-
-- Use physical properties (`ml-*`, `mr-*`, `left-*`, `right-*`) for directional layouts
-- Hardcode strings in components
-- Centralize all translations in single file
-- Use CSS transforms for RTL (scaleX(-1))
-- Assume LTR layout in component logic
-
-### Database Patterns
-
-**Do:**
-
-- Use soft delete with `deletedAt` field for restorable records
-- Always filter `isNull(deletedAt)` in active queries
-- Index frequently filtered/searched columns
-- Use cursor-based pagination for large datasets
-- Validate all inputs with Zod before database operations
-
-**Don't:**
-
-- Hard-delete records without backups
-- Forget to filter soft-deleted records
-- Create N+1 query situations
-- Use offset-based pagination with large datasets
-- Store unvalidated user input
-
-### Testing Standards
-
-**Unit Tests:**
-
-- Pure utility functions (formatters, validators)
-- Business logic in modules
-- Component props/behaviors
-- Target: >80% coverage for new code
-
-**Integration Tests:**
-
-- Server functions with database
-- Auth flows
-- Data isolation (user can't access other's data)
-- Error handling paths
-
-**Not Required (yet):**
-
-- E2E tests (Playwright considered for future)
-- Visual regression tests
-- Performance benchmarks
-
----
-
-## Related Architecture Decision Records
-
-- **ADR-001**: Tech Stack - documents all technology choices and rationale
-- **ADR-002**: Modular Monolith Architecture - details file structure and patterns
-- **ADR-003**: Internationalization - bilingual (EN/AR) architecture
-
----
-
 ## Consequences of Architecture Decisions
 
 ### Positive
@@ -1141,6 +1122,14 @@ const buttonVariants = cva('btn', {
 - **i18n Complexity**: RTL/LTR testing required for all layouts
 - **Database Complexity**: Multiple indexes needed for performance
 - **Testing Overhead**: Must test both LTR and RTL variants
+
+---
+
+## Related Architecture Decision Records
+
+- **ADR-001**: Tech Stack - documents all technology choices and rationale
+- **ADR-002**: Modular Monolith Architecture - details file structure and patterns
+- **ADR-003**: Internationalization - bilingual (EN/AR) architecture
 
 ---
 
