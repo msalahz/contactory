@@ -5,7 +5,7 @@ import { drizzleAdapter } from 'better-auth/adapters/drizzle'
 import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
 import { envServer } from '@/env.server'
-import { getDb } from '@/server/db/client'
+import { getDb } from '@/integrations/drizzle/db'
 import { sendEmail } from '@/server/emails/sendEmail'
 
 /**

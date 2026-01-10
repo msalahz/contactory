@@ -4,8 +4,8 @@ import { defineConfig } from 'drizzle-kit'
 config()
 
 export default defineConfig({
-  out: './src/server/db/migrations',
-  schema: './src/server/schemas/*.ts',
+  out: './src/integrations/drizzle/migrations',
+  schema: './src/integrations/schemas/*.ts',
   dialect: 'postgresql',
   casing: 'snake_case',
   dbCredentials: {

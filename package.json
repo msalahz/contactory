@@ -30,7 +30,7 @@
     "db:push": "drizzle-kit push --config drizzle.config.ts",
     "db:pull": "drizzle-kit pull --config drizzle.config.ts",
     "db:studio": "drizzle-kit studio",
-    "db:seeds": "tsx src/server/db/seeds.ts",
+    "db:seeds": "tsx src/integrations/drizzle/seeds.ts",
     "prepare": "husky",
     "deploy": "npm run build && wrangler deploy",
     "cf-typegen": "wrangler types"
