@@ -33,6 +33,7 @@
 ## Phase 4: Create New Contact [US2]
 
 - [ ] T016 [US2] Implement avatar upload RPC in `src/server/mutations/contacts.ts` using R2
+- [ ] T042 [US2] Implement client-side image compression/resizing (max 512x512) before upload
 - [ ] T017 [P] [US2] Create `ContactForm` component in `src/features/contacts/components/ContactForm.tsx` with Zod validation
 - [ ] T018 [US2] Create `useCreateContact` hook in `src/features/contacts/hooks/useCreateContact.ts` (with optimistic updates)
 - [ ] T019 [US2] Implement create sheet route in `src/routes/_user/contacts/new.tsx`

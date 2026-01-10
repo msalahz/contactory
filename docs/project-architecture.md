@@ -1,13 +1,14 @@
 <!--
 ## Note to AI Agents
-This document is intended for technical stakeholders who have a technical background in software development. It provides a high-level overview the technical stack, architectural patterns, and implementation guidelines
+This document is intended for technical stakeholders who have a technical background in software development. It provides a high-level overview of the technical stack, architectural patterns, and implementation guidelines
 -->
 
 # Project Architecture: Contactory
 
 ## Executive Summary
 
-Contactory is a modern contact management application built with cutting-edge web technologies. It serves as a digital address book with advanced features like cloud storage, internationalization, and real-time collaboration capabilities.
+Contactory is a modern contact management application built with cutting-edge web technologies. It serves as a digital
+address book with advanced features like cloud storage, internationalization, and real-time collaboration capabilities.
 
 **Key Characteristics:**
 
@@ -159,35 +160,48 @@ export const env = createEnv({
 
 ```
 src/
-├── backend/              # Server-only code (never bundled to client)
-│   ├── db/               # Database client, migrations, seeds
-│   ├── emails/           # Email templates
-│   ├── middlewares/      # Authentication, logging
-│   ├── modules/          # Business logic by feature
-│   ├── mutations/        # Server mutation functions (RPC)
-│   ├── queries/          # Server query functions (RPC)
-│   └── schemas/          # Zod validation & Drizzle schemas
-├── features/             # Client feature modules
-│   ├── auth/
-│   ├── contacts/         # Current focus
-│   ├── landing/
-│   └── users/
-├── core/                 # Shared reusable code
-│   ├── components/       # Shared UI components
-│   ├── locales/          # i18n translations
+├── backend/              # Server-only code (never bundled to client) (formerly src/server/)
+│   ├── lib/              # Business logic by feature (auth.ts, storage.ts)
+│   ├── middlewares/      # Server middleware (auth, logging)
+│   ├── mutations/        # Server mutation functions (RPCs)
+│   ├── queries/          # Server query functions (RPCs)
+│   └── utils/            # utilities & helper functions
+├── core/                 # Core/reusable code (formerly src/shared/)
+│   ├── components/       # Core/Shared UI components
+│   ├── locales/          # i18n core/shared translations
 │   ├── theme/            # Theme system
-│   └── utils/            # Utility functions
-├── integrations/         # Third-party setup
-│   ├── better-auth/
-│   ├── i18n/
-│   ├── tanstack-form/
-│   └── tanstack-query/
-└── routes/               # File-based routing
-    ├── __root.tsx        # Root layout with providers
-    ├── _auth/            # Unauthenticated routes
-    ├── _public/          # Public routes
-    ├── _user/            # Protected user routes
-    └── _admin/           # Admin routes
+│   ├── utils/            # Utility functions
+│   └── schemas.ts        # Zod validation schemas and TypeScript types
+├── features/             # Client feature modules
+│   ├── auth/             # Auth & User management components, hooks, lib
+│   └── landing/          # Landing page components
+├── integrations/         # Third-party integrations
+│   ├── better-auth/      # Authentication config
+│   ├── drizzle/          # Drizzle client, migrations, seeds, and config
+│   ├── i18n/             # Internationalization setup
+│   ├── resend/           # Email send integration & email templates (Resend + React Email)
+│   ├── shadcn/           # UI components
+│   ├── tanstack-form/    # Form handling
+│   └── tanstack-query/   # Query client setup
+├── routes/               # File-based routing
+│   ├── __root.tsx        # Root layout with providers
+│   ├── _auth/            # Unauthenticated routes (sign-in, sign-up)
+│   ├── _public/          # Public routes (landing)
+│   ├── _user/            # Protected user routes + route.tsx guard
+│   └── _admin/           # Admin-only routes + route.tsx guard
+├── start.ts              # TanStack Start configuration
+├── style.css             # Global styles with Tailwind CSS integration
+├── env.client.ts         # Client environment variables
+├── env.server.ts         # Server environment variables
+├── router.tsx            # TanStack Router configuration
+├── .env.example                   # Example environment variables
+├── components.json                # shadcn/ui config
+├── drizzle.config.ts              # Drizzle ORM config
+├── eslint.config.js               # ESLint config
+├── package.json                   # Dependencies & scripts
+├── prettier.config.js             # Prettier config
+├── tsconfig.json                  # TypeScript config
+└── vite.config.ts                 # Vite config
 ```
 
 **Rationale:**
@@ -274,11 +288,11 @@ Component Re-render
 
 ```typescript
 // src/features/contacts/components/ContactForm.tsx
-function ContactForm({ contact, onSubmit, isPending }) {
+function ContactForm ({ contact, onSubmit, isPending }) {
   return (
     <form>
-      {/* ... */}
-    </form>
+      {/* ... */ }
+    < /form>
   )
 }
 ```
@@ -301,20 +315,24 @@ export function useCreateContact() {
 
 ```typescript
 // src/routes/_user/contacts/new.tsx
-function CreateContactRoute() {
+function CreateContactRoute () {
   const navigate = useNavigate()
   const { mutate } = useCreateContact()
 
   return (
     <Sheet
-      open={true}
-      onOpenChange={(open) => !open && navigate({ to: '/contacts' })}
-    >
-      <SheetContent>
-        <ContactForm onSubmit={mutate} />
-      </SheetContent>
-    </Sheet>
-  )
+      open = { true }
+  onOpenChange = {(open)
+=>
+  !open && navigate({ to: '/contacts' })
+}
+>
+  <SheetContent>
+    <ContactForm onSubmit = { mutate }
+  />
+  < /SheetContent>
+  < /Sheet>
+)
 }
 ```
 
@@ -494,7 +512,7 @@ src/
 │   │       ├── en.json
 │   │       └── ar.json
 └── core/
-    └── locales/           # Shared (buttons, errors, validation)
+    └── locales/           # Core/Shared (buttons, errors, validation)
         ├── en.json
         └── ar.json
 ```
@@ -785,7 +803,8 @@ describe('createContactFn', () => {
 describe('ContactForm', () => {
   it('submits form with valid data', async () => {
     const onSubmit = vi.fn()
-    render(<ContactForm onSubmit={onSubmit} />)
+    render(<ContactForm onSubmit = { onSubmit }
+    />)
 
     fireEvent.change(screen.getByLabelText('First Name'), {
       target: { value: 'John' },
@@ -955,7 +974,7 @@ const buttonVariants = cva('btn', {
 - Store server secrets in client-accessible code
 - Skip authentication guards on protected server functions
 - Mix business logic with UI components
-- Create shared utilities that mix server and client code
+- Create core utilities that mix server and client code
 
 #### Internationalization Enforcement
 

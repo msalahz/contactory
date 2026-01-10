@@ -46,7 +46,7 @@ pnpm cf-typegen       # Generate Cloudflare Workers types
 
 ### Key Principles
 
-1. **Feature-Sliced Organization**: Client features in `src/features/`, server logic in `src/server/`
+1. **Feature-Sliced Organization**: Client features in `src/features/`, server logic in `src/backend/`
 2. **Route Groups**: File-based routing with `_` prefix groups (`_auth`, `_public`, `_user`, `_admin`)
 3. **Server Functions**: Use TanStack Start server functions (RPC) for internal operations, not REST APIs
 4. **Type Safety**: End-to-end type safety via TanStack Start + Drizzle ORM + Zod
@@ -56,49 +56,62 @@ pnpm cf-typegen       # Generate Cloudflare Workers types
 
 ```
 src/
-├── backend/              # Server-only code (never bundled to client)
-│   ├── db/               # Drizzle client, migrations, seeds
-│   ├── emails/           # Email templates (React Email)
+├── backend/              # Server-only code (never bundled to client) (formerly src/server/)
+│   ├── lib/              # Business logic by feature (auth.ts, storage.ts)
 │   ├── middlewares/      # Server middleware (auth, logging)
-│   ├── modules/          # Business logic by feature (auth.ts, users.ts, guards.ts, r2.ts)
-│   ├── mutations/        # Server mutation functions
-│   ├── queries/          # Server query functions
-│   └── schemas/          # Zod validation schemas
-├── features/             # Client feature modules
-│   ├── auth/             # Auth components, hooks, lib
-│   ├── landing/          # Landing page components
-│   └── users/            # User management components, hooks, lib
-├── core/                 # Shared/reusable code (formerly src/shared/)
-│   ├── components/       # Shared UI components
+│   ├── mutations/        # Server mutation functions (RPCs)
+│   ├── queries/          # Server query functions (RPCs)
+│   └── utils/            # utilities & helper functions
+├── core/                 # Core/reusable code (formerly src/shared/)
+│   ├── components/       # Core/Shared UI components
+│   ├── locales/          # i18n core/shared translations
 │   ├── theme/            # Theme system
-│   ├── locales/          # i18n translations
-│   └── utils/            # Utility functions
+│   ├── utils/            # Utility functions
+│   └── schemas.ts        # Zod validation schemas and TypeScript types
+├── features/             # Client feature modules
+│   ├── auth/             # Auth & User management components, hooks, lib
+│   └── landing/          # Landing page components
 ├── integrations/         # Third-party integrations
 │   ├── better-auth/      # Authentication config
+│   ├── drizzle/          # Drizzle client, migrations, seeds, and config
+│   ├── i18n/             # Internationalization setup
+│   ├── resend/           # Email send integration & email templates (Resend + React Email)
 │   ├── shadcn/           # UI components
 │   ├── tanstack-form/    # Form handling
-│   ├── tanstack-query/   # Query client setup
-│   └── i18n/             # Internationalization setup
-└── routes/               # File-based routing
-    ├── __root.tsx        # Root layout with providers
-    ├── _auth/            # Unauthenticated routes (sign-in, sign-up)
-    ├── _public/          # Public routes (landing)
-    ├── _user/            # Protected user routes + route.tsx guard
-    └── _admin/           # Admin-only routes + route.tsx guard
+│   └── tanstack-query/   # Query client setup
+├── routes/               # File-based routing
+│   ├── __root.tsx        # Root layout with providers
+│   ├── _auth/            # Unauthenticated routes (sign-in, sign-up)
+│   ├── _public/          # Public routes (landing)
+│   ├── _user/            # Protected user routes + route.tsx guard
+│   └── _admin/           # Admin-only routes + route.tsx guard
+├── start.ts              # TanStack Start configuration
+├── style.css             # Global styles with Tailwind CSS integration
+├── env.client.ts         # Client environment variables
+├── env.server.ts         # Server environment variables
+├── router.tsx            # TanStack Router configuration
+├── .env.example                   # Example environment variables
+├── components.json                # shadcn/ui config
+├── drizzle.config.ts              # Drizzle ORM config
+├── eslint.config.js               # ESLint config
+├── package.json                   # Dependencies & scripts
+├── prettier.config.js             # Prettier config
+├── tsconfig.json                  # TypeScript config
+└── vite.config.ts                 # Vite config
 ```
 
 ### Server vs. Client Code
 
-- **Server-only**: `src/server/*` - Never import from client code
+- **Server-only**: `src/backend/*` - Never import from client code
 - **Client-only**: `src/features/*` - UI components, hooks
-- **Shared**: `src/core/*` - Can be used by both (utils, types)
+- **Core**: `src/core/*` - Can be used by both (utils, types)
 - **Environment Variables**:
   - Client: `VITE_*` prefix (validated in `src/env.client.ts`)
   - Server: `process.env.*` (validated with `@t3-oss/env-core`)
 
 ### Data Flow Pattern
 
-1. **Server Function**: Define in `src/backend/queries/` or `src/backend/mutations/`
+1. **Server Function(RPCs)**: Define in `src/backend/queries/` or `src/backend/mutations/`
 
    ```ts
    export const getUsersFn = createServerFn().handler(() => {
@@ -150,7 +163,7 @@ export const Route = createFileRoute('/_user')({
 
 ### Naming
 
-- **Files**: camelCase (e.g., `userProfile.ts`)
+- **Files**: camelCase (e.g., `userAuth.ts`)
 - **Components**: PascalCase (e.g., `UserProfile.tsx`)
 - **Functions/Variables**: camelCase (e.g., `getUserById`)
 - **Constants**: UPPER_SNAKE_CASE (e.g., `MAX_RETRIES`)
@@ -161,6 +174,7 @@ export const Route = createFileRoute('/_user')({
 - Prefer named exports over default exports
 - Use `import type` for type-only imports
 - Explicit imports preferred (avoid barrel files)
+- Import sorting enforced via eslint
 
 ### React Patterns
 
@@ -174,10 +188,10 @@ export const Route = createFileRoute('/_user')({
 ### Database
 
 - Table names: plural (e.g., `contacts` not `contact`)
-- Use UUIDv7 for primary keys (via `uuid` package)
+- Use sortable UUIDv7 for primary keys (via `uuid` package)
 - Timestamps: `createdAt`, `updatedAt` (snake_case in DB via Drizzle config)
-- Schema files in `src/server/schemas/*.ts`
-- Migrations in `src/server/db/migrations/`
+- Schema files in `src/features/**/schemas.ts` or `src/core/schemas.ts`
+- Migrations in `src/integration/drizzle/migrations/`
 
 ### Forms
 
@@ -190,15 +204,13 @@ export const Route = createFileRoute('/_user')({
 - **ALWAYS use pnpm** (not npm or yarn)
 - **Browser preference**: Use Brave browser when applicable (per project instructions)
 - **No secrets in code**: Use environment variables only
-- **Upcoming refactor**: `src/server/` will be renamed to `src/backend/`, `src/shared/` will be renamed to `src/core/`
 - **Work in progress**: Contacts CRUD feature currently under development (branch: 001-contacts-crud)
 - **CI Pipeline**: GitHub Actions runs lint, format check, typecheck, tests, and build on push/PR to main
 
 ## Documentation
 
-- **ADRs**: Architecture Decision Records in `docs/ADR-*.md`
-- **PRD**: Product requirements in `docs/PRD.md`
-- **Security**: Audit findings in `docs/SECURITY-AUDIT.md`
+- **Project Overview**: Business-focused project overview in `docs/project-overview.md`
+- **Project Architecture**: stack, and architectural in `docs/project-architecture.md`
 - **Copilot Instructions**: `.github/copilot-instructions.md` (detailed coding conventions)
 - **Commit Guidelines**: `.github/git-commit-instructions.md`
 

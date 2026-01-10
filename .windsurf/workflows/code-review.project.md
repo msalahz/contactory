@@ -51,7 +51,7 @@ Create a comprehensive view:
 - Feature directories and their purposes
 - Route structure
 - Server/API organization
-- Shared components and utilities
+- Core components and utilities
 
 **Key Files**:
 

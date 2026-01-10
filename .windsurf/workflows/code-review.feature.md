@@ -69,7 +69,7 @@ Create a mental map of the feature:
 **Agent 3 - Constitution Compliance**:
 
 - i18n: All strings using translation keys
-- i18n: Correct namespace usage (feature-specific vs shared)
+- i18n: Correct namespace usage (feature-specific vs core)
 - Accessibility: ARIA labels, keyboard navigation
 - Performance: Lazy loading, memoization where needed
 - UI: Consistent shadcn/ui component usage

@@ -66,7 +66,7 @@ src/
 │   ├── mutations/         # Server mutation functions
 │   ├── queries/           # Server query functions
 │   └── schemas/           # Validation schemas
-├── shared/                # Shared utilities
+├── core/                # core utilities
 │   ├── components/        # Reusable components
 │   ├── theme/             # Theme configuration
 │   └── utils/             # Utility functions

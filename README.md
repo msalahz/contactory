@@ -27,6 +27,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 | -------------------- | -------------- | ------------------------------------------------------- |
 | Authentication       | ✅ Implemented | Secure signup, signin, password reset with better-auth  |
 | Theme Support        | ✅ Implemented | Dark/light mode with system preference detection        |
+| Internationalization | ✅ Implemented | Bilingual support with RTL/LTR layout                   |
 | Organize Contacts    | 🚧 In Progress | CRUD operations for contacts (basic structure in place) |
 | Favorites            | 🚧 In Progress | Mark and manage favorite contacts                       |
 | Search & Filter      | 📅 Coming Soon | Real-time search with advanced filtering                |
@@ -36,7 +37,6 @@ your personal and professional contacts in one secure place with a beautiful, re
 | Groups/Labels        | 📅 Coming Soon | Custom groups with color coding                         |
 | Duplicate Detection  | 📅 Coming Soon | Find and merge duplicate contacts                       |
 | QR Code Sharing      | 📅 Coming Soon | Share contact info via scannable QR code                |
-| Internationalization | 📅 Coming Soon | Bilingual support with RTL/LTR layout                   |
 
 ---
 
@@ -110,64 +110,78 @@ contactory/
 │   ├── workflows/
 │   │   └── ci.yml                # CI/CD pipeline configuration
 ├── docs/                          # Documentation
-│   ├── project-overview.md         # Product vision, features, requirements
+│   ├── project-overview.md       # Product vision, features, requirements
 │   └── project-architecture.md   # Technical stack, patterns, guidelines
 ├── public/                        # Static assets
 │   ├── favicon.svg
 │   └── robots.txt
+├── specs/                         # Feature specifications
+│   └── 001-contacts-crud/        # Contacts CRUD feature spec
 ├── src/
-│   ├── features/                  # Feature modules
+│   ├── backend/                   # Server-only code
+│   │   ├── lib/                   # Business logic modules
+│   │   │   ├── auth.ts            # Auth business logic
+│   │   │   ├── contacts.ts        # Contacts business logic
+│   │   │   ├── storage.ts         # File storage logic
+│   │   │   └── theme.ts           # Theme management
+│   │   ├── middlewares/           # Server middlewares
+│   │   ├── mutations/             # Server mutation functions (RPCs)
+│   │   │   ├── auth.ts            # Auth mutations
+│   │   │   └── contacts.ts        # Contacts mutations
+│   │   ├── queries/               # Server query functions (RPCs)
+│   │   │   ├── auth.ts            # Auth queries
+│   │   │   └── contacts.ts        # Contacts queries
+│   │   └── utils/                 # Server utilities
+│   ├── core/                      # Core/reusable code
+│   │   ├── components/            # Shared UI components
+│   │   ├── locales/               # i18n translations
+│   │   ├── theme/                 # Theme system
+│   │   ├── utils/                 # Utility functions
+│   │   └── schemas.ts             # Zod schemas & TypeScript types
+│   ├── features/                  # Client feature modules
 │   │   ├── auth/                  # Authentication feature
 │   │   │   ├── components/        # Auth UI components
 │   │   │   ├── hooks/             # Auth hooks
 │   │   │   └── lib/               # Auth utilities
-│   │   ├── landing/               # Landing page feature
-│   │   │   └── components/        # Landing page components
-│   │   └── users/                 # User management feature
-│   │       ├── components/        # User UI components
-│   │       ├── hooks/             # User hooks
-│   │       ├── lib/               # User utilities
-│   │       └── utils/             # User helper functions
+│   │   ├── contacts/              # Contacts management feature
+│   │   │   ├── components/        # Contacts UI components
+│   │   │   ├── hooks/             # Contacts hooks
+│   │   │   ├── lib/               # Contacts utilities
+│   │   │   ├── keys.ts            # Query keys factory
+│   │   │   └── options.ts         # Query options factory
+│   │   └── landing/               # Landing page feature
+│   │       └── components/        # Landing page components
 │   ├── integrations/              # Third-party integrations
-│   │   ├── better-auth/           # Auth configuration
+│   │   ├── better-auth/           # Authentication config
+│   │   ├── drizzle/               # Drizzle client, migrations, seeds, config
+│   │   ├── i18n/                  # Internationalization setup
+│   │   ├── resend/                # Email integration & templates
 │   │   ├── shadcn/                # UI components
 │   │   ├── tanstack-form/         # Form handling
-│   │   └── tanstack-query/        # Data fetching
-│   ├── routes/                    # Application routes
-│   │   ├── __root.tsx             # Root layout
-│   │   ├── _auth/                 # Auth routes (sign-in, sign-up, etc.)
+│   │   └── tanstack-query/        # Query client setup
+│   ├── routes/                    # File-based routing
+│   │   ├── __root.tsx             # Root layout with providers
+│   │   ├── _auth/                 # Unauthenticated routes
 │   │   │   ├── sign-in.tsx        # Sign in page
 │   │   │   ├── sign-up.tsx        # Sign up page
 │   │   │   ├── forgot-password.tsx # Password reset request
 │   │   │   └── reset-password.tsx # Password reset form
-│   │   ├── _public/               # Public routes (landing page)
-│   │   ├── _user/                 # Protected routes (authenticated users)
+│   │   ├── _public/               # Public routes (landing)
+│   │   ├── _user/                 # Protected user routes
 │   │   │   ├── route.tsx          # User layout + auth guard
 │   │   │   ├── dashboard.tsx      # Main dashboard view
-│   │   │   ├── contacts.tsx       # Contacts management
+│   │   │   ├── contacts/          # Contacts routes
+│   │   │   │   ├── index.tsx      # Contacts list
+│   │   │   │   ├── new.tsx        # Create contact sheet
+│   │   │   │   ├── $contactId.tsx # Contact detail sheet
+│   │   │   │   └── $contactId.edit.tsx # Edit contact sheet
 │   │   │   └── profile.tsx        # User profile page
-│   │   ├── _admin/                # Admin routes (admin users only)
-│   │   └── api/                   # API endpoints
-│   ├── server/                    # Server-side code
-│   │   ├── db/                    # Database configuration
-│   │   │   ├── client.ts          # Drizzle DB client
-│   │   │   ├── migrations/        # Database migrations
-│   │   │   └── seeds.ts           # Seed data for development
-│   │   ├── emails/                # Email templates
-│   │   ├── middlewares/           # Server middlewares
-│   │   ├── modules/               # Business logic modules
-│   │   │   ├── auth.ts            # Auth business logic
-│   │   │   ├── guards.ts          # Route guards
-│   │   │   ├── r2.ts              # Cloudflare R2 storage
-│   │   │   ├── theme.ts           # Theme management
-│   │   │   └── users.ts           # User business logic
-│   │   ├── mutations/             # Server mutation functions
-│   │   ├── queries/               # Server query functions
-│   │   └── schemas/               # Validation schemas
-│   └── shared/                    # Shared utilities and components
-│       ├── components/            # Reusable components
-│       ├── theme/                 # Theme configuration
-│       └── utils/                 # Utility functions
+│   │   └── _admin/                # Admin-only routes
+│   ├── start.ts                   # TanStack Start configuration
+│   ├── style.css                  # Global styles with Tailwind CSS
+│   ├── env.client.ts              # Client environment variables
+│   ├── env.server.ts              # Server environment variables
+│   └── router.tsx                 # TanStack Router configuration
 ├── .env.example                   # Example environment variables
 ├── components.json                # shadcn/ui config
 ├── drizzle.config.ts              # Drizzle ORM config

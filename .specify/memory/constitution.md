@@ -1,6 +1,26 @@
 <!--
 SYNC IMPACT REPORT
 ==================
+Version change: 1.0.0 → 1.0.1 (namespace clarification)
+
+Added Principles: None
+Removed Principles: None
+Added Sections: None
+Removed Sections: None
+
+Rationale: Updated i18n namespace from 'shared' to 'core' to match actual codebase structure
+
+Templates Status:
+- .specify/templates/plan-template.md ✅ compatible (no changes to constitution check)
+- .specify/templates/spec-template.md ✅ compatible (no changes to success criteria)
+- .specify/templates/tasks-template.md ✅ compatible (no changes to test phases)
+
+Follow-up TODOs: None
+-->
+
+<!--
+SYNC IMPACT REPORT
+==================
 Version change: 0.0.0 → 1.0.0 (initial creation)
 
 Added Principles:
@@ -60,7 +80,7 @@ Testing ensures reliability and enables confident refactoring.
 The application MUST provide a consistent, accessible, and internationalized experience.
 
 - All user-facing strings MUST use i18n translation keys (plain English as keys)
-- i18n namespaces: `shared`, `auth`, `landing`, `users` (feature-specific)
+- i18n namespaces: `core`, `auth`, `landing` (feature-specific)
 - Accessibility MUST target WCAG 2.1 AA compliance
 - Responsive design MUST follow a mobile-first approach
 - UI components MUST use shadcn/ui with Tailwind CSS
@@ -115,4 +135,4 @@ This constitution supersedes ad-hoc decisions and establishes binding developmen
 - Version follows semantic versioning: MAJOR (breaking changes), MINOR (additions), PATCH (clarifications)
 - Compliance reviews SHOULD occur quarterly or after major feature releases
 
-**Version**: 1.0.0 | **Ratified**: 2026-01-08 | **Last Amended**: 2026-01-08
+**Version**: 1.0.1 | **Ratified**: 2026-01-08 | **Last Amended**: 2026-01-10
