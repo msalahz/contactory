@@ -2,7 +2,8 @@
 
 **Feature Branch**: `001-contacts-crud`  
 **Created**: 2026-01-08  
-**Status**: Draft  
+**Updated**: 2026-01-10  
+**Status**: Clarified  
 **Input**: User description: "contacts crud"
 
 ## Clarifications
@@ -13,6 +14,78 @@
 - Q: Is bulk import/export required for MVP? → A: **No, Out of Scope** (Manual entry only. Keep MVP focused on CRUD.)
 - Q: Should soft-deleted contacts be viewable in a Trash folder? → A: **Trash View Required** (Dedicated page to view and restore deleted contacts.)
 - Q: How should contact avatars be handled? → A: **File Upload Required** (Must implement image upload/storage (R2) immediately.)
+
+### Session 2026-01-10 (Detailed UX/Technical Interview)
+
+#### Virtual Scrolling & Performance
+
+- Q: Pagination strategy for infinite scroll? → A: **Cursor-based pagination** (`WHERE id > :lastId LIMIT 50`). Provides consistent results during inserts/deletes without offset drift.
+- Q: Scroll behavior when search results update? → A: **Reset to top of list**. Search is a "new query"; users expect to browse from the beginning.
+- Q: Virtualizer overscan amount? → A: **10-15 rows** outside viewport. Provides buffer for fast scrolling without negating virtualization benefits.
+
+#### Soft Delete & Trash Management
+
+- Q: Multiple sequential deletes within undo window? → A: **Stacked toasts** with individual 5-second timers. Each deletion deserves its own undo opportunity.
+- Q: Trash auto-purge policy? → A: **No auto-purge** (keep forever until manually deleted). Maximum data safety; users explicitly manage trash cleanup.
+- Q: Undo toast persistence across navigation? → A: **Global toast persistence** until timer expires. Undo remains available even if user navigates to another page.
+
+#### Avatar Upload
+
+- Q: Avatar upload timing? → A: **Upload as part of form submission**. Atomic operation; no orphaned uploads if user cancels.
+- Q: Replacing existing avatar? → A: **Upload new image first, then delete old**. Safe pattern; old URL remains valid until replacement confirmed.
+
+#### Search & Filtering
+
+- Q: Search debounce timing? → A: **300ms**. Balanced responsiveness and API efficiency.
+- Q: Search scope with active filter? → A: **Search within current filter** (e.g., only favorites matching query). Filters and search compose; user clears filter for broader results.
+- Q: Empty search results CTA? → A: **"No contacts found" + "Clear search" button + spelling suggestion**. Actionable recovery path.
+
+#### Navigation & Sheet Behavior
+
+- Q: Browser back from edit sheet? → A: **Back to contact list** (`/contacts`). Direct return; detail sheet can be re-opened separately.
+- Q: Deep link to edit URL? → A: **Show edit sheet directly** (respect the URL). URL intent is honored; user sees edit form immediately.
+
+#### Mobile Experience
+
+- Q: Contact list layout on mobile (<768px)? → A: **Card/list view** with stacked information. Touch-friendly, no horizontal scroll.
+- Q: Form presentation on mobile? → A: **Bottom sheet** (slides up). Native mobile feel, thumb-friendly, can expand to full-screen.
+- Q: Swipe actions on mobile cards? → A: **Yes** - swipe right for favorite, swipe left for delete. Include haptic feedback.
+
+#### Error Handling & Resilience
+
+- Q: Failed optimistic delete? → A: **Restore contact to list + show error toast**. Clear feedback; user understands system state.
+- Q: Network timeout during avatar upload? → A: **Auto-retry once silently, then show error with "Retry" button**. Handles transient failures gracefully.
+- Q: Stale data after background tab? → A: **Refetch on window focus** (TanStack Query default). Standard pattern; always show fresh data.
+
+#### Favorites & Sorting
+
+- Q: Favorites display location? → A: **Pinned at top of list**, visually separated from regular contacts. Quick access to important contacts.
+- Q: Sort preference persistence? → A: **Persist in URL** (shareable, bookmarkable). Matches URL-driven architecture.
+- Q: Favorite toggle feedback? → A: **Instant visual toggle + subtle toast** "Added to favorites". Confirms action without blocking.
+
+#### Internationalization (i18n)
+
+- Q: Language switcher placement? → A: **User profile/settings dropdown**. Language is a preference; users change it once.
+- Q: Number display in Arabic locale? → A: **Western numerals (0-9)** regardless of locale. Universally readable; common in modern Arabic apps.
+- Q: Phone number formatting? → A: **Smart formatting based on detected country code**, fallback to raw input. Improves readability.
+
+#### Data Privacy & Cleanup
+
+- Q: Permanent delete confirmation? → A: **Single confirmation dialog**: "Permanently delete? This cannot be undone." Standard safety check.
+- Q: Avatar cleanup on permanent delete? → A: **Delete avatar from R2** as part of permanent delete. Complete cleanup; no orphaned files.
+- Q: "Empty Trash" bulk action? → A: **Yes, with confirmation dialog showing count**. Convenient cleanup with clear warning.
+
+#### Form UX & Validation
+
+- Q: Required fields for contact creation? → A: **Only first name**. Minimum viable contact; users can add more info later.
+- Q: Form field organization? → A: **Grouped sections** (Basic Info, Contact, Work, Address) in single scroll. Visual organization, all fields visible.
+- Q: Unsaved changes warning? → A: **Confirmation dialog**: "Discard changes?" Standard browser-like behavior.
+
+#### Performance & Metrics
+
+- Q: Initial page load target? → A: **Under 2 seconds** to interactive. Achievable with code splitting; below perception threshold.
+- Q: Image optimization strategy? → A: **Client-side resize/compress before upload**, cap at 512x512. Reduces upload time and storage; no server CPU cost.
+- Q: List rendering performance target? → A: **60 FPS during scroll**. Standard for smooth UX; achievable with virtualization.
 
 ## User Scenarios & Testing _(mandatory)_
 
@@ -218,11 +291,35 @@ As a user, I want to view and manage deleted contacts so I can recover accidenta
 - **FR-021**: System MUST provide a "Trash" view to list soft-deleted contacts
 - **FR-022**: System MUST allow users to restore contacts from the Trash
 - **FR-023**: System MUST allow users to permanently delete contacts from the Trash
+- **FR-024**: System MUST support stacked undo toasts when multiple contacts are deleted in quick succession
+- **FR-025**: System MUST persist undo toast globally until timer expires (even across page navigation)
+- **FR-026**: System MUST NOT auto-purge trash (contacts remain in trash until manually deleted)
+- **FR-027**: System MUST provide an "Empty Trash" bulk action with confirmation showing item count
+- **FR-028**: System MUST delete associated avatar from R2 storage when contact is permanently deleted
 
 **URL State**
 
 - **FR-016**: System MUST reflect current view state (search query, filters, selected contact) in the URL
 - **FR-017**: System MUST restore the correct view when a user navigates to a URL with state parameters
+- **FR-029**: System MUST show edit sheet directly when user navigates to edit URL (respect URL intent)
+
+**Mobile Experience**
+
+- **FR-030**: System MUST display contact list as cards on mobile devices (<768px viewport)
+- **FR-031**: System MUST present forms in bottom sheet on mobile devices
+- **FR-032**: System MUST support swipe gestures on mobile (right for favorite, left for delete)
+
+**Performance**
+
+- **FR-033**: System MUST resize/compress avatar images client-side before upload (max 512x512)
+- **FR-034**: System MUST use cursor-based pagination for contact list queries
+- **FR-035**: System MUST maintain 60 FPS during list scrolling with 1000+ contacts
+
+**Error Handling**
+
+- **FR-036**: System MUST restore UI state and show error toast if optimistic update fails
+- **FR-037**: System MUST auto-retry avatar uploads once on transient failure before showing error
+- **FR-038**: System MUST refetch contact data on window focus to ensure freshness
 
 **Exclusions**
 
@@ -246,3 +343,7 @@ As a user, I want to view and manage deleted contacts so I can recover accidenta
 - **SC-006**: Delete with undo prevents accidental data loss - undo success rate tracked
 - **SC-007**: All contact operations (create, edit, delete, favorite toggle) provide immediate visual feedback within 200ms
 - **SC-008**: Contact URLs are shareable - opening a shared contact URL shows that contact's details directly
+- **SC-009**: List scrolling maintains 60 FPS with 1000+ contacts (virtualization performance)
+- **SC-010**: Search debounce of 300ms provides responsive feel without excessive API calls
+- **SC-011**: Avatar upload completes within 3 seconds for images up to 5MB (after client-side compression)
+- **SC-012**: Mobile swipe actions register correctly 99% of the time with haptic feedback confirmation
