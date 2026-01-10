@@ -35,7 +35,7 @@ export default [
     files: [
       'src/features/**/*.tsx',
       'src/features/**/hooks/**/*.ts',
-      'src/shared/components/**/*.tsx',
+      'src/core/components/**/*.tsx',
       'src/routes/**/*.tsx',
     ],
     rules: {

@@ -11,7 +11,7 @@ import {
 } from '@/integrations/shadcn/components/ui/empty'
 
 export function UnderConstruction(props: React.ComponentProps<typeof Empty>) {
-  const { t } = useTranslation('shared')
+  const { t } = useTranslation('core')
 
   return (
     <Empty {...props}>

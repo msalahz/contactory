@@ -3,7 +3,7 @@ import { useTranslation } from 'react-i18next'
 
 import type { Theme } from '@/server/schemas/preferences'
 
-import { noop } from '@/shared/utils/noop'
+import { noop } from '@/core/utils/noop'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import {
@@ -27,7 +27,7 @@ export function ThemeDropdownMenu({
   onChange = noop,
   ...props
 }: ThemeDropdownMenuProps) {
-  const { t } = useTranslation('shared')
+  const { t } = useTranslation('core')
 
   return (
     <DropdownMenu modal={false}>

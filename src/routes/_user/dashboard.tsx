@@ -1,16 +1,16 @@
 import { Link, createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
-import { LogoIcon, LogoWord } from '@/shared/components/Logo'
-import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
-import { UnderConstruction } from '@/shared/components/UnderConstruction'
+import { LogoIcon, LogoWord } from '@/core/components/Logo'
+import { AnimatedPresence } from '@/core/components/AnimatedPresence'
+import { UnderConstruction } from '@/core/components/UnderConstruction'
 
 export const Route = createFileRoute('/_user/dashboard')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
-  const { t } = useTranslation('shared')
+  const { t } = useTranslation('core')
 
   return (
     <AnimatedPresence className="flex h-full items-center justify-center">

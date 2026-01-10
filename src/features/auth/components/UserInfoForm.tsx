@@ -6,7 +6,7 @@ import { useTranslation } from 'react-i18next'
 import type { ReactNode } from 'react'
 import type { User } from '@/integrations/better-auth/authClient'
 
-import { noop } from '@/shared/utils/noop'
+import { noop } from '@/core/utils/noop'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'

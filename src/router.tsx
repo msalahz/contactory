@@ -7,7 +7,7 @@ import * as TanstackQuery from '@/integrations/tanstack-query/rootProvider'
 
 // Import the generated route tree
 
-import { DefaultCatchBoundary } from '@/shared/components/DefaultCatchBoundary'
+import { DefaultCatchBoundary } from '@/core/components/DefaultCatchBoundary'
 
 // Create a new router instance
 export const getRouter = () => {

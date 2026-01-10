@@ -2,13 +2,13 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
 import { envClient } from '@/env.client'
-import { noop } from '@/shared/utils/noop'
-import { AlertBox } from '@/shared/components/AlertBox'
+import { noop } from '@/core/utils/noop'
+import { AlertBox } from '@/core/components/AlertBox'
 import { SignInForm } from '@/features/auth/components/SignInForm'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { useSignInEmail } from '@/features/auth/hooks/useSignInEmail'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
-import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
+import { AnimatedPresence } from '@/core/components/AnimatedPresence'
 import { useSignInSocial } from '@/features/auth/hooks/useSignInSocial'
 
 export const Route = createFileRoute('/_auth/sign-in')({

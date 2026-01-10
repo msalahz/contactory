@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 
-import { useTheme } from '@/shared/theme/useTheme'
+import { useTheme } from '@/core/theme/useTheme'
 import { findAuthUserFn } from '@/server/queries/auth'
 import { FAQs } from '@/features/landing/components/Faqs'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'

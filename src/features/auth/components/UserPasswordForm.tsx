@@ -4,7 +4,7 @@ import { useTranslation } from 'react-i18next'
 import { useMemo } from 'react'
 import type { ReactNode } from 'react'
 
-import { noop } from '@/shared/utils/noop'
+import { noop } from '@/core/utils/noop'
 import { useAppForm } from '@/integrations/tanstack-form/hooks/form'
 import { FieldGroup } from '@/integrations/shadcn/components/ui/field'
 import { ProfileSection } from '@/features/auth/components/ProfileSection'

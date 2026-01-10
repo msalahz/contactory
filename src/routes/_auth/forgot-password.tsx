@@ -2,10 +2,10 @@ import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 
 import { envClient } from '@/env.client'
-import { AlertBox } from '@/shared/components/AlertBox'
+import { AlertBox } from '@/core/components/AlertBox'
 import { ItemTitle } from '@/integrations/shadcn/components/ui/item'
 import { FieldError } from '@/integrations/shadcn/components/ui/field'
-import { AnimatedPresence } from '@/shared/components/AnimatedPresence'
+import { AnimatedPresence } from '@/core/components/AnimatedPresence'
 import { useRequestPasswordReset } from '@/features/auth/hooks/useRequestPasswordReset'
 import { RequestPasswordResetForm } from '@/features/auth/components/RequestPasswordResetForm'
 

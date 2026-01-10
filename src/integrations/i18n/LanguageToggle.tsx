@@ -1,6 +1,6 @@
 import type { Language } from '@/server/schemas/preferences'
 
-import { noop } from '@/shared/utils/noop'
+import { noop } from '@/core/utils/noop'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 

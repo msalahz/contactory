@@ -1,7 +1,7 @@
 import { useTranslation } from 'react-i18next'
 
-import { noop } from '@/shared/utils/noop'
-import { GoogleIcon } from '@/shared/components/GoogleIcon'
+import { noop } from '@/core/utils/noop'
+import { GoogleIcon } from '@/core/components/GoogleIcon'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { ProfileSection } from '@/features/auth/components/ProfileSection'
 

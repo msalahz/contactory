@@ -3,7 +3,7 @@ import { ErrorComponent, Link, rootRouteId, useMatch, useRouter } from '@tanstac
 import type { ErrorComponentProps } from '@tanstack/react-router'
 
 export function DefaultCatchBoundary({ error }: ErrorComponentProps) {
-  const { t } = useTranslation('shared')
+  const { t } = useTranslation('core')
   const router = useRouter()
   const isRoot = useMatch({
     strict: false,

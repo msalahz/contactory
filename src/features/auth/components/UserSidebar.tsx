@@ -12,11 +12,11 @@ import {
 import type { User } from '@/integrations/better-auth/authClient'
 
 import type { Language } from '@/server/schemas/preferences'
-import { useTheme } from '@/shared/theme/useTheme'
+import { useTheme } from '@/core/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
-import { ThemeToggleIcon } from '@/shared/theme/ThemeToggle'
+import { ThemeToggleIcon } from '@/core/theme/ThemeToggle'
 import { useSignOut } from '@/features/auth/hooks/useSignOut'
-import { LogoIcon, LogoWord } from '@/shared/components/Logo'
+import { LogoIcon, LogoWord } from '@/core/components/Logo'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import {
   Tooltip,

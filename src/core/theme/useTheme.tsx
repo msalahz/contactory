@@ -5,11 +5,11 @@ import { useMutation } from '@tanstack/react-query'
 
 import type { Theme } from '@/server/schemas/preferences'
 
-import { ThemeContext } from '@/shared/theme/ThemeContext'
+import { ThemeContext } from '@/core/theme/ThemeContext'
 import { setThemeCookieFn } from '@/server/mutations/preferences'
 
 /**
- * @description Hook to access and update the theme from the shared store
+ * @description Hook to access and update the theme from the core store
  * @returns Object containing theme value and setTheme function
  */
 export function useTheme() {

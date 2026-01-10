@@ -12,7 +12,7 @@ import {
 import { cn } from '@/integrations/shadcn/lib/utils'
 
 export function Pending({ className, ...props }: React.ComponentProps<typeof Card>) {
-  const { t } = useTranslation('shared')
+  const { t } = useTranslation('core')
 
   return (
     <Card className={cn('m-auto', className)} {...props}>
