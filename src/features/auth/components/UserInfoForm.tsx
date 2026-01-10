@@ -16,7 +16,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/integrations/shadcn/compo
 import {
   USER_AVATAR_ACCEPTED_IMAGE_FILE_TYPE,
   USER_AVATAR_MAX_IMAGE_FILE_SIZE,
-} from '@/server/schemas/auth'
+} from '@/features/auth/schemas'
 
 export interface UserInfoFormValues {
   name: string

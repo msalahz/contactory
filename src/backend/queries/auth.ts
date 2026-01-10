@@ -1,6 +1,6 @@
 import { createServerFn } from '@tanstack/react-start'
 
-import { findAuthSession, findAuthUser } from '@/server/lib/auth'
+import { findAuthSession, findAuthUser } from '@/backend/lib/auth'
 
 export const findAuthSessionFn = createServerFn().handler(() => {
   return findAuthSession()

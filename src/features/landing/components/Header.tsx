@@ -3,7 +3,7 @@ import { Link } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
 import { LogOutIcon, Menu, X } from 'lucide-react'
 
-import type { Language, Theme } from '@/server/schemas/preferences'
+import type { Language, Theme } from '@/core/schemas'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { noop } from '@/core/utils/noop'

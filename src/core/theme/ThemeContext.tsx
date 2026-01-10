@@ -1,7 +1,7 @@
 import { createContext } from 'react'
 import { Store } from '@tanstack/react-store'
 
-import type { Theme } from '@/server/schemas/preferences'
+import type { Theme } from '@/core/schemas'
 
 export interface ThemeStoreState {
   theme: Theme

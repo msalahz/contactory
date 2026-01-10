@@ -1,6 +1,6 @@
 import { createMiddleware } from '@tanstack/react-start'
 
-import { requireAdmin, requireAuth } from '@/server/lib/auth'
+import { requireAdmin, requireAuth } from '@/backend/lib/auth'
 
 export const requireAuthMiddleware = createMiddleware().server(async ({ next }) => {
   const session = await requireAuth()

@@ -11,7 +11,7 @@ import {
 
 import type { User } from '@/integrations/better-auth/authClient'
 
-import type { Language } from '@/server/schemas/preferences'
+import type { Language } from '@/core/schemas'
 import { useTheme } from '@/core/theme/useTheme'
 import { cn } from '@/integrations/shadcn/lib/utils'
 import { ThemeToggleIcon } from '@/core/theme/ThemeToggle'

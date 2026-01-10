@@ -6,7 +6,7 @@ import { tanstackStartCookies } from 'better-auth/tanstack-start'
 
 import { envServer } from '@/env.server'
 import { getDb } from '@/integrations/drizzle/db'
-import { sendEmail } from '@/server/emails/sendEmail'
+import { sendEmail } from '@/integrations/resend/client'
 
 /**
  * Create an auth instance. Must be called within a request context.
@@ -66,7 +66,7 @@ export function getAuth() {
 
         console.info('SEND VERIFICATION EMAIL')
         const { VerifyEmailTemplate } =
-          await import('@/server/emails/templates/VerifyEmailTemplate')
+          await import('@/integrations/resend/templates/VerifyEmailTemplate')
         waitUntil(
           sendEmail({
             to: user.email,
@@ -93,7 +93,7 @@ export function getAuth() {
 
         console.info('SEND RESET PASSWORD')
         const { ResetPasswordEmail } =
-          await import('@/server/emails/templates/ResetPasswordEmailTemplate')
+          await import('@/integrations/resend/templates/ResetPasswordEmailTemplate')
         waitUntil(
           sendEmail({
             to: user.email,

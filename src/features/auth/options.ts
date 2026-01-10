@@ -1,7 +1,7 @@
 import { queryOptions } from '@tanstack/react-query'
 
 import { authKeys } from '@/features/auth/keys'
-import { findAuthUserFn } from '@/server/queries/auth'
+import { findAuthUserFn } from '@/backend/queries/auth'
 
 export const authOptions = {
   authUser() {

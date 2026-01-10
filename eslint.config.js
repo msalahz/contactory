@@ -45,13 +45,13 @@ export default [
           patterns: [
             {
               group: [
-                '@/server/!(schemas|queries|mutations)*',
-                '@/server/!(schemas|queries|mutations)/**',
-                '*/server/!(schemas|queries|mutations)*',
-                '*/server/!(schemas|queries|mutations)/**',
+                '@/backend/!(queries|mutations)*',
+                '@/backend/!(queries|mutations)/**',
+                '*/backend/!(queries|mutations)*',
+                '*/backend/!(queries|mutations)/**',
               ],
               message:
-                'Server modules cannot be imported in client code. (schemas/*, queries/*, mutations/* are allowed)',
+                'Server modules cannot be imported in client code. (queries/*, mutations/* are allowed)',
             },
             {
               group: ['@/env.server', '*/env.server'],

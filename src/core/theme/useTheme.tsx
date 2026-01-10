@@ -3,10 +3,10 @@ import { useStore } from '@tanstack/react-store'
 import { useServerFn } from '@tanstack/react-start'
 import { useMutation } from '@tanstack/react-query'
 
-import type { Theme } from '@/server/schemas/preferences'
+import type { Theme } from '@/core/schemas'
 
 import { ThemeContext } from '@/core/theme/ThemeContext'
-import { setThemeCookieFn } from '@/server/mutations/preferences'
+import { setThemeCookieFn } from '@/backend/mutations/preferences'
 
 /**
  * @description Hook to access and update the theme from the core store

@@ -1,6 +1,6 @@
 import { getCookie, setCookie } from '@tanstack/react-start/server'
 
-import type { Language, Theme } from '@/server/schemas/preferences'
+import type { Language, Theme } from '@/core/schemas'
 import {
   COOKIE_OPTIONS,
   LANGUAGE_COOKIE_NAME,
@@ -9,7 +9,7 @@ import {
   THEME_DEFAULT,
   languageSchema,
   themeSchema,
-} from '@/server/schemas/preferences'
+} from '@/core/schemas'
 
 export const parseThemeCookie = () => {
   const theme = getCookie(THEME_COOKIE_NAME)

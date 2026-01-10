@@ -5,8 +5,8 @@ import { redirect } from '@tanstack/react-router'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { getAuth } from '@/integrations/better-auth/auth'
-import { deleteR2Object, uploadR2Object } from '@/server/lib/storage'
-import { extractR2ObjectKey } from '@/server/utils/storage'
+import { deleteR2Object, uploadR2Object } from '@/backend/lib/storage'
+import { extractR2ObjectKey } from '@/backend/utils/storage'
 
 export async function findAuthSession() {
   const request = getRequest()

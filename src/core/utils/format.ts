@@ -1,4 +1,4 @@
-import type { Language } from '@/server/schemas/preferences'
+import type { Language } from '@/core/schemas'
 
 export function getLanguageLocale(language: Language) {
   return language === 'en' ? 'en-US' : language === 'ar' ? 'ar-SA' : language

@@ -4,9 +4,9 @@ import { createServerFn } from '@tanstack/react-start'
 import { getRequest } from '@tanstack/react-start/server'
 
 import { getAuth } from '@/integrations/better-auth/auth'
-import { userAvatarFileSchema } from '@/server/schemas/auth'
-import { requireAuthMiddleware } from '@/server/middlewares/auth'
-import { deleteUserAvatar, uploadUserAvatar } from '@/server/lib/auth'
+import { userAvatarFileSchema } from '@/features/auth/schemas'
+import { requireAuthMiddleware } from '@/backend/middlewares/auth'
+import { deleteUserAvatar, uploadUserAvatar } from '@/backend/lib/auth'
 
 export const signOutFn = createServerFn({ method: 'POST' })
   .inputValidator(z.object({ redirectTo: z.string() }).optional())

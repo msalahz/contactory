@@ -2,8 +2,8 @@ import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 
 import { useSuspenseQuery } from '@tanstack/react-query'
 import { authOptions } from '@/features/auth/options'
-import { findAuthUserFn } from '@/server/queries/auth'
-import { requireAuthMiddleware } from '@/server/middlewares/auth'
+import { findAuthUserFn } from '@/backend/queries/auth'
+import { requireAuthMiddleware } from '@/backend/middlewares/auth'
 import { SidebarProvider } from '@/integrations/shadcn/components/ui/sidebar'
 import {
   UserSidebar,

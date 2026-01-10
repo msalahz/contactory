@@ -1,4 +1,4 @@
-import type { Language } from '@/server/schemas/preferences'
+import type { Language } from '@/core/schemas'
 
 import { noop } from '@/core/utils/noop'
 import { cn } from '@/integrations/shadcn/lib/utils'
