@@ -205,3 +205,4 @@ export const Route = createFileRoute('/_user')({
 # Summary instructions
 
 - When using compact, focus on test output and code changes
+- Use the AskUserQuestion Tool to ask user questions when needed
