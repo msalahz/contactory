@@ -22,13 +22,13 @@ export interface HeroHeaderProps {
   onSignOutClick: () => void
 }
 
-export const HeroHeader = ({
+export function HeroHeader({
   user,
   theme,
   onThemeChange = noop,
   isSigningOut = false,
   onSignOutClick = noop,
-}: HeroHeaderProps) => {
+}: HeroHeaderProps) {
   const { t, i18n } = useTranslation('landing')
   const [menuState, setMenuState] = React.useState(false)
   const [isScrolled, setIsScrolled] = React.useState(false)
