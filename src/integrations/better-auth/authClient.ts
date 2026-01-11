@@ -7,6 +7,9 @@ export const authClient = createAuthClient({
   /** The base URL of the server (optional if you're using the same domain) */
   baseURL: envClient.VITE_BETTER_AUTH_BASE_URL,
   plugins: [adminClient()],
+  fetchOptions: {
+    throw: true, // Throw errors instead of returning { data, error }
+  },
 })
 
 export const { useSession } = createAuthClient()

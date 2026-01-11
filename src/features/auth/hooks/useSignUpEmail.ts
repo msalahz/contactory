@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { authKeys } from '@/features/auth/keys'
-import { signUpEmail } from '@/features/auth/lib/signUpEmail'
+import { authClient } from '@/integrations/better-auth/authClient'
 
 export function useSignUpEmail() {
   return useMutation({
     mutationKey: authKeys.signUpEmail,
-    mutationFn: signUpEmail,
+    mutationFn: (props: Parameters<typeof authClient.signUp.email>[0]) =>
+      authClient.signUp.email(props),
   })
 }

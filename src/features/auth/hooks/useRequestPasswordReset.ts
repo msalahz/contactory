@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { authKeys } from '@/features/auth/keys'
-import { requestPasswordReset } from '@/features/auth/lib/requestPasswordReset'
+import { authClient } from '@/integrations/better-auth/authClient'
 
 export function useRequestPasswordReset() {
   return useMutation({
     mutationKey: authKeys.requestPasswordReset,
-    mutationFn: requestPasswordReset,
+    mutationFn: (props: Parameters<typeof authClient.requestPasswordReset>[0]) =>
+      authClient.requestPasswordReset(props),
   })
 }

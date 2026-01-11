@@ -1,11 +1,12 @@
 import { useMutation } from '@tanstack/react-query'
 
 import { authKeys } from '@/features/auth/keys'
-import { signInSocial } from '@/features/auth/lib/signInSocial'
+import { authClient } from '@/integrations/better-auth/authClient'
 
 export function useSignInSocial() {
   return useMutation({
     mutationKey: authKeys.signInSocial,
-    mutationFn: signInSocial,
+    mutationFn: (props: Parameters<typeof authClient.signIn.social>[0]) =>
+      authClient.signIn.social(props),
   })
 }
