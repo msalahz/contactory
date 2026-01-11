@@ -15,6 +15,7 @@ export const envServer = createEnv({
     RESEND_FROM_EMAIL: z.email().optional(),
     BETTER_AUTH_GOOGLE_CLIENT_ID: z.string().optional(),
     BETTER_AUTH_GOOGLE_CLIENT_SECRET: z.string().optional(),
+    R2_PUBLIC_URL: z.url(),
   },
 
   /**

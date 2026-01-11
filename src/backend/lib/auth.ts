@@ -1,12 +1,13 @@
-import { v7 as uuidv7 } from 'uuid'
+import { redirect } from '@tanstack/react-router'
 import { getRequest } from '@tanstack/react-start/server'
 
-import { redirect } from '@tanstack/react-router'
 import type { User } from '@/integrations/better-auth/authClient'
 
 import { getAuth } from '@/integrations/better-auth/auth'
-import { deleteR2Object, uploadR2Object } from '@/backend/lib/storage'
-import { extractR2ObjectKey } from '@/backend/utils/storage'
+import { deleteR2Object, uploadR2Object } from '@/backend/lib/cloudflare'
+import { extractR2ObjectKey, generateR2ObjectKey } from '@/backend/utils/cloudflare'
+
+export const USER_AVATARS_PREFIX = 'avatars/users'
 
 export async function findAuthSession() {
   const request = getRequest()
@@ -20,14 +21,14 @@ export async function findAuthUser() {
 }
 
 export async function uploadUserAvatar(avatar: File, userId: User['id']) {
-  const key = `avatars/${userId}${uuidv7()}-user-avatar.${avatar.type.split('/')[1]}`
-  const file = new File([avatar], avatar.name, { type: avatar.type })
+  const key = generateR2ObjectKey(USER_AVATARS_PREFIX, userId, avatar.type.split('/')[1])
+  const file = new File([avatar], key, { type: avatar.type })
   // Return the public URL for the uploaded avatar
-  return await uploadR2Object(file, key)
+  return await uploadR2Object(key, file)
 }
 
 export async function deleteUserAvatar(avatarUrl: string) {
-  const key = extractR2ObjectKey(avatarUrl)
+  const key = extractR2ObjectKey(avatarUrl, USER_AVATARS_PREFIX)
   return await deleteR2Object(key)
 }
 
