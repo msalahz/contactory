@@ -48,7 +48,7 @@
     }
   ],
   "limits": {
-    "cpu_ms": 250
+    "cpu_ms": 1000
   },
   "r2_buckets": [
     {
