@@ -2,9 +2,9 @@ import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { useFormContext } from '@/integrations/tanstack-form/hooks/formContext'
 
-export interface SubscribeButtonProps extends React.ComponentProps<typeof Button> {}
+export interface SubmitButtonProps extends React.ComponentProps<typeof Button> {}
 
-export function SubmitButton({ children, ...props }: SubscribeButtonProps) {
+export function SubmitButton({ children, ...props }: SubmitButtonProps) {
   const form = useFormContext()
   return (
     <form.Subscribe selector={(state) => state.isSubmitting}>
