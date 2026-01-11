@@ -1,6 +1,6 @@
 # Implementation Plan: Contacts CRUD
 
-**Branch**: `001-contacts-crud` | **Date**: 2026-01-08 | **Spec**: [spec.md](./spec.md)
+**Branch**: `001-contacts-crud` | **Date**: 2026-01-08 | **Spec**: [spec.md](spec.md)
 **Input**: Feature specification from `/specs/001-contacts-crud/spec.md`
 
 ## Summary
@@ -87,7 +87,7 @@ src/
 ## Complexity Tracking
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
-| --------- | ---------- | ------------------------------------ |
+|-----------|------------|--------------------------------------|
 | None      | N/A        | N/A                                  |
 
 ## Phases
@@ -95,41 +95,41 @@ src/
 ### Phase 0: Outline & Research
 
 1. **Dependencies**:
-   - Verify `@tanstack/react-table` and `@tanstack/react-virtual` installation (currently missing).
-   - Confirm R2 bucket configuration for avatar storage.
+    - Verify `@tanstack/react-table` and `@tanstack/react-virtual` installation (currently missing).
+    - Confirm R2 bucket configuration for avatar storage.
 
 2. **Research**:
-   - Best practices for TanStack Virtual + Table integration.
-   - Optimistic update patterns for soft-delete/restore.
+    - Best practices for TanStack Virtual + Table integration.
+    - Optimistic update patterns for soft-delete/restore.
 
 **Output**: research.md
 
 ### Phase 1: Design & Contracts
 
 1. **Data Model**:
-   - Define Drizzle schema updates (add `avatarUrl`, `deletedAt`, `isFavorite`, etc.).
-   - Define Zod validation schemas for API inputs.
+    - Define Drizzle schema updates (add `avatarUrl`, `deletedAt`, `isFavorite`, etc.).
+    - Define Zod validation schemas for API inputs.
 
 2. **API Contracts**:
-   - Define server function signatures (list, create, get, update, delete, restore, uploadAvatar).
+    - Define server function signatures (list, create, get, update, delete, restore, uploadAvatar).
 
 **Output**: data-model.md, contracts/
 
 ### Phase 2: Implementation
 
 1. **Core Infrastructure**:
-   - Database migrations.
-   - Server modules and RPC functions.
-   - Feature scaffolding (keys, options).
+    - Database migrations.
+    - Server modules and RPC functions.
+    - Feature scaffolding (keys, options).
 
 2. **UI Implementation**:
-   - Components (Table, Virtual Scroll, Forms).
-   - Routes integration.
-   - Image upload logic.
+    - Components (Table, Virtual Scroll, Forms).
+    - Routes integration.
+    - Image upload logic.
 
 3. **Refinement**:
-   - Optimistic updates.
-   - Accessibility & i18n.
-   - Testing.
+    - Optimistic updates.
+    - Accessibility & i18n.
+    - Testing.
 
 **Output**: tasks.md
