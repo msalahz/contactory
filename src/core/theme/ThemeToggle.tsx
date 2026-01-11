@@ -3,16 +3,10 @@ import { MoonIcon, SunIcon } from 'lucide-react'
 import type { Theme } from '@/core/schemas'
 
 import { noop } from '@/core/utils/noop'
-import { cn } from '@/integrations/shadcn/lib/utils'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 
 export function ThemeToggleIcon({ theme }: { theme: Theme }) {
-  return (
-    <>
-      <MoonIcon className={cn('hidden', theme === 'dark' ? 'block' : '')} />
-      <SunIcon className={cn('hidden', theme === 'light' ? 'block' : '')} />
-    </>
-  )
+  return theme === 'dark' ? <MoonIcon /> : <SunIcon />
 }
 
 export interface ThemeToggleButtonProps extends Omit<
