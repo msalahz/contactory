@@ -33,7 +33,11 @@ export function ThemeToggleButton({
     <Button
       size="icon-sm"
       variant="outline"
-      onClick={() => onChange(theme === 'light' ? 'dark' : 'light')}
+      onClick={(e) => {
+        e.preventDefault()
+        e.stopPropagation()
+        onChange(theme === 'light' ? 'dark' : 'light')
+      }}
       {...props}
     >
       <ThemeToggleIcon theme={theme} />

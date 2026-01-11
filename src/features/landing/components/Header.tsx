@@ -9,7 +9,7 @@ import type { User } from '@/integrations/better-auth/authClient'
 import { noop } from '@/core/utils/noop'
 import { Logo } from '@/core/components/Logo'
 import { cn } from '@/integrations/shadcn/lib/utils'
-import { ThemeToggleIcon } from '@/core/theme/ThemeToggle'
+import { ThemeToggleButton } from '@/core/theme/ThemeToggle'
 import { Button } from '@/integrations/shadcn/components/ui/button'
 import { Spinner } from '@/integrations/shadcn/components/ui/spinner'
 import { LanguageToggleButton } from '@/integrations/i18n/LanguageToggle'
@@ -145,18 +145,7 @@ export const HeroHeader = ({
             </div>
           </div>
           <div className="flex flex-initial gap-2">
-            <Button
-              variant="outline"
-              size="icon-sm"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-                onThemeChange(theme === 'light' ? 'dark' : 'light')
-              }}
-            >
-              <ThemeToggleIcon theme={theme} />
-            </Button>
-
+            <ThemeToggleButton theme={theme} onChange={onThemeChange} />
             <LanguageToggleButton
               language={i18n.language as Language}
               onChange={(language) => i18n.changeLanguage(language)}

@@ -5,13 +5,9 @@ import { useMutation } from '@tanstack/react-query'
 
 import type { Theme } from '@/core/schemas'
 
-import { ThemeContext } from '@/core/theme/ThemeContext'
+import { ThemeContext } from '@/core/theme/ThemeProvider'
 import { setThemeCookieFn } from '@/backend/mutations/preferences'
 
-/**
- * @description Hook to access and update the theme from the core store
- * @returns Object containing theme value and setTheme function
- */
 export function useTheme() {
   const store = useContext(ThemeContext)
 
