@@ -11,7 +11,15 @@ import { Button } from '@/integrations/shadcn/components/ui/button'
 import { TextEffect } from '@/integrations/shadcn/components/ui/text-effect'
 import { AnimatedGroup } from '@/integrations/shadcn/components/ui/animated-group'
 
-const transitionVariants: { item: Variants } = {
+const transitionVariants: { container: Variants; item: Variants } = {
+  container: {
+    visible: {
+      transition: {
+        staggerChildren: 0.05,
+        delayChildren: 0.75,
+      },
+    },
+  },
   item: {
     hidden: {
       opacity: 0,
@@ -57,19 +65,7 @@ export function HeroSection({ user }: HeroSectionProps) {
 
           <div className="mx-auto max-w-7xl px-6">
             <div className="text-center sm:mx-auto lg:me-auto lg:mt-0">
-              <AnimatedGroup
-                variants={{
-                  container: {
-                    visible: {
-                      transition: {
-                        staggerChildren: 0.05,
-                        delayChildren: 0.75,
-                      },
-                    },
-                  },
-                  ...transitionVariants,
-                }}
-              >
+              <AnimatedGroup variants={transitionVariants}>
                 <Link
                   to="/"
                   className="hover:bg-background dark:hover:border-t-border bg-muted group mx-auto flex w-fit items-center gap-4 rounded-full border p-1 ps-4 shadow-md shadow-zinc-950/5 transition-colors duration-300 dark:border-t-white/5 dark:shadow-zinc-950"
@@ -115,17 +111,7 @@ export function HeroSection({ user }: HeroSectionProps) {
 
               {user?.id ? (
                 <AnimatedGroup
-                  variants={{
-                    container: {
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.05,
-                          delayChildren: 0.75,
-                        },
-                      },
-                    },
-                    ...transitionVariants,
-                  }}
+                  variants={transitionVariants}
                   className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row"
                 >
                   <div
@@ -140,19 +126,7 @@ export function HeroSection({ user }: HeroSectionProps) {
                   </div>
                 </AnimatedGroup>
               ) : (
-                <AnimatedGroup
-                  variants={{
-                    container: {
-                      visible: {
-                        transition: {
-                          staggerChildren: 0.05,
-                          delayChildren: 0.75,
-                        },
-                      },
-                    },
-                    ...transitionVariants,
-                  }}
-                >
+                <AnimatedGroup variants={transitionVariants}>
                   <div className="mt-12 flex flex-col items-center justify-center gap-2 md:flex-row">
                     <div
                       key={1}
@@ -181,19 +155,7 @@ export function HeroSection({ user }: HeroSectionProps) {
             </div>
           </div>
 
-          <AnimatedGroup
-            variants={{
-              container: {
-                visible: {
-                  transition: {
-                    staggerChildren: 0.05,
-                    delayChildren: 0.75,
-                  },
-                },
-              },
-              ...transitionVariants,
-            }}
-          >
+          <AnimatedGroup variants={transitionVariants}>
             <div className="relative mt-8 overflow-hidden mask-b-from-55% px-2 sm:mt-12 md:mt-20">
               <DashboardPreview />
             </div>
