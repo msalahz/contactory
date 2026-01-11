@@ -29,9 +29,47 @@
 
 ## Constitution Check
 
-_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
+*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+Verify compliance with Contactory Constitution (`.specify/memory/constitution.md` v1.0.0):
+
+### I. Code Quality First
+- [ ] TypeScript strict mode enabled and enforced
+- [ ] Zod schemas defined for all external inputs
+- [ ] Error handling strategy documented for async operations
+- [ ] Naming conventions verified (camelCase files, PascalCase components, etc.)
+- [ ] No barrel exports (index.ts) planned; explicit imports only
+
+### II. Testing Standards
+- [ ] Risk assessment completed for feature components
+- [ ] High-risk operations identified (auth, mutations, deletions)
+- [ ] Integration test plan documented for critical paths
+- [ ] Test independence strategy defined (no shared state)
+
+### III. User Experience Consistency
+- [ ] WCAG 2.1 AA accessibility plan documented
+- [ ] i18n keys planned for all user-facing text
+- [ ] RTL/LTR layout support verified
+- [ ] 200ms performance feedback strategy defined (loading states, optimistic updates)
+- [ ] Error recovery mechanisms planned (undo, restore, auto-save where applicable)
+- [ ] shadcn/ui component usage verified; custom components justified
+
+### IV. Performance Requirements
+- [ ] Performance targets identified and documented:
+  - [ ] Page interactive < 2s (500 records)
+  - [ ] Search response < 5s (with 300ms debounce)
+  - [ ] 60 FPS scroll performance (1000+ items)
+  - [ ] Form submission < 1s
+  - [ ] File upload < 3s (with compression)
+- [ ] Virtual scrolling considered for large lists
+- [ ] Bundle size impact assessed
+- [ ] Performance verification plan defined (testing with 1000+ records)
+
+### Development Standards
+- [ ] Specification created before implementation
+- [ ] Feature broken into independently deployable slices
+- [ ] Complexity additions justified (new deps, abstractions, patterns)
+- [ ] Simplicity-first approach verified (no premature abstractions)
 
 ## Project Structure
 
@@ -48,7 +86,6 @@ specs/[###-feature]/
 ```
 
 ### Source Code (repository root)
-
 <!--
   ACTION REQUIRED: Replace the placeholder tree below with the concrete layout
   for this feature. Delete unused options and expand the chosen structure with
@@ -99,7 +136,7 @@ directories captured above]
 
 > **Fill ONLY if Constitution Check has violations that must be justified**
 
-| Violation                  | Why Needed         | Simpler Alternative Rejected Because |
-| -------------------------- | ------------------ | ------------------------------------ |
-| [e.g., 4th project]        | [current need]     | [why 3 projects insufficient]        |
-| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient]  |
+| Violation | Why Needed | Simpler Alternative Rejected Because |
+|-----------|------------|-------------------------------------|
+| [e.g., 4th project] | [current need] | [why 3 projects insufficient] |
+| [e.g., Repository pattern] | [specific problem] | [why direct DB access insufficient] |

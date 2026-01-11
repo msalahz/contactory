@@ -1,5 +1,6 @@
 ---
-description: 'Task list template for feature implementation'
+
+description: "Task list template for feature implementation"
 ---
 
 # Tasks: [FEATURE NAME]
@@ -7,7 +8,13 @@ description: 'Task list template for feature implementation'
 **Input**: Design documents from `/specs/[###-feature-name]/`
 **Prerequisites**: plan.md (required), spec.md (required for user stories), research.md, data-model.md, contracts/
 
-**Tests**: The examples below include test tasks. Tests are OPTIONAL - only include them if explicitly requested in the feature specification.
+**Tests**: Per Contactory Constitution (`.specify/memory/constitution.md` v1.0.0), testing is RISK-BASED:
+
+- High-risk operations (auth, mutations, deletions): Integration + unit tests REQUIRED
+- Medium-risk operations (CRUD, forms): Integration tests REQUIRED
+- Low-risk operations (UI presentation, formatting): Tests OPTIONAL but encouraged
+
+Include test tasks based on risk assessment in the feature specification.
 
 **Organization**: Tasks are grouped by user story to enable independent implementation and testing of each story.
 
@@ -25,22 +32,24 @@ description: 'Task list template for feature implementation'
 - Paths shown below assume single project - adjust based on plan.md structure
 
 <!--
-  ============================================================================
-  IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
+============================================================================
+IMPORTANT: The tasks below are SAMPLE TASKS for illustration purposes only.
 
-  The /speckit.tasks command MUST replace these with actual tasks based on:
-  - User stories from spec.md (with their priorities P1, P2, P3...)
-  - Feature requirements from plan.md
-  - Entities from data-model.md
-  - Endpoints from contracts/
+The /speckit.tasks command MUST replace these with actual tasks based on:
 
-  Tasks MUST be organized by user story so each story can be:
-  - Implemented independently
-  - Tested independently
-  - Delivered as an MVP increment
+- User stories from spec.md (with their priorities P1, P2, P3...)
+- Feature requirements from plan.md
+- Entities from data-model.md
+- Endpoints from contracts/
 
-  DO NOT keep these sample tasks in the generated tasks.md file.
-  ============================================================================
+Tasks MUST be organized by user story so each story can be:
+
+- Implemented independently
+- Tested independently
+- Delivered as an MVP increment
+
+DO NOT keep these sample tasks in the generated tasks.md file.
+============================================================================
 -->
 
 ## Phase 1: Setup (Shared Infrastructure)
@@ -82,8 +91,8 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test\_[name].py
+- [ ] T010 [P] [US1] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T011 [P] [US1] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 1
 
@@ -106,8 +115,8 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test\_[name].py
+- [ ] T018 [P] [US2] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T019 [P] [US2] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 2
 
@@ -128,8 +137,8 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test\_[name].py
-- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test\_[name].py
+- [ ] T024 [P] [US3] Contract test for [endpoint] in tests/contract/test_[name].py
+- [ ] T025 [P] [US3] Integration test for [user journey] in tests/integration/test_[name].py
 
 ### Implementation for User Story 3
 
@@ -149,9 +158,20 @@ Examples of foundational tasks (adjust based on your project):
 
 **Purpose**: Improvements that affect multiple user stories
 
+**Constitution Compliance** (`.specify/memory/constitution.md` v1.0.0):
+
+- [ ] TXXX [P] Verify TypeScript strict mode compliance (zero `any` types)
+- [ ] TXXX [P] Verify Zod validation for all external inputs
+- [ ] TXXX [P] WCAG 2.1 AA accessibility audit
+- [ ] TXXX [P] i18n key usage verification for all user-facing text
+- [ ] TXXX Performance testing with 1000+ records (verify targets met)
+- [ ] TXXX Code review checklist verification (typecheck, lint, format, build, tests)
+
+**General Polish**:
+
 - [ ] TXXX [P] Documentation updates in docs/
-- [ ] TXXX Code cleanup and refactoring
-- [ ] TXXX Performance optimization across all stories
+- [ ] TXXX Code cleanup and refactoring (remove dead code)
+- [ ] TXXX Performance optimization across all stories (if targets not met)
 - [ ] TXXX [P] Additional unit tests (if requested) in tests/unit/
 - [ ] TXXX Security hardening
 - [ ] TXXX Run quickstart.md validation
@@ -165,15 +185,17 @@ Examples of foundational tasks (adjust based on your project):
 - **Setup (Phase 1)**: No dependencies - can start immediately
 - **Foundational (Phase 2)**: Depends on Setup completion - BLOCKS all user stories
 - **User Stories (Phase 3+)**: All depend on Foundational phase completion
-  - User stories can then proceed in parallel (if staffed)
-  - Or sequentially in priority order (P1 → P2 → P3)
+    - User stories can then proceed in parallel (if staffed)
+    - Or sequentially in priority order (P1 → P2 → P3)
 - **Polish (Final Phase)**: Depends on all desired user stories being complete
 
 ### User Story Dependencies
 
 - **User Story 1 (P1)**: Can start after Foundational (Phase 2) - No dependencies on other stories
-- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently testable
-- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently testable
+- **User Story 2 (P2)**: Can start after Foundational (Phase 2) - May integrate with US1 but should be independently
+  testable
+- **User Story 3 (P3)**: Can start after Foundational (Phase 2) - May integrate with US1/US2 but should be independently
+  testable
 
 ### Within Each User Story
 
@@ -232,9 +254,9 @@ With multiple developers:
 
 1. Team completes Setup + Foundational together
 2. Once Foundational is done:
-   - Developer A: User Story 1
-   - Developer B: User Story 2
-   - Developer C: User Story 3
+    - Developer A: User Story 1
+    - Developer B: User Story 2
+    - Developer C: User Story 3
 3. Stories complete and integrate independently
 
 ---

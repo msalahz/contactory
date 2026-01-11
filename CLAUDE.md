@@ -44,7 +44,9 @@ pnpm cf-typegen       # Generate Cloudflare Workers types
 
 **Type**: Modular monolith with TanStack Start (full-stack React framework)
 
-### Key Principles
+**Constitution**: All development must comply with Contactory Constitution (`.specify/memory/constitution.md`) which defines mandatory standards for code quality, testing, UX consistency, and performance.
+
+### Key Architectural Principles
 
 1. **Feature-Sliced Organization**: Client features in `src/features/`, server logic in `src/backend/`
 2. **Route Groups**: File-based routing with `_` prefix groups (`_auth`, `_public`, `_user`, `_admin`)
