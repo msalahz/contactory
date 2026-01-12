@@ -7,10 +7,9 @@ This document is intended for business-focused stakeholders who may not have a t
 
 ## Executive Summary
 
-**Contactory** is a modern contact management application that enables users to organize, search, and manage their
-personal and professional contacts in one secure place. Built with a focus on simplicity, performance, and user
-experience, Contactory provides essential contact management features with plans for advanced functionality including
-sharing, import/export, and cross-device synchronization.
+**Contactory** is a modern, team-first contact management application that bridges the gap between personal contact apps (Google Contacts, Apple Contacts) and enterprise CRM (Salesforce, HubSpot). Built with a focus on **team collaboration, speed, and cross-platform neutrality**, Contactory enables individuals and small teams to organize, share, and manage contacts without ecosystem lock-in.
+
+**Strategic Position**: "The Switzerland of Contacts" - Works with everyone, owned by you, built for teams.
 
 ---
 
@@ -18,32 +17,63 @@ sharing, import/export, and cross-device synchronization.
 
 ### Vision
 
-To provide an effortless way to manage, search, and share contacts across devices with a focus on simplicity and
-excellent user experience.
+To be the cross-platform, team-first contact manager that works with existing ecosystems (Google, Apple) while providing collaboration features neither offers.
 
 ### Mission
 
-Empower individuals and professionals to maintain an accurate, organized address book with minimal friction and maximum
-safety.
+Empower individuals and small teams to collaboratively manage contacts with the speed, reliability, and modern UX that legacy platforms can't match - without forcing users to abandon their existing ecosystems.
+
+---
+
+## Strategic Differentiation
+
+### Why Contactory Exists
+
+Neither Google Contacts nor Apple Contacts addresses **team contact sharing with granular permissions**. Both are personal-first tools. Google Workspace has directories but not true shared contact management. Apple has nothing for teams.
+
+### Competitive Advantages
+
+| Advantage | Description |
+| --------- | ----------- |
+| **Team Collaboration** | Shared lists, permissions, activity history - features neither competitor will prioritize |
+| **Cross-Platform Neutrality** | Two-way sync with Google AND Apple - we're the bridge they'll never build |
+| **Speed & Reliability** | < 2s page loads, 60 FPS scrolling, instant search - modern stack vs legacy codebases |
+| **Modern UX** | Keyboard shortcuts, custom fields, advanced filters, dark mode done right |
+
+### Strategic Approach: Embrace + Differentiate
+
+**Embrace ecosystems** (two-way sync with Google/Apple) to lower switching friction, then **differentiate** through team features, speed, and UX that big tech won't prioritize.
+
+For detailed competitive analysis, see [Market Research](./market-research.md).
 
 ---
 
 ## Product Goals
 
-1. **Core Functionality**: Provide reliable CRUD operations for contacts with minimal friction
-2. **User Safety**: Implement soft-delete with undo to prevent accidental data loss
-3. **Performance**: Handle 1000+ contacts per user without performance degradation
-4. **Accessibility**: Meet WCAG 2.1 AA compliance standards
-5. **Global Support**: Bilingual (English/Arabic) with RTL/LTR layout support
-6. **Security**: Ensure user data isolation and secure authentication
+1. **Team Collaboration**: Enable small teams (2-20) to share and manage contacts together
+2. **Ecosystem Integration**: Two-way sync with Google and Apple contacts
+3. **Performance Excellence**: Handle 10K+ contacts with < 2s load times and 60 FPS scrolling
+4. **User Safety**: Soft-delete with undo, activity history, conflict resolution
+5. **Accessibility**: WCAG 2.1 AA compliance across all features
+6. **Global Support**: Bilingual (English/Arabic) with RTL/LTR layout support
+7. **Data Ownership**: Export to any format, API access, no vendor lock-in
 
 ---
 
 ## Target Users
 
-- **Individuals** managing personal contacts
-- **Professionals** organizing work contacts
-- **Teams** (future roadmap) sharing contact information
+### Primary Segments
+
+- **Individual power users** - Managing 500+ contacts, frustrated with ecosystem lock-in
+- **Small business teams** - Teams of 2-20 needing shared contact management without enterprise pricing
+- **Privacy-conscious users** - Users wanting control over their data
+- **Cross-platform users** - People with mixed devices (Android + Mac, iPhone + Windows)
+
+### Market Position
+
+Contactory fills the gap between:
+- **Personal contact apps** (Google/Apple) - Too simple for teams
+- **Enterprise CRM** (Salesforce/HubSpot) - Too complex and expensive for contact management
 
 ---
 
@@ -345,7 +375,7 @@ safety.
 
 ## Development Roadmap
 
-### Phase 1: MVP (Current)
+### Phase 1: Individual MVP (Current)
 
 - Contact CRUD (create, read, update, soft delete)
 - List with virtual scrolling
@@ -355,26 +385,40 @@ safety.
 - Favorites
 - Mobile responsiveness
 
-### Phase 2: Enhanced Experience (Q2 2026)
+### Phase 2: Team MVP (Q1 2026) - **Primary Focus**
 
-- Import/export functionality
-- Groups and labels
-- Contact sharing (links)
-- Duplicate detection
+- **Team contact sharing** with role-based permissions (view/edit/admin)
+- Shared contact lists
+- Google Contacts import (one-way)
+- Team invite flow
+- Activity history for shared contacts
+- Team duplicate detection
 
-### Phase 3: Advanced Features (Q3 2026)
+For detailed specification, see [002-team-sharing/spec.md](./002-team-sharing/spec.md).
+
+### Phase 3: Sync & Integration (Q2 2026)
+
+- Two-way Google Contacts sync
+- Apple Contacts import/sync
+- Import/export (CSV, vCard, JSON)
+- Conflict resolution UI
+- Free tier public launch
+
+### Phase 4: Advanced Features (Q3 2026)
+
+- Custom fields and tags
+- Advanced filters and saved searches
+- Keyboard shortcuts for power users
+- Public API for integrations
+- Mobile apps (PWA, then native)
+
+### Phase 5: Expansion (Q4 2026)
 
 - QR code sharing
-- Real-time sync
-- Advanced duplicate merging
 - Offline support
-
-### Phase 4: Expansion (Q4 2026)
-
-- Additional languages beyond English/Arabic
-- Advanced filtering and saved searches
-- Contact reminders
-- API for third-party integrations
+- Additional languages
+- Self-hosting option (privacy moat)
+- Enterprise features
 
 ---
 
@@ -480,8 +524,33 @@ safety.
 ## Contact & Support
 
 **Product Owner**: Mohammed
-**Last Updated**: January 10, 2026
+**Last Updated**: January 12, 2026
 **Repository**: github.com/your-org/contactory
+
+---
+
+## Business Model: Freemium with Team Focus
+
+### Free Tier
+- Unlimited personal contacts
+- Google/Apple sync (one direction)
+- Basic search and organization
+- Export to vCard/CSV
+
+### Pro Tier ($5-8/month)
+- Two-way sync with multiple sources
+- Advanced search and filters
+- Custom fields and tags
+- Priority support
+
+### Team Tier ($10-15/user/month)
+- Shared contact lists
+- Permissions and roles
+- Activity history and audit log
+- Team duplicate detection
+- Admin dashboard
+
+**Revenue Strategy**: Teams are the product. Individual tier builds awareness and funnel.
 
 ---
 
@@ -489,13 +558,12 @@ safety.
 
 | Document                            | Purpose                                                 | Audience                            |
 | ----------------------------------- | ------------------------------------------------------- | ----------------------------------- |
-| **project-overview.md**             | Product vision, features, requirements                  | PMs, stakeholders, all team members |
+| **project-overview.md**             | Product vision, strategy, features                      | PMs, stakeholders, all team members |
+| **market-research.md**              | Competitive analysis and strategic positioning          | Product, leadership, investors      |
 | **project-architecture.md**         | Technical stack, patterns, guidelines                   | Developers, architects, tech leads  |
-| **ADR-001-tech-stack.md**           | Tech stack decisions (archive after reading)            | Technical reference                 |
-| **ADR-002-file-structure.md**       | Monolith architecture decisions (archive after reading) | Technical reference                 |
-| **ADR-003-internationalization.md** | i18n architecture decisions (archive after reading)     | Technical reference                 |
-| **PRD.md**                          | Original PRD (superseded by overview)                   | Can be archived                     |
-| **product-requirements.md**         | Legacy PRD (superseded by overview + specs)             | Can be archived                     |
+| **002-team-sharing/spec.md**        | Team sharing feature specification                      | Product, developers                 |
+| **archived-001-contacts-crud/**     | Contacts CRUD feature (archived)                        | Reference                           |
+| **competitors-overview.md**         | Google vs Apple Contacts comparison                     | Product, strategy                   |
 
 ---
 
