@@ -2,240 +2,329 @@
 
 ## Executive Summary
 
-**Recommendation**: Contactory should **embrace ecosystems while differentiating through team collaboration, speed, and modern UX**. Don't compete head-on with Google/Apple on their strengths (AI, ecosystem polish). Instead, fill the gaps they can't or won't address.
+**Original Hypothesis (Team Contact Sharing):** Not viable. The "gap" is already filled by 6+ established solutions at $1-3/user. Risk assessment was overly optimistic.
 
-**Strategic Position**: "The Switzerland of Contacts" - Works with everyone, owned by you, built for teams.
+**Revised Recommendation:** Pivot to **Verifiable Credentials (VC) + Self-Sovereign Identity (SSI)** positioning. This transforms Contactory from "another contact manager" to "infrastructure for the verifiable identity economy."
 
----
-
-## Competitor Analysis
-
-### Google Contacts
-
-| Strength                          | Weakness                            |
-| --------------------------------- | ----------------------------------- |
-| AI enrichment & auto-suggestions  | 25K contact limit                   |
-| 30-day undo/recovery              | No native team sharing              |
-| Cross-platform (web, Android, iOS)| Privacy concerns (data harvesting)  |
-| Deep Gmail/Calendar integration   | Bulk import limits                  |
-
-**Key Insight**: Google Contacts is optimized for individual Gmail users. Team sharing requires third-party tools like "Shared Contacts for Gmail." The 30-day undo feature is a strong safety net that Apple lacks.
-
-### Apple Contacts
-
-| Strength                    | Weakness                    |
-| --------------------------- | --------------------------- |
-| 50K contact limit           | No undo for deletions       |
-| Smart groups (auto-updating)| Apple-only ecosystem        |
-| Deep ecosystem integration  | No team collaboration       |
-| LDAP for enterprise         | Limited cross-platform      |
-
-**Key Insight**: Apple Contacts is tightly integrated within the Apple ecosystem but offers almost nothing for cross-platform users or teams. Deletions are permanent - a significant UX gap.
-
-### Critical Gap Neither Addresses
-
-**Team contact sharing with granular permissions** - Both are personal-first tools. Google Workspace has directories but not true shared contact management. Apple has nothing for teams.
-
-This gap represents Contactory's primary market opportunity.
+**Strategic Position:** "The first contact manager where contacts update themselves, prove who they are, and you control who sees what."
 
 ---
 
-## Strategic Positioning: Embrace + Differentiate
+## Part 1: Why the Original Strategy Was Flawed
 
-### Why "Embrace" (Two-Way Sync with Google/Apple)
+### The "Gap" Already Has Solutions
 
-1. **Lowers switching friction** - Users don't have to abandon their ecosystem to try Contactory
-2. **Cross-platform neutrality is your moat** - Neither Google nor Apple will ever fully support the other's ecosystem
-3. **Sync quality becomes a feature** - "Best Google Contacts sync for Apple users" is a real, underserved market
-4. **Trojan horse strategy** - Start as a sync layer, gradually become the source of truth as users trust the platform
+The original research claimed: *"Team contact sharing with granular permissions... This gap represents Contactory's primary market opportunity."*
 
-### Why Not "Compete Directly"
+**Reality:** This gap has 6+ established solutions.
 
-1. **Google has infinite AI resources** - You cannot out-AI them on contact enrichment
-2. **Apple has infinite polish resources** - You cannot out-integrate them on their own devices
-3. **Replacement requires perfection** - One sync bug and users leave immediately
-4. **Market education cost** - Teaching users to abandon ecosystems is expensive and slow
+| Solution | Price | Status |
+|----------|-------|--------|
+| [Shared Contacts for Gmail](https://workspace.google.com/marketplace/app/shared_contacts_share_google_workspace_c/1033860418004) | $1.29-$2.99/user/mo | Active, millions of users |
+| [Contacts+](https://www.contactsplus.com/teams/) | Has team plans | 30M+ users claimed |
+| [HubSpot Free CRM](https://www.hubspot.com/products/crm) | Free (1,000 contacts) | Massive market leader |
+| [Notion CRM templates](https://www.notion.com/templates/category/crm) | Free-$10/mo | Growing rapidly |
+| [Folk CRM](https://www.folk.app/) | Targeted at this space | VC-funded competitor |
+| [Streak CRM](https://www.streak.com/) | Free tier + paid | Gmail-native |
+| Microsoft 365 Shared Contacts | Included | Native feature |
 
----
+### Risk Assessment Was Fantasy
 
-## Differentiation Strategy: Where Contactory Wins
+| Original Claim | Reality |
+|----------------|---------|
+| "Google/Apple copy team features - Low probability" | **Microsoft launched unified contacts in Teams+Outlook (Jan 2025)**. Google has Domain Shared Contacts API. They ARE building this. |
+| "Competition from CRM downmarket moves - Low probability" | **HubSpot already moved downmarket** with free CRM. Notion is eating this space. |
+| Primary moat: "Team Collaboration" | Shared Contacts for Gmail, Contacts+, and Folk CRM all have this. |
 
-### 1. Team Collaboration (Primary Moat)
+### Pricing Assumptions Ignored Market Reality
 
-Neither competitor will prioritize this - it's not aligned with their business models.
+Original proposal: **$10-15/user/month for Team Tier**
 
-**Features to build:**
+Market reality:
+- Shared Contacts for Gmail: **$1.29-$2.99/user/month**
+- HubSpot CRM: **Free** for basic features
+- Notion: **$10/user/month** (but includes entire workspace)
 
-- Shared contact lists with role-based permissions (view/edit/admin)
-- Activity history ("John updated Sarah's phone number 2 hours ago")
-- Comments and notes on contacts (team context)
-- Duplicate detection across team members
-- Contact ownership transfer
+**You cannot charge 5-10x more than established solutions without dramatic differentiation.**
 
-**Why defensible:** Google sells ads, Apple sells devices. Neither has business incentive to build deep team contact management. This is Contactory's to own.
+### "Cross-Platform Neutrality" Isn't a Moat
 
-### 2. Speed & Reliability (UX Differentiator)
+The claim: *"Contactory is the bridge they'll never build."*
 
-Modern tech stack advantage over legacy codebases built 15+ years ago.
-
-**Features to build:**
-
-- Instant search (< 100ms for 10K contacts)
-- Offline-first architecture with background sync
-- 60 FPS virtual scrolling for large contact lists
-- Optimistic updates (actions feel instant)
-- Conflict resolution UI (when sync conflicts occur)
-
-**Why defensible:** Contactory's constitution mandates these performance targets. Ship fast, iterate faster than big tech's slow release cycles.
-
-### 3. Modern UX + Customization
-
-Google/Apple optimize for the lowest common denominator. Power users are underserved.
-
-**Features to build:**
-
-- Keyboard shortcuts for power users
-- Custom fields and tags (beyond fixed schemas)
-- Advanced filters and saved searches
-- Bulk operations with preview
-- Dark mode done right (not an afterthought)
-
-**Why defensible:** Big tech moves slowly on UX innovation. Contactory can ship features in weeks that they take years to consider.
-
-### 4. Cross-Platform Neutrality (Positioning Moat)
-
-"Works everywhere, owned by you"
-
-**Features to build:**
-
-- First-class web, iOS, and Android apps
-- Two-way sync with Google AND Apple simultaneously
-- Export to any format (vCard, CSV, JSON, API)
-- Import from anywhere (LinkedIn, Outlook, CSV, vCard)
-
-**Why defensible:** Google will never prioritize Apple sync. Apple will never prioritize Android support. Contactory is the bridge they'll never build.
+**Reality:** [Contacts+](https://www.contactsplus.com/) has been doing cross-platform contact sync for years with 30M+ users.
 
 ---
 
-## Target Market Segments
+## Part 2: Competitive Landscape (Original Position)
 
-### Primary Segments
+### Tier 1: Dominant Players (Cannot Compete)
+- **Salesforce** - $31.4B revenue, owns enterprise
+- **HubSpot** - $1.6B revenue, owns SMB with free tier
+- **Zoho** - $1.5B revenue, owns cost-conscious SMB
 
-1. **Individual power users** - Managing 500+ contacts across personal and professional life, frustrated with ecosystem lock-in
-2. **Small business teams** - Teams of 2-20 who need shared contact management without enterprise CRM pricing
-3. **Privacy-conscious users** - Users who want control over their data, avoiding Google/Apple data harvesting
-4. **Cross-platform users** - People with mixed devices (Android phone + Mac, iPhone + Windows) who need unified contacts
+### Tier 2: Direct Competitors (Already Solving the Problem)
+- **Shared Contacts for Gmail** - Solves Google Workspace team sharing at $1.29/user
+- **Contacts+** - Cross-platform, team features, 30M users
+- **Folk CRM** - VC-funded, modern UX, team-focused
+- **Copper CRM** - Gmail-native, funded
 
-### Market Positioning
+### Tier 3: "Good Enough" Free Alternatives
+- **HubSpot Free** - 1,000 contacts, team features
+- **Notion** - Flexible database, team collaboration
+- **Airtable** - Same as Notion
+- **Google Sheets** - Zero learning curve, free
 
-Contactory fills the gap between:
-
-- **Personal contact apps** (Google Contacts, Apple Contacts) - Too simple for teams
-- **Enterprise CRM** (Salesforce, HubSpot) - Too complex and expensive for contact management
-
----
-
-## Business Model: Freemium with Team Focus
-
-### Free Tier
-
-- Unlimited personal contacts
-- Google/Apple sync (one direction)
-- Basic search and organization
-- Export to vCard/CSV
-
-**Purpose:** Marketing funnel, build awareness, lower barrier to trial
-
-### Pro Tier ($5-8/month)
-
-- Two-way sync with multiple sources
-- Advanced search and filters
-- Custom fields and tags
-- Priority support
-
-**Purpose:** Convert power users, validate willingness to pay
-
-### Team Tier ($10-15/user/month)
-
-- Shared contact lists
-- Permissions and roles
-- Activity history and audit log
-- Team duplicate detection
-- Admin dashboard
-
-**Purpose:** Primary revenue driver. This is the actual product.
-
-### Revenue Strategy
-
-Teams are the product. Individual tiers build awareness and create a funnel to team adoption. Focus sales and marketing efforts on small business teams.
+### Market Size (Original Position)
+- Contact Management Software: ~$2B (2023) → ~$5B (2032)
+- CAGR: ~12%
+- Dominated by top 3 players with >80% market share
+- Remaining market fragmented across dozens of niche players
 
 ---
 
-## Launch Strategy: Team-First
+## Part 3: The VC/SSI Pivot Opportunity
 
-### Phase 1: Team MVP (Current Focus)
+### Why This Changes Everything
 
-1. Core CRUD with performance targets (already in progress)
-2. Team sharing with basic permissions
-3. Google import (one-way to start)
-4. Invite flow for team members
+Verifiable Credentials (VCs) and Self-Sovereign Identity (SSI) represent a fundamentally different market opportunity.
 
-**Goal:** Validate team collaboration hypothesis with 5-10 beta teams
+| Metric | Original Position | VC/SSI Position |
+|--------|-------------------|-----------------|
+| Market Size (2025) | ~$2B | $1.3B - $4.9B |
+| Projected (2030) | ~$5B | $41.7B - $102B |
+| CAGR | 12% | 53% - 90% |
+| Competitors | 6+ established | No consumer leader |
+| Regulatory | None | EU mandate (Sept 2026) |
+| Pricing Power | Low ($1-3/user) | Premium ($8-25/user) |
 
-### Phase 2: Sync & Individual
+**SSI is a 5-10x larger opportunity growing 5-7x faster.**
 
-1. Two-way Google sync
-2. Apple import/sync
-3. Free tier public launch
-4. Mobile apps (PWA first, then native)
+### Regulatory Tailwinds (Not Just Market Forces)
 
-**Goal:** Build user base, establish sync reliability reputation
+**EU eIDAS 2.0 Mandates:**
+- **September 2026**: EU Member States must offer digital identity wallets
+- **December 2027**: Banks, payment providers, large platforms MUST accept them
+- This isn't optional. It's law.
 
-### Phase 3: Advanced Features
+The European Commission adopted five implementing regulations in November 2024 establishing wallet requirements, interoperability protocols (including W3C Verifiable Credentials), and security standards.
 
-1. Advanced team features (activity log, comments)
-2. Custom fields and tags
-3. Public API for integrations
-4. Self-hosting option (long-term privacy moat)
+### Technical Maturity
 
-**Goal:** Deepen team functionality, create platform stickiness
+**W3C Verifiable Credentials 2.0** became an official W3C Recommendation in **May 2025**.
 
----
+Key improvement: VC 2.0 works with standard JSON/JWT—no complex RDF required. Any web developer can implement it now.
 
-## Risks and Mitigations
+### Existing Players (But No Consumer Leader)
 
-| Risk                                  | Probability | Impact | Mitigation                                                        |
-| ------------------------------------- | ----------- | ------ | ----------------------------------------------------------------- |
-| Google/Apple copy team features       | Low         | High   | Move fast, go deeper on collaboration than they ever will         |
-| Sync reliability issues erode trust   | Medium      | High   | Invest heavily in conflict resolution UX, transparent sync status |
-| Freemium attracts non-paying users    | High        | Medium | Team features are the product; free tier is marketing cost        |
-| Cross-platform development cost       | Medium      | Medium | PWA + React Native with shared business logic                     |
-| Competition from CRM downmarket moves | Low         | Medium | Stay focused on contact management, not full CRM                  |
+| Company | Focus | Gap |
+|---------|-------|-----|
+| [Hypersign](https://www.hypersign.id/) | Verifiable business cards | Infrastructure, not consumer app |
+| [Dock.io](https://www.dock.io/) | VC platform | Developer tools, not end-user |
+| [Microsoft Entra Verified ID](https://www.microsoft.com/en-us/security/business/identity-access/microsoft-entra-verified-id) | Enterprise identity | Enterprise-only, not personal contacts |
+| EU Digital Wallet | Government identity | Coming 2026, government scope |
 
----
-
-## Competitive Advantages Aligned with Constitution
-
-Contactory's technical constitution directly supports the competitive strategy:
-
-| Constitution Principle            | Strategic Alignment                              |
-| --------------------------------- | ------------------------------------------------ |
-| Performance (<2s page, 60 FPS)    | Speed is a key differentiator vs legacy apps     |
-| WCAG 2.1 AA accessibility         | Better accessibility than both competitors       |
-| i18n with RTL support             | Global market access from day one                |
-| Risk-based testing                | Ship fast with confidence, iterate quickly       |
-| Error recovery (undo, restore)    | Directly addresses Apple Contacts' weakness      |
-| TypeScript strict + Zod validation| Reliability that users can trust for sync        |
+**Gap:** No consumer-friendly "contacts app" built on VCs. This is the real opportunity.
 
 ---
 
-## Recommended Next Steps
+## Part 4: Contactory as a VC-First Contact Manager
 
-1. **Document team sharing specification** - Define permissions model, sharing UI, activity tracking requirements
-2. **Prioritize Google import** - Most users start with Google contacts; make import seamless
-3. **Build conflict resolution UX** - Critical for establishing sync trust
-4. **Plan team beta program** - Recruit 5-10 small teams to validate collaboration features
-5. **Define pricing experiments** - Test price sensitivity in Pro and Team tiers
+### New Value Proposition
+
+> "The first contact manager where your contacts can update themselves, prove who they are, and you control who sees what."
+
+### Key Features (VC-Enabled)
+
+1. **Self-Updating Contacts**
+   - Contacts share a VC (verifiable credential) instead of static data
+   - When they update their info (new job, new phone), YOUR copy updates automatically
+   - No more outdated contacts
+
+2. **Verified Professional Identity**
+   - Know that "John at Acme Corp" actually works at Acme Corp
+   - Company can revoke credential when employee leaves
+   - Eliminates impersonation/spoofing
+
+3. **Selective Disclosure**
+   - Share only what's needed (email but not phone, name but not address)
+   - Zero-knowledge proofs: "I work at a Fortune 500" without revealing which one
+   - Privacy by design
+
+4. **Portable & Interoperable**
+   - VCs work across any app that supports the W3C standard
+   - Export your identity, not just your data
+   - No vendor lock-in
+
+5. **Team Sharing with Verifiable Permissions**
+   - Share contacts with team via VCs
+   - Cryptographically provable who has access
+   - Audit trail built-in
+
+### Why This Is Defensible
+
+1. **First-mover in consumer VC contacts** - No one else is doing this
+2. **Regulatory tailwind** - eIDAS 2.0 creates demand
+3. **Network effects** - VCs are more valuable when more people use them
+4. **Technical moat** - VC implementation is non-trivial; you build expertise
+
+---
+
+## Part 5: Revised Competitive Landscape (VC Position)
+
+### Who You're NOT Competing With
+
+- **Google Contacts** - Won't adopt VCs (conflicts with data harvesting model)
+- **Apple Contacts** - May adopt eventually, but slowly
+- **Shared Contacts for Gmail** - No VC roadmap
+
+### Who You ARE Competing With
+
+- Future EU wallet apps (but government-focused, not contact-focused)
+- Potential Microsoft pivot (if Entra expands to consumer)
+- Other startups who see this opportunity (race to market)
+
+### Your Unique Position
+
+You're not building "another contact manager." You're building the **contact layer for the verifiable credential economy**.
+
+---
+
+## Part 6: Target Market Segments (Revised)
+
+### Priority Order
+
+1. **Privacy-conscious professionals** - Lawyers, doctors, journalists who need verified contacts
+2. **Enterprise compliance teams** - Need to verify vendor/partner identities
+3. **EU businesses preparing for eIDAS** - Regulatory compliance driver
+4. **Web3/crypto community** - Already understand decentralized identity
+
+### Why These Segments
+
+These customers:
+- Understand the value of verified identity
+- Have higher willingness to pay for security/compliance
+- Are early adopters who can provide feedback
+- Create network effects as they onboard their contacts
+
+---
+
+## Part 7: Revised Business Model
+
+### Pricing Strategy (Premium, Not Race-to-Bottom)
+
+| Tier | Price | Features |
+|------|-------|----------|
+| Free | $0 | Personal VC wallet, receive VCs, basic contacts |
+| Pro | $8-12/mo | Issue VCs, selective disclosure, advanced privacy |
+| Team | $15-25/user/mo | Verified team directory, compliance audit log |
+| Enterprise | Custom | Self-hosted, API access, custom VC schemas |
+
+### Justification for Higher Prices
+
+- You're not competing with $1.29/user Shared Contacts for Gmail
+- You're in the identity/security space (higher willingness to pay)
+- Compliance/regulatory value commands premium
+- Enterprise identity solutions (competitors like Okta, Auth0) charge significantly more
+
+---
+
+## Part 8: Revised Risk Assessment
+
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|--------|------------|
+| VC adoption slower than expected | Medium | High | Start with simpler privacy features, add VCs progressively |
+| EU wallet becomes dominant | Medium | Medium | Position as "contact layer" that works WITH EU wallet |
+| Technical complexity delays launch | Medium | Medium | Start with basic VC support, iterate |
+| User education required | High | Medium | Focus on "self-updating contacts" benefit, hide VC complexity |
+| Big Tech adopts VCs | Low-Medium | High | Move fast, build network effects before they enter |
+
+**Comparison to original risks:**
+- Original claimed "Low probability" of competition copying features
+- Microsoft shipped unified contacts in Jan 2025—reality moved faster than assumptions
+
+---
+
+## Part 9: Implementation Strategy
+
+### Phase 1: Privacy-First Foundation (Now - Q1 2026)
+- Build core contact management with privacy as differentiator
+- End-to-end encryption
+- Local-first architecture
+- No data harvesting
+
+### Phase 2: VC Integration (Q2-Q3 2026)
+- Add "receive verifiable contact" feature
+- Basic VC credential support (W3C VC 2.0)
+- Target early adopters (crypto, privacy community)
+
+### Phase 3: Full VC Platform (Q4 2026 - aligned with eIDAS)
+- Issue and verify VCs
+- Selective disclosure
+- Team/enterprise features
+- EU compliance certification
+
+### Why This Phasing Works
+1. Privacy-first is valuable even without VCs
+2. VCs add differentiation as standard matures
+3. eIDAS deadline creates urgency in 2026
+4. You're not betting everything on VCs—they're an enhancement
+
+---
+
+## Part 10: Validation Checklist
+
+Before committing to full VC implementation, validate:
+
+1. **Would privacy-conscious users pay for encrypted contacts?**
+   - Test: Landing page for "privacy-first contact manager"
+   - Success: >5% conversion to email signup
+
+2. **Do businesses understand/want verifiable contacts?**
+   - Test: 20+ interviews with compliance officers, HR leaders
+   - Success: >50% express interest
+
+3. **Is the technical complexity manageable?**
+   - Test: Prototype VC credential exchange
+   - Success: Working demo in <2 weeks
+
+4. **Can you explain VCs without jargon?**
+   - Test: User research on messaging
+   - Success: >70% understand "self-updating contacts" value prop
+
+---
+
+## Sources
+
+### Original Competition Research
+- [Shared Contacts for Gmail - Capterra](https://www.capterra.com/p/162216/Shared-Contacts-for-Gmail/)
+- [Shared Contacts for Gmail - G2 Reviews](https://www.g2.com/products/shared-contacts-for-gmail/reviews)
+- [HubSpot Free CRM](https://www.hubspot.com/products/crm)
+- [HubSpot CRM for Small Business](https://www.hubspot.com/products/crm/small-business)
+- [Microsoft Unified Contacts Announcement](https://techcommunity.microsoft.com/blog/microsoft_365blog/new-unified-contacts-in-microsoft-teams-and-outlook-now-generally-available/4365811)
+- [Contact Management Software Market Size](https://www.verifiedmarketresearch.com/product/contact-management-software-market/)
+- [CB Insights - Startup Failure Post-Mortems](https://www.cbinsights.com/research/startup-failure-post-mortem/)
+- [Contacts+ Website](https://www.contactsplus.com/)
+- [Folk CRM](https://www.folk.app/)
+- [Notion CRM Templates](https://www.notion.com/templates/category/crm)
+- [Google Domain Shared Contacts API](https://developers.google.com/workspace/admin/domain-shared-contacts/overview)
+- [Contactzilla - Google Workspace Shared Contacts](https://contactzilla.com/google-workspace-shared-contact-list/)
+
+### SSI/VC Market Research
+- [Decentralized Identity Market - Mordor Intelligence](https://www.mordorintelligence.com/industry-reports/decentralized-identity-market)
+- [Decentralized Identity Market - Grand View Research](https://www.grandviewresearch.com/industry-analysis/decentralized-identity-market-report)
+- [W3C Verifiable Credentials 2.0](https://www.w3.org/press-releases/2025/verifiable-credentials-2-0/)
+- [2025 State of Verifiable Credentials Report](https://everycred.com/blog/2025-state-of-verifiable-credential-report/)
+
+### EU Regulations
+- [EUDI Wallet 2026 Deadline](https://www.partisia.com/blog/eudi-wallet-2026-what-it-means-for-eu-digital-identity)
+- [eIDAS 2.0 Complete Guide](https://everycred.com/blog/eidas-2-0-digital-identity-guide-2026/)
+- [European Digital Identity Regulation](https://digital-strategy.ec.europa.eu/en/policies/eudi-regulation)
+
+### Technical References
+- [Verifiable Credentials Use Cases - W3C](https://w3c.github.io/vc-use-cases/)
+- [Hypersign Verifiable Business Cards](https://www.hypersign.id/blogs/tpost/i5xszaszu1-verifiable-business-cards-using-hypersig)
+- [Dock.io VC Guide](https://www.dock.io/post/verifiable-credentials)
+- [Self-Sovereign Identity Guide - Dock.io](https://www.dock.io/post/self-sovereign-identity)
 
 ---
 
@@ -243,14 +332,15 @@ Contactory's technical constitution directly supports the competitive strategy:
 
 > **Don't build a "better Google Contacts" or "better Apple Contacts."**
 >
-> **Build the contact manager that works with both and adds what neither provides: team collaboration.**
+> **Build the contact layer for the verifiable credential economy.**
 
-The market opportunity is the gap between personal contact management (Google/Apple) and enterprise CRM (Salesforce/HubSpot). Contactory can own that middle ground by being the cross-platform, team-first contact manager that embraces existing ecosystems rather than fighting them.
+The original "team contact sharing" positioning competes in a crowded market with low prices. The VC/SSI pivot transforms Contactory into infrastructure for an emerging $100B+ market with regulatory tailwinds and genuine differentiation.
 
 ---
 
 ## Document History
 
-| Date       | Author    | Changes                        |
-| ---------- | --------- | ------------------------------ |
-| 2026-01-12 | Mohammed  | Initial market research        |
+| Date       | Author    | Changes                                              |
+| ---------- | --------- | ---------------------------------------------------- |
+| 2026-01-12 | Mohammed  | Initial market research                              |
+| 2026-01-12 | Mohammed  | Major revision: Reality check + VC/SSI pivot analysis |
