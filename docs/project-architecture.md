@@ -8,7 +8,8 @@ This document is intended for technical stakeholders who have a technical backgr
 ## Executive Summary
 
 Contactory is a modern contact management application built with cutting-edge web technologies. It serves as a digital
-address book with advanced features like cloud storage, internationalization, and real-time collaboration capabilities.
+address book with advanced features like cloud storage, internationalization, and privacy-first design with future
+support for verifiable credentials (VCs) and self-sovereign identity (SSI).
 
 **Key Characteristics:**
 
@@ -18,7 +19,8 @@ address book with advanced features like cloud storage, internationalization, an
 - **Bilingual Support**: Native English and Arabic interfaces with RTL layout support
 - **Performance Optimized**: Virtual scrolling, cursor-based pagination, and image optimization
 
-**Target Audience:** Small to medium businesses needing professional contact management with modern web standards.
+**Target Audience:** Privacy-conscious professionals, small teams, and cross-platform users seeking modern contact
+management without ecosystem lock-in. Future expansion targets EU businesses preparing for eIDAS 2.0 compliance.
 
 ---
 
@@ -27,7 +29,7 @@ address book with advanced features like cloud storage, internationalization, an
 ### Core Framework
 
 | Technology         | Version | Purpose                    |
-| ------------------ | ------- | -------------------------- |
+|--------------------|---------|----------------------------|
 | **React**          | 19.2.3  | UI library                 |
 | **TypeScript**     | 5.9.3   | Type-safe JavaScript       |
 | **Vite**           | 7.3.0   | Build tool & dev server    |
@@ -36,7 +38,7 @@ address book with advanced features like cloud storage, internationalization, an
 ### Routing & State Management
 
 | Technology           | Version | Purpose                  |
-| -------------------- | ------- | ------------------------ |
+|----------------------|---------|--------------------------|
 | **TanStack Router**  | 1.145.7 | Type-safe routing        |
 | **TanStack Query**   | 5.90.16 | Data fetching & caching  |
 | **TanStack Form**    | 1.27.7  | Form handling            |
@@ -47,7 +49,7 @@ address book with advanced features like cloud storage, internationalization, an
 ### Database & ORM
 
 | Technology          | Version | Purpose                       |
-| ------------------- | ------- | ----------------------------- |
+|---------------------|---------|-------------------------------|
 | **Drizzle ORM**     | 0.45.1  | Database ORM (PostgreSQL)     |
 | **PostgreSQL**      | 3.4.7   | Database client               |
 | **Neon Hyperdrive** | Latest  | PostgreSQL connection pooling |
@@ -55,7 +57,7 @@ address book with advanced features like cloud storage, internationalization, an
 ### UI & Styling
 
 | Technology                   | Version | Purpose                |
-| ---------------------------- | ------- | ---------------------- |
+|------------------------------|---------|------------------------|
 | **Tailwind CSS**             | 4.1.18  | Utility-first styling  |
 | **shadcn/ui**                | Latest  | Component library      |
 | **Radix UI**                 | 1.4.3   | Accessible primitives  |
@@ -66,14 +68,14 @@ address book with advanced features like cloud storage, internationalization, an
 ### Authentication & Security
 
 | Technology           | Version | Purpose                             |
-| -------------------- | ------- | ----------------------------------- |
+|----------------------|---------|-------------------------------------|
 | **better-auth**      | 1.4.10  | Authentication & session management |
 | **@t3-oss/env-core** | 0.13.10 | Environment validation              |
 
 ### Internationalization
 
 | Technology        | Version | Purpose                    |
-| ----------------- | ------- | -------------------------- |
+|-------------------|---------|----------------------------|
 | **react-i18next** | Latest  | Translation management     |
 | **i18next**       | Latest  | i18n framework             |
 | **Luxon**         | Latest  | Date/time formatting       |
@@ -82,27 +84,27 @@ address book with advanced features like cloud storage, internationalization, an
 ### Animation & Effects
 
 | Technology | Version | Purpose             |
-| ---------- | ------- | ------------------- |
+|------------|---------|---------------------|
 | **Motion** | 12.24.0 | Animation library   |
 | **Sonner** | Latest  | Toast notifications |
 
 ### File Upload & Storage
 
 | Technology        | Version | Purpose                    |
-| ----------------- | ------- | -------------------------- |
+|-------------------|---------|----------------------------|
 | **Cloudflare R2** | Latest  | Object storage for avatars |
 | **Wrangler**      | 4.54.0  | Cloudflare CLI             |
 
 ### Validation
 
 | Technology | Version | Purpose           |
-| ---------- | ------- | ----------------- |
+|------------|---------|-------------------|
 | **Zod**    | 4.3.5   | Schema validation |
 
 ### Testing & Quality
 
 | Technology          | Version | Purpose                |
-| ------------------- | ------- | ---------------------- |
+|---------------------|---------|------------------------|
 | **Vitest**          | 3.2.4   | Unit testing framework |
 | **Testing Library** | 16.3.1  | Component testing      |
 | **ESLint**          | 9.39.2  | Code linting           |
@@ -111,7 +113,7 @@ address book with advanced features like cloud storage, internationalization, an
 ### Deployment
 
 | Technology             | Version | Purpose            |
-| ---------------------- | ------- | ------------------ |
+|------------------------|---------|--------------------|
 | **Cloudflare Workers** | Latest  | Serverless compute |
 | **Cloudflare Pages**   | Latest  | Static hosting     |
 
@@ -119,7 +121,7 @@ address book with advanced features like cloud storage, internationalization, an
 
 #### Client Environment (VITE\_ prefix)
 
-```typescript
+```tsx
 // src/env.client.ts
 export const env = createEnv({
   client: {
@@ -135,7 +137,7 @@ export const env = createEnv({
 
 #### Server Environment
 
-```typescript
+```tsx
 // src/env.server.ts
 export const env = createEnv({
   server: {
@@ -214,17 +216,17 @@ src/
 
 **Pattern**: Instead of REST APIs, use TanStack Start server functions for type-safe internal communication.
 
-```typescript
+```tsx
 // src/backend/queries/contacts.ts
 export const listContactsFn = createServerFn()
-  .validator(listContactsInputSchema)
-  .handler(async ({ data }) => {
-    const session = await requireAuth()
-    return listContacts(session.user.id, data)
-  })
+.validator(listContactsInputSchema)
+.handler(async ({ data }) => {
+  const session = await requireAuth()
+  return listContacts(session.user.id, data)
+})
 ```
 
-```typescript
+```tsx
 // Client usage - fully type-safe
 const { data } = useQuery(contactOptions.list(filters))
 ```
@@ -269,7 +271,7 @@ Hook (useCreateContact, useQuery, etc.)
     ↓
 Server Function RPC (createContactFn)
     ↓
-Business Logic Module (src/backend/modules/contacts.ts)
+Business Logic Module (src/backend/lib/contacts.ts)
     ↓
 Drizzle ORM Query
     ↓
@@ -286,12 +288,12 @@ Component Re-render
 
 **Pure UI Components** (No side effects):
 
-```typescript
+```tsx
 // src/features/contacts/components/ContactForm.tsx
 function ContactForm ({ contact, onSubmit, isPending }) {
   return (
     <form>
-      {/* ... */ }
+      {/* ... */}
     < /form>
   )
 }
@@ -299,9 +301,9 @@ function ContactForm ({ contact, onSubmit, isPending }) {
 
 **Hooks** (Side effects & data):
 
-```typescript
+```tsx
 // src/features/contacts/hooks/useCreateContact.ts
-export function useCreateContact() {
+export function useCreateContact () {
   return useMutation({
     mutationFn: createContactFn,
     onSuccess: () => {
@@ -313,26 +315,24 @@ export function useCreateContact() {
 
 **Routes** (Sheet/dialog wrappers):
 
-```typescript
+```tsx
 // src/routes/_user/contacts/new.tsx
 function CreateContactRoute () {
-  const navigate = useNavigate()
-  const { mutate } = useCreateContact()
+  const navigate = useNavigate();
+  const { mutate } = useCreateContact();
 
   return (
     <Sheet
-      open = { true }
-  onOpenChange = {(open)
-=>
-  !open && navigate({ to: '/contacts' })
-}
->
-  <SheetContent>
-    <ContactForm onSubmit = { mutate }
-  />
-  < /SheetContent>
-  < /Sheet>
-)
+      open={true}
+      onOpenChange={(open) => !open && navigate({ to: '/contacts' })
+      }
+    >
+      <SheetContent>
+        <ContactForm onSubmit={mutate}
+        />
+      < /SheetContent>
+    < /Sheet>
+  );
 }
 ```
 
@@ -344,7 +344,7 @@ function CreateContactRoute () {
 
 ### 6. Query Key Factory Pattern
 
-```typescript
+```tsx
 // src/features/contacts/keys.ts
 export const contactKeys = {
   all: ['contacts'] as const,
@@ -356,13 +356,13 @@ export const contactKeys = {
 
 // src/features/contacts/options.ts
 export const contactOptions = {
-  list(filters = {}) {
+  list (filters = {}) {
     return queryOptions({
       queryKey: contactKeys.list(filters),
       queryFn: () => listContactsFn({ data: filters }),
     })
   },
-  detail(id: string) {
+  detail (id: string) {
     return queryOptions({
       queryKey: contactKeys.detail(id),
       queryFn: () => getContactFn({ data: { id } }),
@@ -382,7 +382,7 @@ export const contactOptions = {
 
 #### Schema Pattern (Drizzle ORM)
 
-```typescript
+```tsx
 // src/backend/schemas/contacts.ts
 import { pgTable, text, timestamp, boolean, index } from 'drizzle-orm/pg-core'
 import { v7 } from 'uuid'
@@ -391,11 +391,11 @@ export const contact = pgTable(
   'contact',
   {
     id: text()
-      .primaryKey()
-      .$defaultFn(() => v7()),
+    .primaryKey()
+    .$defaultFn(() => v7()),
     userId: text()
-      .notNull()
-      .references(() => users.id, { onDelete: 'cascade' }),
+    .notNull()
+    .references(() => users.id, { onDelete: 'cascade' }),
     firstName: text().notNull(),
     // ... other fields
     isFavorite: boolean().default(false).notNull(),
@@ -418,26 +418,26 @@ export const contact = pgTable(
 
 **Query Pattern**: Always filter `WHERE deletedAt IS NULL`
 
-```typescript
+```tsx
 const conditions = [eq(contact.userId, userId), isNull(contact.deletedAt)]
 ```
 
 **Trash View**: Only show `WHERE deletedAt IS NOT NULL`
 
-```typescript
+```tsx
 const conditions = [eq(contact.userId, userId), isNotNull(contact.deletedAt)]
 ```
 
 **Restore**: Set `deletedAt = NULL`
 
-```typescript
-db.update(contact).set({ deletedAt: null }).where(...)
+```tsx
+db.update(contact).set({ deletedAt: null }).where(eq('id', id))
 ```
 
-**Permanent Delete**: Actually remove from database
+**Permanent Delete**: Actually remove from a database
 
-```typescript
-db.delete(contact).where(...)
+```tsx
+db.delete(contact).where(eq('id', id))
 ```
 
 ### Authentication & Authorization
@@ -456,7 +456,7 @@ db.delete(contact).where(...)
 
 **Route-level Guard**:
 
-```typescript
+```tsx
 // src/routes/_user/route.tsx
 export const Route = createFileRoute('/_user')({
   beforeLoad: async ({ context }) => {
@@ -468,28 +468,28 @@ export const Route = createFileRoute('/_user')({
 
 **Function-level Guard** (Server functions):
 
-```typescript
+```tsx
 export const createContactFn = createServerFn()
-  .validator(createContactInputSchema)
-  .handler(async ({ data }) => {
-    const session = await requireAuth() // Throws if not authenticated
-    return createContact(data, session.user.id)
-  })
+.validator(createContactInputSchema)
+.handler(async ({ data }) => {
+  const session = await requireAuth() // Throws if not authenticated
+  return createContact(data, session.user.id)
+})
 ```
 
 **Data-level Isolation**:
 
-```typescript
+```tsx
 // Every query filters by authenticated user
 const contacts = await db
-  .select()
-  .from(contact)
-  .where(
-    and(
-      eq(contact.userId, session.user.id), // User isolation
-      isNull(contact.deletedAt), // Soft delete filter
-    ),
-  )
+.select()
+.from(contact)
+.where(
+  and(
+    eq(contact.userId, session.user.id), // User isolation
+    isNull(contact.deletedAt), // Soft delete filter
+  ),
+)
 ```
 
 ---
@@ -519,7 +519,7 @@ src/
 
 #### Namespace Aggregation
 
-```typescript
+```ts
 // src/integrations/i18n/resources.ts
 import authEn from '@/features/auth/locales/en.json'
 import authAr from '@/features/auth/locales/ar.json'
@@ -544,7 +544,7 @@ export const resources = {
 
 **Direction Detection**:
 
-```typescript
+```tsx
 const isRTL = language === 'ar'
 document.documentElement.dir = isRTL ? 'rtl' : 'ltr'
 document.documentElement.lang = language
@@ -566,9 +566,9 @@ text-start
 
 **Date & Number Formatting**:
 
-```typescript
+```tsx
 // src/core/utils/formatters.ts
-export function formatDate(date: Date, locale: string) {
+export function formatDate (date: Date, locale: string) {
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
@@ -576,7 +576,7 @@ export function formatDate(date: Date, locale: string) {
   }).format(date)
 }
 
-export function formatNumber(num: number, locale: string) {
+export function formatNumber (num: number, locale: string) {
   return new Intl.NumberFormat(locale).format(num)
 }
 ```
@@ -586,26 +586,26 @@ export function formatNumber(num: number, locale: string) {
 #### Avatar Upload Flow
 
 1. **Client-Side**:
-   - Resize/compress image (max 512x512)
-   - Create FormData with image
-   - Call `uploadAvatarFn` server function
+    - Resize/compress image (max 512x512)
+    - Create FormData with image
+    - Call `uploadAvatarFn` server function
 
 2. **Server-Side**:
-   - Validate file (size, type)
-   - Upload to R2 using key: `/contacts/${contactId}/${timestamp}.ext`
-   - Return public URL
-   - Store URL in database
+    - Validate file (size, type)
+    - Upload to R2 using key: `/contacts/${contactId}/${timestamp}.ext`
+    - Return public URL
+    - Store URL in database
 
 3. **Storage**:
-   - **Bucket**: Cloudflare R2
-   - **Public URL**: `https://cdn.contactory.consultin.dev/`
-   - **Access**: Read-only public URLs for images
+    - **Bucket**: Cloudflare R2
+    - **Public URL**: `https://cdn.contactory.consultin.dev/`
+    - **Access**: Read-only public URLs for images
 
 #### Deletion Pattern
 
-```typescript
+```tsx
 // When permanently deleting a contact:
-async function permanentDeleteContact(contactId: string) {
+async function permanentDeleteContact (contactId: string) {
   const contact = await getContact(contactId)
 
   // Delete avatar from R2
@@ -624,7 +624,7 @@ async function permanentDeleteContact(contactId: string) {
 
 **Library**: TanStack Virtual
 
-```typescript
+```tsx
 const { rows } = useReactTable({
   data: contacts,
   columns,
@@ -651,8 +651,8 @@ const virtualRows = virtualizer.getVirtualItems()
 
 **Pattern**: Use last item ID instead of offset
 
-```typescript
-export async function listContacts(
+```tsx
+export async function listContacts (
   userId: string,
   options: {
     cursor?: string
@@ -666,11 +666,11 @@ export async function listContacts(
   }
 
   return db
-    .select()
-    .from(contact)
-    .where(and(...conditions))
-    .orderBy(asc(contact.id))
-    .limit(options.limit ?? 50)
+  .select()
+  .from(contact)
+  .where(and(...conditions))
+  .orderBy(asc(contact.id))
+  .limit(options.limit ?? 50)
 }
 ```
 
@@ -684,7 +684,7 @@ export async function listContacts(
 
 **Client-Side**:
 
-```typescript
+```tsx
 // Resize/compress before upload
 const resized = await resizeImage(file, {
   maxWidth: 512,
@@ -713,25 +713,25 @@ const resized = await resizeImage(file, {
 
 #### Server Function Error Handling
 
-```typescript
+```tsx
 export const createContactFn = createServerFn()
-  .validator(createContactInputSchema)
-  .handler(async ({ data }) => {
-    try {
-      const session = await requireAuth()
-      return await createContact(data, session.user.id)
-    } catch (error) {
-      if (error instanceof ValidationError) {
-        throw new ServerError('Validation failed', { cause: error })
-      }
-      throw error
+.validator(createContactInputSchema)
+.handler(async ({ data }) => {
+  try {
+    const session = await requireAuth()
+    return await createContact(data, session.user.id)
+  } catch (error) {
+    if (error instanceof ValidationError) {
+      throw new ServerError('Validation failed', { cause: error })
     }
-  })
+    throw error
+  }
+})
 ```
 
 #### Client Error Handling
 
-```typescript
+```tsx
 const { mutate, isPending, error } = useMutation({
   mutationFn: createContactFn,
   onError: (error) => {
@@ -746,7 +746,7 @@ const { mutate, isPending, error } = useMutation({
 
 #### Optimistic Error Recovery
 
-```typescript
+```tsx
 const { mutate } = useMutation({
   mutationFn: deleteContactFn,
   onMutate: async (contactId) => {
@@ -771,7 +771,7 @@ const { mutate } = useMutation({
 
 #### Unit Tests (Vitest)
 
-```typescript
+```tsx
 // src/features/contacts/lib/formatContact.test.ts
 describe('formatContact', () => {
   it('returns initials from first and last name', () => {
@@ -783,7 +783,7 @@ describe('formatContact', () => {
 
 #### Integration Tests
 
-```typescript
+```tsx
 // src/backend/mutations/contacts.test.ts
 describe('createContactFn', () => {
   it('creates contact for authenticated user', async () => {
@@ -798,12 +798,12 @@ describe('createContactFn', () => {
 
 #### Component Tests
 
-```typescript
+```tsx
 // src/features/contacts/components/ContactForm.test.ts
 describe('ContactForm', () => {
   it('submits form with valid data', async () => {
     const onSubmit = vi.fn()
-    render(<ContactForm onSubmit = { onSubmit }
+    render(<ContactForm onSubmit={onSubmit}
     />)
 
     fireEvent.change(screen.getByLabelText('First Name'), {
@@ -906,7 +906,7 @@ pnpm db:studio     # Drizzle Studio GUI
 #### Naming Conventions
 
 | Type           | Pattern                     | Example                         |
-| -------------- | --------------------------- | ------------------------------- |
+|----------------|-----------------------------|---------------------------------|
 | **Files**      | lowercase-with-hyphens      | `contact-form.tsx`              |
 | **Components** | PascalCase                  | `ContactForm`                   |
 | **Hooks**      | camelCase with 'use' prefix | `useCreateContact`              |
@@ -916,10 +916,10 @@ pnpm db:studio     # Drizzle Studio GUI
 
 #### Import Style
 
-```typescript
+```tsx
 // Use explicit imports, not barrels
-import { createContact } from '@/backend/modules/contacts' // ✅
-import { createContact } from '@/backend/modules' // ❌
+import { createContact } from '@/backend/lib/contacts' // ✅
+import { createContact } from '@/backend/lib' // ❌
 
 // Path aliases
 import { ContactForm } from '@/features/contacts/components' // ✅
@@ -928,14 +928,14 @@ import { ContactForm } from '../../../features/contacts' // ❌
 
 #### React Patterns
 
-```typescript
+```tsx
 // Use function declarations for components
-export function ContactForm({ contact, onSubmit }: Props) {
+export function ContactForm ({ contact, onSubmit }: Props) {
   // ...
 }
 
 // Extract custom hooks
-export function useCreateContact() {
+export function useCreateContact () {
   return useMutation({
     /* ... */
   })
@@ -965,7 +965,7 @@ const buttonVariants = cva('btn', {
 - Use TanStack Start server functions for internal operations
 - Organize features in `src/features/*/` with clear boundaries
 - Use explicit imports, avoid barrel files (index.ts exports)
-- Keep business logic in `modules/`, not in routes or components
+- Keep business logic in `lib/`, not in routes or components
 
 **Don't:**
 
@@ -1017,7 +1017,7 @@ const buttonVariants = cva('btn', {
 **Unit Tests:**
 
 - Pure utility functions (formatters, validators)
-- Business logic in modules
+- Business logic in lib
 - Component props/behaviors
 - Target: >80% coverage for new code
 
@@ -1152,6 +1152,6 @@ const buttonVariants = cva('btn', {
 
 ---
 
-**Last Updated**: January 10, 2026
+**Last Updated**: January 12, 2026
 **Maintained By**: Mohammed
 **Related Documents**: ADR-001, ADR-002, ADR-003 (can be archived after migration)
