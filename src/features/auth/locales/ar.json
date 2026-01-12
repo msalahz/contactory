@@ -28,6 +28,8 @@
   "Sign In Failed": "فشل تسجيل الدخول",
   "Request Failed": "فشل الطلب",
   "Invalid token": "رمز غير صالح",
+  "Reset password": "إعادة تعيين كلمة المرور",
+  "Set new password": "تعيين كلمة مرور جديدة",
   "Password reset successfully": "تمت إعادة تعيين كلمة المرور بنجاح",
   "Reset password failed": "فشلت إعادة تعيين كلمة المرور",
   "Go home": "العودة للرئيسية",
@@ -64,7 +66,6 @@
   "Change your password to keep your account secure": "غيّر كلمة المرور للحفاظ على أمان حسابك",
   "Profile Information": "معلومات الملف الشخصي",
   "Update your profile photo and display name": "حدّث صورة ملفك الشخصي واسم العرض",
-
   "Display Name": "اسم العرض",
   "Enter your name": "أدخل اسمك",
   "This is your public display name visible to others": "هذا هو اسم العرض العام المرئي للآخرين",
