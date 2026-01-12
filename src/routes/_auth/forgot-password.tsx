@@ -1,5 +1,5 @@
-import { createFileRoute } from '@tanstack/react-router'
 import { useTranslation } from 'react-i18next'
+import { createFileRoute } from '@tanstack/react-router'
 
 import { envClient } from '@/env.client'
 import { AlertBox } from '@/core/components/AlertBox'
@@ -15,7 +15,7 @@ export const Route = createFileRoute('/_auth/forgot-password')({
 
 function RouteComponent() {
   const { t } = useTranslation('auth')
-  const { mutateAsync, data, error, isSuccess } = useRequestPasswordReset()
+  const { mutateAsync, error, isSuccess } = useRequestPasswordReset()
 
   if (envClient.VITE_BETTER_AUTH_ENABLE_EMAIL !== 'true') {
     return null
@@ -39,10 +39,9 @@ function RouteComponent() {
         {isSuccess ? (
           <AlertBox type="success">
             <ItemTitle>
-              {data.message ||
-                t(
-                  'If an account with that email exists, check your email for a password reset link.',
-                )}
+              {t(
+                'If an account with that email exists, check your email for a password reset link.',
+              )}
             </ItemTitle>
           </AlertBox>
         ) : null}
