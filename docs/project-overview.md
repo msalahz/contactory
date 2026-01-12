@@ -7,7 +7,10 @@ This document is intended for business-focused stakeholders who may not have a t
 
 ## Executive Summary
 
-**Contactory** is a modern, team-first contact management application that bridges the gap between personal contact apps (Google Contacts, Apple Contacts) and enterprise CRM (Salesforce, HubSpot). Built with a focus on **team collaboration, speed, and cross-platform neutrality**, Contactory enables individuals and small teams to organize, share, and manage contacts without ecosystem lock-in.
+**Contactory** is a modern, team-first contact management application that bridges the gap between personal contact
+apps (Google Contacts, Apple Contacts) and enterprise CRM (Salesforce, HubSpot). Built with a focus on **team
+collaboration, speed, and cross-platform neutrality**, Contactory enables individuals and small teams to organize,
+share, and manage contacts without ecosystem lock-in.
 
 **Strategic Position**: "The Switzerland of Contacts" - Works with everyone, owned by you, built for teams.
 
@@ -17,11 +20,13 @@ This document is intended for business-focused stakeholders who may not have a t
 
 ### Vision
 
-To be the cross-platform, team-first contact manager that works with existing ecosystems (Google, Apple) while providing collaboration features neither offers.
+To be the cross-platform, team-first contact manager that works with existing ecosystems (Google, Apple) while providing
+collaboration features neither offers.
 
 ### Mission
 
-Empower individuals and small teams to collaboratively manage contacts with the speed, reliability, and modern UX that legacy platforms can't match - without forcing users to abandon their existing ecosystems.
+Empower individuals and small teams to collaboratively manage contacts with the speed, reliability, and modern UX that
+legacy platforms can't match - without forcing users to abandon their existing ecosystems.
 
 ---
 
@@ -29,20 +34,23 @@ Empower individuals and small teams to collaboratively manage contacts with the 
 
 ### Why Contactory Exists
 
-Neither Google Contacts nor Apple Contacts addresses **team contact sharing with granular permissions**. Both are personal-first tools. Google Workspace has directories but not true shared contact management. Apple has nothing for teams.
+Neither Google Contacts nor Apple Contacts addresses **team contact sharing with granular permissions**. Both are
+personal-first tools. Google Workspace has directories but not true shared contact management. Apple has nothing for
+teams.
 
 ### Competitive Advantages
 
-| Advantage | Description |
-| --------- | ----------- |
-| **Team Collaboration** | Shared lists, permissions, activity history - features neither competitor will prioritize |
-| **Cross-Platform Neutrality** | Two-way sync with Google AND Apple - we're the bridge they'll never build |
-| **Speed & Reliability** | < 2s page loads, 60 FPS scrolling, instant search - modern stack vs legacy codebases |
-| **Modern UX** | Keyboard shortcuts, custom fields, advanced filters, dark mode done right |
+| Advantage                     | Description                                                                               |
+|-------------------------------|-------------------------------------------------------------------------------------------|
+| **Team Collaboration**        | Shared lists, permissions, activity history - features neither competitor will prioritize |
+| **Cross-Platform Neutrality** | Two-way sync with Google AND Apple - we're the bridge they'll never build                 |
+| **Speed & Reliability**       | < 2s page loads, 60 FPS scrolling, instant search - modern stack vs legacy codebases      |
+| **Modern UX**                 | Keyboard shortcuts, custom fields, advanced filters, dark mode done right                 |
 
 ### Strategic Approach: Embrace + Differentiate
 
-**Embrace ecosystems** (two-way sync with Google/Apple) to lower switching friction, then **differentiate** through team features, speed, and UX that big tech won't prioritize.
+**Embrace ecosystems** (two-way sync with Google/Apple) to lower switching friction, then **differentiate** through team
+features, speed, and UX that big tech won't prioritize.
 
 For detailed competitive analysis, see [Market Research](./market-research.md).
 
@@ -72,6 +80,7 @@ For detailed competitive analysis, see [Market Research](./market-research.md).
 ### Market Position
 
 Contactory fills the gap between:
+
 - **Personal contact apps** (Google/Apple) - Too simple for teams
 - **Enterprise CRM** (Salesforce/HubSpot) - Too complex and expensive for contact management
 
@@ -105,7 +114,7 @@ Contactory fills the gap between:
 #### Contact Data Fields
 
 | Field           | Required | Description                     |
-| --------------- | -------- | ------------------------------- |
+|-----------------|----------|---------------------------------|
 | First Name      | Yes      | Only required field             |
 | Last Name       | No       |                                 |
 | Display Name    | No       | Computed or custom              |
@@ -280,7 +289,7 @@ Contactory fills the gap between:
 ### Functional Requirements
 
 | ID     | Requirement                                    |
-| ------ | ---------------------------------------------- |
+|--------|------------------------------------------------|
 | FR-001 | Create new contacts with minimum first name    |
 | FR-002 | View list of all user contacts                 |
 | FR-003 | View complete contact details                  |
@@ -359,7 +368,7 @@ Contactory fills the gap between:
 ## Success Metrics
 
 | Metric                 | Target                     |
-| ---------------------- | -------------------------- |
+|------------------------|----------------------------|
 | Create contact time    | < 60 seconds               |
 | Search to first result | < 5 seconds                |
 | Page to interactive    | < 2 seconds (500 contacts) |
@@ -394,7 +403,7 @@ Contactory fills the gap between:
 - Activity history for shared contacts
 - Team duplicate detection
 
-For detailed specification, see [002-team-sharing/spec.md](./002-team-sharing/spec.md).
+For detailed specification, see [002-team-sharing/spec.md](../specs/002-team-sharing/spec.md).
 
 ### Phase 3: Sync & Integration (Q2 2026)
 
@@ -496,7 +505,7 @@ For detailed specification, see [002-team-sharing/spec.md](./002-team-sharing/sp
 ## Risk Mitigation
 
 | Risk                               | Impact | Mitigation                                                     |
-| ---------------------------------- | ------ | -------------------------------------------------------------- |
+|------------------------------------|--------|----------------------------------------------------------------|
 | Large dataset performance          | High   | Virtual scrolling, efficient pagination, database optimization |
 | Data loss from accidental deletion | High   | Soft delete with 5-second undo, trash view with restore        |
 | Mobile usability issues            | Medium | Bottom sheets, swipe gestures, responsive card layouts         |
@@ -532,18 +541,21 @@ For detailed specification, see [002-team-sharing/spec.md](./002-team-sharing/sp
 ## Business Model: Freemium with Team Focus
 
 ### Free Tier
+
 - Unlimited personal contacts
 - Google/Apple sync (one direction)
 - Basic search and organization
 - Export to vCard/CSV
 
 ### Pro Tier ($5-8/month)
+
 - Two-way sync with multiple sources
 - Advanced search and filters
 - Custom fields and tags
 - Priority support
 
 ### Team Tier ($10-15/user/month)
+
 - Shared contact lists
 - Permissions and roles
 - Activity history and audit log
@@ -556,14 +568,14 @@ For detailed specification, see [002-team-sharing/spec.md](./002-team-sharing/sp
 
 ## Documentation Map
 
-| Document                            | Purpose                                                 | Audience                            |
-| ----------------------------------- | ------------------------------------------------------- | ----------------------------------- |
-| **project-overview.md**             | Product vision, strategy, features                      | PMs, stakeholders, all team members |
-| **market-research.md**              | Competitive analysis and strategic positioning          | Product, leadership, investors      |
-| **project-architecture.md**         | Technical stack, patterns, guidelines                   | Developers, architects, tech leads  |
-| **002-team-sharing/spec.md**        | Team sharing feature specification                      | Product, developers                 |
-| **archived-001-contacts-crud/**     | Contacts CRUD feature (archived)                        | Reference                           |
-| **competitors-overview.md**         | Google vs Apple Contacts comparison                     | Product, strategy                   |
+| Document                        | Purpose                                        | Audience                            |
+|---------------------------------|------------------------------------------------|-------------------------------------|
+| **project-overview.md**         | Product vision, strategy, features             | PMs, stakeholders, all team members |
+| **market-research.md**          | Competitive analysis and strategic positioning | Product, leadership, investors      |
+| **project-architecture.md**     | Technical stack, patterns, guidelines          | Developers, architects, tech leads  |
+| **002-team-sharing/spec.md**    | Team sharing feature specification             | Product, developers                 |
+| **archived-001-contacts-crud/** | Contacts CRUD feature (archived)               | Reference                           |
+| **competitors-overview.md**     | Google vs Apple Contacts comparison            | Product, strategy                   |
 
 ---
 

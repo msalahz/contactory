@@ -3,13 +3,16 @@
 **Feature Branch**: `002-team-sharing`
 **Created**: 2026-01-12
 **Status**: Draft
-**Strategic Context**: [Market Research](../market-research.md) - Primary differentiation moat
+**Strategic Context**: [Market Research](../../docs/market-research.md) - Primary differentiation moat
 
 ## Overview
 
-Team contact sharing enables small teams (2-20 people) to collaboratively manage shared contact lists with granular permissions, activity tracking, and conflict resolution. This feature fills a critical gap that neither Google Contacts nor Apple Contacts addresses.
+Team contact sharing enables small teams (2-20 people) to collaboratively manage shared contact lists with granular
+permissions, activity tracking, and conflict resolution. This feature fills a critical gap that neither Google Contacts
+nor Apple Contacts addresses.
 
-**Why this matters**: Team collaboration is Contactory's primary competitive moat. Google sells ads, Apple sells devices - neither has business incentive to build deep team contact management.
+**Why this matters**: Team collaboration is Contactory's primary competitive moat. Google sells ads, Apple sells
+devices - neither has business incentive to build deep team contact management.
 
 ---
 
@@ -17,7 +20,8 @@ Team contact sharing enables small teams (2-20 people) to collaboratively manage
 
 ### User Story 1 - Create and Share a Contact List (Priority: P1)
 
-As a team lead, I want to create a shared contact list and invite team members so we can collaboratively manage our client contacts.
+As a team lead, I want to create a shared contact list and invite team members so we can collaboratively manage our
+client contacts.
 
 **Why this priority**: Core value proposition. Without sharing, there's no team feature.
 
@@ -25,8 +29,10 @@ As a team lead, I want to create a shared contact list and invite team members s
 
 **Acceptance Scenarios**:
 
-1. **Given** I am logged in, **When** I click "New List" and enter a name, **Then** a new empty contact list is created with me as owner
-2. **Given** I own a contact list, **When** I click "Share" and enter an email, **Then** an invitation is sent and the user appears as "Pending"
+1. **Given** I am logged in, **When** I click "New List" and enter a name, **Then** a new empty contact list is created
+   with me as owner
+2. **Given** I own a contact list, **When** I click "Share" and enter an email, **Then** an invitation is sent and the
+   user appears as "Pending"
 3. **Given** I received an invitation, **When** I click the invite link, **Then** I see the shared list in my sidebar
 4. **Given** I am a list member, **When** the owner removes me, **Then** the list disappears from my sidebar immediately
 
@@ -34,7 +40,8 @@ As a team lead, I want to create a shared contact list and invite team members s
 
 ### User Story 2 - Role-Based Permissions (Priority: P1)
 
-As a list owner, I want to assign different permission levels (view, edit, admin) so I can control who can modify contacts.
+As a list owner, I want to assign different permission levels (view, edit, admin) so I can control who can modify
+contacts.
 
 **Why this priority**: Without permissions, sharing is dangerous. Users won't trust the system.
 
@@ -46,23 +53,24 @@ As a list owner, I want to assign different permission levels (view, edit, admin
 2. **Given** I am a Viewer, **When** I open a contact, **Then** I see details but cannot edit
 3. **Given** I am an Editor, **When** I edit a contact, **Then** the change is saved and visible to all members
 4. **Given** I am an Admin, **When** I access list settings, **Then** I can invite/remove members and change roles
-5. **Given** I am the Owner, **When** I try to leave the list, **Then** I must first transfer ownership or delete the list
+5. **Given** I am the Owner, **When** I try to leave the list, **Then** I must first transfer ownership or delete the
+   list
 
 **Permission Matrix**:
 
-| Action                | Viewer | Editor | Admin | Owner |
-| --------------------- | ------ | ------ | ----- | ----- |
-| View contacts         | Yes    | Yes    | Yes   | Yes   |
-| Add contacts          | No     | Yes    | Yes   | Yes   |
-| Edit contacts         | No     | Yes    | Yes   | Yes   |
-| Delete contacts       | No     | Yes    | Yes   | Yes   |
-| View member list      | Yes    | Yes    | Yes   | Yes   |
-| Invite members        | No     | No     | Yes   | Yes   |
-| Remove members        | No     | No     | Yes   | Yes   |
-| Change member roles   | No     | No     | Yes   | Yes   |
-| Rename list           | No     | No     | Yes   | Yes   |
-| Delete list           | No     | No     | No    | Yes   |
-| Transfer ownership    | No     | No     | No    | Yes   |
+| Action              | Viewer | Editor | Admin | Owner |
+|---------------------|--------|--------|-------|-------|
+| View contacts       | Yes    | Yes    | Yes   | Yes   |
+| Add contacts        | No     | Yes    | Yes   | Yes   |
+| Edit contacts       | No     | Yes    | Yes   | Yes   |
+| Delete contacts     | No     | Yes    | Yes   | Yes   |
+| View member list    | Yes    | Yes    | Yes   | Yes   |
+| Invite members      | No     | No     | Yes   | Yes   |
+| Remove members      | No     | No     | Yes   | Yes   |
+| Change member roles | No     | No     | Yes   | Yes   |
+| Rename list         | No     | No     | Yes   | Yes   |
+| Delete list         | No     | No     | No    | Yes   |
+| Transfer ownership  | No     | No     | No    | Yes   |
 
 ---
 
@@ -77,7 +85,8 @@ As a team member, I want to see who changed what and when so I can track contact
 **Acceptance Scenarios**:
 
 1. **Given** I am viewing a shared contact, **When** I click "Activity", **Then** I see a chronological list of changes
-2. **Given** someone edited a contact, **When** I view activity, **Then** I see who made the change, what changed, and when
+2. **Given** someone edited a contact, **When** I view activity, **Then** I see who made the change, what changed, and
+   when
 3. **Given** I am viewing list activity, **When** a member was added/removed, **Then** I see that in the activity log
 4. **Given** activity is older than 90 days, **When** I scroll to load more, **Then** older activity loads on demand
 
@@ -97,7 +106,8 @@ As a team member, I want to see who changed what and when so I can track contact
 
 ### User Story 4 - Team Duplicate Detection (Priority: P2)
 
-As a team member, I want the system to detect potential duplicates across team members' additions so we don't have messy data.
+As a team member, I want the system to detect potential duplicates across team members' additions so we don't have messy
+data.
 
 **Why this priority**: Data quality differentiator. Neither competitor does this for teams.
 
@@ -105,10 +115,12 @@ As a team member, I want the system to detect potential duplicates across team m
 
 **Acceptance Scenarios**:
 
-1. **Given** I am adding a contact, **When** the email matches an existing contact, **Then** I see a "Potential duplicate" warning
+1. **Given** I am adding a contact, **When** the email matches an existing contact, **Then** I see a "Potential
+   duplicate" warning
 2. **Given** duplicates are detected, **When** I click "Review", **Then** I see a side-by-side comparison
 3. **Given** I am reviewing duplicates, **When** I click "Merge", **Then** I can select which fields to keep from each
-4. **Given** I am reviewing duplicates, **When** I click "Keep Both", **Then** both contacts are marked as "Not Duplicate"
+4. **Given** I am reviewing duplicates, **When** I click "Keep Both", **Then** both contacts are marked as "Not
+   Duplicate"
 
 **Duplicate Detection Rules**:
 
@@ -130,14 +142,16 @@ As a team admin, I want to transfer contact ownership when someone leaves the te
 
 1. **Given** I am an Admin, **When** I view a member's contacts, **Then** I see an option to "Transfer Ownership"
 2. **Given** I am transferring contacts, **When** I select a new owner, **Then** all selected contacts are reassigned
-3. **Given** a member is removed from the list, **When** they had contacts, **Then** Admin sees prompt to transfer or keep as-is
+3. **Given** a member is removed from the list, **When** they had contacts, **Then** Admin sees prompt to transfer or
+   keep as-is
 
 ---
 
 ### Edge Cases
 
 - What happens when a user is in multiple teams with the same contact? (Contacts remain separate per list)
-- What happens when the owner deletes their account? (Ownership transfers to oldest Admin, or list is deleted if no Admins)
+- What happens when the owner deletes their account? (Ownership transfers to oldest Admin, or list is deleted if no
+  Admins)
 - What happens during a sync conflict? (Last-write-wins with conflict UI for resolution)
 - What happens if invitation email bounces? (Show "Invite Failed" status, allow resend)
 - What happens with very large teams (>20)? (Soft limit with upgrade prompt for enterprise tier)
@@ -225,53 +239,59 @@ Per Contactory Constitution (`.specify/memory/constitution.md` v1.0.0):
 
 ```sql
 -- Contact lists
-CREATE TABLE contact_lists (
-  id UUID PRIMARY KEY,
-  name VARCHAR(255) NOT NULL,
-  owner_id UUID NOT NULL REFERENCES users(id),
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW(),
-  deleted_at TIMESTAMP -- soft delete
+CREATE TABLE contact_lists
+(
+    id         UUID PRIMARY KEY,
+    name       VARCHAR(255) NOT NULL,
+    owner_id   UUID         NOT NULL REFERENCES users (id),
+    created_at TIMESTAMP DEFAULT NOW(),
+    updated_at TIMESTAMP DEFAULT NOW(),
+    deleted_at TIMESTAMP -- soft delete
 );
 
 -- List memberships
-CREATE TABLE list_memberships (
-  id UUID PRIMARY KEY,
-  list_id UUID NOT NULL REFERENCES contact_lists(id),
-  user_id UUID NOT NULL REFERENCES users(id),
-  role VARCHAR(20) NOT NULL CHECK (role IN ('viewer', 'editor', 'admin')),
-  joined_at TIMESTAMP DEFAULT NOW(),
-  UNIQUE(list_id, user_id)
+CREATE TABLE list_memberships
+(
+    id        UUID PRIMARY KEY,
+    list_id   UUID        NOT NULL REFERENCES contact_lists (id),
+    user_id   UUID        NOT NULL REFERENCES users (id),
+    role      VARCHAR(20) NOT NULL CHECK (role IN ('viewer', 'editor', 'admin')),
+    joined_at TIMESTAMP DEFAULT NOW(),
+    UNIQUE (list_id, user_id)
 );
 
 -- Invitations
-CREATE TABLE list_invitations (
-  id UUID PRIMARY KEY,
-  list_id UUID NOT NULL REFERENCES contact_lists(id),
-  email VARCHAR(255) NOT NULL,
-  role VARCHAR(20) NOT NULL,
-  token VARCHAR(64) NOT NULL UNIQUE,
-  invited_by UUID NOT NULL REFERENCES users(id),
-  expires_at TIMESTAMP NOT NULL,
-  accepted_at TIMESTAMP,
-  created_at TIMESTAMP DEFAULT NOW()
+CREATE TABLE list_invitations
+(
+    id          UUID PRIMARY KEY,
+    list_id     UUID         NOT NULL REFERENCES contact_lists (id),
+    email       VARCHAR(255) NOT NULL,
+    role        VARCHAR(20)  NOT NULL,
+    token       VARCHAR(64)  NOT NULL UNIQUE,
+    invited_by  UUID         NOT NULL REFERENCES users (id),
+    expires_at  TIMESTAMP    NOT NULL,
+    accepted_at TIMESTAMP,
+    created_at  TIMESTAMP DEFAULT NOW()
 );
 
 -- Activity log
-CREATE TABLE activity_logs (
-  id UUID PRIMARY KEY,
-  list_id UUID NOT NULL REFERENCES contact_lists(id),
-  actor_id UUID NOT NULL REFERENCES users(id),
-  action VARCHAR(50) NOT NULL,
-  target_type VARCHAR(50) NOT NULL,
-  target_id UUID,
-  details JSONB,
-  created_at TIMESTAMP DEFAULT NOW()
+CREATE TABLE activity_logs
+(
+    id          UUID PRIMARY KEY,
+    list_id     UUID        NOT NULL REFERENCES contact_lists (id),
+    actor_id    UUID        NOT NULL REFERENCES users (id),
+    action      VARCHAR(50) NOT NULL,
+    target_type VARCHAR(50) NOT NULL,
+    target_id   UUID,
+    details     JSONB,
+    created_at  TIMESTAMP DEFAULT NOW()
 );
 
 -- Extend contacts table
-ALTER TABLE contacts ADD COLUMN list_id UUID REFERENCES contact_lists(id);
-ALTER TABLE contacts ADD COLUMN created_by_id UUID REFERENCES users(id);
+ALTER TABLE contacts
+    ADD COLUMN list_id UUID REFERENCES contact_lists (id);
+ALTER TABLE contacts
+    ADD COLUMN created_by_id UUID REFERENCES users (id);
 ```
 
 ### API Endpoints (Preliminary)
@@ -323,6 +343,6 @@ POST   /api/lists/:id/merge          # Merge duplicates
 
 ## Document History
 
-| Date       | Author   | Changes                              |
-| ---------- | -------- | ------------------------------------ |
-| 2026-01-12 | Mohammed | Initial specification                |
+| Date       | Author   | Changes               |
+|------------|----------|-----------------------|
+| 2026-01-12 | Mohammed | Initial specification |

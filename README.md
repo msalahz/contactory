@@ -339,11 +339,12 @@ positives.
 
 - [Project Overview](docs/project-overview.md) - Product vision, features, requirements
 - [Project Architecture](docs/project-architecture.md) - High-level project structure and design decisions
-- [Contactory Constitution](.specify/memory/constitution.md) - Mandatory standards for code quality, testing, UX, and performance
+- [Contactory Constitution](.specify/memory/constitution.md) - Mandatory standards for code quality, testing, UX, and
+  performance
 
 ### Specifications
 
-- [001 Contacts CRUD](docs/archived-001-contacts-crud/spec.md)
+- [001 Contacts CRUD](specs/001-contacts-crud/spec.md)
 
 ### GitHub Configuration
 
