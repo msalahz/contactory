@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UserRouteRouteImport } from './routes/_user/route'
+import { Route as AuthRouteRouteImport } from './routes/_auth/route'
 import { Route as AdminRouteRouteImport } from './routes/_admin/route'
 import { Route as PublicIndexRouteImport } from './routes/_public/index'
 import { Route as UserProfileRouteImport } from './routes/_user/profile'
@@ -24,6 +25,10 @@ import { Route as ApiAuthSplatRouteImport } from './routes/api/auth.$'
 
 const UserRouteRoute = UserRouteRouteImport.update({
   id: '/_user',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRouteRoute = AuthRouteRouteImport.update({
+  id: '/_auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AdminRouteRoute = AdminRouteRouteImport.update({
@@ -51,24 +56,24 @@ const UserContactsRoute = UserContactsRouteImport.update({
   getParentRoute: () => UserRouteRoute,
 } as any)
 const AuthSignUpRoute = AuthSignUpRouteImport.update({
-  id: '/_auth/sign-up',
+  id: '/sign-up',
   path: '/sign-up',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AuthSignInRoute = AuthSignInRouteImport.update({
-  id: '/_auth/sign-in',
+  id: '/sign-in',
   path: '/sign-in',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AuthResetPasswordRoute = AuthResetPasswordRouteImport.update({
-  id: '/_auth/reset-password',
+  id: '/reset-password',
   path: '/reset-password',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AuthForgotPasswordRoute = AuthForgotPasswordRouteImport.update({
-  id: '/_auth/forgot-password',
+  id: '/forgot-password',
   path: '/forgot-password',
-  getParentRoute: () => rootRouteImport,
+  getParentRoute: () => AuthRouteRoute,
 } as any)
 const AdminAdminRoute = AdminAdminRouteImport.update({
   id: '/admin',
@@ -108,6 +113,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_admin': typeof AdminRouteRouteWithChildren
+  '/_auth': typeof AuthRouteRouteWithChildren
   '/_user': typeof UserRouteRouteWithChildren
   '/_admin/admin': typeof AdminAdminRoute
   '/_auth/forgot-password': typeof AuthForgotPasswordRoute
@@ -148,6 +154,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/_admin'
+    | '/_auth'
     | '/_user'
     | '/_admin/admin'
     | '/_auth/forgot-password'
@@ -163,11 +170,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   AdminRouteRoute: typeof AdminRouteRouteWithChildren
+  AuthRouteRoute: typeof AuthRouteRouteWithChildren
   UserRouteRoute: typeof UserRouteRouteWithChildren
-  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
-  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
-  AuthSignInRoute: typeof AuthSignInRoute
-  AuthSignUpRoute: typeof AuthSignUpRoute
   PublicIndexRoute: typeof PublicIndexRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
@@ -179,6 +183,13 @@ declare module '@tanstack/react-router' {
       path: ''
       fullPath: ''
       preLoaderRoute: typeof UserRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_auth': {
+      id: '/_auth'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof AuthRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_admin': {
@@ -221,28 +232,28 @@ declare module '@tanstack/react-router' {
       path: '/sign-up'
       fullPath: '/sign-up'
       preLoaderRoute: typeof AuthSignUpRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     '/_auth/sign-in': {
       id: '/_auth/sign-in'
       path: '/sign-in'
       fullPath: '/sign-in'
       preLoaderRoute: typeof AuthSignInRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     '/_auth/reset-password': {
       id: '/_auth/reset-password'
       path: '/reset-password'
       fullPath: '/reset-password'
       preLoaderRoute: typeof AuthResetPasswordRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     '/_auth/forgot-password': {
       id: '/_auth/forgot-password'
       path: '/forgot-password'
       fullPath: '/forgot-password'
       preLoaderRoute: typeof AuthForgotPasswordRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof AuthRouteRoute
     }
     '/_admin/admin': {
       id: '/_admin/admin'
@@ -273,6 +284,24 @@ const AdminRouteRouteWithChildren = AdminRouteRoute._addFileChildren(
   AdminRouteRouteChildren,
 )
 
+interface AuthRouteRouteChildren {
+  AuthForgotPasswordRoute: typeof AuthForgotPasswordRoute
+  AuthResetPasswordRoute: typeof AuthResetPasswordRoute
+  AuthSignInRoute: typeof AuthSignInRoute
+  AuthSignUpRoute: typeof AuthSignUpRoute
+}
+
+const AuthRouteRouteChildren: AuthRouteRouteChildren = {
+  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
+  AuthResetPasswordRoute: AuthResetPasswordRoute,
+  AuthSignInRoute: AuthSignInRoute,
+  AuthSignUpRoute: AuthSignUpRoute,
+}
+
+const AuthRouteRouteWithChildren = AuthRouteRoute._addFileChildren(
+  AuthRouteRouteChildren,
+)
+
 interface UserRouteRouteChildren {
   UserContactsRoute: typeof UserContactsRoute
   UserDashboardRoute: typeof UserDashboardRoute
@@ -291,11 +320,8 @@ const UserRouteRouteWithChildren = UserRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   AdminRouteRoute: AdminRouteRouteWithChildren,
+  AuthRouteRoute: AuthRouteRouteWithChildren,
   UserRouteRoute: UserRouteRouteWithChildren,
-  AuthForgotPasswordRoute: AuthForgotPasswordRoute,
-  AuthResetPasswordRoute: AuthResetPasswordRoute,
-  AuthSignInRoute: AuthSignInRoute,
-  AuthSignUpRoute: AuthSignUpRoute,
   PublicIndexRoute: PublicIndexRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
