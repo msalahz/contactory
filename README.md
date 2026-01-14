@@ -24,10 +24,10 @@ your personal and professional contacts in one secure place with a beautiful, re
 ## ✨ Features
 
 | Feature              | Status         | Description                                             |
-|----------------------|----------------|---------------------------------------------------------|
-| Authentication       | ✅ Implemented  | Secure signup, signin, password reset with better-auth  |
-| Theme Support        | ✅ Implemented  | Dark/light mode with system preference detection        |
-| Internationalization | ✅ Implemented  | Bilingual support with RTL/LTR layout                   |
+| -------------------- | -------------- | ------------------------------------------------------- |
+| Authentication       | ✅ Implemented | Secure signup, signin, password reset with better-auth  |
+| Theme Support        | ✅ Implemented | Dark/light mode with system preference detection        |
+| Internationalization | ✅ Implemented | Bilingual support with RTL/LTR layout                   |
 | Organize Contacts    | 🚧 In Progress | CRUD operations for contacts (basic structure in place) |
 | Favorites            | 🚧 In Progress | Mark and manage favorite contacts                       |
 | Search & Filter      | 📅 Coming Soon | Real-time search with advanced filtering                |
@@ -45,7 +45,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 ### Core
 
 | Technology       | Purpose                    |
-|------------------|----------------------------|
+| ---------------- | -------------------------- |
 | TypeScript 5.9.3 | Type-safe JavaScript       |
 | Vite 7.3.0       | Build tool & dev server    |
 | TanStack Start   | Full-stack React framework |
@@ -54,7 +54,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 ### Data & State
 
 | Technology      | Purpose                   |
-|-----------------|---------------------------|
+| --------------- | ------------------------- |
 | TanStack Router | Type-safe routing         |
 | TanStack Query  | Data fetching & caching   |
 | TanStack Store  | State management & theme  |
@@ -65,7 +65,7 @@ your personal and professional contacts in one secure place with a beautiful, re
 ### UI/UX
 
 | Technology               | Purpose                |
-|--------------------------|------------------------|
+| ------------------------ | ---------------------- |
 | Tailwind CSS 4           | Utility-first styling  |
 | shadcn/ui                | Component library      |
 | Radix UI                 | Accessible primitives  |
@@ -76,21 +76,21 @@ your personal and professional contacts in one secure place with a beautiful, re
 ### Authentication
 
 | Technology       | Purpose                             |
-|------------------|-------------------------------------|
+| ---------------- | ----------------------------------- |
 | better-auth      | Authentication & session management |
 | @t3-oss/env-core | Environment validation              |
 
 ### Deployment
 
 | Technology         | Purpose             |
-|--------------------|---------------------|
+| ------------------ | ------------------- |
 | Cloudflare Workers | Edge deployment     |
 | Wrangler           | Cloudflare CLI tool |
 
 ### Development Tools
 
 | Technology      | Purpose                |
-|-----------------|------------------------|
+| --------------- | ---------------------- |
 | Vitest          | Unit testing framework |
 | Testing Library | Component testing      |
 | ESLint          | Code linting           |
@@ -240,21 +240,21 @@ contactory/
 ### Environment Variables
 
 | Variable                           | Description                      | Required | Default                 |
-|------------------------------------|----------------------------------|----------|-------------------------|
-| `DATABASE_URL`                     | PostgreSQL connection string     | ✅        | -                       |
-| `BETTER_AUTH_SECRET`               | Secret key for authentication    | ✅        | -                       |
-| `BETTER_AUTH_URL`                  | Base URL of your app             | ✅        | `http://localhost:3000` |
-| `BETTER_AUTH_GOOGLE_CLIENT_ID`     | Google OAuth client ID           | ❌        | -                       |
-| `BETTER_AUTH_GOOGLE_CLIENT_SECRET` | Google OAuth client secret       | ❌        | -                       |
-| `RESEND_API_KEY`                   | API key for Resend email service | ❌        | -                       |
-| `VITE_BETTER_AUTH_BASE_URL`        | Client-side base URL of your app | ✅        |
+| ---------------------------------- | -------------------------------- | -------- | ----------------------- |
+| `DATABASE_URL`                     | PostgreSQL connection string     | ✅       | -                       |
+| `BETTER_AUTH_SECRET`               | Secret key for authentication    | ✅       | -                       |
+| `BETTER_AUTH_URL`                  | Base URL of your app             | ✅       | `http://localhost:3000` |
+| `BETTER_AUTH_GOOGLE_CLIENT_ID`     | Google OAuth client ID           | ❌       | -                       |
+| `BETTER_AUTH_GOOGLE_CLIENT_SECRET` | Google OAuth client secret       | ❌       | -                       |
+| `RESEND_API_KEY`                   | API key for Resend email service | ❌       | -                       |
+| `VITE_BETTER_AUTH_BASE_URL`        | Client-side base URL of your app | ✅       |
 
 ---
 
 ## 📜 Scripts
 
 | Script              | Description                            |
-|---------------------|----------------------------------------|
+| ------------------- | -------------------------------------- |
 | `pnpm dev`          | Start development server (port 3000)   |
 | `pnpm build`        | Build for production                   |
 | `pnpm serve`        | Preview production build               |
@@ -285,43 +285,43 @@ positives.
 ### Available workflows
 
 - **Project-wide review**: `code-review.project`
-    - **Use when**: You want an overall health report for the repo.
-    - **Examples**:
-        - `code-review.project`
-        - `code-review.project quick`
-        - `code-review.project focus:security`
+  - **Use when**: You want an overall health report for the repo.
+  - **Examples**:
+    - `code-review.project`
+    - `code-review.project quick`
+    - `code-review.project focus:security`
 
 - **Pull request review**: `code-review.pr`
-    - **Use when**: Reviewing a GitHub PR via `gh`.
-    - **Examples**:
-        - `code-review.pr`
-        - `code-review.pr 123`
+  - **Use when**: Reviewing a GitHub PR via `gh`.
+  - **Examples**:
+    - `code-review.pr`
+    - `code-review.pr 123`
 
 - **Git diff review**: `code-review.git`
-    - **Use when**: Reviewing local changes without a PR.
-    - **Examples**:
-        - `code-review.git`
-        - `code-review.git staged`
-        - `code-review.git unstaged`
-        - `code-review.git HEAD~3`
-        - `code-review.git commit1..commit2`
+  - **Use when**: Reviewing local changes without a PR.
+  - **Examples**:
+    - `code-review.git`
+    - `code-review.git staged`
+    - `code-review.git unstaged`
+    - `code-review.git HEAD~3`
+    - `code-review.git commit1..commit2`
 
 - **Pre-commit staged review**: `code-review.staged`
-    - **Use when**: Quick gate-style check before committing.
-    - **Examples**:
-        - `code-review.staged`
-        - `code-review.staged --strict`
+  - **Use when**: Quick gate-style check before committing.
+  - **Examples**:
+    - `code-review.staged`
+    - `code-review.staged --strict`
 
 - **Feature-scope review**: `code-review.feature`
-    - **Use when**: Deep review for a feature folder (architecture, UX/i18n consistency, tests).
-    - **Examples**:
-        - `code-review.feature auth`
-        - `code-review.feature src/features/users`
+  - **Use when**: Deep review for a feature folder (architecture, UX/i18n consistency, tests).
+  - **Examples**:
+    - `code-review.feature auth`
+    - `code-review.feature src/features/users`
 
 - **Single-file review**: `code-review.file`
-    - **Use when**: You want detailed, line-by-line feedback for one file.
-    - **Examples**:
-        - `code-review.file src/router.tsx`
+  - **Use when**: You want detailed, line-by-line feedback for one file.
+  - **Examples**:
+    - `code-review.file src/router.tsx`
 
 ### What the workflows check
 
@@ -349,7 +349,7 @@ positives.
 ### GitHub Configuration
 
 | File                                                            | Description                                                           |
-|-----------------------------------------------------------------|-----------------------------------------------------------------------|
+| --------------------------------------------------------------- | --------------------------------------------------------------------- |
 | [Copilot Instructions](./.github/copilot-instructions.md)       | Code generation guidelines and project conventions for GitHub Copilot |
 | [Git Commit Instructions](./.github/git-commit-instructions.md) | Conventional commit message format and guidelines                     |
 | [CI Workflow](./.github/workflows/ci.yml)                       | GitHub Actions workflow for linting, testing and building             |
@@ -369,7 +369,7 @@ The project uses GitHub Actions for continuous integration. The pipeline runs on
 ### Production
 
 | Package                    | Version  | Description                |
-|----------------------------|----------|----------------------------|
+| -------------------------- | -------- | -------------------------- |
 | `react`                    | ^19.2.3  | UI library                 |
 | `react-dom`                | ^19.2.3  | React DOM renderer         |
 | `@tanstack/react-start`    | ^1.145.7 | Full-stack React framework |
@@ -394,7 +394,7 @@ The project uses GitHub Actions for continuous integration. The pipeline runs on
 ### Development
 
 | Package                   | Version | Description               |
-|---------------------------|---------|---------------------------|
+| ------------------------- | ------- | ------------------------- |
 | `typescript`              | ^5.9.3  | TypeScript compiler       |
 | `vite`                    | ^7.3.0  | Build tool                |
 | `vitest`                  | ^3.2.4  | Test runner               |
