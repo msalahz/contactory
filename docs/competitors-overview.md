@@ -51,39 +51,47 @@ Picture this: You save a contact on your iPhone, and it's instantly available on
 Now, let's see how they compare side-by-side, focusing on what matters most for users.
 
 ### Platforms and Accessibility
+
 Google Contacts shines with broad support: web, Android, iOS, and cross-device sync. Apple Contacts is optimized for the Apple ecosystem—Mac, iOS, watchOS—with iCloud sync, but less flexible outside it.
 
 If you use multiple device types, Google might feel more universal. Apple users who stick to their gadgets will find it perfectly integrated.
 
 ### Storing and Managing Contacts
+
 Both handle rich details like names, emails, phones, addresses, and photos. Google adds AI to suggest updates and includes relationships; Apple offers pronunciation and IM fields.
 
 For daily use, both are comprehensive, but Google's automation makes it easier for busy people.
 
 ### Actions and Organization
+
 Create, edit, search, and organize—both do this well. Google excels in bulk editing, merging duplicates, and 30-day undo. Apple provides smart groups and voice search.
 
 If you need powerful search and undo safety, Google edges out; for automatic grouping, Apple is strong.
 
 ### Sharing and Teamwork
+
 Google offers delegate sharing and Workspace directories, plus third-party tools for teams. Apple is more personal, with card-sharing and LDAP for enterprises.
 
 For collaboration, Google is more versatile, especially in business settings.
 
 ### Integrations and Ecosystem
+
 Google integrates deeply with its own apps and has broad APIs. Apple connects seamlessly within its ecosystem and supports key third-party sync.
 
 If you're in the Google world (Gmail, Calendar), Google Contacts feels essential. Apple users will appreciate the tight integration with Messages and FaceTime.
 
 ### Unique Strengths
+
 - **Google**: AI enrichment, smart suggestions, undo features, adaptive design.
 - **Apple**: Smart groups, LDAP, voice search, pronunciation support.
 
 ### Limitations
+
 - **Google**: Sharing needs extras, import limits, 25K contact cap, Google dependency.
 - **Apple**: 50K limit, no undo, Apple-only focus.
 
 ### Who Should Choose What?
+
 - **Choose Google Contacts** if you use Android, need AI help, or want easy cross-platform sharing. Great for Google Workspace users or those with diverse devices.
 - **Choose Apple Contacts** if you're all-in on Apple products, value deep ecosystem integration, and prefer automatic organization without extras.
 

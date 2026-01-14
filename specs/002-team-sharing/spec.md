@@ -23,12 +23,12 @@ Verified team contact sharing enables teams to collaboratively manage contact li
 
 ### Market Reality (See [Market Research](../../docs/market-research.md))
 
-| Existing Solutions | What They Do | Gap |
-|--------------------|--------------|-----|
+| Existing Solutions        | What They Do               | Gap                          |
+| ------------------------- | -------------------------- | ---------------------------- |
 | Shared Contacts for Gmail | Team sharing at $1.29/user | No verification, static data |
-| Contacts+ | Cross-platform sync | No VCs, data goes stale |
-| HubSpot Free CRM | Free team contacts | No privacy, no verification |
-| Folk CRM | Modern team CRM | No decentralized identity |
+| Contacts+                 | Cross-platform sync        | No VCs, data goes stale      |
+| HubSpot Free CRM          | Free team contacts         | No privacy, no verification  |
+| Folk CRM                  | Modern team CRM            | No decentralized identity    |
 
 ### Our Differentiation
 
@@ -79,15 +79,15 @@ As a user, I want to share my contact information while controlling exactly what
 
 **Selective Disclosure Options**:
 
-| Field | Default Shared | Can Hide |
-|-------|----------------|----------|
-| Name | Yes | No (required) |
-| Email | Yes | Yes |
-| Phone | No | Yes |
-| Job Title | Yes | Yes |
-| Company | Yes | Yes |
-| Address | No | Yes |
-| Social Links | No | Yes |
+| Field        | Default Shared | Can Hide      |
+| ------------ | -------------- | ------------- |
+| Name         | Yes            | No (required) |
+| Email        | Yes            | Yes           |
+| Phone        | No             | Yes           |
+| Job Title    | Yes            | Yes           |
+| Company      | Yes            | Yes           |
+| Address      | No             | Yes           |
+| Social Links | No             | Yes           |
 
 ---
 
@@ -127,7 +127,7 @@ As a list owner, I want to assign permission levels where all actions are crypto
 **Permission Matrix** (unchanged from original):
 
 | Action              | Viewer | Editor | Admin | Owner |
-|---------------------|--------|--------|-------|-------|
+| ------------------- | ------ | ------ | ----- | ----- |
 | View contacts       | Yes    | Yes    | Yes   | Yes   |
 | Add contacts        | No     | Yes    | Yes   | Yes   |
 | Edit contacts       | No     | Yes    | Yes   | Yes   |
@@ -179,6 +179,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 ### Functional Requirements (VC-Enhanced)
 
 **Core VC Functionality**:
+
 - **FR-VC01**: Users MUST be able to create a Decentralized Identifier (DID)
 - **FR-VC02**: Users MUST be able to receive Verifiable Credentials from issuers
 - **FR-VC03**: Users MUST be able to share contact info as a VC with selective disclosure
@@ -188,6 +189,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 - **FR-VC07**: VCs MUST use W3C VC Data Model 2.0 format
 
 **Team Sharing** (from original):
+
 - **FR-001**: Users MUST be able to create named contact lists
 - **FR-002**: Users MUST be able to invite others to lists via VC-based invitations
 - **FR-003**: Invitations MUST be cryptographically signed
@@ -198,6 +200,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 - **FR-008**: Activity log MUST be exportable for compliance audits
 
 **Data Privacy**:
+
 - **FR-P01**: Users MUST be able to revoke shared credentials at any time
 - **FR-P02**: Revocation MUST propagate to all recipients within 24 hours
 - **FR-P03**: Users MUST see who has accessed their shared credentials
@@ -218,27 +221,32 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 **Per Contactory Constitution** (`.specify/memory/constitution.md` v1.0.0):
 
 **Code Quality**:
+
 - **NFR-Q1**: TypeScript strict mode with Zod validation for all VC payloads
 - **NFR-Q2**: All VC operations use established libraries (see [VC Technical Research](./vc-technical-research.md))
 
 **Testing** (Risk-Based):
+
 - **NFR-T1**: VC verification is HIGH-RISK - require integration + unit tests
 - **NFR-T2**: Permission checks with DID - require integration tests
 - **NFR-T3**: Revocation propagation - require integration tests
 
 **User Experience**:
+
 - **NFR-UX1**: WCAG 2.1 AA compliance
 - **NFR-UX2**: "Verified" badge visually distinct and accessible
 - **NFR-UX3**: VC operations should feel instant (<500ms UI feedback)
 - **NFR-UX4**: Clear explanation of what "verified" means for non-technical users
 
 **Performance**:
+
 - **NFR-P1**: VC verification completes in <500ms
 - **NFR-P2**: List view with 100 verified contacts loads in <2s
 - **NFR-P3**: Selective disclosure UI renders in <200ms
 - **NFR-P4**: Revocation check adds <100ms to contact view
 
 **Security**:
+
 - **NFR-S1**: Private keys NEVER leave user's device (use browser crypto APIs)
 - **NFR-S2**: All VC operations use established cryptographic standards
 - **NFR-S3**: Server NEVER has access to unencrypted private keys
@@ -248,6 +256,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 ## Implementation Phases
 
 ### Phase 1: Privacy-First Foundation (Now - Q1 2026)
+
 **Focus**: Core contact management with encryption
 
 - End-to-end encrypted contacts
@@ -256,11 +265,13 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 - No data harvesting commitment
 
 **Success Criteria**:
+
 - Users can create encrypted contacts
 - Team sharing works with role-based permissions
 - All user data is encrypted at rest
 
 ### Phase 2: VC Integration (Q2-Q3 2026)
+
 **Focus**: Add verifiable credential support
 
 - DID creation and management
@@ -269,11 +280,13 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 - Basic verification UI
 
 **Success Criteria**:
+
 - Users can create DIDs
 - Users can receive and verify VCs
 - Selective disclosure works for sharing
 
 ### Phase 3: Full VC Platform (Q4 2026 - aligned with eIDAS)
+
 **Focus**: Complete VC ecosystem
 
 - Issue organizational credentials
@@ -282,6 +295,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 - Compliance certifications
 
 **Success Criteria**:
+
 - Organizations can issue employee VCs
 - ZKP proofs work for privacy claims
 - Interoperable with EU Digital Wallet
@@ -302,7 +316,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 
 - Recruit 20+ privacy-conscious professionals (lawyers, doctors, journalists)
 - Recruit 5+ small business compliance teams
-- >60% express willingness to pay for verified contacts
+- > 60% express willingness to pay for verified contacts
 - NPS >50 for verification features
 
 ---
@@ -314,6 +328,7 @@ As a privacy-conscious user, I want to prove claims without revealing underlying
 See [VC Technical Research](./vc-technical-research.md) for detailed analysis.
 
 **Summary**:
+
 - **VC Format**: W3C VC Data Model 2.0 (JSON-LD or JWT)
 - **DID Method**: `did:web` for organizations, `did:key` for individuals (initially)
 - **Libraries**: `@veramo/core` or `@web5/credentials` (to be evaluated)
@@ -481,7 +496,7 @@ GET    /api/verify/:credentialId        # Public verification endpoint
 
 ## Document History
 
-| Date       | Author   | Changes                                    |
-|------------|----------|--------------------------------------------|
-| 2026-01-12 | Mohammed | Initial specification                      |
-| 2026-01-12 | Mohammed | Major revision for VC/SSI strategy pivot   |
+| Date       | Author   | Changes                                  |
+| ---------- | -------- | ---------------------------------------- |
+| 2026-01-12 | Mohammed | Initial specification                    |
+| 2026-01-12 | Mohammed | Major revision for VC/SSI strategy pivot |

@@ -29,7 +29,7 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Core Framework
 
 | Technology         | Version | Purpose                    |
-|--------------------|---------|----------------------------|
+| ------------------ | ------- | -------------------------- |
 | **React**          | 19.2.3  | UI library                 |
 | **TypeScript**     | 5.9.3   | Type-safe JavaScript       |
 | **Vite**           | 7.3.0   | Build tool & dev server    |
@@ -38,7 +38,7 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Routing & State Management
 
 | Technology           | Version | Purpose                  |
-|----------------------|---------|--------------------------|
+| -------------------- | ------- | ------------------------ |
 | **TanStack Router**  | 1.145.7 | Type-safe routing        |
 | **TanStack Query**   | 5.90.16 | Data fetching & caching  |
 | **TanStack Form**    | 1.27.7  | Form handling            |
@@ -49,7 +49,7 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Database & ORM
 
 | Technology          | Version | Purpose                       |
-|---------------------|---------|-------------------------------|
+| ------------------- | ------- | ----------------------------- |
 | **Drizzle ORM**     | 0.45.1  | Database ORM (PostgreSQL)     |
 | **PostgreSQL**      | 3.4.7   | Database client               |
 | **Neon Hyperdrive** | Latest  | PostgreSQL connection pooling |
@@ -57,7 +57,7 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### UI & Styling
 
 | Technology                   | Version | Purpose                |
-|------------------------------|---------|------------------------|
+| ---------------------------- | ------- | ---------------------- |
 | **Tailwind CSS**             | 4.1.18  | Utility-first styling  |
 | **shadcn/ui**                | Latest  | Component library      |
 | **Radix UI**                 | 1.4.3   | Accessible primitives  |
@@ -68,14 +68,14 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Authentication & Security
 
 | Technology           | Version | Purpose                             |
-|----------------------|---------|-------------------------------------|
+| -------------------- | ------- | ----------------------------------- |
 | **better-auth**      | 1.4.10  | Authentication & session management |
 | **@t3-oss/env-core** | 0.13.10 | Environment validation              |
 
 ### Internationalization
 
 | Technology        | Version | Purpose                    |
-|-------------------|---------|----------------------------|
+| ----------------- | ------- | -------------------------- |
 | **react-i18next** | Latest  | Translation management     |
 | **i18next**       | Latest  | i18n framework             |
 | **Luxon**         | Latest  | Date/time formatting       |
@@ -84,27 +84,27 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Animation & Effects
 
 | Technology | Version | Purpose             |
-|------------|---------|---------------------|
+| ---------- | ------- | ------------------- |
 | **Motion** | 12.24.0 | Animation library   |
 | **Sonner** | Latest  | Toast notifications |
 
 ### File Upload & Storage
 
 | Technology        | Version | Purpose                    |
-|-------------------|---------|----------------------------|
+| ----------------- | ------- | -------------------------- |
 | **Cloudflare R2** | Latest  | Object storage for avatars |
 | **Wrangler**      | 4.54.0  | Cloudflare CLI             |
 
 ### Validation
 
 | Technology | Version | Purpose           |
-|------------|---------|-------------------|
+| ---------- | ------- | ----------------- |
 | **Zod**    | 4.3.5   | Schema validation |
 
 ### Testing & Quality
 
 | Technology          | Version | Purpose                |
-|---------------------|---------|------------------------|
+| ------------------- | ------- | ---------------------- |
 | **Vitest**          | 3.2.4   | Unit testing framework |
 | **Testing Library** | 16.3.1  | Component testing      |
 | **ESLint**          | 9.39.2  | Code linting           |
@@ -113,7 +113,7 @@ management without ecosystem lock-in. Future expansion targets EU businesses pre
 ### Deployment
 
 | Technology             | Version | Purpose            |
-|------------------------|---------|--------------------|
+| ---------------------- | ------- | ------------------ |
 | **Cloudflare Workers** | Latest  | Serverless compute |
 | **Cloudflare Pages**   | Latest  | Static hosting     |
 
@@ -219,11 +219,11 @@ src/
 ```tsx
 // src/backend/queries/contacts.ts
 export const listContactsFn = createServerFn()
-.validator(listContactsInputSchema)
-.handler(async ({ data }) => {
-  const session = await requireAuth()
-  return listContacts(session.user.id, data)
-})
+  .validator(listContactsInputSchema)
+  .handler(async ({ data }) => {
+    const session = await requireAuth()
+    return listContacts(session.user.id, data)
+  })
 ```
 
 ```tsx
@@ -303,7 +303,7 @@ function ContactForm ({ contact, onSubmit, isPending }) {
 
 ```tsx
 // src/features/contacts/hooks/useCreateContact.ts
-export function useCreateContact () {
+export function useCreateContact() {
   return useMutation({
     mutationFn: createContactFn,
     onSuccess: () => {
@@ -356,13 +356,13 @@ export const contactKeys = {
 
 // src/features/contacts/options.ts
 export const contactOptions = {
-  list (filters = {}) {
+  list(filters = {}) {
     return queryOptions({
       queryKey: contactKeys.list(filters),
       queryFn: () => listContactsFn({ data: filters }),
     })
   },
-  detail (id: string) {
+  detail(id: string) {
     return queryOptions({
       queryKey: contactKeys.detail(id),
       queryFn: () => getContactFn({ data: { id } }),
@@ -391,11 +391,11 @@ export const contact = pgTable(
   'contact',
   {
     id: text()
-    .primaryKey()
-    .$defaultFn(() => v7()),
+      .primaryKey()
+      .$defaultFn(() => v7()),
     userId: text()
-    .notNull()
-    .references(() => users.id, { onDelete: 'cascade' }),
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
     firstName: text().notNull(),
     // ... other fields
     isFavorite: boolean().default(false).notNull(),
@@ -470,11 +470,11 @@ export const Route = createFileRoute('/_user')({
 
 ```tsx
 export const createContactFn = createServerFn()
-.validator(createContactInputSchema)
-.handler(async ({ data }) => {
-  const session = await requireAuth() // Throws if not authenticated
-  return createContact(data, session.user.id)
-})
+  .validator(createContactInputSchema)
+  .handler(async ({ data }) => {
+    const session = await requireAuth() // Throws if not authenticated
+    return createContact(data, session.user.id)
+  })
 ```
 
 **Data-level Isolation**:
@@ -482,14 +482,14 @@ export const createContactFn = createServerFn()
 ```tsx
 // Every query filters by authenticated user
 const contacts = await db
-.select()
-.from(contact)
-.where(
-  and(
-    eq(contact.userId, session.user.id), // User isolation
-    isNull(contact.deletedAt), // Soft delete filter
-  ),
-)
+  .select()
+  .from(contact)
+  .where(
+    and(
+      eq(contact.userId, session.user.id), // User isolation
+      isNull(contact.deletedAt), // Soft delete filter
+    ),
+  )
 ```
 
 ---
@@ -568,7 +568,7 @@ text-start
 
 ```tsx
 // src/core/utils/formatters.ts
-export function formatDate (date: Date, locale: string) {
+export function formatDate(date: Date, locale: string) {
   return new Intl.DateTimeFormat(locale, {
     year: 'numeric',
     month: 'long',
@@ -576,7 +576,7 @@ export function formatDate (date: Date, locale: string) {
   }).format(date)
 }
 
-export function formatNumber (num: number, locale: string) {
+export function formatNumber(num: number, locale: string) {
   return new Intl.NumberFormat(locale).format(num)
 }
 ```
@@ -586,26 +586,26 @@ export function formatNumber (num: number, locale: string) {
 #### Avatar Upload Flow
 
 1. **Client-Side**:
-    - Resize/compress image (max 512x512)
-    - Create FormData with image
-    - Call `uploadAvatarFn` server function
+   - Resize/compress image (max 512x512)
+   - Create FormData with image
+   - Call `uploadAvatarFn` server function
 
 2. **Server-Side**:
-    - Validate file (size, type)
-    - Upload to R2 using key: `/contacts/${contactId}/${timestamp}.ext`
-    - Return public URL
-    - Store URL in database
+   - Validate file (size, type)
+   - Upload to R2 using key: `/contacts/${contactId}/${timestamp}.ext`
+   - Return public URL
+   - Store URL in database
 
 3. **Storage**:
-    - **Bucket**: Cloudflare R2
-    - **Public URL**: `https://cdn.contactory.consultin.dev/`
-    - **Access**: Read-only public URLs for images
+   - **Bucket**: Cloudflare R2
+   - **Public URL**: `https://cdn.contactory.consultin.dev/`
+   - **Access**: Read-only public URLs for images
 
 #### Deletion Pattern
 
 ```tsx
 // When permanently deleting a contact:
-async function permanentDeleteContact (contactId: string) {
+async function permanentDeleteContact(contactId: string) {
   const contact = await getContact(contactId)
 
   // Delete avatar from R2
@@ -652,7 +652,7 @@ const virtualRows = virtualizer.getVirtualItems()
 **Pattern**: Use last item ID instead of offset
 
 ```tsx
-export async function listContacts (
+export async function listContacts(
   userId: string,
   options: {
     cursor?: string
@@ -666,11 +666,11 @@ export async function listContacts (
   }
 
   return db
-  .select()
-  .from(contact)
-  .where(and(...conditions))
-  .orderBy(asc(contact.id))
-  .limit(options.limit ?? 50)
+    .select()
+    .from(contact)
+    .where(and(...conditions))
+    .orderBy(asc(contact.id))
+    .limit(options.limit ?? 50)
 }
 ```
 
@@ -715,18 +715,18 @@ const resized = await resizeImage(file, {
 
 ```tsx
 export const createContactFn = createServerFn()
-.validator(createContactInputSchema)
-.handler(async ({ data }) => {
-  try {
-    const session = await requireAuth()
-    return await createContact(data, session.user.id)
-  } catch (error) {
-    if (error instanceof ValidationError) {
-      throw new ServerError('Validation failed', { cause: error })
+  .validator(createContactInputSchema)
+  .handler(async ({ data }) => {
+    try {
+      const session = await requireAuth()
+      return await createContact(data, session.user.id)
+    } catch (error) {
+      if (error instanceof ValidationError) {
+        throw new ServerError('Validation failed', { cause: error })
+      }
+      throw error
     }
-    throw error
-  }
-})
+  })
 ```
 
 #### Client Error Handling
@@ -803,17 +803,18 @@ describe('createContactFn', () => {
 describe('ContactForm', () => {
   it('submits form with valid data', async () => {
     const onSubmit = vi.fn()
-    render(<ContactForm onSubmit={onSubmit}
-    />)
+    render(<ContactForm onSubmit={onSubmit} />)
 
     fireEvent.change(screen.getByLabelText('First Name'), {
       target: { value: 'John' },
     })
     fireEvent.click(screen.getByText('Create'))
 
-    expect(onSubmit).toHaveBeenCalledWith(expect.objectContaining({
-      firstName: 'John',
-    }))
+    expect(onSubmit).toHaveBeenCalledWith(
+      expect.objectContaining({
+        firstName: 'John',
+      }),
+    )
   })
 })
 ```
@@ -906,7 +907,7 @@ pnpm db:studio     # Drizzle Studio GUI
 #### Naming Conventions
 
 | Type           | Pattern                     | Example                         |
-|----------------|-----------------------------|---------------------------------|
+| -------------- | --------------------------- | ------------------------------- |
 | **Files**      | lowercase-with-hyphens      | `contact-form.tsx`              |
 | **Components** | PascalCase                  | `ContactForm`                   |
 | **Hooks**      | camelCase with 'use' prefix | `useCreateContact`              |
@@ -930,12 +931,12 @@ import { ContactForm } from '../../../features/contacts' // ❌
 
 ```tsx
 // Use function declarations for components
-export function ContactForm ({ contact, onSubmit }: Props) {
+export function ContactForm({ contact, onSubmit }: Props) {
   // ...
 }
 
 // Extract custom hooks
-export function useCreateContact () {
+export function useCreateContact() {
   return useMutation({
     /* ... */
   })

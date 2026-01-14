@@ -18,12 +18,12 @@ This document evaluates the technical landscape for implementing Verifiable Cred
 
 The [W3C VC Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/) became a W3C Recommendation in May 2025, bringing significant improvements:
 
-| Feature | VC 1.1 | VC 2.0 |
-|---------|--------|--------|
-| JSON-LD Required | Yes | No (plain JSON supported) |
-| Proof Formats | Embedded only | External proofs supported |
-| Securing Mechanism | LD-Proofs only | JWT, COSE, Data Integrity |
-| Developer Experience | Complex | Much simpler |
+| Feature              | VC 1.1         | VC 2.0                    |
+| -------------------- | -------------- | ------------------------- |
+| JSON-LD Required     | Yes            | No (plain JSON supported) |
+| Proof Formats        | Embedded only  | External proofs supported |
+| Securing Mechanism   | LD-Proofs only | JWT, COSE, Data Integrity |
+| Developer Experience | Complex        | Much simpler              |
 
 **Key Improvement**: VC 2.0 can be represented as plain JSON with JWT signatures, making it accessible to any web developer without specialized RDF/JSON-LD knowledge.
 
@@ -31,9 +31,7 @@ The [W3C VC Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/) became a W
 
 ```json
 {
-  "@context": [
-    "https://www.w3.org/ns/credentials/v2"
-  ],
+  "@context": ["https://www.w3.org/ns/credentials/v2"],
   "type": ["VerifiableCredential", "ContactCredential"],
   "issuer": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
   "validFrom": "2026-01-12T00:00:00Z",
@@ -73,27 +71,30 @@ VC 2.0 supports multiple securing mechanisms:
 
 ### DID Method Comparison
 
-| DID Method | Example | Pros | Cons | Use Case |
-|------------|---------|------|------|----------|
-| `did:key` | `did:key:z6Mk...` | No network required, instant creation, self-contained | Key rotation difficult | Individual users |
-| `did:web` | `did:web:example.com` | Human-readable, DNS-based trust | Requires hosting, centralized | Organizations |
-| `did:ion` | `did:ion:EiD...` | Decentralized (Bitcoin), good key rotation | Slow updates, complex | Long-term identity |
-| `did:pkh` | `did:pkh:eip155:1:0x...` | Blockchain-based, crypto wallets | Blockchain dependency | Web3 users |
-| `did:jwk` | `did:jwk:eyJr...` | Self-contained JWK, standard | No key rotation | Temporary/ephemeral |
+| DID Method | Example                  | Pros                                                  | Cons                          | Use Case            |
+| ---------- | ------------------------ | ----------------------------------------------------- | ----------------------------- | ------------------- |
+| `did:key`  | `did:key:z6Mk...`        | No network required, instant creation, self-contained | Key rotation difficult        | Individual users    |
+| `did:web`  | `did:web:example.com`    | Human-readable, DNS-based trust                       | Requires hosting, centralized | Organizations       |
+| `did:ion`  | `did:ion:EiD...`         | Decentralized (Bitcoin), good key rotation            | Slow updates, complex         | Long-term identity  |
+| `did:pkh`  | `did:pkh:eip155:1:0x...` | Blockchain-based, crypto wallets                      | Blockchain dependency         | Web3 users          |
+| `did:jwk`  | `did:jwk:eyJr...`        | Self-contained JWK, standard                          | No key rotation               | Temporary/ephemeral |
 
 ### Recommendation for Contactory
 
 **Phase 1**: `did:key` for individuals
+
 - Zero infrastructure required
 - Instant creation in browser
 - Perfect for MVP
 
 **Phase 2**: `did:web` for organizations
+
 - `did:web:contactory.com:orgs:acme-corp`
 - Verifiable via DNS
 - Professional appearance
 
 **Future**: EU Wallet interoperability
+
 - Will need to support `did:ebsi` or equivalent
 - eIDAS 2.0 will define requirements
 
@@ -103,13 +104,17 @@ VC 2.0 supports multiple securing mechanisms:
 {
   "@context": ["https://www.w3.org/ns/did/v1"],
   "id": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
-  "verificationMethod": [{
-    "id": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
-    "type": "Ed25519VerificationKey2020",
-    "controller": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
-    "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
-  }],
-  "authentication": ["did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"]
+  "verificationMethod": [
+    {
+      "id": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+      "type": "Ed25519VerificationKey2020",
+      "controller": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+      "publicKeyMultibase": "z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+    }
+  ],
+  "authentication": [
+    "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+  ]
 }
 ```
 
@@ -119,19 +124,20 @@ VC 2.0 supports multiple securing mechanisms:
 
 ### Library Comparison
 
-| Library | Maintainer | Stars | VC 2.0 | TypeScript | Size | Cloudflare Compatible |
-|---------|------------|-------|--------|------------|------|----------------------|
-| **@veramo/core** | Veramo | 400+ | Yes | Native | Medium | Needs adaptation |
-| **@web5/credentials** | TBD (Block) | 200+ | Yes | Native | Small | Yes |
-| **@digitalbazaar/vc** | Digital Bazaar | 150+ | Yes | Types available | Small | Yes |
-| **did-jwt-vc** | Decentralized Identity | 100+ | Partial | Native | Small | Yes |
-| **@sphereon/ssi-sdk** | Sphereon | 50+ | Yes | Native | Large | Needs adaptation |
+| Library               | Maintainer             | Stars | VC 2.0  | TypeScript      | Size   | Cloudflare Compatible |
+| --------------------- | ---------------------- | ----- | ------- | --------------- | ------ | --------------------- |
+| **@veramo/core**      | Veramo                 | 400+  | Yes     | Native          | Medium | Needs adaptation      |
+| **@web5/credentials** | TBD (Block)            | 200+  | Yes     | Native          | Small  | Yes                   |
+| **@digitalbazaar/vc** | Digital Bazaar         | 150+  | Yes     | Types available | Small  | Yes                   |
+| **did-jwt-vc**        | Decentralized Identity | 100+  | Partial | Native          | Small  | Yes                   |
+| **@sphereon/ssi-sdk** | Sphereon               | 50+   | Yes     | Native          | Large  | Needs adaptation      |
 
 ### Detailed Library Analysis
 
 #### @veramo/core (Recommended)
 
 **Pros**:
+
 - Most mature and battle-tested
 - Excellent TypeScript support
 - Plugin architecture (use only what you need)
@@ -140,16 +146,19 @@ VC 2.0 supports multiple securing mechanisms:
 - Good documentation
 
 **Cons**:
+
 - Some features require Node.js APIs (needs polyfills for Cloudflare)
 - Larger bundle if using all features
 - Learning curve for plugin system
 
 **Installation**:
+
 ```bash
 pnpm add @veramo/core @veramo/credential-w3c @veramo/did-manager @veramo/key-manager @veramo/did-resolver
 ```
 
 **Example Usage**:
+
 ```typescript
 import { createAgent, ICredentialPlugin, IDIDManager } from '@veramo/core'
 import { CredentialPlugin } from '@veramo/credential-w3c'
@@ -159,8 +168,12 @@ import { KeyManager } from '@veramo/key-manager'
 const agent = createAgent<ICredentialPlugin & IDIDManager>({
   plugins: [
     new CredentialPlugin(),
-    new DIDManager({ /* config */ }),
-    new KeyManager({ /* config */ }),
+    new DIDManager({
+      /* config */
+    }),
+    new KeyManager({
+      /* config */
+    }),
   ],
 })
 
@@ -174,10 +187,10 @@ const credential = await agent.createVerifiableCredential({
     credentialSubject: {
       id: 'did:key:z6Mk...',
       name: 'John Smith',
-      email: 'john@example.com'
-    }
+      email: 'john@example.com',
+    },
   },
-  proofFormat: 'jwt'
+  proofFormat: 'jwt',
 })
 
 // Verify a VC
@@ -187,17 +200,20 @@ const result = await agent.verifyCredential({ credential })
 #### @web5/credentials (Alternative)
 
 **Pros**:
+
 - Lightweight, focused on VCs
 - Built for browser-first
 - Good Cloudflare Workers compatibility
 - TBD/Block backing (well-funded)
 
 **Cons**:
+
 - Newer, less battle-tested
 - Smaller community
 - Tied to Web5 ecosystem
 
 **Example Usage**:
+
 ```typescript
 import { VerifiableCredential } from '@web5/credentials'
 
@@ -208,8 +224,8 @@ const vc = await VerifiableCredential.create({
   subject: holderDid.uri,
   data: {
     name: 'John Smith',
-    email: 'john@example.com'
-  }
+    email: 'john@example.com',
+  },
 })
 
 // Sign as JWT
@@ -222,12 +238,14 @@ const verifiedVc = await VerifiableCredential.verify({ vcJwt })
 #### did-jwt-vc (Lightweight Option)
 
 **Pros**:
+
 - Very lightweight
 - Focused on JWT-based VCs
 - Easy to understand
 - Good for simple use cases
 
 **Cons**:
+
 - Less features than Veramo
 - Limited DID method support
 - No advanced features (selective disclosure)
@@ -245,37 +263,28 @@ For Cloudflare Workers and browser compatibility, use the Web Crypto API:
 const keyPair = await crypto.subtle.generateKey(
   { name: 'Ed25519' },
   true, // extractable
-  ['sign', 'verify']
+  ['sign', 'verify'],
 )
 
 // Export public key
 const publicKey = await crypto.subtle.exportKey('spki', keyPair.publicKey)
 
 // Sign data
-const signature = await crypto.subtle.sign(
-  'Ed25519',
-  keyPair.privateKey,
-  data
-)
+const signature = await crypto.subtle.sign('Ed25519', keyPair.privateKey, data)
 
 // Verify signature
-const isValid = await crypto.subtle.verify(
-  'Ed25519',
-  keyPair.publicKey,
-  signature,
-  data
-)
+const isValid = await crypto.subtle.verify('Ed25519', keyPair.publicKey, signature, data)
 ```
 
 ### Key Storage Options
 
-| Storage Method | Security | Portability | Recommended For |
-|----------------|----------|-------------|-----------------|
-| IndexedDB (encrypted) | Medium | Low | Web app default |
-| localStorage (encrypted) | Low | Low | Temporary only |
-| Browser extension wallet | High | Medium | Power users |
-| Hardware key (WebAuthn) | Very High | Medium | Enterprise |
-| Mobile secure enclave | Very High | Low | Mobile apps |
+| Storage Method           | Security  | Portability | Recommended For |
+| ------------------------ | --------- | ----------- | --------------- |
+| IndexedDB (encrypted)    | Medium    | Low         | Web app default |
+| localStorage (encrypted) | Low       | Low         | Temporary only  |
+| Browser extension wallet | High      | Medium      | Power users     |
+| Hardware key (WebAuthn)  | Very High | Medium      | Enterprise      |
+| Mobile secure enclave    | Very High | Low         | Mobile apps     |
 
 **Recommendation**: Use IndexedDB with encryption for MVP, add hardware key support later.
 
@@ -285,15 +294,15 @@ import { openDB } from 'idb'
 const db = await openDB('contactory-keys', 1, {
   upgrade(db) {
     db.createObjectStore('keys', { keyPath: 'id' })
-  }
+  },
 })
 
 // Store encrypted private key
 await db.put('keys', {
   id: 'primary',
   did: 'did:key:z6Mk...',
-  encryptedPrivateKey: '...',  // Encrypted with user password
-  publicKey: '...'
+  encryptedPrivateKey: '...', // Encrypted with user password
+  publicKey: '...',
 })
 ```
 
@@ -338,11 +347,13 @@ For zero-knowledge proofs, BBS+ signatures allow proving claims without revealin
 const proof = await createBBSProof({
   credential,
   revealedAttributes: ['name'],
-  predicates: [{
-    attribute: 'company',
-    predicate: 'IN',
-    value: FORTUNE_500_COMPANIES
-  }]
+  predicates: [
+    {
+      attribute: 'company',
+      predicate: 'IN',
+      value: FORTUNE_500_COMPANIES,
+    },
+  ],
 })
 ```
 
@@ -354,12 +365,12 @@ const proof = await createBBSProof({
 
 ### Revocation Methods Comparison
 
-| Method | Latency | Privacy | Complexity | Standard |
-|--------|---------|---------|------------|----------|
-| Status List 2021 | Low | High | Medium | W3C |
-| Revocation List 2020 | Low | Medium | Low | W3C |
-| OCSP-style | Real-time | Low | High | - |
-| On-chain registry | Medium | Low | High | - |
+| Method               | Latency   | Privacy | Complexity | Standard |
+| -------------------- | --------- | ------- | ---------- | -------- |
+| Status List 2021     | Low       | High    | Medium     | W3C      |
+| Revocation List 2020 | Low       | Medium  | Low        | W3C      |
+| OCSP-style           | Real-time | Low     | High       | -        |
+| On-chain registry    | Medium    | Low     | High       | -        |
 
 ### Recommended: Status List 2021
 
@@ -378,6 +389,7 @@ const proof = await createBBSProof({
 ```
 
 **Implementation**:
+
 ```typescript
 // Check revocation status
 async function isRevoked(credential: VerifiableCredential): Promise<boolean> {
@@ -487,6 +499,7 @@ async function isRevoked(credential: VerifiableCredential): Promise<boolean> {
    - "Verified" badge UI
 
 **Deliverables**:
+
 - Users can create a DID
 - Users can share contact as VC
 - Recipients can verify credentials
@@ -505,6 +518,7 @@ async function isRevoked(credential: VerifiableCredential): Promise<boolean> {
    - Revocation controls
 
 **Deliverables**:
+
 - Users select which fields to share
 - Recipients only see disclosed fields
 
@@ -524,13 +538,13 @@ async function isRevoked(credential: VerifiableCredential): Promise<boolean> {
 
 ### Threat Model
 
-| Threat | Mitigation |
-|--------|------------|
-| Private key theft | Never send to server, encrypt at rest |
-| Credential tampering | Cryptographic signatures |
-| Replay attacks | Include issuance date, short validity |
-| Phishing (fake issuers) | DID resolution, issuer reputation |
-| Revocation bypass | Multiple revocation checks, short cache |
+| Threat                  | Mitigation                              |
+| ----------------------- | --------------------------------------- |
+| Private key theft       | Never send to server, encrypt at rest   |
+| Credential tampering    | Cryptographic signatures                |
+| Replay attacks          | Include issuance date, short validity   |
+| Phishing (fake issuers) | DID resolution, issuer reputation       |
+| Revocation bypass       | Multiple revocation checks, short cache |
 
 ### Security Requirements
 
@@ -567,7 +581,7 @@ describe('VC Operations', () => {
   it('should issue valid credential', async () => {
     const vc = await vcManager.issue({
       issuer: testDid,
-      subject: { name: 'Test', email: 'test@example.com' }
+      subject: { name: 'Test', email: 'test@example.com' },
     })
     expect(vc).toHaveProperty('proof')
   })
@@ -595,7 +609,7 @@ describe('Contact Sharing Flow', () => {
     // Create VC with selective disclosure
     const vc = await shareContact({
       issuer: issuerDid,
-      fields: { name: true, email: true, phone: false }
+      fields: { name: true, email: true, phone: false },
     })
 
     // Verify recipient can see only disclosed fields
@@ -612,6 +626,7 @@ describe('Contact Sharing Flow', () => {
 ## 11. References
 
 ### Standards
+
 - [W3C VC Data Model 2.0](https://www.w3.org/TR/vc-data-model-2.0/)
 - [W3C DID Core 1.0](https://www.w3.org/TR/did-core/)
 - [DIF DID Resolution](https://w3c-ccg.github.io/did-resolution/)
@@ -619,16 +634,19 @@ describe('Contact Sharing Flow', () => {
 - [Status List 2021](https://w3c-ccg.github.io/vc-status-list-2021/)
 
 ### Libraries
+
 - [Veramo Documentation](https://veramo.io/docs/basics/introduction)
 - [Web5 Credentials](https://developer.tbd.website/docs/web5/build/verifiable-credentials/vc-issuance)
 - [did-jwt-vc](https://github.com/decentralized-identity/did-jwt-vc)
 - [SD-JWT TypeScript](https://github.com/openwallet-foundation-labs/sd-jwt-js)
 
 ### EU Regulations
+
 - [eIDAS 2.0 Architecture Reference](https://digital-strategy.ec.europa.eu/en/library/european-digital-identity-wallet-architecture-and-reference-framework)
 - [EUDI Wallet Reference Implementation](https://github.com/eu-digital-identity-wallet)
 
 ### Tutorials
+
 - [Veramo Getting Started](https://veramo.io/docs/basics/introduction)
 - [Building with Web5 Credentials](https://developer.tbd.website/docs/web5/build/verifiable-credentials/)
 
@@ -636,18 +654,18 @@ describe('Contact Sharing Flow', () => {
 
 ## 12. Decision Log
 
-| Decision | Option Chosen | Rationale | Date |
-|----------|---------------|-----------|------|
-| VC Library | @veramo/core | Most mature, best TypeScript, plugin architecture | 2026-01-12 |
-| Initial DID Method | did:key | Zero infrastructure, instant creation | 2026-01-12 |
-| VC Format | JWT | Simple, widely supported, good interop | 2026-01-12 |
-| Key Storage | IndexedDB + encryption | Browser-native, no external deps | 2026-01-12 |
-| Revocation | Status List 2021 | W3C standard, privacy-preserving | 2026-01-12 |
+| Decision           | Option Chosen          | Rationale                                         | Date       |
+| ------------------ | ---------------------- | ------------------------------------------------- | ---------- |
+| VC Library         | @veramo/core           | Most mature, best TypeScript, plugin architecture | 2026-01-12 |
+| Initial DID Method | did:key                | Zero infrastructure, instant creation             | 2026-01-12 |
+| VC Format          | JWT                    | Simple, widely supported, good interop            | 2026-01-12 |
+| Key Storage        | IndexedDB + encryption | Browser-native, no external deps                  | 2026-01-12 |
+| Revocation         | Status List 2021       | W3C standard, privacy-preserving                  | 2026-01-12 |
 
 ---
 
 ## Document History
 
 | Date       | Author   | Changes                    |
-|------------|----------|----------------------------|
+| ---------- | -------- | -------------------------- |
 | 2026-01-12 | Mohammed | Initial technical research |

@@ -41,7 +41,7 @@ teams.
 ### Competitive Advantages
 
 | Advantage                     | Description                                                                               |
-|-------------------------------|-------------------------------------------------------------------------------------------|
+| ----------------------------- | ----------------------------------------------------------------------------------------- |
 | **Team Collaboration**        | Shared lists, permissions, activity history - features neither competitor will prioritize |
 | **Cross-Platform Neutrality** | Two-way sync with Google AND Apple - we're the bridge they'll never build                 |
 | **Speed & Reliability**       | < 2s page loads, 60 FPS scrolling, instant search - modern stack vs legacy codebases      |
@@ -114,7 +114,7 @@ Contactory fills the gap between:
 #### Contact Data Fields
 
 | Field           | Required | Description                     |
-|-----------------|----------|---------------------------------|
+| --------------- | -------- | ------------------------------- |
 | First Name      | Yes      | Only required field             |
 | Last Name       | No       |                                 |
 | Display Name    | No       | Computed or custom              |
@@ -289,7 +289,7 @@ Contactory fills the gap between:
 ### Functional Requirements
 
 | ID     | Requirement                                    |
-|--------|------------------------------------------------|
+| ------ | ---------------------------------------------- |
 | FR-001 | Create new contacts with minimum first name    |
 | FR-002 | View list of all user contacts                 |
 | FR-003 | View complete contact details                  |
@@ -368,7 +368,7 @@ Contactory fills the gap between:
 ## Success Metrics
 
 | Metric                 | Target                     |
-|------------------------|----------------------------|
+| ---------------------- | -------------------------- |
 | Create contact time    | < 60 seconds               |
 | Search to first result | < 5 seconds                |
 | Page to interactive    | < 2 seconds (500 contacts) |
@@ -505,7 +505,7 @@ For detailed specification, see [002-team-sharing/spec.md](../specs/002-team-sha
 ## Risk Mitigation
 
 | Risk                               | Impact | Mitigation                                                     |
-|------------------------------------|--------|----------------------------------------------------------------|
+| ---------------------------------- | ------ | -------------------------------------------------------------- |
 | Large dataset performance          | High   | Virtual scrolling, efficient pagination, database optimization |
 | Data loss from accidental deletion | High   | Soft delete with 5-second undo, trash view with restore        |
 | Mobile usability issues            | Medium | Bottom sheets, swipe gestures, responsive card layouts         |
@@ -569,7 +569,7 @@ For detailed specification, see [002-team-sharing/spec.md](../specs/002-team-sha
 ## Documentation Map
 
 | Document                        | Purpose                                        | Audience                            |
-|---------------------------------|------------------------------------------------|-------------------------------------|
+| ------------------------------- | ---------------------------------------------- | ----------------------------------- |
 | **project-overview.md**         | Product vision, strategy, features             | PMs, stakeholders, all team members |
 | **market-research.md**          | Competitive analysis and strategic positioning | Product, leadership, investors      |
 | **project-architecture.md**     | Technical stack, patterns, guidelines          | Developers, architects, tech leads  |
