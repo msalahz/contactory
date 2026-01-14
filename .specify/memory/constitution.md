@@ -59,6 +59,7 @@ Testing discipline follows a risk-based approach:
 - **Coverage as Signal**: Code coverage is a signal, not a target; focus on testing behavior that matters
 
 **Test Types by Risk**:
+
 - High-risk operations (auth, payments, data deletion): Integration + unit tests required
 - Medium-risk operations (CRUD, forms): Integration tests required
 - Low-risk operations (UI presentation, formatting): Tests optional but encouraged
@@ -90,6 +91,7 @@ The application MUST meet performance targets:
 - **Bundle Size**: Monitor and justify increases; use dynamic imports for large dependencies
 
 **Performance Verification**:
+
 - Test with realistic data volumes (1000+ contacts minimum)
 - Use React DevTools Profiler to identify expensive renders
 - Monitor bundle size changes in PR reviews
@@ -126,6 +128,7 @@ Additional complexity MUST be justified:
 - Design patterns: Document the problem being solved (no patterns for patterns' sake)
 
 **Default to Simple**:
+
 - Three similar lines > premature abstraction
 - Direct code > helper functions for one-time use
 - Feature flags only when truly needed

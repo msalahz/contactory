@@ -5,13 +5,13 @@
 **Status**: Draft  
 **Input**: User description: "$ARGUMENTS"
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 <!--
   IMPORTANT: User stories should be PRIORITIZED as user journeys ordered by importance.
   Each user story/journey must be INDEPENDENTLY TESTABLE - meaning if you implement just ONE of them,
   you should still have a viable MVP (Minimum Viable Product) that delivers value.
-  
+
   Assign priorities (P1, P2, P3, etc.) to each story, where P1 is the most critical.
   Think of each story as a standalone slice of functionality that can be:
   - Developed independently
@@ -75,7 +75,7 @@
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 <!--
   ACTION REQUIRED: The content in this section represents placeholders.
@@ -85,50 +85,54 @@
 ### Functional Requirements
 
 - **FR-001**: System MUST [specific capability, e.g., "allow users to create accounts"]
-- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]  
+- **FR-002**: System MUST [specific capability, e.g., "validate email addresses"]
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
 
-*Example of marking unclear requirements:*
+_Example of marking unclear requirements:_
 
 - **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
 - **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **[Entity 1]**: [What it represents, key attributes without implementation]
 - **[Entity 2]**: [What it represents, relationships to other entities]
 
-### Non-Functional Requirements *(apply constitution standards)*
+### Non-Functional Requirements _(apply constitution standards)_
 
 Per Contactory Constitution (`.specify/memory/constitution.md` v1.0.0), features MUST meet:
 
 **Code Quality**:
+
 - **NFR-Q1**: TypeScript strict mode with Zod validation for external inputs
 - **NFR-Q2**: Explicit imports only (no barrel exports)
 
 **Testing** (Risk-Based):
+
 - **NFR-T1**: High-risk operations (auth, mutations, deletions) MUST have integration + unit tests
 - **NFR-T2**: Medium-risk operations (CRUD, forms) MUST have integration tests
 - **NFR-T3**: All tests MUST be independently runnable
 
 **User Experience**:
+
 - **NFR-UX1**: WCAG 2.1 AA compliance (keyboard nav, ARIA labels, 4.5:1 contrast)
 - **NFR-UX2**: All user-facing text via i18n keys with RTL/LTR support
 - **NFR-UX3**: Visual feedback < 200ms for all actions
 - **NFR-UX4**: Error recovery mechanisms (undo/restore where applicable)
 
 **Performance**:
+
 - **NFR-P1**: Page interactive < 2s (500 records)
 - **NFR-P2**: Search response < 5s (300ms debounce)
 - **NFR-P3**: 60 FPS scrolling (1000+ items with virtual scrolling)
 - **NFR-P4**: Form submission < 1s
 - **NFR-P5**: File upload < 3s (with client compression)
 
-*Note: If any NFR cannot be met, document justification in spec.*
+_Note: If any NFR cannot be met, document justification in spec._
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 <!--
   ACTION REQUIRED: Define measurable success criteria.

@@ -11,13 +11,13 @@
 <!--
   ============================================================================
   IMPORTANT: The checklist items below are SAMPLE ITEMS for illustration only.
-  
+
   The /speckit.checklist command MUST replace these with actual items based on:
   - User's specific checklist request
   - Feature requirements from spec.md
   - Technical context from plan.md
   - Implementation details from tasks.md
-  
+
   DO NOT keep these sample items in the generated checklist file.
   ============================================================================
 -->
